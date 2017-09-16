@@ -1,0 +1,6 @@
+18:59:04 **** Incremental Build of configuration Debug for project STM32_nixie_firmware ****
+make all 
+make: Nothing to be done for 'all'.
+
+18:59:04 Build Finished (took 217ms)
+
