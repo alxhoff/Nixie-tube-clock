@@ -56,6 +56,16 @@
 
 /* Private define ------------------------------------------------------------*/
 
+#define BUT4_Pin GPIO_PIN_3
+#define BUT4_GPIO_Port GPIOE
+#define BUT3_Pin GPIO_PIN_5
+#define BUT3_GPIO_Port GPIOE
+#define BUT2_Pin GPIO_PIN_1
+#define BUT2_GPIO_Port GPIOF
+#define BUT1_Pin GPIO_PIN_3
+#define BUT1_GPIO_Port GPIOF
+#define BUT0_Pin GPIO_PIN_5
+#define BUT0_GPIO_Port GPIOF
 #define B1_Pin GPIO_PIN_0
 #define B1_GPIO_Port GPIOA
 #define ACP_RST_Pin GPIO_PIN_7
@@ -66,6 +76,8 @@
 #define LD3_GPIO_Port GPIOG
 #define LD4_Pin GPIO_PIN_14
 #define LD4_GPIO_Port GPIOG
+#define BUT5_Pin GPIO_PIN_1
+#define BUT5_GPIO_Port GPIOE
 
 /* USER CODE BEGIN Private defines */
 
