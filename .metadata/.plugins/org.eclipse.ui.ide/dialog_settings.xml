@@ -5,6 +5,8 @@
 		<item value="false" key="WizardProjectsImportPage.STORE_COPY_PROJECT_ID"/>
 		<item value="false" key="WizardProjectsImportPage.STORE_ARCHIVE_SELECTED"/>
 		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
+			<item value="/home/alxhoff/git/Embedded/stm32_nixie_clock_firmware/Nucleo144LMU2"/>
+			<item value="/home/alxhoff/git/Embedded/stm32_nixie_clock_firmware/Nixie_firnware"/>
 			<item value="/home/alxhoff/git/Embedded/embedded_goodness/STM/STM32F1/STM32f1RTOStest"/>
 			<item value="/home/alxhoff/git/Embedded/stm32_nixie_clock_firmware/Nixie_firmware"/>
 		</list>
