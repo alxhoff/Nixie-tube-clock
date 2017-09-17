@@ -1,8 +1,0 @@
-LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/arch=x86_64
-LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/os=linux
-configDescList=org.eclipse.launchbar.core.descriptorType.default\:Nixie_firmware Debug,org.eclipse.launchbar.core.descriptorType.default\:stm32f1RTOStest Debug,org.eclipse.launchbar.core.descriptorType.default\:Nixie_firmware Debug (1),org.eclipse.launchbar.core.descriptorType.default\:STM32_nixie_firmware Debug,org.eclipse.launchbar.core.descriptorType.default\:Nixie_firnware Run
-eclipse.preferences.version=1
-org.eclipse.launchbar.core.descriptorType.default\:Nixie_firmware\ Debug\ (1)/activeLaunchMode=debug
-org.eclipse.launchbar.core.descriptorType.default\:Nixie_firmware\ Debug/activeLaunchMode=run
-org.eclipse.launchbar.core.descriptorType.default\:Nixie_firmware\ Debug/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
-org.eclipse.launchbar.core.descriptorType.default\:Nixie_firnware\ Run/activeLaunchMode=debug
