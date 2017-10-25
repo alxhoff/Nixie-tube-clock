@@ -56,6 +56,25 @@
 
 /* Private define ------------------------------------------------------------*/
 
+#define BUT0_Pin GPIO_PIN_1
+#define BUT0_GPIO_Port GPIOA
+#define BUT1_Pin GPIO_PIN_2
+#define BUT1_GPIO_Port GPIOA
+#define BUT2_Pin GPIO_PIN_3
+#define BUT2_GPIO_Port GPIOA
+#define BUT3_Pin GPIO_PIN_4
+#define BUT3_GPIO_Port GPIOA
+#define BUZZ_Pin GPIO_PIN_10
+#define BUZZ_GPIO_Port GPIOB
+#define DHT_Pin GPIO_PIN_11
+#define DHT_GPIO_Port GPIOB
+#define SER_OUT_Pin GPIO_PIN_12
+#define SER_OUT_GPIO_Port GPIOB
+#define SER_CLK_Pin GPIO_PIN_13
+#define SER_CLK_GPIO_Port GPIOB
+#define LAT_CLK_Pin GPIO_PIN_14
+#define LAT_CLK_GPIO_Port GPIOB
+
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
