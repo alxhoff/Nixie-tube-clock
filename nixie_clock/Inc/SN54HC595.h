@@ -80,7 +80,7 @@
  *	the object then call SN54HC595_init_obj as seen
  *	in the example.
  */
-
+#include "main.h"
 //PIN DEFS
 
 #define CLOCK_SWITCH(PORT)		{if(PORT == GPIOA)\
@@ -93,39 +93,27 @@
 							__HAL_RCC_GPIOD_CLK_ENABLE();\
 						else if(PORT == GPIOE) \
 							__HAL_RCC_GPIOE_CLK_ENABLE();\
-						else if(PORT == GPIOF) \
-							__HAL_RCC_GPIOF_CLK_ENABLE();\
-						else if(PORT == GPIOG) \
-							__HAL_RCC_GPIOG_CLK_ENABLE();\
-						else if(PORT == GPIOH) \
-							__HAL_RCC_GPIOH_CLK_ENABLE();\
-						else if(PORT == GPIOI) \
-							__HAL_RCC_GPIOI_CLK_ENABLE();\
-						else if(PORT == GPIOJ) \
-							__HAL_RCC_GPIOJ_CLK_ENABLE();\
-						else if(PORT == GPIOK) \
-							__HAL_RCC_GPIOK_CLK_ENABLE();\
 						}
 
 #define CLOCK_ENABLE(PORT)		__HAL_RCC_##PORT##_CLK_ENABLE();
 
-#define SER_IN_PIN				GPIO_PIN_8 //A8
-#define SER_IN_PORT				GPIOA
-#define SER_IN_CLOCK			CLOCK_ENABLE(GPIOA)
-#define SER_CLK_PIN				GPIO_PIN_7 //G7
-#define SER_CLK_PORT			GPIOG
-#define SER_CLK_CLOCK			CLOCK_ENABLE(GPIOG)
+#define SER_IN_PIN				SER_OUT_Pin //A8
+#define SER_IN_PORT				SER_OUT_GPIO_Port
+#define SER_IN_CLOCK			CLOCK_ENABLE(SER_OUT_GPIO_Port)
+#define SER_CLK_PIN				SER_CLK_Pin //G7
+#define SER_CLK_PORT			SER_CLK_GPIO_Port
+#define SER_CLK_CLOCK			CLOCK_ENABLE(SER_CLK_GPIO_Port)
 
-#define LATCH_PIN				GPIO_PIN_6 //C6
-#define LATCH_PORT				GPIOC
-#define LATCH_CLOCK				CLOCK_ENABLE(GPIOC)
+#define LATCH_PIN				LAT_CLK_Pin //C6
+#define LATCH_PORT				LAT_CLK_GPIO_Port
+#define LATCH_CLOCK				CLOCK_ENABLE(LAT_CLK_GPIO_Port)
 
-#define OUT_ENA_PIN				GPIO_PIN_8 //C8
-#define OUT_ENA_PORT			GPIOC
-#define OUT_ENA_CLOCK			CLOCK_ENABLE(GPIOC)
-#define SR_CLR_PIN				GPIO_PIN_5 //G5
-#define SR_CLR_PORT				GPIOG
-#define SR_CLR_CLOCK			CLOCK_ENABLE(GPIOG)
+#define OUT_ENA_PIN				 //C8
+#define OUT_ENA_PORT
+#define OUT_ENA_CLOCK
+#define SR_CLR_PIN				 //G5
+#define SR_CLR_PORT
+#define SR_CLR_CLOCK
 
 #define USE_SN54HC595_STRUCTS		1
 

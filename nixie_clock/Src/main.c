@@ -79,7 +79,6 @@ void StartDefaultTask(void const * argument);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
-int a = 2;
 /* USER CODE END 0 */
 
 int main(void)
@@ -266,7 +265,10 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, DHT_Pin|SER_CLK_Pin|LAT_CLK_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, DHT_Pin|SER_CLK_Pin|LAT_CLK_Pin|SHIFT_ENA_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(SHIFT_CLR_GPIO_Port, SHIFT_CLR_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : BUT0_Pin BUT1_Pin BUT2_Pin BUT3_Pin */
   GPIO_InitStruct.Pin = BUT0_Pin|BUT1_Pin|BUT2_Pin|BUT3_Pin;
@@ -280,11 +282,17 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : DHT_Pin SER_CLK_Pin LAT_CLK_Pin */
-  GPIO_InitStruct.Pin = DHT_Pin|SER_CLK_Pin|LAT_CLK_Pin;
+  /*Configure GPIO pins : DHT_Pin SER_CLK_Pin LAT_CLK_Pin SHIFT_ENA_Pin */
+  GPIO_InitStruct.Pin = DHT_Pin|SER_CLK_Pin|LAT_CLK_Pin|SHIFT_ENA_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : SHIFT_CLR_Pin */
+  GPIO_InitStruct.Pin = SHIFT_CLR_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(SHIFT_CLR_GPIO_Port, &GPIO_InitStruct);
 
 }
 

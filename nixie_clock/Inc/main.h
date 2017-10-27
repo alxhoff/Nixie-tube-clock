@@ -74,6 +74,10 @@
 #define SER_CLK_GPIO_Port GPIOB
 #define LAT_CLK_Pin GPIO_PIN_14
 #define LAT_CLK_GPIO_Port GPIOB
+#define SHIFT_ENA_Pin GPIO_PIN_15
+#define SHIFT_ENA_GPIO_Port GPIOB
+#define SHIFT_CLR_Pin GPIO_PIN_8
+#define SHIFT_CLR_GPIO_Port GPIOA
 
 /* USER CODE BEGIN Private defines */
 
