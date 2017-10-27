@@ -64,6 +64,8 @@
 #define BUT2_GPIO_Port GPIOA
 #define BUT3_Pin GPIO_PIN_4
 #define BUT3_GPIO_Port GPIOA
+#define LD2_Pin GPIO_PIN_5
+#define LD2_GPIO_Port GPIOC
 #define BUZZ_Pin GPIO_PIN_10
 #define BUZZ_GPIO_Port GPIOB
 #define DHT_Pin GPIO_PIN_11
@@ -78,6 +80,8 @@
 #define SHIFT_ENA_GPIO_Port GPIOB
 #define SHIFT_CLR_Pin GPIO_PIN_8
 #define SHIFT_CLR_GPIO_Port GPIOA
+#define LD1_Pin GPIO_PIN_11
+#define LD1_GPIO_Port GPIOA
 
 /* USER CODE BEGIN Private defines */
 

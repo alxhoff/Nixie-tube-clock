@@ -108,12 +108,12 @@
 #define LATCH_PORT				LAT_CLK_GPIO_Port
 #define LATCH_CLOCK				CLOCK_ENABLE(LAT_CLK_GPIO_Port)
 
-#define OUT_ENA_PIN				 //C8
-#define OUT_ENA_PORT
-#define OUT_ENA_CLOCK
-#define SR_CLR_PIN				 //G5
-#define SR_CLR_PORT
-#define SR_CLR_CLOCK
+#define OUT_ENA_PIN				SHIFT_ENA_Pin//C8
+#define OUT_ENA_PORT			SHIFT_ENA_GPIO_Port
+#define OUT_ENA_CLOCK			CLOCK_ENABLE(SHIFT_CLR_Pin)
+#define SR_CLR_PIN				SHIFT_CLR_Pin//G5
+#define SR_CLR_PORT				SHIFT_CLR_GPIO_Port
+#define SR_CLR_CLOCK			CLOCK_ENABLE(SHIFT_CLR_GPIO_Port)
 
 #define USE_SN54HC595_STRUCTS		1
 

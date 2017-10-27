@@ -45,14 +45,16 @@ int8_t nixie_set_tube(nixie_tube_array_t* array, uint8_t index, uint8_t value)
 
 int8_t nixie_compile_output(nixie_tube_array_t* array)
 {
-	uint8_t output[array->count] = {0};
+	if(array->count){
+		uint8_t output[array->count];
 
-	for(uint8_t i = 0; i < array->count; i++){
-		if(array->mask & (1 << (array->count - i)))
-			output[i] = nixie_bcd_to_nixie(array->tubes[i]->value);
-	}
+		for(uint8_t i = 0; i < array->count; i++){
+			if(array->mask & (1 << (array->count - i)))
+				output[i] = nixie_bcd_to_nixie(array->tubes[i]->value);
+		}
 
-	memcpy(array->output, output, sizeof(uint8_t) * array->count);
-
+		memcpy(array->output, output, sizeof(uint8_t) * array->count);
+	}else
+		return -1;
 	return 0;
 }

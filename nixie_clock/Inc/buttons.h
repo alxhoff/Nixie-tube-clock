@@ -30,6 +30,14 @@
 
 #define NUM_OF_BUTTONS		6
 
+#ifndef TRUE
+#define TRUE	1
+#endif
+
+#ifndef FALSE
+#define FALSE	0
+#endif
+
 typedef enum {LEFT1, CENTER1, RIGHT1, LEFT2, CENTER2, RIGHT2, MAX_VALUE} button_positions;
 
 void ButtonsInit();

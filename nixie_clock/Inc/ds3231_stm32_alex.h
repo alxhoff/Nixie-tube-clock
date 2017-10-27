@@ -6,11 +6,19 @@
  */
 
 #include "externs.h"
-#include "stm32f4xx_hal.h"
+#include "stm32f1xx_hal.h"
 
 
 #ifndef DS3231_STM32_ALEX_H_
 #define DS3231_STM32_ALEX_H_
+
+#ifndef TRUE
+#define TRUE	1
+#endif
+
+#ifndef	 FALSE
+#define FALSE	0
+#endif
 
 #define DS3231_ADDR8	0xD0
 
