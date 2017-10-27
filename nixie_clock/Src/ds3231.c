@@ -5,7 +5,7 @@
  *      Author: alxhoff
  */
 
-#include "ds3231_stm32_alex.h"
+#include <ds3231.h>
 
 //typedef enum {ALARM_EVERY_SECOND, ALARM_MATCH_SECONDS,
 //		ALARM_MATCH_MINUTES, ALARM_MATCH_HOURS, ALARM_MATCH_DATE,

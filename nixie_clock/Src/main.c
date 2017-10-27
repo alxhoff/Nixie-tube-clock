@@ -51,7 +51,10 @@
 #include "cmsis_os.h"
 
 /* USER CODE BEGIN Includes */
-
+#include "ds3231.h"
+#include "my_timers.h"
+#include "render.h"
+#include "buttons.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -63,7 +66,11 @@ osThreadId defaultTaskHandle;
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-
+osTimerId set_blink_timerHandle;
+osSemaphoreId set_blink_semaphoreHandle;
+osThreadId ButtonListenerTaskHandle, ScreenRenderTaskHandle;
+ds3231Registers* registers = NULL;
+TimerHandle_t rtos_blink_timer;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -110,7 +117,40 @@ int main(void)
   MX_SPI1_Init();
 
   /* USER CODE BEGIN 2 */
+  ButtonsInit();
+  ds3231Time testTime = {
+  		.twelve_hour = TRUE,
+  		.sec = 55,
+  		.min = 59,
+  		.hour = 11,
+  		.pm = PM,
+  		.week_day = 5,
+  		.date = 31,
+  		.month = 12,
+  		.year = 2017
+  	};
+  	DS3231_set_time(&hi2c1, &testTime);
 
+  	ds3231Alarm testAlarm1 = {
+  		.twelve_hour = TRUE,
+  		.hour = 2,
+  		.min = 3,
+  		.sec = 4,
+  		.pm = PM,
+  		.week_day = MONDAY,
+  		.date = 4,
+  		.date_or_day = DAY_OF_MONTH,
+  		.alarm_type = ALARM_MATCH_SECONDS
+  	};
+  	DS3231_set_alarm(&hi2c1, &testAlarm1, ALARM_ONE);
+
+  	render_state = DISP_TIME;
+
+  	//SSD1306
+  	ssd1306_Init();
+  	HAL_Delay(1000);
+  	ssd1306_Fill(White);
+  	ssd1306_UpdateScreen();
   /* USER CODE END 2 */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -119,11 +159,16 @@ int main(void)
 
   /* USER CODE BEGIN RTOS_SEMAPHORES */
   /* add semaphores, ... */
+    osSemaphoreDef(set_blink_semaphore);
+    set_blink_semaphoreHandle = osSemaphoreCreate(osSemaphore(set_blink_semaphore), 1);
   /* USER CODE END RTOS_SEMAPHORES */
 
   /* USER CODE BEGIN RTOS_TIMERS */
-  /* start timers, add new ones, ... */
-  /* USER CODE END RTOS_TIMERS */
+  	osTimerDef(set_blink_timer, set_blink_timer_callback);
+	set_blink_timerHandle = osTimerCreate(osTimer(set_blink_timer), osTimerPeriodic, NULL);
+
+	rtos_blink_timer = xTimerCreate("blinkTimer", 1000, pdTRUE, 1, set_blink_timer_callback);
+	xTimerStart(rtos_blink_timer,0);  /* USER CODE END RTOS_TIMERS */
 
   /* Create the thread(s) */
   /* definition and creation of defaultTask */

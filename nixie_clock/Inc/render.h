@@ -8,8 +8,8 @@
 #ifndef RENDER_H_
 #define RENDER_H_
 
+#include <ds3231.h>
 #include "ssd1306.h"
-#include "ds3231_stm32_alex.h"
 
 typedef enum {DISP_TIME, SET_TIME, DISP_ALARM1, DISP_ALARM2,
 	SET_ALARM1, SET_ALARM2} SCREEN_RENDER_STATE;

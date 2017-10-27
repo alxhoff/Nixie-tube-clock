@@ -8,8 +8,8 @@
 #ifndef EXTERNS_H_
 #define EXTERNS_H_
 
+#include <ds3231.h>
 #include "cmsis_os.h"
-#include "ds3231_stm32_alex.h"
 
 extern I2C_HandleTypeDef hi2c1;
 extern I2C_HandleTypeDef hi2c2;
