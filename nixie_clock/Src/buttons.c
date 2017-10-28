@@ -8,8 +8,8 @@
 #include "buttons.h"
 #include "render.h"
 
-ds3231Time set_time = {0};
-ds3231Alarm set_alarm = {0};
+ds3231_time_t set_time = {0};
+ds3231_alarm_t set_alarm = {0};
 
 void ButtonsInit(){
 

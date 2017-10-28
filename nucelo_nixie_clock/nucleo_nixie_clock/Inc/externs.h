@@ -11,7 +11,6 @@
 #include <ds3231.h>
 #include "cmsis_os.h"
 
-extern I2C_HandleTypeDef hi2c1;
 extern I2C_HandleTypeDef hi2c2;
 extern osSemaphoreId set_blink_semaphoreHandle;
 extern TimerHandle_t rtos_blink_timer;

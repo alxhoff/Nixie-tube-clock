@@ -71,7 +71,7 @@ osThreadId defaultTaskHandle;
 osTimerId set_blink_timerHandle;
 osSemaphoreId set_blink_semaphoreHandle;
 osThreadId ButtonListenerTaskHandle, ScreenRenderTaskHandle;
-ds3231Registers* registers = NULL;
+ds3231_registers_t* registers = NULL;
 TimerHandle_t rtos_blink_timer;
 
 //LCD
@@ -126,7 +126,7 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
   ButtonsInit();
-  ds3231Time testTime = {
+  ds3231_time_t testTime = {
   		.twelve_hour = TRUE,
   		.sec = 55,
   		.min = 59,
@@ -139,7 +139,7 @@ int main(void)
   	};
   	DS3231_set_time(&hi2c2, &testTime);
 
-  	ds3231Alarm testAlarm1 = {
+  	ds3231_alarm_t testAlarm1 = {
   		.twelve_hour = TRUE,
   		.hour = 2,
   		.min = 3,
@@ -155,7 +155,7 @@ int main(void)
 //  	render_state = DISP_TIME;
 
 
-  	ds3231Time test_return_time;
+  	ds3231_time_t test_return_time;
 
   	DS3231_get_time(&hi2c2, &test_return_time);
 

@@ -51,24 +51,39 @@
 #include "cmsis_os.h"
 
 /* USER CODE BEGIN Includes */
+//EXTERNS
+#include "externs.h"
+//TIMERS
+#include "my_timers.h"
+//RTC
 #include "ds3231.h"
+//LCD
+#include "ssd1306.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
-I2C_HandleTypeDef hi2c1;
 I2C_HandleTypeDef hi2c2;
 
 osThreadId defaultTaskHandle;
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
+//TASKS
+osThreadId ButtonListenerTaskHandle, ScreenRenderTaskHandle;
 
+//TIMERS
+osTimerId set_blink_timerHandle;
+TimerHandle_t blink_timer;
+osSemaphoreId set_blink_semaphoreHandle;
+
+
+//LCD
+SSD1306_device_t* LCD;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-static void MX_I2C1_Init(void);
 static void MX_I2C2_Init(void);
 void StartDefaultTask(void const * argument);
 
@@ -106,11 +121,12 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_I2C1_Init();
   MX_I2C2_Init();
 
   /* USER CODE BEGIN 2 */
-  ds3231Time testTime = {
+
+  //RTC
+	ds3231_time_t testTime = {
 		.twelve_hour = TRUE,
 		.sec = 55,
 		.min = 59,
@@ -123,11 +139,22 @@ int main(void)
 	};
 	DS3231_set_time(&hi2c2, &testTime);
 
-	HAL_Delay(5000);
+	HAL_Delay(2000);
 
-	ds3231Time test_return_time;
+	ds3231_time_t test_return_time;
 
 	DS3231_get_time(&hi2c2, &test_return_time);
+
+	//LCD
+	SSD1306_device_init_t LCD_init_dev =
+		{ .background = White, .width = 128, .height = 64, .port = &hi2c2, .font =
+				&Font_11x18, };
+	LCD = ssd1306_init(&LCD_init_dev);
+
+	LCD->clear(LCD);
+	LCD->cursor(LCD, 23, 23);
+	LCD->string(LCD, "sup");
+	LCD->update(LCD);
 
   /* USER CODE END 2 */
 
@@ -137,10 +164,17 @@ int main(void)
 
   /* USER CODE BEGIN RTOS_SEMAPHORES */
   /* add semaphores, ... */
+	  osSemaphoreDef(set_blink_semaphore);
+	  set_blink_semaphoreHandle = osSemaphoreCreate(osSemaphore(set_blink_semaphore), 1);
   /* USER CODE END RTOS_SEMAPHORES */
 
   /* USER CODE BEGIN RTOS_TIMERS */
   /* start timers, add new ones, ... */
+	osTimerDef(set_blink_timer, set_blink_timer_callback);
+	set_blink_timerHandle = osTimerCreate(osTimer(set_blink_timer), osTimerPeriodic, NULL);
+
+	blink_timer = xTimerCreate("blinkTimer", 1000, pdTRUE, 1, set_blink_timer_callback);
+	xTimerStart(blink_timer,0);
   /* USER CODE END RTOS_TIMERS */
 
   /* Create the thread(s) */
@@ -220,26 +254,6 @@ void SystemClock_Config(void)
 
   /* SysTick_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(SysTick_IRQn, 15, 0);
-}
-
-/* I2C1 init function */
-static void MX_I2C1_Init(void)
-{
-
-  hi2c1.Instance = I2C1;
-  hi2c1.Init.ClockSpeed = 100000;
-  hi2c1.Init.DutyCycle = I2C_DUTYCYCLE_2;
-  hi2c1.Init.OwnAddress1 = 0;
-  hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
-  hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
-  hi2c1.Init.OwnAddress2 = 0;
-  hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
-  hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
-  if (HAL_I2C_Init(&hi2c1) != HAL_OK)
-  {
-    _Error_Handler(__FILE__, __LINE__);
-  }
-
 }
 
 /* I2C2 init function */
@@ -352,9 +366,12 @@ static void MX_GPIO_Init(void)
 /* StartDefaultTask function */
 void StartDefaultTask(void const * argument)
 {
-	int i =0;
+
   /* USER CODE BEGIN 5 */
   /* Infinite loop */
+
+	int i = 0;
+
   for(;;)
   {
 	if(i % 2)

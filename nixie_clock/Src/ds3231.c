@@ -114,7 +114,7 @@ void DS3231_get_date_short(I2C_HandleTypeDef *hi2c, uint16_t* year,
 	*day = bcd2dec(read_buffer[0]);
 }
 
-void DS3231_set_time(I2C_HandleTypeDef *hi2c, ds3231Time* time)
+void DS3231_set_time(I2C_HandleTypeDef *hi2c, ds3231_time_t* time)
 {
 	uint8_t write_buffer[7];
 	uint8_t century = 0, year = time->year;
@@ -160,7 +160,7 @@ void DS3231_set_time(I2C_HandleTypeDef *hi2c, ds3231Time* time)
 	HAL_I2C_Mem_Write(hi2c, DS3231_ADDR8, 0x00, 1, &write_buffer, 7, 10);
 }
 
-void DS3231_get_time(I2C_HandleTypeDef *hi2c, ds3231Time* return_struct)
+void DS3231_get_time(I2C_HandleTypeDef *hi2c, ds3231_time_t* return_struct)
 {
 	uint8_t read_buffer[7];
 	uint8_t century = 0;
@@ -214,7 +214,7 @@ float DS3231_get_temp(I2C_HandleTypeDef *hi2c)
 
 }
 
-void DS3231_register_dump(I2C_HandleTypeDef *hi2c, ds3231Registers* return_struct)
+void DS3231_register_dump(I2C_HandleTypeDef *hi2c, ds3231_registers_t* return_struct)
 {
 		uint8_t read_buffer[19];
 
@@ -243,7 +243,7 @@ void DS3231_register_dump(I2C_HandleTypeDef *hi2c, ds3231Registers* return_struc
 
 //untested
 void DS3231_set_alarm_short(I2C_HandleTypeDef *hi2c, uint8_t twelve_hour,
-		uint8_t hour, uint8_t min, uint8_t sec, ALARM_NUMBER alarm_number)
+		uint8_t hour, uint8_t min, uint8_t sec, ALARM_NUMBER_t alarm_number)
 {
 	uint8_t write_buffer[3];
 	write_buffer[0]= dec2bcd(sec);
@@ -267,8 +267,8 @@ void DS3231_set_alarm_short(I2C_HandleTypeDef *hi2c, uint8_t twelve_hour,
 }
 
 //untested
-void DS3231_set_alarm(I2C_HandleTypeDef *hi2c, ds3231Alarm* alarm_time,
-			ALARM_NUMBER alarm_number)
+void DS3231_set_alarm(I2C_HandleTypeDef *hi2c, ds3231_alarm_t* alarm_time,
+			ALARM_NUMBER_t alarm_number)
 {
 	uint8_t alarm_register_addr = 0x07;
 
@@ -360,7 +360,7 @@ void DS3231_set_alarm(I2C_HandleTypeDef *hi2c, ds3231Alarm* alarm_time,
 }
 
 //untested
-void DS3231_enable_alarms(I2C_HandleTypeDef *hi2c, ALARM_NUMBER alarm_number)
+void DS3231_enable_alarms(I2C_HandleTypeDef *hi2c, ALARM_NUMBER_t alarm_number)
 {
 	uint8_t control_register = 0x00;
 
@@ -396,7 +396,7 @@ void DS3231_enable_alarm_interrupt(I2C_HandleTypeDef *hi2c){
 }
 
 //untested
-void DS3231_disable_alarms(I2C_HandleTypeDef *hi2c, ALARM_NUMBER alarm_number)
+void DS3231_disable_alarms(I2C_HandleTypeDef *hi2c, ALARM_NUMBER_t alarm_number)
 {
 	uint8_t control_register = 0x00;
 
@@ -433,7 +433,7 @@ void DS3231_disable_alarm_interrupt(I2C_HandleTypeDef *hi2c){
 
 
 //untested
-void DS3231_change_wave_freq(I2C_HandleTypeDef *hi2c, WAVE_FREQ frequency)
+void DS3231_change_wave_freq(I2C_HandleTypeDef *hi2c, WAVE_FREQ_t frequency)
 {
 	uint8_t control_register = 0x00;
 
@@ -464,8 +464,8 @@ void DS3231_change_wave_freq(I2C_HandleTypeDef *hi2c, WAVE_FREQ frequency)
 }
 
 //untested
-void DS3231_get_alarm(I2C_HandleTypeDef *hi2c, ds3231Alarm* return_struct,
-		ALARM_NUMBER alarm_number)
+void DS3231_get_alarm(I2C_HandleTypeDef *hi2c, ds3231_alarm_t* return_struct,
+		ALARM_NUMBER_t alarm_number)
 {
 	uint8_t read_buffer[4];
 	volatile uint8_t alarm_register_addr = 0x00;

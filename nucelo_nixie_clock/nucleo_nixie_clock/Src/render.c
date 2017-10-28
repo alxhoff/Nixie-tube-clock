@@ -23,10 +23,10 @@ void ScreenRenderTask(){
 
 		switch(render_state){
 		case DISP_TIME:
-			draw_disp_time_state(&hi2c2, 0, 0, &testStruct);
+//			draw_disp_time_state(&hi2c2, 0, 0, &testStruct);
 			break;
 		case DISP_ALARM1:
-			draw_disp_alarm1_state(&hi2c2, 0, 0, &testAlarm1);
+//			draw_disp_alarm1_state(&hi2c2, 0, 0, &testAlarm1);
 			break;
 		case DISP_ALARM2:{
 //			float temp_tmp;
@@ -53,21 +53,21 @@ void ScreenRenderTask(){
 //			ssd1306_WriteString("temp",Font_11x18,Black);
 
 
-			ds3231_time_t get_time = {0};
-			DS3231_get_time(&hi2c2, &get_time);
-			char *time_str = get_time_string(&get_time);
-			ssd1306_SetCursor(10, 35);
-			ssd1306_WriteString(time_str,Font_11x18,Black);
+//			ds3231Time get_time = {0};
+//			DS3231_get_time(&hi2c2, &get_time);
+//			char *time_str = get_time_string(&get_time);
+//			ssd1306_SetCursor(10, 35);
+//			ssd1306_WriteString(time_str,Font_11x18,Black);
 			break;
 		}
 		case SET_TIME:
-			draw_set_states(&hi2c2, 0, 0, &set_time);
+//			draw_set_states(&hi2c2, 0, 0, &set_time);
 			break;
 		case SET_ALARM1:
-			draw_set_states(&hi2c2, 0, 0, &set_alarm);
+//			draw_set_states(&hi2c2, 0, 0, &set_alarm);
 			break;
 		case SET_ALARM2:
-			draw_set_states(&hi2c2, 0, 0, &set_alarm);
+//			draw_set_states(&hi2c2, 0, 0, &set_alarm);
 			break;
 		default:
 			break;

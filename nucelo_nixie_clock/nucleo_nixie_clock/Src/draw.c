@@ -6,9 +6,12 @@
  */
 
 #include "draw.h"
+#include "externs.h"
 
 //STATES
-void draw_disp_time_state(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, ds3231_time_t* time){
+void draw_disp_time_state(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y,
+		ds3231_time_t* time)
+{
 	DS3231_get_time(&hi2c2, time);
 	draw_time(&hi2c2, x + 10, y + 5, time);
 	if(time->twelve_hour){
@@ -20,7 +23,9 @@ void draw_disp_time_state(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, ds3231_
 	draw_year(&hi2c2, x + 45, y + 45, time->year);
 }
 
-void draw_disp_alarm1_state(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, ds3231_alarm_t* alarm){
+void draw_disp_alarm1_state(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y,
+		ds3231_alarm_t* alarm)
+{
 	DS3231_get_alarm(&hi2c2, alarm, ALARM_ONE);
 	draw_alarm(&hi2c2, x+10, y+5, alarm);
 	if(alarm->twelve_hour){
@@ -31,8 +36,9 @@ void draw_disp_alarm1_state(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, ds323
 
 }
 
-void draw_set_states(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, void* timeStruct){
-
+void draw_set_states(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y,
+		void* timeStruct)
+{
 	ssd1306_SetCursor(23,5);
 	switch(render_state){
 	case SET_TIME:{
@@ -156,7 +162,8 @@ void draw_time_blink(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, ds3231_time_
 	ssd1306_WriteString(time_str,Font_11x18,Black);
 }
 
-void draw_time(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, ds3231_time_t* time){
+void draw_time(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, ds3231_time_t* time)
+{
 	char time_str[] = "12:59:59";
 	ssd1306_SetCursor(x, y);
 	sprintf(time_str, "%d:%d:%d", time->hour, time->min, time->sec);
@@ -172,7 +179,8 @@ char* get_time_string(ds3231_time_t* time){
 }
 
 
-void draw_am_pm(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, 12HR_TIME_OF_DAY_t pm){
+void draw_am_pm(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, TIME_OF_DAY_12HR_t pm)
+{
 	ssd1306_SetCursor(x, y);
 	if(pm == PM){
 		ssd1306_WriteString("PM",Font_11x18,Black);
@@ -181,21 +189,24 @@ void draw_am_pm(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, 12HR_TIME_OF_DAY_
 	}
 }
 
-void draw_date(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, uint8_t date){
+void draw_date(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, uint8_t date)
+{
 	char date_str[2];
 	sprintf(date_str, "%2d", date);
 	ssd1306_SetCursor(x, y);
 	ssd1306_WriteString(date_str,Font_11x18,Black);
 }
 
-void draw_year(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, uint16_t year){
+void draw_year(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, uint16_t year)
+{
 	char year_str[4];
 	sprintf(year_str, "%4d", year);
 	ssd1306_SetCursor(x, y);
 	ssd1306_WriteString(year_str,Font_11x18,Black);
 }
 
-void draw_month(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, months month){
+void draw_month(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, months month)
+{
 	char month_str[3];
 
 	switch(month){

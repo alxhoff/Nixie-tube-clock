@@ -8,7 +8,6 @@
 #include "externs.h"
 #include "stm32f1xx_hal.h"
 
-
 #ifndef DS3231_STM32_ALEX_H_
 #define DS3231_STM32_ALEX_H_
 
@@ -26,22 +25,22 @@
 
 typedef enum {ALARM_EVERY_SECOND, ALARM_MATCH_SECONDS,
 		ALARM_MATCH_MINUTES, ALARM_MATCH_HOURS,
-		ALARM_MATCH_DATE_OR_DAY} ALARM_TYPE;
+		ALARM_MATCH_DATE_OR_DAY} ALARM_TYPE_t;
 
-typedef enum {ALARM_ONE, ALARM_TWO, BOTH} ALARM_NUMBER;
+typedef enum {ALARM_ONE, ALARM_TWO, BOTH} ALARM_NUMBER_t;
 
-typedef enum {DAY_OF_MONTH, DAY_OF_WEEK} DY_DT;
+typedef enum {DAY_OF_MONTH, DAY_OF_WEEK} DY_DT_t;
 
-typedef enum {ONE_K, ONE_POINT_K, FOUR_K, EIGHT_K} WAVE_FREQ;
+typedef enum {ONE_K, ONE_POINT_K, FOUR_K, EIGHT_K} WAVE_FREQ_t;
 
 typedef enum {EMPTY_MONTH, JANUARY, FEBUARY, MARCH, APRIL, MAY, JUNE,
 	JULY, AUGUST, SEPTERMBER, OCTOBER, NOVEMBER, DECEMBER}
 months;
 
 typedef enum{EMPTY_DAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY,
-	FRIDAY, SATURDAY, SUNDAY} days;
+	FRIDAY, SATURDAY, SUNDAY} DAYS_t;
 
-typedef enum{AM, PM} time_of_day;
+typedef enum{AM, PM} TIME_OF_DAY_12HR_t;
 
 typedef struct {
         uint8_t sec;
@@ -52,7 +51,7 @@ typedef struct {
         uint8_t month;
         uint16_t year;
         uint8_t	alarm1_sec;
-        uint8_t alarm1_min;
+        uint8_t alarm1_min;TIME_OF_DAY_12HR_t
         uint8_t alarm1_hour;
         uint8_t alarm1_date;
         uint8_t alarm2_min;
@@ -63,31 +62,36 @@ typedef struct {
         uint8_t offset;
         uint8_t MSB_temp;
         uint8_t LSB_temp;
-    } ds3231Registers;
+    } ds3231_registers_t;
 
 typedef struct {
 	uint8_t twelve_hour;
 	uint8_t sec;
 	uint8_t min;
 	uint8_t hour;
-	time_of_day pm;
+	TIME_OF_DAY_12HR_t pm;
 	uint8_t week_day;
 	uint8_t date;
 	uint8_t month;
 	uint16_t year;
-} ds3231Time;
+} ds3231_time_t;
 
 typedef struct {
 	uint8_t twelve_hour;
 	uint8_t	sec;
 	uint8_t min;
 	uint8_t hour;
-	time_of_day pm;
+	TIME_OF_DAY_12HR_t pm;
 	uint8_t week_day;
 	uint8_t date;
-	DY_DT date_or_day;
-	ALARM_TYPE alarm_type;
-} ds3231Alarm;
+	DY_DT_t date_or_day;
+	ALARM_TYPE_t alarm_type;
+} ds3231_alarm_t;
+
+typedef struct ds3231_device{
+
+
+}ds3231_device_t;
 
 #define PM_AM_FLAG		5
 #define TWELVE_FLAG		6
@@ -122,11 +126,11 @@ void DS3231_set_date_short(I2C_HandleTypeDef *hi2c, uint16_t year,
 		uint8_t month, uint8_t date, uint8_t day);
 void DS3231_get_date_short(I2C_HandleTypeDef *hi2c, uint16_t* year,
 		uint8_t* month, uint8_t* date, uint8_t* day);
-void DS3231_set_time(I2C_HandleTypeDef *hi2c, ds3231Time* time);
-void DS3231_get_time(I2C_HandleTypeDef *hi2c, ds3231Time* return_struct);
+void DS3231_set_time(I2C_HandleTypeDef *hi2c, ds3231_time_t* time);
+void DS3231_get_time(I2C_HandleTypeDef *hi2c, ds3231_time_t* return_struct);
 float DS3231_get_temp(I2C_HandleTypeDef *hi2c);
-void DS3231_set_alarm(I2C_HandleTypeDef *hi2c, ds3231Alarm* alarm_time,
-			ALARM_NUMBER alarm_number);
-void DS3231_register_dump(I2C_HandleTypeDef *hi2c, ds3231Registers* return_struct);
+void DS3231_set_alarm(I2C_HandleTypeDef *hi2c, ds3231_alarm_t* alarm_time,
+			ALARM_NUMBER_t alarm_number);
+void DS3231_register_dump(I2C_HandleTypeDef *hi2c, ds3231_registers_t* return_struct);
 
 #endif /* DS3231_STM32_ALEX_H_ */
