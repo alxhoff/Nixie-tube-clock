@@ -5,7 +5,7 @@
  *      Author: alxhoff
  */
 
-#include "externs.h"
+//#include "externs.h"
 #include "stm32f1xx_hal.h"
 
 
@@ -23,6 +23,14 @@
 #define DS3231_ADDR8	0xD0
 
 #define STM_I2C_PORT	hi2c2
+
+#ifndef TRUE
+#define TRUE 	1
+#endif
+
+#ifndef FALSE
+#define FALSE	0
+#endif
 
 typedef enum {ALARM_EVERY_SECOND, ALARM_MATCH_SECONDS,
 		ALARM_MATCH_MINUTES, ALARM_MATCH_HOURS,

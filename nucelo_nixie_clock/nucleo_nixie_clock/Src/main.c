@@ -52,30 +52,16 @@
 
 /* USER CODE BEGIN Includes */
 #include "ds3231.h"
-#include "my_timers.h"
-#include "render.h"
-#include "buttons.h"
-#include "ssd1306.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
 I2C_HandleTypeDef hi2c1;
 I2C_HandleTypeDef hi2c2;
 
-SPI_HandleTypeDef hspi1;
-
 osThreadId defaultTaskHandle;
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-osTimerId set_blink_timerHandle;
-osSemaphoreId set_blink_semaphoreHandle;
-osThreadId ButtonListenerTaskHandle, ScreenRenderTaskHandle;
-ds3231Registers* registers = NULL;
-TimerHandle_t rtos_blink_timer;
-
-//LCD
-SSD1306_device_t* LCD;
 
 /* USER CODE END PV */
 
@@ -83,7 +69,6 @@ SSD1306_device_t* LCD;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_I2C1_Init(void);
-static void MX_SPI1_Init(void);
 static void MX_I2C2_Init(void);
 void StartDefaultTask(void const * argument);
 
@@ -93,6 +78,7 @@ void StartDefaultTask(void const * argument);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
+
 /* USER CODE END 0 */
 
 int main(void)
@@ -121,57 +107,27 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_I2C1_Init();
-  MX_SPI1_Init();
   MX_I2C2_Init();
 
   /* USER CODE BEGIN 2 */
-  ButtonsInit();
   ds3231Time testTime = {
-  		.twelve_hour = TRUE,
-  		.sec = 55,
-  		.min = 59,
-  		.hour = 11,
-  		.pm = PM,
-  		.week_day = 5,
-  		.date = 31,
-  		.month = 12,
-  		.year = 2017
-  	};
-  	DS3231_set_time(&hi2c2, &testTime);
+		.twelve_hour = TRUE,
+		.sec = 55,
+		.min = 59,
+		.hour = 11,
+		.pm = PM,
+		.week_day = 5,
+		.date = 31,
+		.month = 12,
+		.year = 2017
+	};
+	DS3231_set_time(&hi2c2, &testTime);
 
-  	ds3231Alarm testAlarm1 = {
-  		.twelve_hour = TRUE,
-  		.hour = 2,
-  		.min = 3,
-  		.sec = 4,
-  		.pm = PM,
-  		.week_day = MONDAY,
-  		.date = 4,
-  		.date_or_day = DAY_OF_MONTH,
-  		.alarm_type = ALARM_MATCH_SECONDS
-  	};
-  	DS3231_set_alarm(&hi2c2, &testAlarm1, ALARM_ONE);
+	HAL_Delay(5000);
 
-//  	render_state = DISP_TIME;
+	ds3231Time test_return_time;
 
-
-  	ds3231Time test_return_time;
-
-  	DS3231_get_time(&hi2c2, &test_return_time);
-
-  	HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
-  	HAL_GPIO_WritePin(LD1_GPIO_Port, LD1_Pin, GPIO_PIN_SET);
-
-  	//LCD
-  	SSD1306_device_init_t LCD_init_dev =
-  		{ .background = White, .width = 128, .height = 64, .port = &hi2c1, .font =
-  				&Font_11x18, };
-  	LCD = ssd1306_init(&LCD_init_dev);
-
-  	LCD->clear(LCD);
-  	LCD->cursor(LCD, 23, 23);
-  	LCD->string(LCD, "sup");
-  	LCD->update(LCD);
+	DS3231_get_time(&hi2c2, &test_return_time);
 
   /* USER CODE END 2 */
 
@@ -181,15 +137,10 @@ int main(void)
 
   /* USER CODE BEGIN RTOS_SEMAPHORES */
   /* add semaphores, ... */
-    osSemaphoreDef(set_blink_semaphore);
-    set_blink_semaphoreHandle = osSemaphoreCreate(osSemaphore(set_blink_semaphore), 1);
   /* USER CODE END RTOS_SEMAPHORES */
 
   /* USER CODE BEGIN RTOS_TIMERS */
-  	osTimerDef(set_blink_timer, set_blink_timer_callback);
-	set_blink_timerHandle = osTimerCreate(osTimer(set_blink_timer), osTimerPeriodic, NULL);
-
-	rtos_blink_timer = xTimerCreate("blinkTimer", 1000, pdTRUE, 1, set_blink_timer_callback);
+  /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
 
   /* Create the thread(s) */
@@ -311,36 +262,14 @@ static void MX_I2C2_Init(void)
 
 }
 
-/* SPI1 init function */
-static void MX_SPI1_Init(void)
-{
-
-  /* SPI1 parameter configuration*/
-  hspi1.Instance = SPI1;
-  hspi1.Init.Mode = SPI_MODE_MASTER;
-  hspi1.Init.Direction = SPI_DIRECTION_1LINE;
-  hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
-  hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
-  hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
-  hspi1.Init.NSS = SPI_NSS_SOFT;
-  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_4;
-  hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
-  hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
-  hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
-  hspi1.Init.CRCPolynomial = 10;
-  if (HAL_SPI_Init(&hspi1) != HAL_OK)
-  {
-    _Error_Handler(__FILE__, __LINE__);
-  }
-
-}
-
 /** Configure pins as 
         * Analog 
         * Input 
         * Output
         * EVENT_OUT
         * EXTI
+     PA2   ------> USART2_TX
+     PA3   ------> USART2_RX
 */
 static void MX_GPIO_Init(void)
 {
@@ -348,51 +277,71 @@ static void MX_GPIO_Init(void)
   GPIO_InitTypeDef GPIO_InitStruct;
 
   /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOD_CLK_ENABLE();
+  __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, BUT0_Pin|LD3_Pin|SER_OUT_Pin|SHIFT_CLR_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, BUZZ_Pin|DHT_Pin|SER_CLK_Pin|LAT_CLK_Pin 
-                          |SHIFT_ENA_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, LD2_Pin|LD1_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, SHIFT_CLR_Pin|LD1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, BUZZ_Pin|SER_CLK_Pin|LAT_CLK_Pin|SHIFT_ENA_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : BUT0_Pin BUT1_Pin BUT2_Pin BUT3_Pin */
-  GPIO_InitStruct.Pin = BUT0_Pin|BUT1_Pin|BUT2_Pin|BUT3_Pin;
+  /*Configure GPIO pin : B1_Pin */
+  GPIO_InitStruct.Pin = B1_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : BUT0_Pin LD3_Pin SER_OUT_Pin SHIFT_CLR_Pin */
+  GPIO_InitStruct.Pin = BUT0_Pin|LD3_Pin|SER_OUT_Pin|SHIFT_CLR_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : BUT1_Pin BUT2_Pin BUT3_Pin */
+  GPIO_InitStruct.Pin = BUT1_Pin|BUT2_Pin|BUT3_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : LD2_Pin */
-  GPIO_InitStruct.Pin = LD2_Pin;
+  /*Configure GPIO pin : USART_TX_Pin */
+  GPIO_InitStruct.Pin = USART_TX_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(USART_TX_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PA3 */
+  GPIO_InitStruct.Pin = GPIO_PIN_3;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : LD2_Pin LD1_Pin */
+  GPIO_InitStruct.Pin = LD2_Pin|LD1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(LD2_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : BUZZ_Pin DHT_Pin SER_CLK_Pin LAT_CLK_Pin 
-                           SHIFT_ENA_Pin */
-  GPIO_InitStruct.Pin = BUZZ_Pin|DHT_Pin|SER_CLK_Pin|LAT_CLK_Pin 
-                          |SHIFT_ENA_Pin;
+  /*Configure GPIO pins : BUZZ_Pin SER_CLK_Pin LAT_CLK_Pin SHIFT_ENA_Pin */
+  GPIO_InitStruct.Pin = BUZZ_Pin|SER_CLK_Pin|LAT_CLK_Pin|SHIFT_ENA_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : SER_OUT_Pin */
-  GPIO_InitStruct.Pin = SER_OUT_Pin;
+  /*Configure GPIO pin : DHT_Pin */
+  GPIO_InitStruct.Pin = DHT_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(SER_OUT_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(DHT_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : SHIFT_CLR_Pin LD1_Pin */
-  GPIO_InitStruct.Pin = SHIFT_CLR_Pin|LD1_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 
 }
 
@@ -403,13 +352,23 @@ static void MX_GPIO_Init(void)
 /* StartDefaultTask function */
 void StartDefaultTask(void const * argument)
 {
-
+	int i =0;
   /* USER CODE BEGIN 5 */
   /* Infinite loop */
   for(;;)
   {
+	if(i % 2)
+		HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
+
+	if(i % 3)
+		HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+
+	HAL_GPIO_TogglePin(LD3_GPIO_Port, LD3_Pin);
+
+	i++;
+
     osDelay(500);
-    HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
+
   }
   /* USER CODE END 5 */ 
 }
