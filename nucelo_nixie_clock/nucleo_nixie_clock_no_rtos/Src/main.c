@@ -3,97 +3,70 @@
   * File Name          : main.c
   * Description        : Main program body
   ******************************************************************************
-  * This notice applies to any and all portions of this file
+  ** This notice applies to any and all portions of this file
   * that are not between comment pairs USER CODE BEGIN and
   * USER CODE END. Other portions of this file, whether 
   * inserted by the user or by software development tools
   * are owned by their respective copyright owners.
   *
-  * Copyright (c) 2017 STMicroelectronics International N.V. 
-  * All rights reserved.
+  * COPYRIGHT(c) 2017 STMicroelectronics
   *
-  * Redistribution and use in source and binary forms, with or without 
-  * modification, are permitted, provided that the following conditions are met:
+  * Redistribution and use in source and binary forms, with or without modification,
+  * are permitted provided that the following conditions are met:
+  *   1. Redistributions of source code must retain the above copyright notice,
+  *      this list of conditions and the following disclaimer.
+  *   2. Redistributions in binary form must reproduce the above copyright notice,
+  *      this list of conditions and the following disclaimer in the documentation
+  *      and/or other materials provided with the distribution.
+  *   3. Neither the name of STMicroelectronics nor the names of its contributors
+  *      may be used to endorse or promote products derived from this software
+  *      without specific prior written permission.
   *
-  * 1. Redistribution of source code must retain the above copyright notice, 
-  *    this list of conditions and the following disclaimer.
-  * 2. Redistributions in binary form must reproduce the above copyright notice,
-  *    this list of conditions and the following disclaimer in the documentation
-  *    and/or other materials provided with the distribution.
-  * 3. Neither the name of STMicroelectronics nor the names of other 
-  *    contributors to this software may be used to endorse or promote products 
-  *    derived from this software without specific written permission.
-  * 4. This software, including modifications and/or derivative works of this 
-  *    software, must execute solely and exclusively on microcontroller or
-  *    microprocessor devices manufactured by or for STMicroelectronics.
-  * 5. Redistribution and use of this software other than as permitted under 
-  *    this license is void and will automatically terminate your rights under 
-  *    this license. 
-  *
-  * THIS SOFTWARE IS PROVIDED BY STMICROELECTRONICS AND CONTRIBUTORS "AS IS" 
-  * AND ANY EXPRESS, IMPLIED OR STATUTORY WARRANTIES, INCLUDING, BUT NOT 
-  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
-  * PARTICULAR PURPOSE AND NON-INFRINGEMENT OF THIRD PARTY INTELLECTUAL PROPERTY
-  * RIGHTS ARE DISCLAIMED TO THE FULLEST EXTENT PERMITTED BY LAW. IN NO EVENT 
-  * SHALL STMICROELECTRONICS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-  * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-  * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, 
-  * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
-  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING 
-  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+  * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+  * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   *
   ******************************************************************************
   */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f1xx_hal.h"
-#include "cmsis_os.h"
 
 /* USER CODE BEGIN Includes */
-//EXTERNS
 #include "externs.h"
-//TIMERS
-#include "my_timers.h"
-//RTC
 #include "ds3231.h"
-//LCD
 #include "ssd1306.h"
 #include "render.h"
-//BUTTONS
 #include "buttons.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
 I2C_HandleTypeDef hi2c2;
 
-osThreadId defaultTaskHandle;
-osThreadId render_taslHandle;
-osThreadId buttons_listeneHandle;
-
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-//TASKS
-osThreadId ButtonListenerTaskHandle;
-osThreadId ScreenRenderTaskHandle;
-
-//TIMERS
-osTimerId set_blink_timerHandle;
-TimerHandle_t blink_timer;
-osSemaphoreId set_blink_semaphoreHandle;
-
-
-//LCD
 SSD1306_device_t* LCD;
+
+
+//BUTTONS
+uint8_t button_input[NUM_OF_BUTTONS] = {0};
+uint8_t button_last_state[NUM_OF_BUTTONS] = {0};
+uint8_t button_current_state[NUM_OF_BUTTONS] = {0};
+uint32_t button_last_time[NUM_OF_BUTTONS] = {0};
+uint32_t debounce_delay = DEBOUNCE_DELAY;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_I2C2_Init(void);
-void StartDefaultTask(void const * argument);
-void render_task_callback(void const * argument);
-void buttons_listener_callback(void const * argument);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
@@ -132,24 +105,21 @@ int main(void)
   MX_I2C2_Init();
 
   /* USER CODE BEGIN 2 */
-
   //RTC
-	ds3231_time_t testTime = {
-		.twelve_hour = TRUE,
-		.sec = 55,
-		.min = 59,
-		.hour = 11,
-		.pm = PM,
-		.week_day = 5,
-		.date = 31,
-		.month = 12,
-		.year = 2017
-	};
-	DS3231_set_time(&hi2c2, &testTime);
+ 	ds3231_time_t testTime = {
+ 		.twelve_hour = TRUE,
+ 		.sec = 55,
+ 		.min = 59,
+ 		.hour = 11,
+ 		.pm = PM,
+ 		.week_day = 5,
+ 		.date = 31,
+ 		.month = 12,
+ 		.year = 2017
+ 	};
+ 	DS3231_set_time(&hi2c2, &testTime);
 
-	HAL_Delay(2000);
-
-	ds3231_time_t test_return_time;
+ 	ds3231_time_t test_return_time;
 
 	DS3231_get_time(&hi2c2, &test_return_time);
 
@@ -163,62 +133,7 @@ int main(void)
 	LCD->cursor(LCD, 23, 23);
 	LCD->string(LCD, "supppp");
 	LCD->update(LCD);
-
-	//BUTTONS
-//	ButtonsInit();
-
   /* USER CODE END 2 */
-
-  /* USER CODE BEGIN RTOS_MUTEX */
-  /* add mutexes, ... */
-  /* USER CODE END RTOS_MUTEX */
-
-  /* USER CODE BEGIN RTOS_SEMAPHORES */
-  /* add semaphores, ... */
-	  osSemaphoreDef(set_blink_semaphore);
-	  set_blink_semaphoreHandle = osSemaphoreCreate(osSemaphore(set_blink_semaphore), 1);
-  /* USER CODE END RTOS_SEMAPHORES */
-
-  /* USER CODE BEGIN RTOS_TIMERS */
-  /* start timers, add new ones, ... */
-//	osTimerDef(set_blink_timer, set_blink_timer_callback);
-//	set_blink_timerHandle = osTimerCreate(osTimer(set_blink_timer), osTimerPeriodic, NULL);
-//
-//	blink_timer = xTimerCreate("blinkTimer", 1000, pdTRUE, 1, set_blink_timer_callback);
-//	xTimerStart(blink_timer,0);
-  /* USER CODE END RTOS_TIMERS */
-
-  /* Create the thread(s) */
-  /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
-  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
-
-  /* definition and creation of render_tasl */
-  osThreadDef(render_tasl, render_task_callback, osPriorityBelowNormal, 0, 128);
-  render_taslHandle = osThreadCreate(osThread(render_tasl), NULL);
-
-  /* definition and creation of buttons_listene */
-  osThreadDef(buttons_listene, buttons_listener_callback, osPriorityNormal, 0, 128);
-  buttons_listeneHandle = osThreadCreate(osThread(buttons_listene), NULL);
-
-  /* USER CODE BEGIN RTOS_THREADS */
-  /* add threads, ... */
-//	osThreadDef(ButtonListener, ButtonListenerTask, osPriorityLow, 0, 56);
-//	ButtonListenerTaskHandle = osThreadCreate(osThread(ButtonListener), NULL);
-
-//	osThreadDef(ScreenRender, ScreenRenderTask, osPriorityNormal, 0, 12);
-//	ScreenRenderTaskHandle = osThreadCreate(osThread(ScreenRender), NULL);
-  /* USER CODE END RTOS_THREADS */
-
-  /* USER CODE BEGIN RTOS_QUEUES */
-  /* add queues, ... */
-  /* USER CODE END RTOS_QUEUES */
- 
-
-  /* Start scheduler */
-  osKernelStart();
-  
-  /* We should never get here as control is now taken by the scheduler */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
@@ -228,6 +143,7 @@ int main(void)
 
   /* USER CODE BEGIN 3 */
 
+	  buttons_listener_callback();
   }
   /* USER CODE END 3 */
 
@@ -277,7 +193,7 @@ void SystemClock_Config(void)
   HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
 
   /* SysTick_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(SysTick_IRQn, 15, 0);
+  HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);
 }
 
 /* I2C2 init function */
@@ -321,7 +237,7 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, BUT1_Pin|LD2_Pin|LD1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, LD2_Pin|LD1_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOC, LD3_Pin|SER_OUT_Pin|SHIFT_CLR_Pin, GPIO_PIN_RESET);
@@ -335,26 +251,20 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : BUT0_Pin BUT2_Pin */
-  GPIO_InitStruct.Pin = BUT0_Pin|BUT2_Pin;
+  /*Configure GPIO pins : BUT0_Pin BUT1_Pin BUT2_Pin */
+  GPIO_InitStruct.Pin = BUT0_Pin|BUT1_Pin|BUT2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : USART_TX_Pin */
-  GPIO_InitStruct.Pin = USART_TX_Pin;
+  /*Configure GPIO pins : USART_TX_Pin USART_RX_Pin */
+  GPIO_InitStruct.Pin = USART_TX_Pin|USART_RX_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(USART_TX_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PA3 */
-  GPIO_InitStruct.Pin = GPIO_PIN_3;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : BUT1_Pin LD2_Pin LD1_Pin */
-  GPIO_InitStruct.Pin = BUT1_Pin|LD2_Pin|LD1_Pin;
+  /*Configure GPIO pins : LD2_Pin LD1_Pin */
+  GPIO_InitStruct.Pin = LD2_Pin|LD1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
@@ -378,7 +288,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_Init(DHT_GPIO_Port, &GPIO_InitStruct);
 
   /* EXTI interrupt init*/
-  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 5, 0);
+  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 
 }
@@ -386,81 +296,6 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 
 /* USER CODE END 4 */
-
-/* StartDefaultTask function */
-void StartDefaultTask(void const * argument)
-{
-
-  /* USER CODE BEGIN 5 */
-  /* Infinite loop */
-
-//	int i = 0;
-
-  for(;;)
-  {
-//	if(i % 2)
-//		HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
-//
-//	if(i % 3)
-//		HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-//
-	HAL_GPIO_TogglePin(LD3_GPIO_Port, LD3_Pin);
-//
-//	i++;
-//
-	osDelay(500);
-  }
-  /* USER CODE END 5 */ 
-}
-
-/* render_task_callback function */
-//void render_task_callback(void const * argument)
-//{
-//  /* USER CODE BEGIN render_task_callback */
-////  /* Infinite loop */
-////  for(;;)
-////  {
-////	LCD->clear_wo_update(LCD);
-////	LCD->cursor(LCD, 23, 23);
-////	LCD->string(LCD, "in render");
-////	LCD->update(LCD);
-////    osDelay(1);
-////  }
-//  /* USER CODE END render_task_callback */
-//}
-
-/* buttons_listener_callback function */
-//void buttons_listener_callback(void const * argument)
-//{
-//  /* USER CODE BEGIN buttons_listener_callback */
-////  /* Infinite loop */
-////  for(;;)
-////  {
-////    osDelay(1);
-////  }
-//  /* USER CODE END buttons_listener_callback */
-//}
-
-/**
-  * @brief  Period elapsed callback in non blocking mode
-  * @note   This function is called  when TIM1 interrupt took place, inside
-  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
-  * a global variable "uwTick" used as application time base.
-  * @param  htim : TIM handle
-  * @retval None
-  */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-{
-/* USER CODE BEGIN Callback 0 */
-
-/* USER CODE END Callback 0 */
-  if (htim->Instance == TIM1) {
-    HAL_IncTick();
-  }
-/* USER CODE BEGIN Callback 1 */
-
-/* USER CODE END Callback 1 */
-}
 
 /**
   * @brief  This function is executed in case of error occurrence.

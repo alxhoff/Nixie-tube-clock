@@ -47,6 +47,6 @@ typedef enum {LEFT1,
 	MAX_VALUE} button_positions;
 
 void ButtonsInit();
-void buttons_listener_callback(void const * argument);
+void buttons_listener_callback(void);
 
 #endif /* BUTTONS_H_ */
