@@ -9,9 +9,13 @@
 #define EXTERNS_H_
 
 #include "ssd1306.h"
+#include "ds3231.h"
 #include "buttons.h"
 
 extern SSD1306_device_t* LCD_dev;
+
+typedef struct ds3231_device DS3231_device_t;
+extern DS3231_device_t* RTC_dev;
 
 extern I2C_HandleTypeDef hi2c2;
 

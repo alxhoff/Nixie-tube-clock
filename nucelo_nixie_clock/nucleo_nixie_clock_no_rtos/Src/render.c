@@ -13,13 +13,14 @@
 SCREEN_RENDER_STATE render_state = DISP_TIME;
 SET_STATE set_state = SET_HOUR;
 
-
 void render_task_callback(void)
 {
+	LCD_dev->clear_wo_update(LCD_dev);
+
 	switch(render_state)
 	{
 	case DISP_TIME:
-//		draw_disp_time_state(&hi2c2, 0, 0, &testStruct);
+		draw_disp_time_state( 0, 0);
 		break;
 	case DISP_ALARM1:
 //			draw_disp_alarm1_state(&hi2c2, 0, 0, &testAlarm1);
@@ -68,4 +69,6 @@ void render_task_callback(void)
 	default:
 		break;
 	}
+
+	LCD_dev->update(LCD_dev);
 }
