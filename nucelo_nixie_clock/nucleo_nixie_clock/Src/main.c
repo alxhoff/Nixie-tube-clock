@@ -59,6 +59,9 @@
 #include "ds3231.h"
 //LCD
 #include "ssd1306.h"
+#include "render.h"
+//BUTTONS
+#include "buttons.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -69,7 +72,8 @@ osThreadId defaultTaskHandle;
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 //TASKS
-osThreadId ButtonListenerTaskHandle, ScreenRenderTaskHandle;
+osThreadId ButtonListenerTaskHandle;
+osThreadId ScreenRenderTaskHandle;
 
 //TIMERS
 osTimerId set_blink_timerHandle;
@@ -153,8 +157,11 @@ int main(void)
 
 	LCD->clear(LCD);
 	LCD->cursor(LCD, 23, 23);
-	LCD->string(LCD, "sup");
+	LCD->string(LCD, "supppp");
 	LCD->update(LCD);
+
+	//BUTTONS
+	ButtonsInit();
 
   /* USER CODE END 2 */
 
@@ -184,6 +191,11 @@ int main(void)
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
+	osThreadDef(ButtonListener, ButtonListenerTask, osPriorityNormal, 0, 56);
+	ButtonListenerTaskHandle = osThreadCreate(osThread(ButtonListener), NULL);
+
+//	osThreadDef(ScreenRender, ScreenRenderTask, osPriorityLow, 0, 12);
+//	ScreenRenderTaskHandle = osThreadCreate(osThread(ScreenRender), NULL);
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_QUEUES */
@@ -297,10 +309,10 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, BUT0_Pin|LD3_Pin|SER_OUT_Pin|SHIFT_CLR_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, BUT1_Pin|LD2_Pin|LD1_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, LD2_Pin|LD1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, LD3_Pin|SER_OUT_Pin|SHIFT_CLR_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, BUZZ_Pin|SER_CLK_Pin|LAT_CLK_Pin|SHIFT_ENA_Pin, GPIO_PIN_RESET);
@@ -311,14 +323,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : BUT0_Pin LD3_Pin SER_OUT_Pin SHIFT_CLR_Pin */
-  GPIO_InitStruct.Pin = BUT0_Pin|LD3_Pin|SER_OUT_Pin|SHIFT_CLR_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : BUT1_Pin BUT2_Pin BUT3_Pin */
-  GPIO_InitStruct.Pin = BUT1_Pin|BUT2_Pin|BUT3_Pin;
+  /*Configure GPIO pins : BUT0_Pin BUT2_Pin */
+  GPIO_InitStruct.Pin = BUT0_Pin|BUT2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
@@ -335,11 +341,17 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : LD2_Pin LD1_Pin */
-  GPIO_InitStruct.Pin = LD2_Pin|LD1_Pin;
+  /*Configure GPIO pins : BUT1_Pin LD2_Pin LD1_Pin */
+  GPIO_InitStruct.Pin = BUT1_Pin|LD2_Pin|LD1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : LD3_Pin SER_OUT_Pin SHIFT_CLR_Pin */
+  GPIO_InitStruct.Pin = LD3_Pin|SER_OUT_Pin|SHIFT_CLR_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pins : BUZZ_Pin SER_CLK_Pin LAT_CLK_Pin SHIFT_ENA_Pin */
   GPIO_InitStruct.Pin = BUZZ_Pin|SER_CLK_Pin|LAT_CLK_Pin|SHIFT_ENA_Pin;
@@ -370,24 +382,44 @@ void StartDefaultTask(void const * argument)
   /* USER CODE BEGIN 5 */
   /* Infinite loop */
 
-	int i = 0;
+//	int i = 0;
 
   for(;;)
   {
-	if(i % 2)
-		HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
-
-	if(i % 3)
-		HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-
+//	if(i % 2)
+//		HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
+//
+//	if(i % 3)
+//		HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+//
 	HAL_GPIO_TogglePin(LD3_GPIO_Port, LD3_Pin);
-
-	i++;
-
-    osDelay(500);
-
+//
+//	i++;
+//
+	vTaskDelay(500 / portTICK_PERIOD_MS);
   }
   /* USER CODE END 5 */ 
+}
+
+/**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM1 interrupt took place, inside
+  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim : TIM handle
+  * @retval None
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+/* USER CODE BEGIN Callback 0 */
+
+/* USER CODE END Callback 0 */
+  if (htim->Instance == TIM1) {
+    HAL_IncTick();
+  }
+/* USER CODE BEGIN Callback 1 */
+
+/* USER CODE END Callback 1 */
 }
 
 /**

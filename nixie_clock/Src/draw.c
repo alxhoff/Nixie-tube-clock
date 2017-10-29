@@ -7,6 +7,7 @@
 
 #include "draw.h"
 
+
 //STATES
 void draw_disp_time_state(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, ds3231_time_t* time){
 	DS3231_get_time(&hi2c2, time);
@@ -172,7 +173,7 @@ char* get_time_string(ds3231_time_t* time){
 }
 
 
-void draw_am_pm(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, 12HR_TIME_OF_DAY_t pm){
+void draw_am_pm(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, TIME_OF_DAY_12HR_t pm){
 	ssd1306_SetCursor(x, y);
 	if(pm == PM){
 		ssd1306_WriteString("PM",Font_11x18,Black);

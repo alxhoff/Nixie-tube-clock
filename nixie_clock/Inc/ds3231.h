@@ -51,7 +51,7 @@ typedef struct {
         uint8_t month;
         uint16_t year;
         uint8_t	alarm1_sec;
-        uint8_t alarm1_min;TIME_OF_DAY_12HR_t
+        uint8_t alarm1_min;
         uint8_t alarm1_hour;
         uint8_t alarm1_date;
         uint8_t alarm2_min;

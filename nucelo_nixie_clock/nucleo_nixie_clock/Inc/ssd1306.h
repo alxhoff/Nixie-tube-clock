@@ -62,7 +62,7 @@ struct SSD1306_device{
 
 	SSD1306_colour_t background;
 
-	FontDef* font;
+	font_def_t* font;
 
 	uint8_t width;
 	uint8_t height;
@@ -82,7 +82,7 @@ struct SSD1306_device{
 typedef struct SSD1306_device_init{
 	SSD1306_colour_t background;
 
-	FontDef* font;
+	font_def_t* font;
 
 	uint8_t width;
 	uint8_t height;

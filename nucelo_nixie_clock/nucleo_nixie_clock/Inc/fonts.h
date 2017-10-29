@@ -1,25 +1,18 @@
 
 #include "stm32f1xx_hal.h"
 
-#ifndef Fonts
-#define Fonts
+#ifndef __FONTS_H__
+#define __FONTS_H__
 
-//
-//	Structure om font te definieren
-//
-typedef struct {
-	const uint8_t FontWidth;    /*!< Font width in pixels */
-	uint8_t FontHeight;   /*!< Font height in pixels */
-	const uint16_t *data; /*!< Pointer to data font data array */
-} FontDef;
+typedef struct font_def{
+	const uint8_t FontWidth;
+	uint8_t FontHeight;
+	const uint16_t *data;
+} font_def_t;
 
-
-//
-//	De 3 fonts
-//
-extern FontDef Font_7x10;
-extern FontDef Font_11x18;
-extern FontDef Font_16x26;
+extern font_def_t Font_7x10;
+extern font_def_t Font_11x18;
+extern font_def_t Font_16x26;
 
 #endif
 

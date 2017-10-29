@@ -21,6 +21,6 @@ extern ds3231_time_t testStruct;
 extern SCREEN_RENDER_STATE render_state;
 extern SET_STATE set_state;
 
-void ScreenRenderTask();
+void ScreenRenderTask(void);
 
 #endif /* RENDER_H_ */

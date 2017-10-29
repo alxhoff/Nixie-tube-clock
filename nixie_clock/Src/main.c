@@ -199,6 +199,11 @@ int main(void)
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
+  	osThreadDef(ButtonListener, ButtonListenerTask, osPriorityNormal, 0, 128);
+  	ButtonListenerTaskHandle = osThreadCreate(osThread(ButtonListener), NULL);
+
+  	osThreadDef(ScreenRender, ScreenRenderTask, osPriorityNormal, 0, 128);
+  	ScreenRenderTaskHandle = osThreadCreate(osThread(ScreenRender), NULL);
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_QUEUES */

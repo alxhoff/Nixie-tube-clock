@@ -5,11 +5,11 @@
  *      Author: alxhoff
  */
 
-#include "externs.h"
-#include "stm32f1xx_hal.h"
-
 #ifndef DS3231_STM32_ALEX_H_
 #define DS3231_STM32_ALEX_H_
+
+#include "externs.h"
+#include "stm32f1xx_hal.h"
 
 #ifndef TRUE
 #define TRUE	1
@@ -22,6 +22,29 @@
 #define DS3231_ADDR8	0xD0
 
 #define STM_I2C_PORT	hi2c2
+
+#define PM_AM_FLAG		5
+#define TWELVE_FLAG		6
+#define DY_DT_FLAG		6
+#define ALARM_MASK_BITS	7
+
+#define ALARM_INTERRUPT_ENABLE		2
+#define ALARM2_CRTL_ENABLE			1
+#define ALARM1_CRTL_ENABLE			0
+
+#define ALARM2_STATUS				1
+#define ALARM1_STATUS				0
+
+#define RS1							3
+#define RS2							4
+
+#ifndef uint8_t
+#define uint8_t uint8_t
+#endif
+
+#ifndef uint16_t
+#define uint16_t uint16_t
+#endif
 
 typedef enum {ALARM_EVERY_SECOND, ALARM_MATCH_SECONDS,
 		ALARM_MATCH_MINUTES, ALARM_MATCH_HOURS,
@@ -148,29 +171,6 @@ struct ds3231_device{
 
 	DS3231_ERR_t (*dump_register)(ds3231_device_t*);
 };
-
-#define PM_AM_FLAG		5
-#define TWELVE_FLAG		6
-#define DY_DT_FLAG		6
-#define ALARM_MASK_BITS	7
-
-#define ALARM_INTERRUPT_ENABLE		2
-#define ALARM2_CRTL_ENABLE			1
-#define ALARM1_CRTL_ENABLE			0
-
-#define ALARM2_STATUS				1
-#define ALARM1_STATUS				0
-
-#define RS1							3
-#define RS2							4
-
-#ifndef uint8_t
-#define uint8_t uint8_t
-#endif
-
-#ifndef uint16_t
-#define uint16_t uint16_t
-#endif
 
 //self
 DS3231_ERR_t self_DS3231_set_time(ds3231_device_t* self);
