@@ -109,7 +109,8 @@ DS3231_ERR_t self_DS3231_get_time(DS3231_device_t* self)
 	uint8_t century = 0;
 	uint8_t hour_byte;
 
-	if(HAL_I2C_Mem_Read(self->i2c_handle, DS3231_ADDR8, 0x00, 1, read_buffer, 7, 10) != HAL_OK)
+	if(HAL_I2C_Mem_Read(self->i2c_handle, DS3231_ADDR8, 0x00, 1,
+			read_buffer, 7, 10) != HAL_OK)
 		return DS3231_I2C;
 
 	hour_byte=read_buffer[2];
@@ -649,7 +650,8 @@ void DS3231_get_time(I2C_HandleTypeDef *hi2c, ds3231_time_t* return_struct)
 	uint8_t century = 0;
 	uint8_t hour_byte;
 
-	HAL_I2C_Mem_Read(hi2c, DS3231_ADDR8, 0x00, 1, read_buffer, 7, 10);
+	if(HAL_I2C_Mem_Read(hi2c, DS3231_ADDR8, 0x00, 1, read_buffer, 7, 10) != HAL_OK)
+		return;
 
 	hour_byte=read_buffer[2];
 

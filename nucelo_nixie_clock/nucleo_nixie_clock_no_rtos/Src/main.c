@@ -166,11 +166,10 @@ int main(void)
 
 
 
-	HAL_Delay(1000);
+	HAL_Delay(3000);
+	RTC_dev->get_time(RTC_dev);
+
 	DS3231_get_time(&hi2c2, &test_return_time);
-
-
-	RTC_dev->get_time(RTC);
 
   /* USER CODE END 2 */
 
