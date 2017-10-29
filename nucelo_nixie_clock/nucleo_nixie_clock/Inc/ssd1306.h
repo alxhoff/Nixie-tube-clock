@@ -72,7 +72,8 @@ struct SSD1306_device{
 	I2C_HandleTypeDef* port;
 
 	HAL_StatusTypeDef (*command)(SSD1306_device_t*, uint8_t);
-	HAL_StatusTypeDef (*clear)(SSD1306_device_t*);
+	HAL_StatusTypeDef (*clear_w_update)(SSD1306_device_t*);
+	HAL_StatusTypeDef (*clear_wo_update)(SSD1306_device_t*);
 	HAL_StatusTypeDef (*update)(SSD1306_device_t*);
 	HAL_StatusTypeDef (*fill)(SSD1306_device_t*, SSD1306_colour_t);
 	HAL_StatusTypeDef (*string)(SSD1306_device_t*, char*);

@@ -38,7 +38,7 @@ HAL_StatusTypeDef ssd1306_write_command(SSD1306_device_t* self, uint8_t command)
 	return HAL_OK;
 }
 
-HAL_StatusTypeDef ssd1306_clear(SSD1306_device_t* self)
+HAL_StatusTypeDef ssd1306_clear_w_update(SSD1306_device_t* self)
 {
 	uint32_t i;
 
@@ -51,6 +51,19 @@ HAL_StatusTypeDef ssd1306_clear(SSD1306_device_t* self)
 
 	return HAL_OK;
 }
+
+HAL_StatusTypeDef ssd1306_clear_wo_update(SSD1306_device_t* self)
+{
+	uint32_t i;
+
+	for (i = 0; i < sizeof(self->buffer); i++)
+	{
+		self->buffer[i] = (self->background == Black) ? 0x00 : 0xFF;
+	}
+
+	return HAL_OK;
+}
+
 
 HAL_StatusTypeDef ssd1306_fill(SSD1306_device_t* self, SSD1306_colour_t color)
 {
@@ -178,7 +191,8 @@ SSD1306_device_t* ssd1306_init(SSD1306_device_init_t* init_dev_vals)
 
 	//functions
 	init_dev->command = &ssd1306_write_command;
-	init_dev->clear = &ssd1306_clear;
+	init_dev->clear_w_update = &ssd1306_clear_w_update;
+	init_dev->clear_wo_update = &ssd1306_clear_wo_update;
 	init_dev->update = &ssd1306_update_screen;
 	init_dev->fill = &ssd1306_fill;
 	init_dev->string = &ssd1306_write_string;

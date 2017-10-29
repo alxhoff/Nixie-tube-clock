@@ -155,13 +155,13 @@ int main(void)
 				&Font_11x18, };
 	LCD = ssd1306_init(&LCD_init_dev);
 
-	LCD->clear(LCD);
+	LCD->clear_wo_update(LCD);
 	LCD->cursor(LCD, 23, 23);
 	LCD->string(LCD, "supppp");
 	LCD->update(LCD);
 
 	//BUTTONS
-	ButtonsInit();
+//	ButtonsInit();
 
   /* USER CODE END 2 */
 
@@ -177,25 +177,25 @@ int main(void)
 
   /* USER CODE BEGIN RTOS_TIMERS */
   /* start timers, add new ones, ... */
-	osTimerDef(set_blink_timer, set_blink_timer_callback);
-	set_blink_timerHandle = osTimerCreate(osTimer(set_blink_timer), osTimerPeriodic, NULL);
-
-	blink_timer = xTimerCreate("blinkTimer", 1000, pdTRUE, 1, set_blink_timer_callback);
-	xTimerStart(blink_timer,0);
+//	osTimerDef(set_blink_timer, set_blink_timer_callback);
+//	set_blink_timerHandle = osTimerCreate(osTimer(set_blink_timer), osTimerPeriodic, NULL);
+//
+//	blink_timer = xTimerCreate("blinkTimer", 1000, pdTRUE, 1, set_blink_timer_callback);
+//	xTimerStart(blink_timer,0);
   /* USER CODE END RTOS_TIMERS */
 
   /* Create the thread(s) */
   /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
+  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 12);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
-	osThreadDef(ButtonListener, ButtonListenerTask, osPriorityNormal, 0, 56);
-	ButtonListenerTaskHandle = osThreadCreate(osThread(ButtonListener), NULL);
+//	osThreadDef(ButtonListener, ButtonListenerTask, osPriorityLow, 0, 56);
+//	ButtonListenerTaskHandle = osThreadCreate(osThread(ButtonListener), NULL);
 
-//	osThreadDef(ScreenRender, ScreenRenderTask, osPriorityLow, 0, 12);
-//	ScreenRenderTaskHandle = osThreadCreate(osThread(ScreenRender), NULL);
+	osThreadDef(ScreenRender, ScreenRenderTask, osPriorityNormal, 0, 12);
+	ScreenRenderTaskHandle = osThreadCreate(osThread(ScreenRender), NULL);
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_QUEUES */
@@ -396,7 +396,7 @@ void StartDefaultTask(void const * argument)
 //
 //	i++;
 //
-	vTaskDelay(500 / portTICK_PERIOD_MS);
+	vTaskDelay(500);
   }
   /* USER CODE END 5 */ 
 }

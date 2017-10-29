@@ -18,7 +18,7 @@ void ScreenRenderTask(void)
 {
 
 	while(1){
-		LCD->clear(LCD);
+		LCD->clear_wo_update(LCD);
 
 //		switch(render_state){
 //		case DISP_TIME:
@@ -76,6 +76,5 @@ void ScreenRenderTask(void)
 		LCD->string(LCD, "in render");
 
 		LCD->update(LCD);
-		vTaskDelay(20);
 	}
 }
