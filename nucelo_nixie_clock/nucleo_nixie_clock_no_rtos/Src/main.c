@@ -164,12 +164,22 @@ int main(void)
 //	  	};
 //	DS3231_set_time(&hi2c2, &testTime);
 
-
-
-	HAL_Delay(3000);
 	RTC_dev->get_time(RTC_dev);
 
 	DS3231_get_time(&hi2c2, &test_return_time);
+
+	//test alarm
+	RTC_dev->alarm_1->min = 8;
+	RTC_dev->alarm_1->hour = 7;
+	RTC_dev->alarm_1->sec = 45;
+	RTC_dev->alarm_1->alarm_type = ALARM_MATCH_MINUTES;
+
+	RTC_dev->set_alarm(RTC_dev, ALARM_ONE);
+
+	RTC_dev->alarm_1->min = 6;
+	RTC_dev->alarm_1->hour = 6;
+	RTC_dev->alarm_1->sec = 6;
+	RTC_dev->alarm_1->alarm_type = ALARM_MATCH_MINUTES;
 
   /* USER CODE END 2 */
 

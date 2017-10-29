@@ -5,6 +5,8 @@
  *      Author: alxhoff
  */
 
+#include <string.h>
+
 #include "draw.h"
 #include "externs.h"
 
@@ -19,30 +21,165 @@ void draw_time(uint8_t x, uint8_t y, ds3231_time_t* time)
 //	ssd1306_WriteString(time_str,Font_11x18,Black);
 }
 
+void draw_am_pm( uint8_t x, uint8_t y, TIME_OF_DAY_12HR_t pm)
+{
+	LCD_dev->cursor(LCD_dev, x, y);
+//	ssd1306_SetCursor(x, y);
+	if(pm == PM){
+		LCD_dev->string(LCD_dev, "PM");
+//		ssd1306_WriteString("PM",Font_11x18,Black);
+	}else{
+		LCD_dev->string(LCD_dev, "AM");
+//		ssd1306_WriteString("AM",Font_11x18,Black);
+	}
+}
+
+void draw_day( uint8_t x, uint8_t y, DAYS_t day)
+{
+	char day_str[3];
+
+	switch(day){
+		case MONDAY:
+			strcpy(day_str, "MON");
+			break;
+		case TUESDAY:
+			strcpy(day_str, "TUE");
+			break;
+		case WEDNESDAY:
+			strcpy(day_str, "WED");
+			break;
+		case THURSDAY:
+			strcpy(day_str, "THU");
+			break;
+		case FRIDAY:
+			strcpy(day_str, "FRI");
+			break;
+		case SATURDAY:
+			strcpy(day_str, "SAT");
+			break;
+		case SUNDAY:
+			strcpy(day_str, "SUN");
+			break;
+		default:
+			break;
+		}
+	LCD_dev->cursor(LCD_dev, x, y);
+	LCD_dev->string(LCD_dev, day_str);
+//	ssd1306_SetCursor(x, y);
+//	ssd1306_WriteString(day_str,Font_11x18,Black);
+}
+
+void draw_date( uint8_t x, uint8_t y, uint8_t date)
+{
+	char date_str[2];
+	sprintf(date_str, "%2d", date);
+	LCD_dev->cursor(LCD_dev, x, y);
+	LCD_dev->string(LCD_dev, date_str);
+//	ssd1306_SetCursor(x, y);
+//	ssd1306_WriteString(date_str,Font_11x18,Black);
+}
+
+void draw_month( uint8_t x, uint8_t y, months month)
+{
+	char month_str[3];
+
+	switch(month){
+		case JANUARY:
+			strcpy(month_str, "JAN");
+			break;
+		case FEBUARY:
+			strcpy(month_str, "FEB");
+			break;
+		case MARCH:
+			strcpy(month_str, "MAR");
+			break;
+		case APRIL:
+			strcpy(month_str, "APR");
+			break;
+		case MAY:
+			strcpy(month_str, "MAY");
+			break;
+		case JUNE:
+			strcpy(month_str, "JUN");
+			break;
+		case JULY:
+			strcpy(month_str, "JUL");
+			break;
+		case AUGUST:
+			strcpy(month_str, "AUG");
+			break;
+		case SEPTERMBER:
+			strcpy(month_str, "SEP");
+			break;
+		case OCTOBER:
+			strcpy(month_str, "OCT");
+			break;
+		case NOVEMBER:
+			strcpy(month_str, "NOV");
+			break;
+		case DECEMBER:
+			strcpy(month_str, "DEC");
+			break;
+		default:
+			break;
+		}
+
+	LCD_dev->cursor(LCD_dev, x, y);
+	LCD_dev->string(LCD_dev, month_str);
+//	ssd1306_SetCursor(x, y);
+//	ssd1306_WriteString(month_str,Font_11x18,Black);
+}
+
+void draw_year( uint8_t x, uint8_t y, uint16_t year)
+{
+	char year_str[4];
+	sprintf(year_str, "%4d", year);
+	LCD_dev->cursor(LCD_dev, x, y);
+	LCD_dev->string(LCD_dev, year_str);
+//	ssd1306_SetCursor(x, y);
+//	ssd1306_WriteString(year_str,Font_11x18,Black);
+}
+
 void draw_disp_time_state(uint8_t x, uint8_t y)
 {
 	RTC_dev->get_time(RTC_dev);
 //	DS3231_get_time(&hi2c2, time);
 	draw_time(x + 10, y + 5, RTC_dev->time_1);
-	if(RTC_dev->time_1->twelve_hour){
-		draw_am_pm(&hi2c2, x + 100, y + 5, RTC_dev->time_1->pm);
-	}
-	draw_day(&hi2c2, x + 4, y + 25, RTC_dev->time_1->week_day);
-	draw_date(&hi2c2, x + 35, y + 25, RTC_dev->time_1->date);
-	draw_month(&hi2c2, x + 65, y + 25, RTC_dev->time_1->month);
-	draw_year(&hi2c2, x + 45, y + 45, RTC_dev->time_1->year);
+	if(RTC_dev->time_1->twelve_hour)
+		draw_am_pm( x + 100, y + 5, RTC_dev->time_1->pm);
+
+	draw_day( x + 4, y + 25, RTC_dev->time_1->week_day);
+	draw_date( x + 35, y + 25, RTC_dev->time_1->date);
+	draw_month( x + 65, y + 25, RTC_dev->time_1->month);
+	draw_year( x + 45, y + 45, RTC_dev->time_1->year);
 }
 
-void draw_disp_alarm1_state(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y,
-		ds3231_alarm_t* alarm)
+
+
+void draw_alarm( uint8_t x, uint8_t y, ds3231_alarm_t* alarm)
 {
-	DS3231_get_alarm(&hi2c2, alarm, ALARM_ONE);
-	draw_alarm(&hi2c2, x+10, y+5, alarm);
-	if(alarm->twelve_hour){
-		draw_am_pm(&hi2c2, x + 100, y + 5, alarm->pm);
+	char time_str[] = "12:59:59";
+	LCD_dev->cursor(LCD_dev, x, y);
+//	ssd1306_SetCursor(x, y);
+	sprintf(time_str, "%d:%d:%d", alarm->hour, alarm->min, alarm->sec);
+	LCD_dev->string(LCD_dev, time_str);
+//	ssd1306_WriteString(time_str,Font_11x18,Black);
+}
+
+
+
+
+
+void draw_disp_alarm1_state(uint8_t x, uint8_t y)
+{
+	RTC_dev->get_alarm(RTC_dev, ALARM_ONE);
+//	DS3231_get_alarm(&hi2c2, alarm, ALARM_ONE);
+	draw_alarm(x+10, y+5, RTC_dev->alarm_1);
+	if(RTC_dev->alarm_1->twelve_hour){
+		draw_am_pm(x + 100, y + 5, RTC_dev->alarm_1->pm);
 	}
-	draw_day(&hi2c2, x + 4, y + 25, alarm->week_day);
-	draw_date(&hi2c2, x + 35, y + 25, alarm->date);
+	draw_day( x + 4, y + 25, RTC_dev->alarm_1->week_day);
+	draw_date( x + 35, y + 25, RTC_dev->alarm_1->date);
 
 }
 
@@ -144,12 +281,7 @@ void draw_alarm_blink(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, ds3231_alar
 	ssd1306_WriteString(time_str,Font_11x18,Black);
 }
 
-void draw_alarm(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, ds3231_alarm_t* alarm){
-	char time_str[] = "12:59:59";
-	ssd1306_SetCursor(x, y);
-	sprintf(time_str, "%d:%d:%d", alarm->hour, alarm->min, alarm->sec);
-	ssd1306_WriteString(time_str,Font_11x18,Black);
-}
+
 
 void draw_time_blink(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, ds3231_time_t* time, BLINK_TIME blink){
 	char time_str[9];
@@ -183,109 +315,9 @@ char* get_time_string(ds3231_time_t* time){
 }
 
 
-void draw_am_pm(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, TIME_OF_DAY_12HR_t pm)
-{
-//	ssd1306_SetCursor(x, y);
-//	if(pm == PM){
-//		ssd1306_WriteString("PM",Font_11x18,Black);
-//	}else{
-//		ssd1306_WriteString("AM",Font_11x18,Black);
-//	}
-}
 
-void draw_date(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, uint8_t date)
-{
-	char date_str[2];
-	sprintf(date_str, "%2d", date);
-//	ssd1306_SetCursor(x, y);
-//	ssd1306_WriteString(date_str,Font_11x18,Black);
-}
 
-void draw_year(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, uint16_t year)
-{
-	char year_str[4];
-	sprintf(year_str, "%4d", year);
-//	ssd1306_SetCursor(x, y);
-//	ssd1306_WriteString(year_str,Font_11x18,Black);
-}
 
-void draw_month(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, months month)
-{
-	char month_str[3];
 
-	switch(month){
-		case JANUARY:
-			strcpy(month_str, "JAN");
-			break;
-		case FEBUARY:
-			strcpy(month_str, "FEB");
-			break;
-		case MARCH:
-			strcpy(month_str, "MAR");
-			break;
-		case APRIL:
-			strcpy(month_str, "APR");
-			break;
-		case MAY:
-			strcpy(month_str, "MAY");
-			break;
-		case JUNE:
-			strcpy(month_str, "JUN");
-			break;
-		case JULY:
-			strcpy(month_str, "JUL");
-			break;
-		case AUGUST:
-			strcpy(month_str, "AUG");
-			break;
-		case SEPTERMBER:
-			strcpy(month_str, "SEP");
-			break;
-		case OCTOBER:
-			strcpy(month_str, "OCT");
-			break;
-		case NOVEMBER:
-			strcpy(month_str, "NOV");
-			break;
-		case DECEMBER:
-			strcpy(month_str, "DEC");
-			break;
-		}
 
-//	ssd1306_SetCursor(x, y);
-//	ssd1306_WriteString(month_str,Font_11x18,Black);
-}
-
-void draw_day(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, DAYS_t day){
-	char day_str[3];
-
-	switch(day){
-		case MONDAY:
-			strcpy(day_str, "MON");
-			break;
-		case TUESDAY:
-			strcpy(day_str, "TUE");
-			break;
-		case WEDNESDAY:
-			strcpy(day_str, "WED");
-			break;
-		case THURSDAY:
-			strcpy(day_str, "THU");
-			break;
-		case FRIDAY:
-			strcpy(day_str, "FRI");
-			break;
-		case SATURDAY:
-			strcpy(day_str, "SAT");
-			break;
-		case SUNDAY:
-			strcpy(day_str, "SUN");
-			break;
-		default:
-			break;
-		}
-
-//	ssd1306_SetCursor(x, y);
-//	ssd1306_WriteString(day_str,Font_11x18,Black);
-}
 
