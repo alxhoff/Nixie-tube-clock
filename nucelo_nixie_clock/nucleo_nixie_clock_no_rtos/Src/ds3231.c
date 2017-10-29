@@ -22,14 +22,18 @@ uint8_t bcd2dec(uint8_t b)
 
 //OBJECT ORIENTATED
 
-DS3231_ERR_t DS3231_dev_init(ds3231_device_t* device, ds3231_device_init_t* init_struct)
+DS3231_device_t* DS3231_init(ds3231_device_init_t* init_struct)
 {
-	device = (ds3231_device_t*)calloc(1, sizeof(ds3231_device_t));
+	DS3231_device_t* device = (DS3231_device_t*)calloc(1, sizeof(DS3231_device_t));
+
+	device->time_1 = (ds3231_time_t*)calloc(1, sizeof(ds3231_time_t));
+	device->alarm_1 = (ds3231_alarm_t*)calloc(1, sizeof(ds3231_alarm_t));
+	device->alarm_2 = (ds3231_alarm_short_t*)calloc(1, sizeof(ds3231_alarm_short_t));
 
 	memcpy(device->time_1, &init_struct->initial_time, sizeof(ds3231_time_t));
 
 	if(device->time_1 == NULL)
-		return DS3231_MEM;
+		return NULL;
 
 	device->i2c_handle = init_struct->i2c_handle;
 
@@ -43,10 +47,12 @@ DS3231_ERR_t DS3231_dev_init(ds3231_device_t* device, ds3231_device_init_t* init
 	device->get_temp = &self_DS3231_get_temp;
 	device->dump_register = &self_DS3231_register_dump;
 
-	return DS3231_OK;
+	device->set_time(device);
+
+	return device;
 }
 
-DS3231_ERR_t self_DS3231_set_time(ds3231_device_t* self)
+DS3231_ERR_t self_DS3231_set_time(DS3231_device_t* self)
 {
 	uint8_t write_buffer[7];
 	uint8_t century = 0, year = self->time_1->year;
@@ -97,7 +103,7 @@ DS3231_ERR_t self_DS3231_set_time(ds3231_device_t* self)
 	return DS3231_OK;
 }
 
-DS3231_ERR_t self_DS3231_get_time(ds3231_device_t* self)
+DS3231_ERR_t self_DS3231_get_time(DS3231_device_t* self)
 {
 	uint8_t read_buffer[7];
 	uint8_t century = 0;
@@ -138,7 +144,7 @@ DS3231_ERR_t self_DS3231_get_time(ds3231_device_t* self)
 	return DS3231_OK;
 }
 
-DS3231_ERR_t self_DS3231_set_date(ds3231_device_t* self)
+DS3231_ERR_t self_DS3231_set_date(DS3231_device_t* self)
 {
 	uint8_t write_buffer[4];
 	uint8_t century = 0;
@@ -163,7 +169,7 @@ DS3231_ERR_t self_DS3231_set_date(ds3231_device_t* self)
 	return DS3231_OK;
 }
 
-DS3231_ERR_t self_DS3231_get_date(ds3231_device_t* self)
+DS3231_ERR_t self_DS3231_get_date(DS3231_device_t* self)
 {
 	uint8_t read_buffer[4];
 	volatile uint8_t century = 0;
@@ -183,7 +189,7 @@ DS3231_ERR_t self_DS3231_get_date(ds3231_device_t* self)
 }
 
 //untested
-DS3231_ERR_t self_DS3231_set_alarm(ds3231_device_t* self,
+DS3231_ERR_t self_DS3231_set_alarm(DS3231_device_t* self,
 			ALARM_NUMBER_t alarm_number)
 {
 	uint8_t alarm_register_addr = 0x07;
@@ -345,7 +351,7 @@ DS3231_ERR_t self_DS3231_set_alarm(ds3231_device_t* self,
 }
 
 //untested
-DS3231_ERR_t self_DS3231_get_alarm(ds3231_device_t* self, ALARM_NUMBER_t alarm_number)
+DS3231_ERR_t self_DS3231_get_alarm(DS3231_device_t* self, ALARM_NUMBER_t alarm_number)
 {
 	uint8_t read_buffer[4];
 	volatile uint8_t alarm_register_addr = 0x00;
@@ -441,7 +447,7 @@ DS3231_ERR_t self_DS3231_get_alarm(ds3231_device_t* self, ALARM_NUMBER_t alarm_n
 }
 
 //untested
-DS3231_ERR_t self_DS3231_get_temp(ds3231_device_t* self)
+DS3231_ERR_t self_DS3231_get_temp(DS3231_device_t* self)
 {
 	float return_temp;
 
@@ -460,7 +466,7 @@ DS3231_ERR_t self_DS3231_get_temp(ds3231_device_t* self)
 	return DS3231_OK;
 }
 
-DS3231_ERR_t self_DS3231_register_dump(ds3231_device_t* self)
+DS3231_ERR_t self_DS3231_register_dump(DS3231_device_t* self)
 {
 	if(self->registers == NULL)
 		self->registers = (ds3231_registers_t*)calloc(1, sizeof(ds3231_registers_t));

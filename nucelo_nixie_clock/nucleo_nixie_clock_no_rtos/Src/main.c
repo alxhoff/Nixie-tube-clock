@@ -52,8 +52,10 @@ I2C_HandleTypeDef hi2c2;
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-SSD1306_device_t* LCD;
+SSD1306_device_t* LCD_dev;
 
+//RTC
+DS3231_device_t* RTC_dev;
 
 //BUTTONS
 uint8_t button_input[NUM_OF_BUTTONS] = {0};
@@ -105,34 +107,71 @@ int main(void)
   MX_I2C2_Init();
 
   /* USER CODE BEGIN 2 */
-  //RTC
- 	ds3231_time_t testTime = {
- 		.twelve_hour = TRUE,
- 		.sec = 55,
- 		.min = 59,
- 		.hour = 11,
- 		.pm = PM,
- 		.week_day = 5,
- 		.date = 31,
- 		.month = 12,
- 		.year = 2017
- 	};
- 	DS3231_set_time(&hi2c2, &testTime);
 
- 	ds3231_time_t test_return_time;
-
-	DS3231_get_time(&hi2c2, &test_return_time);
 
 	//LCD
 	SSD1306_device_init_t LCD_init_dev =
-		{ .background = White, .width = 128, .height = 64, .port = &hi2c2, .font =
-				&Font_11x18, };
-	LCD = ssd1306_init(&LCD_init_dev);
+		{
+				.background = White,
+				.width = 128,
+				.height = 64,
+				.port = &hi2c2,
+				.font = &Font_11x18,
+		};
 
-	LCD->clear_wo_update(LCD);
-	LCD->cursor(LCD, 23, 23);
-	LCD->string(LCD, "supppp");
-	LCD->update(LCD);
+	LCD_dev = ssd1306_init(&LCD_init_dev);
+
+	LCD_dev->clear_wo_update(LCD_dev);
+	LCD_dev->cursor(LCD_dev, 23, 23);
+	LCD_dev->string(LCD_dev, "LCD Init'd");
+	LCD_dev->update(LCD_dev);
+
+	//RTC
+	ds3231_device_init_t RTC_init_dev =
+	{
+			.initial_time = {
+					.twelve_hour = TRUE,
+
+					.sec = 45,
+					.min = 59,
+					.hour = 11,
+					.pm = PM,
+
+					.week_day = 1,
+					.date = 05,
+					.month = 06,
+					.year = 2017,
+
+					.dirty = 0
+			},
+			.i2c_handle = &hi2c2,
+	};
+
+	RTC_dev = DS3231_init(&RTC_init_dev);
+
+	ds3231_time_t test_return_time;
+
+//	ds3231_time_t testTime = {
+//	  		.twelve_hour = TRUE,
+//	  		.sec = 55,
+//	  		.min = 59,
+//	  		.hour = 11,
+//	  		.pm = PM,
+//	  		.week_day = 5,
+//	  		.date = 31,
+//	  		.month = 12,
+//	  		.year = 2017
+//	  	};
+//	DS3231_set_time(&hi2c2, &testTime);
+
+
+
+	HAL_Delay(1000);
+	DS3231_get_time(&hi2c2, &test_return_time);
+
+
+	RTC_dev->get_time(RTC);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -144,6 +183,7 @@ int main(void)
   /* USER CODE BEGIN 3 */
 
 	  buttons_listener_callback();
+	  render_task_callback();
   }
   /* USER CODE END 3 */
 

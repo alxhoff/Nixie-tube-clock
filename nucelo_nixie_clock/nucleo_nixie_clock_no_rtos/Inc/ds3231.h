@@ -94,6 +94,8 @@ typedef struct ds3231_registers{
         uint8_t LSB_temp;
     } ds3231_registers_t;
 
+//TODO handle dirty flags
+
 typedef struct ds3231_time{
 	uint8_t twelve_hour;
 	uint8_t sec;
@@ -147,7 +149,7 @@ typedef struct ds3231_device_init{
 
 } ds3231_device_init_t;
 
-typedef struct ds3231_device ds3231_device_t;
+typedef struct ds3231_device DS3231_device_t;
 
 struct ds3231_device{
 	ds3231_time_t* time_1;
@@ -160,29 +162,28 @@ struct ds3231_device{
 
 	ds3231_registers_t* registers;
 
-	DS3231_ERR_t (*get_time)(ds3231_device_t*);
-	DS3231_ERR_t (*set_time)(ds3231_device_t*);
-	DS3231_ERR_t (*get_date)(ds3231_device_t*);
-	DS3231_ERR_t (*set_date)(ds3231_device_t*);
-	DS3231_ERR_t (*get_alarm)(ds3231_device_t*, ALARM_NUMBER_t);
-	DS3231_ERR_t (*set_alarm)(ds3231_device_t*, ALARM_NUMBER_t);
-
-	DS3231_ERR_t (*get_temp)(ds3231_device_t*);
-
-	DS3231_ERR_t (*dump_register)(ds3231_device_t*);
+	DS3231_ERR_t (*get_time)(DS3231_device_t*);
+	DS3231_ERR_t (*set_time)(DS3231_device_t*);
+	DS3231_ERR_t (*get_date)(DS3231_device_t*);
+	DS3231_ERR_t (*set_date)(DS3231_device_t*);
+	DS3231_ERR_t (*get_alarm)(DS3231_device_t*, ALARM_NUMBER_t);
+	DS3231_ERR_t (*set_alarm)(DS3231_device_t*, ALARM_NUMBER_t);
+	DS3231_ERR_t (*get_temp)(DS3231_device_t*);
+	DS3231_ERR_t (*dump_register)(DS3231_device_t*);
 };
 
 //self
-DS3231_ERR_t self_DS3231_set_time(ds3231_device_t* self);
-DS3231_ERR_t self_DS3231_get_time(ds3231_device_t* self);
-DS3231_ERR_t self_DS3231_set_date(ds3231_device_t* self);
-DS3231_ERR_t self_DS3231_get_date(ds3231_device_t* self);
-DS3231_ERR_t self_DS3231_set_alarm(ds3231_device_t* self,
+DS3231_device_t* DS3231_init(ds3231_device_init_t* init_struct);
+DS3231_ERR_t self_DS3231_set_time(DS3231_device_t* self);
+DS3231_ERR_t self_DS3231_get_time(DS3231_device_t* self);
+DS3231_ERR_t self_DS3231_set_date(DS3231_device_t* self);
+DS3231_ERR_t self_DS3231_get_date(DS3231_device_t* self);
+DS3231_ERR_t self_DS3231_set_alarm(DS3231_device_t* self,
 			ALARM_NUMBER_t alarm_number);
-DS3231_ERR_t self_DS3231_get_alarm(ds3231_device_t* self,
+DS3231_ERR_t self_DS3231_get_alarm(DS3231_device_t* self,
 		ALARM_NUMBER_t alarm_number);
-DS3231_ERR_t self_DS3231_get_temp(ds3231_device_t* self);
-DS3231_ERR_t self_DS3231_register_dump(ds3231_device_t* self);
+DS3231_ERR_t self_DS3231_get_temp(DS3231_device_t* self);
+DS3231_ERR_t self_DS3231_register_dump(DS3231_device_t* self);
 
 uint8_t dec2bcd(uint8_t d);
 uint8_t bcd2dec(uint8_t b);

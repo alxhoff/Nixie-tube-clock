@@ -75,7 +75,7 @@ ds3231_registers_t* registers = NULL;
 TimerHandle_t rtos_blink_timer;
 
 //LCD
-SSD1306_device_t* LCD;
+SSD1306_device_t* LCD_dev;
 
 /* USER CODE END PV */
 
@@ -166,12 +166,12 @@ int main(void)
   	SSD1306_device_init_t LCD_init_dev =
   		{ .background = White, .width = 128, .height = 64, .port = &hi2c1, .font =
   				&Font_11x18, };
-  	LCD = ssd1306_init(&LCD_init_dev);
+  	LCD_dev = ssd1306_init(&LCD_init_dev);
 
-  	LCD->clear(LCD);
-  	LCD->cursor(LCD, 23, 23);
-  	LCD->string(LCD, "sup");
-  	LCD->update(LCD);
+  	LCD_dev->clear(LCD_dev);
+  	LCD_dev->cursor(LCD_dev, 23, 23);
+  	LCD_dev->string(LCD_dev, "sup");
+  	LCD_dev->update(LCD_dev);
 
   /* USER CODE END 2 */
 

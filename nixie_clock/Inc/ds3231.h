@@ -91,7 +91,7 @@ typedef struct {
 typedef struct ds3231_device{
 
 
-}ds3231_device_t;
+}DS3231_device_t;
 
 #define PM_AM_FLAG		5
 #define TWELVE_FLAG		6
