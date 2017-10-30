@@ -10,7 +10,7 @@
 //#include "draw.h"
 #include "externs.h"
 
-SCREEN_RENDER_STATE render_state = DISP_TIME;
+SCREEN_RENDER_STATE render_state = DISP_ALARM1;
 SET_STATE set_state = SET_HOUR;
 
 void render_task_callback(void)
@@ -23,7 +23,7 @@ void render_task_callback(void)
 		draw_disp_time_state( 0, 0);
 		break;
 	case DISP_ALARM1:
-//			draw_disp_alarm1_state(&hi2c2, 0, 0, &testAlarm1);
+		draw_disp_alarm1_state(0, 0);
 		break;
 	case DISP_ALARM2:{
 //			float temp_tmp;
