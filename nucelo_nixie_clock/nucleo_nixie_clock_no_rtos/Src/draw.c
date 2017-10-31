@@ -153,16 +153,10 @@ void draw_alarm( uint8_t x, uint8_t y, TYPE_TIME_t alarm)
 		sprintf(time_str, "%d:%d:%d", RTC_dev->alarm_1->hour,
 				RTC_dev->alarm_1->min, RTC_dev->alarm_1->sec);
 		LCD_dev->string(LCD_dev, time_str);
-		LCD_dev->cursor(LCD_dev, x, y + 40);
-		sprintf(time_str, "Alarm 1");
-		LCD_dev->string(LCD_dev, time_str);
 		break;
 	case ALARM_TWO:
-		sprintf(time_str, "%d:%d:%d", RTC_dev->alarm_1->hour,
-				RTC_dev->alarm_1->min, 0);
-		LCD_dev->string(LCD_dev, time_str);
-		LCD_dev->cursor(LCD_dev, x, y + 40);
-		sprintf(time_str, "Alarm 2");
+		sprintf(time_str, "%d:%d:%d", RTC_dev->alarm_2->hour,
+				RTC_dev->alarm_2->min, 0);
 		LCD_dev->string(LCD_dev, time_str);
 		break;
 	default:
@@ -195,32 +189,41 @@ void draw_disp_alarm2_state(uint8_t x, uint8_t y)
 //TODO remove dependency on retrieving time a second time
 void draw_set_states( uint8_t x, uint8_t y)
 {
-	LCD_dev->cursor(LCD_dev, 25, 5);
+	LCD_dev->cursor(LCD_dev, x + 25, y + 5);
 	switch(render_state){
 	case SET_TIME:{
+		char* disp_str = "Set Time";
+		LCD_dev->cursor(LCD_dev, x + 4, y + 43);
+		LCD_dev->string(LCD_dev, disp_str);
 		RTC_dev->get_time(RTC_dev);
 		if(blink_flag){
 			draw_time( x + 10, y + 5);
 		}else{
-			draw_time_blink(x + 10, y + 5, TIME, set_state);
+			draw_time_blink(x + 10, y + 5, TIME, set_type);
 		}
 		break;
 	}
 	case SET_ALARM1:{
+		char* disp_str = "Set Alarm 1";
+		LCD_dev->cursor(LCD_dev, x + 4, y + 43);
+		LCD_dev->string(LCD_dev, disp_str);
 		RTC_dev->get_alarm(RTC_dev, ALARM_ONE);
 		if(blink_flag){
-			draw_alarm( x + 10, y + 5, ALARM_TWO);
+			draw_alarm( x + 10, y + 5, ALARM_ONE);
 		}else{
-			draw_time_blink( x + 10, y + 5, ALARM_ONE, set_state);
+			draw_time_blink( x + 10, y + 5, ALARM_ONE, set_type);
 		}
 		break;
 	}
 	case SET_ALARM2:{
+		char* disp_str = "Set Alarm 2";
+		LCD_dev->cursor(LCD_dev, x + 4 , y + 43);
+		LCD_dev->string(LCD_dev, disp_str);
 		RTC_dev->get_alarm(RTC_dev, ALARM_TWO);
 		if(blink_flag){
 			draw_alarm( x + 10, y + 5, ALARM_TWO);
 		}else{
-			draw_time_blink( x + 10, y + 5, ALARM_TWO, set_state);
+			draw_time_blink( x + 10, y + 5, ALARM_TWO, set_type);
 		}
 		break;
 	}
@@ -230,7 +233,7 @@ void draw_set_states( uint8_t x, uint8_t y)
 
 	LCD_dev->cursor(LCD_dev, x + 15, y + 25);
 
-	switch(set_state){
+	switch(set_type){
 	case SET_HOUR:
 		LCD_dev->string(LCD_dev, "hour");
 		break;
@@ -262,7 +265,7 @@ void draw_set_states( uint8_t x, uint8_t y)
 		LCD_dev->string(LCD_dev, "al type");
 		break;
 	case SET_TWELVE_HOUR:
-		LCD_dev->string(LCD_dev, "twelv");
+		LCD_dev->string(LCD_dev, "twelve");
 		break;
 	default:
 		break;

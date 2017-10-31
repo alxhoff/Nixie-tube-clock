@@ -38,7 +38,7 @@
 #define FALSE	0
 #endif
 
-typedef enum {LEFT1, CENTER1, RIGHT1, LEFT2, CENTER2, RIGHT2, MAX_VALUE} button_positions;
+typedef enum {LEFT1, CENTER1, RIGHT1, LEFT2, CENTER2, RIGHT2, MAX_VALUE} BUTTON_POSITIONS_t;
 
 void ButtonsInit();
 void ButtonListenerTask(void const * argument);

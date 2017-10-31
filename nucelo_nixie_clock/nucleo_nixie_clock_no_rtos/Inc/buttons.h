@@ -8,10 +8,6 @@
 #ifndef BUTTONS_H_
 #define BUTTONS_H_
 
-/*
- * BUTTON DEFINES
- */
-
 #define DEBOUNCE_DELAY 		20
 
 #define LEFT_BUTTON1_PORT 	BUT0_GPIO_Port
@@ -38,13 +34,23 @@
 #define FALSE	0
 #endif
 
-typedef enum {LEFT1,
+typedef enum {
+	LEFT1,
 	CENTER1,
 	RIGHT1,
 //	LEFT2,
 //	CENTER2,
 //	RIGHT2,
-	MAX_VALUE} button_positions;
+	MAX_VALUE
+} BUTTON_POSITIONS_t;
+
+typedef enum{
+	NOT_SETTING,
+	SETTING_DIGIT,
+	SETTING_MOVE,
+} SET_STATE_t;
+
+SET_STATE_t set_state;
 
 void ButtonsInit();
 void buttons_listener_callback(void);

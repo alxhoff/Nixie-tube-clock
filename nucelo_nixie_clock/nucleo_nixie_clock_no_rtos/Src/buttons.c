@@ -10,9 +10,6 @@
 
 #include "main.h"
 
-ds3231_time_t set_time = {0};
-ds3231_alarm_t set_alarm = {0};
-
 //BUTTONS
 uint8_t button_input[NUM_OF_BUTTONS] = {0};
 uint8_t button_last_state[NUM_OF_BUTTONS] = {0};
@@ -41,31 +38,172 @@ void ButtonsInit(){
 	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
 	GPIO_InitStruct.Pull = GPIO_PULLUP;
 	HAL_GPIO_Init(LEFT_BUTTON1_PORT, &GPIO_InitStruct);
+}
 
-	/*Configure GPIO pin : PB10 */
-	GPIO_InitStruct.Pin = RIGHT_BUTTON2_PIN;
-	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	GPIO_InitStruct.Pull = GPIO_PULLUP;
-	HAL_GPIO_Init(RIGHT_BUTTON2_PORT, &GPIO_InitStruct);
+void buttons_handle_center(void)
+{
+	switch(render_state){
+	case DISP_TIME:
+		render_state = SET_TIME;
+		RTC_dev->get_time(RTC_dev);
+		break;
+	case DISP_ALARM1:
+		render_state = SET_ALARM1;
+		RTC_dev->get_alarm(RTC_dev, ALARM_ONE);
+		break;
+	case DISP_ALARM2:
+		render_state = SET_ALARM2;
+		RTC_dev->get_alarm(RTC_dev, ALARM_TWO);
+		break;
+	case SET_TIME:
+		render_state = DISP_TIME;
+		set_type = SET_HOUR;
+//		DS3231_set_time(&hi2c2, &set_time);
+		break;
+	case SET_ALARM1:
+		render_state = DISP_ALARM1;
+		set_type = SET_HOUR;
+//		DS3231_set_alarm(&hi2c2, &set_alarm, ALARM_ONE);
+		break;
+	case SET_ALARM2:
+		render_state = DISP_ALARM2;
+		set_type = SET_HOUR;
+//		DS3231_get_alarm(&hi2c2, &set_alarm, ALARM_TWO);
+		break;
+	default:
+		break;
+	}
+}
 
-	/*Configure GPIO pin : PB11 */
-	GPIO_InitStruct.Pin = CENTER_BUTTON2_PIN;
-	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	GPIO_InitStruct.Pull = GPIO_PULLUP;
-	HAL_GPIO_Init(CENTER_BUTTON2_PORT, &GPIO_InitStruct);
+void buttons_handle_left_not_setting(void)
+{
+	switch(render_state){
+	case DISP_TIME:
+		RTC_dev->get_alarm(RTC_dev, ALARM_TWO);
+		render_state = SET_ALARM2;
+		break;
+	case DISP_ALARM1:
+		RTC_dev->get_time(RTC_dev);
+		render_state = DISP_TIME;
+		break;
+	case DISP_ALARM2:
+		RTC_dev->get_alarm(RTC_dev, ALARM_ONE);
+		render_state = DISP_ALARM1;
+		break;
+	case SET_TIME:
+		RTC_dev->get_alarm(RTC_dev, ALARM_TWO);
+		render_state = DISP_ALARM2;
+		break;
+	case SET_ALARM1:
+		RTC_dev->get_time(RTC_dev);
+		render_state = SET_TIME;
+		break;
+	case SET_ALARM2:
+		RTC_dev->get_alarm(RTC_dev, ALARM_ONE);
+		render_state = SET_ALARM1;
+		break;
+	default:
+		break;
+	}
+}
 
-	/*Configure GPIO pin : PE0 */
-	GPIO_InitStruct.Pin = LEFT_BUTTON2_PIN;
-	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	GPIO_InitStruct.Pull = GPIO_PULLUP;
-	HAL_GPIO_Init(LEFT_BUTTON2_PORT, &GPIO_InitStruct);
 
+void buttons_handle_left_setting_digit(void)
+{
+
+}
+
+void buttons_handle_left_setting_move(void)
+{
+
+}
+
+void buttons_handle_left(void)
+{
+	switch(set_state){
+	case NOT_SETTING:
+		buttons_handle_left_not_setting();
+		break;
+	case SETTING_DIGIT:
+		buttons_handle_left_setting_digit();
+		break;
+	case SETTING_MOVE:
+		buttons_handle_left_setting_move();
+		break;
+	default:
+		break;
+	}
+}
+
+void buttons_handle_right_set_time(void)
+{
+
+}
+
+void buttons_handle_right_not_setting(void)
+{
+	switch(render_state){
+	case DISP_TIME:
+		RTC_dev->get_alarm(RTC_dev, ALARM_ONE);
+		render_state = DISP_ALARM1;
+		break;
+	case DISP_ALARM1:
+		RTC_dev->get_alarm(RTC_dev, ALARM_TWO);
+		render_state = DISP_ALARM2;
+		break;
+	case DISP_ALARM2:
+		RTC_dev->get_time(RTC_dev);
+		render_state = SET_TIME;
+		break;
+	case SET_TIME:
+		RTC_dev->get_alarm(RTC_dev, ALARM_ONE);
+		render_state = SET_ALARM1;
+		break;
+	case SET_ALARM1:
+		RTC_dev->get_alarm(RTC_dev, ALARM_TWO);
+		render_state = SET_ALARM2;
+		break;
+	case SET_ALARM2:
+		RTC_dev->get_time(RTC_dev);
+		render_state = DISP_TIME;
+		break;
+	default:
+		break;
+	}
+}
+
+void buttons_handle_right_setting_digit(void)
+{
+
+}
+
+void buttons_handle_right_setting_move(void)
+{
+
+}
+
+void buttons_handle_right(void)
+{
+
+	switch(set_state){
+	case NOT_SETTING:
+		buttons_handle_right_not_setting();
+		break;
+	case SETTING_DIGIT:
+		buttons_handle_right_setting_digit();
+		break;
+	case SETTING_MOVE:
+		buttons_handle_right_setting_move();
+		break;
+	default:
+		break;
+	}
 }
 
 void buttons_listener_callback(void)
 {
 
-		for(button_positions i=LEFT1;i<MAX_VALUE+1;i++){
+		for(BUTTON_POSITIONS_t i=LEFT1;i<MAX_VALUE;i++){
 			switch(i){
 			case LEFT1:
 				button_input[i] = HAL_GPIO_ReadPin(LEFT_BUTTON1_PORT, LEFT_BUTTON1_PIN);
@@ -76,15 +214,6 @@ void buttons_listener_callback(void)
 			case RIGHT1:
 				button_input[i] = HAL_GPIO_ReadPin(RIGHT_BUTTON1_PORT, RIGHT_BUTTON1_PIN);
 				break;
-//			case LEFT2:
-//				button_input[i] = HAL_GPIO_ReadPin(LEFT_BUTTON2_PORT, LEFT_BUTTON2_PIN);
-//				break;
-//			case CENTER2:
-//				button_input[i] = HAL_GPIO_ReadPin(CENTER_BUTTON2_PORT, CENTER_BUTTON2_PIN);
-//				break;
-//			case RIGHT2:
-//				button_input[i] = HAL_GPIO_ReadPin(RIGHT_BUTTON2_PORT, RIGHT_BUTTON2_PIN);
-//				break;
 			default:
 				break;
 			}
@@ -96,118 +225,31 @@ void buttons_listener_callback(void)
 					button_current_state[i] = button_input[i];
 					//press
 					if(!button_input[i]){
-//						switch(i){
-//							case LEFT1:
-//								switch(render_state){
-//								case DISP_TIME:
-//									render_state = DISP_ALARM2;
-//									break;
-//								case DISP_ALARM1:
-//									render_state = DISP_TIME;
-//									break;
-//								case DISP_ALARM2:
-//									render_state = DISP_ALARM1;
-//									break;
-//
-//								case SET_TIME:
-//									if(set_state == SET_HOUR){
-//										set_state = SET_TWELVE_HOUR;
-//									}else{
-//										set_state--;
-//									}
-//									break;
-//								case SET_ALARM1:
-//								case SET_ALARM2:
-//									if(set_state == SET_HOUR){
-//										set_state = SET_ALARM_TYPE;
-//									}else{
-//										set_state--;
-//									}
-//									break;
-//
-//								default:
-//									break;
-//								}
-//
-//								break;
-//							case CENTER1:
-//								switch(render_state){
-//								case DISP_TIME:
-//									render_state = SET_TIME;
-////									xTimerStart(rtos_blink_timer,0);
-//									//get current time
-//									DS3231_get_time(&hi2c2, &set_time);
-//									break;
-//								case DISP_ALARM1:
-////									xTimerStart(rtos_blink_timer,0);
-//									render_state = SET_ALARM1;
-//									//get current alarm
-//									DS3231_get_alarm(&hi2c2, &set_alarm, ALARM_ONE);
-//									break;
-//								case DISP_ALARM2:
-////									xTimerStart(rtos_blink_timer,0);
-//									render_state = SET_ALARM2;
-//									//get current alarm
-//									DS3231_get_alarm(&hi2c2, &set_alarm, ALARM_TWO);
-//									break;
-//
-//								case SET_TIME:
-//									render_state = DISP_TIME;
-//									set_state = SET_HOUR;
-////									xTimerStop(rtos_blink_timer, 0);
-//									//get current time
-//									DS3231_set_time(&hi2c2, &set_time);
-//									break;
-//								case SET_ALARM1:
-//									render_state = DISP_ALARM1;
-//									set_state = SET_HOUR;
-////									xTimerStop(rtos_blink_timer, 0);
-//									//get current alarm
-//									DS3231_set_alarm(&hi2c2, &set_alarm, ALARM_ONE);
-//									break;
-//								case SET_ALARM2:
-//									render_state = DISP_ALARM2;
-//									set_state = SET_HOUR;
-////									xTimerStop(rtos_blink_timer, 0);
-//									//get current alarm
-//									DS3231_get_alarm(&hi2c2, &set_alarm, ALARM_TWO);
-//									break;
-//
-//								default:
-//									break;
-//								}
-//								break;
-//							case RIGHT1:
-//								switch(render_state){
-//								case DISP_TIME:
-//									render_state = DISP_ALARM1;
-//									break;
-//								case DISP_ALARM1:
-//									render_state = DISP_ALARM2;
-//									break;
-//								case DISP_ALARM2:
-//									render_state = DISP_TIME;
-//									break;
-//								case SET_TIME:
-//									if(set_state == SET_TWELVE_HOUR){
-//										set_state = SET_HOUR;
-//									}else{
-//										set_state++;
-//									}
-//									break;
-//								case SET_ALARM1:
-//								case SET_ALARM2:
-//									if(set_state == SET_ALARM_TYPE){
-//										set_state = SET_HOUR;
-//									}else{
-//										set_state++;
-//									}
-//									break;
-//
-//								default:
-//									break;
-//								}
-//								break;
+						switch(i){
+							case LEFT1:
+								buttons_handle_left();
+								break;
+							case CENTER1:
+								buttons_handle_center();
+								break;
+							case RIGHT1:
+								buttons_handle_right();
+								break;
+							default:
+								break;
+						}
+					//release
+					}else{
+					}
+				}
+			}
+			button_last_state[i]=button_input[i];
+		}
+}
+
+
+
+
 //							case LEFT2:
 //								switch(render_state){
 //								case DISP_TIME:
@@ -471,36 +513,3 @@ void buttons_listener_callback(void)
 //								break;
 //							default:
 //								break;
-//						}
-						HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
-						//release
-					}else{
-//						switch(i){
-//							case LEFT1:
-//								HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
-//								break;
-//							case CENTER1:
-//								HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
-//								break;
-//							case RIGHT1:
-//								HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
-//								break;
-//							case LEFT2:
-//								HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
-//								break;
-//							case CENTER2:
-//								HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
-//								break;
-//							case RIGHT2:
-//								HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
-//								break;
-//							default:
-//								break;
-//							}
-						HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
-					}
-				}
-			}
-			button_last_state[i]=button_input[i];
-		}
-}

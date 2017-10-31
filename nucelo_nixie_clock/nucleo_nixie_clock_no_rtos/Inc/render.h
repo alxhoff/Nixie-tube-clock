@@ -34,11 +34,12 @@ typedef enum {
 	SET_TWELVE_HOUR,
 	SET_DATE_OR_DAY,
 	SET_ALARM_TYPE
-} SET_STATE_t;
+} SET_TARGET_t;
+
 
 extern ds3231_time_t testStruct;
 extern SCREEN_RENDER_STATE_t render_state;
-extern SET_STATE_t set_state;
+extern SET_TARGET_t set_type;
 
 void render_task_callback(void);
 

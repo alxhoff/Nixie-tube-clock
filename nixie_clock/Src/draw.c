@@ -41,7 +41,7 @@ void draw_set_states(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, void* timeSt
 		if(xSemaphoreTake(set_blink_semaphoreHandle, 10)){
 			draw_time(hi2c, x + 10, y + 5, timeStruct);
 		}else{
-			draw_time_blink(hi2c, x + 10, y + 5, timeStruct, set_state);
+			draw_time_blink(hi2c, x + 10, y + 5, timeStruct, set_type);
 		}
 		break;
 	}
@@ -50,7 +50,7 @@ void draw_set_states(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, void* timeSt
 		if(xSemaphoreTake(set_blink_semaphoreHandle, 10)){
 			draw_alarm(hi2c, x + 10, y + 5, timeStruct);
 		}else{
-			draw_alarm_blink(hi2c, x + 10, y + 5, timeStruct, set_state);
+			draw_alarm_blink(hi2c, x + 10, y + 5, timeStruct, set_type);
 		}
 		break;
 	}
@@ -59,7 +59,7 @@ void draw_set_states(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, void* timeSt
 		if(xSemaphoreTake(set_blink_semaphoreHandle, 10)){
 			draw_alarm(hi2c, x + 10, y + 5, timeStruct);
 		}else{
-			draw_alarm_blink(hi2c, x + 10, y + 5, timeStruct, set_state);
+			draw_alarm_blink(hi2c, x + 10, y + 5, timeStruct, set_type);
 		}
 		break;
 	}
@@ -69,7 +69,7 @@ void draw_set_states(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, void* timeSt
 
 	ssd1306_SetCursor(23,35);
 
-	switch(set_state){
+	switch(set_type){
 	case SET_HOUR:
 		ssd1306_WriteString("hour",Font_11x18,Black);
 		break;

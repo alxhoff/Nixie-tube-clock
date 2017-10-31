@@ -204,12 +204,17 @@ int main(void)
 
   /* USER CODE BEGIN 3 */
 	  if(HAL_GetTick() > ticks + BLINK_SPEED){
-	 		  blink_flag = !blink_flag;
+	 		  blink_flag ^= 1<<0;
+
 	 		  ticks = HAL_GetTick();
-	 		  HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
+
+	 		  HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+
+	 		  if(blink_flag)
+	 			  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_SET);
+	 		  else
+	 			  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_RESET);
 	  }
-
-
 
 	  buttons_listener_callback();
 	  render_task_callback();

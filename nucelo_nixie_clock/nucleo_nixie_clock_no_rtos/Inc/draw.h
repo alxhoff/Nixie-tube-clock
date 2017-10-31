@@ -17,7 +17,6 @@ typedef enum {
 	BLINK_PM
 } BLINK_TIME_t;
 
-
 void draw_disp_time_state(uint8_t x, uint8_t y);
 void draw_disp_alarm1_state(uint8_t x, uint8_t y);
 void draw_disp_alarm2_state(uint8_t x, uint8_t y);

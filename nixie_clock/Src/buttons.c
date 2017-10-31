@@ -66,7 +66,7 @@ void ButtonListenerTask(void const * argument)
 	for(;;)
 	{
 
-		for(button_positions i=LEFT1;i<MAX_VALUE+1;i++){
+		for(BUTTON_POSITIONS_t i=LEFT1;i<MAX_VALUE+1;i++){
 			switch(i){
 			case LEFT1:
 				button_input[i] = HAL_GPIO_ReadPin(LEFT_BUTTON1_PORT, LEFT_BUTTON1_PIN);
@@ -111,18 +111,18 @@ void ButtonListenerTask(void const * argument)
 									break;
 
 								case SET_TIME:
-									if(set_state == SET_HOUR){
-										set_state = SET_TWELVE_HOUR;
+									if(set_type == SET_HOUR){
+										set_type = SET_TWELVE_HOUR;
 									}else{
-										set_state--;
+										set_type--;
 									}
 									break;
 								case SET_ALARM1:
 								case SET_ALARM2:
-									if(set_state == SET_HOUR){
-										set_state = SET_ALARM_TYPE;
+									if(set_type == SET_HOUR){
+										set_type = SET_ALARM_TYPE;
 									}else{
-										set_state--;
+										set_type--;
 									}
 									break;
 
@@ -154,21 +154,21 @@ void ButtonListenerTask(void const * argument)
 
 								case SET_TIME:
 									render_state = DISP_TIME;
-									set_state = SET_HOUR;
+									set_type = SET_HOUR;
 //									xTimerStop(rtos_blink_timer, 0);
 									//get current time
 									DS3231_set_time(&hi2c2, &set_time);
 									break;
 								case SET_ALARM1:
 									render_state = DISP_ALARM1;
-									set_state = SET_HOUR;
+									set_type = SET_HOUR;
 //									xTimerStop(rtos_blink_timer, 0);
 									//get current alarm
 									DS3231_set_alarm(&hi2c2, &set_alarm, ALARM_ONE);
 									break;
 								case SET_ALARM2:
 									render_state = DISP_ALARM2;
-									set_state = SET_HOUR;
+									set_type = SET_HOUR;
 //									xTimerStop(rtos_blink_timer, 0);
 									//get current alarm
 									DS3231_get_alarm(&hi2c2, &set_alarm, ALARM_TWO);
@@ -190,18 +190,18 @@ void ButtonListenerTask(void const * argument)
 									render_state = DISP_TIME;
 									break;
 								case SET_TIME:
-									if(set_state == SET_TWELVE_HOUR){
-										set_state = SET_HOUR;
+									if(set_type == SET_TWELVE_HOUR){
+										set_type = SET_HOUR;
 									}else{
-										set_state++;
+										set_type++;
 									}
 									break;
 								case SET_ALARM1:
 								case SET_ALARM2:
-									if(set_state == SET_ALARM_TYPE){
-										set_state = SET_HOUR;
+									if(set_type == SET_ALARM_TYPE){
+										set_type = SET_HOUR;
 									}else{
-										set_state++;
+										set_type++;
 									}
 									break;
 
@@ -218,7 +218,7 @@ void ButtonListenerTask(void const * argument)
 								case DISP_ALARM2:
 									break;
 								case SET_TIME:
-									switch(set_state){
+									switch(set_type){
 									case SET_HOUR:
 										if(set_time.twelve_hour){
 											if(set_time.hour == 12){
@@ -306,7 +306,7 @@ void ButtonListenerTask(void const * argument)
 								case DISP_ALARM2:
 									break;
 								case SET_TIME:
-									switch(set_state){
+									switch(set_type){
 									case SET_HOUR:
 										if(set_time.twelve_hour){
 											if(set_time.hour == 1){
@@ -383,7 +383,7 @@ void ButtonListenerTask(void const * argument)
 								case DISP_ALARM2:
 									break;
 								case SET_TIME:
-									switch(set_state){
+									switch(set_type){
 									case SET_HOUR:
 										if(set_alarm.twelve_hour){
 											if(set_alarm.hour == 1){
