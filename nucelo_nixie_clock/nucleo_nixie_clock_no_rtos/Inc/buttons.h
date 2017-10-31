@@ -38,9 +38,6 @@ typedef enum {
 	LEFT1,
 	CENTER1,
 	RIGHT1,
-//	LEFT2,
-//	CENTER2,
-//	RIGHT2,
 	MAX_VALUE
 } BUTTON_POSITIONS_t;
 
@@ -49,8 +46,6 @@ typedef enum{
 	SETTING_DIGIT,
 	SETTING_MOVE,
 } SET_STATE_t;
-
-SET_STATE_t set_state;
 
 void ButtonsInit();
 void buttons_listener_callback(void);

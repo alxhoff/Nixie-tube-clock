@@ -7,11 +7,10 @@
 
 
 #include "render.h"
-//#include "draw.h"
 #include "externs.h"
 
 SCREEN_RENDER_STATE_t render_state = DISP_TIME;
-SET_TARGET_t set_type = SET_HOUR;
+SET_TARGET_t set_target = SET_HOUR;
 SET_STATE_t set_state = NOT_SETTING;
 
 void render_task_callback(void)

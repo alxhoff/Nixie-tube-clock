@@ -36,10 +36,9 @@ typedef enum {
 	SET_ALARM_TYPE
 } SET_TARGET_t;
 
-
-extern ds3231_time_t testStruct;
 extern SCREEN_RENDER_STATE_t render_state;
-extern SET_TARGET_t set_type;
+extern SET_TARGET_t set_target;
+extern SET_STATE_t set_state;
 
 void render_task_callback(void);
 

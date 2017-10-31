@@ -40,35 +40,48 @@ void ButtonsInit(){
 	HAL_GPIO_Init(LEFT_BUTTON1_PORT, &GPIO_InitStruct);
 }
 
-void buttons_handle_center(void)
+void buttons_handle_center_not_setting(void)
 {
 	switch(render_state){
 	case DISP_TIME:
-		render_state = SET_TIME;
-		RTC_dev->get_time(RTC_dev);
 		break;
 	case DISP_ALARM1:
-		render_state = SET_ALARM1;
-		RTC_dev->get_alarm(RTC_dev, ALARM_ONE);
 		break;
 	case DISP_ALARM2:
-		render_state = SET_ALARM2;
-		RTC_dev->get_alarm(RTC_dev, ALARM_TWO);
 		break;
 	case SET_TIME:
-		render_state = DISP_TIME;
-		set_type = SET_HOUR;
-//		DS3231_set_time(&hi2c2, &set_time);
 		break;
 	case SET_ALARM1:
-		render_state = DISP_ALARM1;
-		set_type = SET_HOUR;
-//		DS3231_set_alarm(&hi2c2, &set_alarm, ALARM_ONE);
 		break;
 	case SET_ALARM2:
-		render_state = DISP_ALARM2;
-		set_type = SET_HOUR;
-//		DS3231_get_alarm(&hi2c2, &set_alarm, ALARM_TWO);
+		break;
+	default:
+		break;
+	}
+}
+
+void buttons_handle_center_setting_digit(void)
+{
+
+}
+
+void buttons_handle_center_setting_move(void)
+{
+
+}
+
+void buttons_handle_center(void)
+{
+
+	switch(set_state){
+	case NOT_SETTING:
+		buttons_handle_center_not_setting();
+		break;
+	case SETTING_DIGIT:
+		buttons_handle_center_setting_digit();
+		break;
+	case SETTING_MOVE:
+		buttons_handle_center_setting_move();
 		break;
 	default:
 		break;
@@ -110,7 +123,89 @@ void buttons_handle_left_not_setting(void)
 
 void buttons_handle_left_setting_digit(void)
 {
-
+//	switch(render_state){
+//		case DISP_TIME:
+//			break;
+//		case DISP_ALARM1:
+//			break;
+//		case DISP_ALARM2:
+//			break;
+//		case SET_TIME:
+//			switch(set_state){
+//			case SET_HOUR:
+//				if(set_time.twelve_hour){
+//					if(set_time.hour == 12){
+//						set_time.hour = 1;
+//					}else{
+//						set_time.hour++;
+//					}
+//				}else{
+//					if(set_time.hour == 23){
+//						set_time.hour = 0;
+//					}else{
+//						set_time.hour++;
+//					}
+//				}
+//				break;
+//			case SET_MIN:
+//				if(set_time.min == 59){
+//					set_time.min = 0;
+//				}else{
+//					set_time.min++;
+//				}
+//				break;
+//			case SET_SEC:
+//				set_time.sec = 0;
+//				break;
+//			case SET_DAY:
+//				if(set_time.week_day == 7){
+//					set_time.week_day = 1;
+//				}else{
+//					set_time.week_day++;
+//				}
+//				break;
+//			case SET_DATE:
+//				if(set_time.date == 31){
+//					set_time.date = 1;
+//				}else{
+//					set_time.date++;
+//				}
+//				break;
+//			case SET_MONTH:
+//				if(set_time.month == 12){
+//					set_time.month = 1;
+//				}else{
+//					set_time.month++;
+//				}
+//				break;
+//			case SET_YEAR:
+//				set_time.year++;
+//				break;
+//			case SET_PM:
+//				if(set_time.pm == PM){
+//					set_time.pm = AM;
+//				}else{
+//					set_time.pm = PM;
+//				}
+//				break;
+//			case SET_TWELVE_HOUR:
+//				if(set_time.twelve_hour == TRUE){
+//					set_time.twelve_hour = FALSE;
+//				}else{
+//					set_time.twelve_hour = TRUE;
+//				}
+//				break;
+//			default:
+//				break;
+//			}
+//			break;
+//		case SET_ALARM1:
+//			break;
+//		case SET_ALARM2:
+//			break;
+//		default:
+//			break;
+//		}
 }
 
 void buttons_handle_left_setting_move(void)

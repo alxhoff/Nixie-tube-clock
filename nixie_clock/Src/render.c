@@ -11,7 +11,7 @@
 #include "draw.h"
 
 SCREEN_RENDER_STATE_t render_state = DISP_TIME;
-SET_TARGET_t set_type = SET_HOUR;
+SET_TARGET_t set_target = SET_HOUR;
 
 
 void ScreenRenderTask(){

@@ -196,10 +196,12 @@ void draw_set_states( uint8_t x, uint8_t y)
 		LCD_dev->cursor(LCD_dev, x + 4, y + 43);
 		LCD_dev->string(LCD_dev, disp_str);
 		RTC_dev->get_time(RTC_dev);
-		if(blink_flag){
-			draw_time( x + 10, y + 5);
+		if(blink_flag && (set_state == SETTING_DIGIT)){
+			draw_time_blink(x + 10, y + 5, TIME, set_target);
+		}else if(set_state == NOT_SETTING){
+			draw_time_blink(x + 10, y + 5, TIME, set_target);
 		}else{
-			draw_time_blink(x + 10, y + 5, TIME, set_type);
+			draw_time( x + 10, y + 5);
 		}
 		break;
 	}
@@ -208,10 +210,12 @@ void draw_set_states( uint8_t x, uint8_t y)
 		LCD_dev->cursor(LCD_dev, x + 4, y + 43);
 		LCD_dev->string(LCD_dev, disp_str);
 		RTC_dev->get_alarm(RTC_dev, ALARM_ONE);
-		if(blink_flag){
-			draw_alarm( x + 10, y + 5, ALARM_ONE);
+		if(blink_flag && (set_state == SETTING_DIGIT)){
+			draw_time_blink( x + 10, y + 5, ALARM_ONE, set_target);
+		}else if(set_state == NOT_SETTING){
+			draw_time_blink( x + 10, y + 5, ALARM_ONE, set_target);
 		}else{
-			draw_time_blink( x + 10, y + 5, ALARM_ONE, set_type);
+			draw_alarm( x + 10, y + 5, ALARM_ONE);
 		}
 		break;
 	}
@@ -220,10 +224,12 @@ void draw_set_states( uint8_t x, uint8_t y)
 		LCD_dev->cursor(LCD_dev, x + 4 , y + 43);
 		LCD_dev->string(LCD_dev, disp_str);
 		RTC_dev->get_alarm(RTC_dev, ALARM_TWO);
-		if(blink_flag){
-			draw_alarm( x + 10, y + 5, ALARM_TWO);
+		if(blink_flag && (set_state == SETTING_DIGIT)){
+			draw_time_blink( x + 10, y + 5, ALARM_TWO, set_target);
+		}else if(set_state == NOT_SETTING){
+			draw_time_blink( x + 10, y + 5, ALARM_TWO, set_target);
 		}else{
-			draw_time_blink( x + 10, y + 5, ALARM_TWO, set_type);
+			draw_alarm( x + 10, y + 5, ALARM_TWO);
 		}
 		break;
 	}
@@ -233,7 +239,7 @@ void draw_set_states( uint8_t x, uint8_t y)
 
 	LCD_dev->cursor(LCD_dev, x + 15, y + 25);
 
-	switch(set_type){
+	switch(set_target){
 	case SET_HOUR:
 		LCD_dev->string(LCD_dev, "hour");
 		break;
@@ -272,8 +278,8 @@ void draw_set_states( uint8_t x, uint8_t y)
 	}
 }
 
-void draw_time_blink( uint8_t x, uint8_t y,TYPE_TIME_t type ,
-		BLINK_TIME_t blink)
+void draw_time_blink( uint8_t x, uint8_t y,TYPE_TIME_t type,
+		SET_TARGET_t blink_target)
 {
 	char time_str[] = "12:59:59";
 
@@ -295,17 +301,17 @@ void draw_time_blink( uint8_t x, uint8_t y,TYPE_TIME_t type ,
 		hour = RTC_dev->time_1->hour;
 	}
 
-	switch(blink){
-	case BLINK_HOUR:
+	switch(blink_target){
+	case SET_HOUR:
 		sprintf(time_str, "--:%d:%d", min, sec);
 		break;
-	case BLINK_MINUTE:
+	case SET_MIN:
 		sprintf(time_str, "%d:--:%d", hour, sec);
 		break;
-	case BLINK_SEC:
+	case SET_SEC:
 		sprintf(time_str, "%d:%d:--", hour, min);
 		break;
-	case BLINK_PM:
+	case SET_PM:
 		break;
 	default:
 		break;
