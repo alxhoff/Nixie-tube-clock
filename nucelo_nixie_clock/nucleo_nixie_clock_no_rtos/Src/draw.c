@@ -13,14 +13,7 @@
 uint8_t blink_flag = 0;
 
 //STATES
-void draw_time(uint8_t x, uint8_t y)
-{
-	char time_str[] = "12:59:59";
-	LCD_dev->cursor(LCD_dev, x, y);
-	sprintf(time_str, "%d:%d:%d", RTC_dev->time_1->hour,
-			RTC_dev->time_1->min, RTC_dev->time_1->sec);
-	LCD_dev->string(LCD_dev, time_str);
-}
+
 
 void draw_am_pm( uint8_t x, uint8_t y, TIME_OF_DAY_12HR_t pm)
 {
@@ -131,21 +124,26 @@ void draw_year( uint8_t x, uint8_t y, uint16_t year)
 	LCD_dev->string(LCD_dev, year_str);
 }
 
-void draw_disp_time_state(uint8_t x, uint8_t y)
+void draw_time(uint8_t x, uint8_t y)
 {
-	RTC_dev->get_time(RTC_dev);
-	draw_time(x + 10, y + 5);
-	if(RTC_dev->time_1->twelve_hour)
-		draw_am_pm( x + 100, y + 5, RTC_dev->time_1->pm);
+	char time_str[] = "12:59:59";
+	LCD_dev->cursor(LCD_dev, x, y);
+	sprintf(time_str, "%d:%d:%d", RTC_dev->time_1->hour,
+			RTC_dev->time_1->min, RTC_dev->time_1->sec);
+	LCD_dev->string(LCD_dev, time_str);
 
-	draw_day( x + 4, y + 25, RTC_dev->time_1->week_day);
-	draw_date( x + 35, y + 25, RTC_dev->time_1->date);
-	draw_month( x + 65, y + 25, RTC_dev->time_1->month);
-	draw_year( x + 45, y + 45, RTC_dev->time_1->year);
+	if(RTC_dev->time_1->twelve_hour)
+			draw_am_pm( x + 90, y , RTC_dev->time_1->pm);
+
+	draw_day( x , y + 20, RTC_dev->time_1->week_day);
+	draw_date( x + 35, y + 20, RTC_dev->time_1->date);
+	draw_month( x + 65, y + 20, RTC_dev->time_1->month);
+	draw_year( x, y + 40, RTC_dev->time_1->year);
 }
 
 void draw_alarm( uint8_t x, uint8_t y, TYPE_TIME_t alarm)
 {
+
 	char time_str[] = "12:59:59";
 	LCD_dev->cursor(LCD_dev, x, y);
 	switch(alarm){
@@ -162,18 +160,14 @@ void draw_alarm( uint8_t x, uint8_t y, TYPE_TIME_t alarm)
 	default:
 		break;
 	}
-}
 
-void draw_disp_alarm1_state(uint8_t x, uint8_t y)
-{
-	RTC_dev->get_alarm(RTC_dev, ALARM_ONE);
-	draw_alarm(x+10, y+5, ALARM_ONE);
 	if(RTC_dev->alarm_1->twelve_hour)
 		draw_am_pm(x + 100, y + 5, RTC_dev->alarm_1->pm);
 
-	draw_day( x + 10, y + 25, RTC_dev->alarm_1->week_day);
-	draw_date( x + 50, y + 25, RTC_dev->alarm_1->date);
+	draw_day( x , y + 20, RTC_dev->alarm_1->week_day);
+	draw_date( x + 35, y + 20, RTC_dev->alarm_1->date);
 }
+
 
 void draw_disp_alarm2_state(uint8_t x, uint8_t y)
 {
@@ -192,10 +186,11 @@ void draw_set_states( uint8_t x, uint8_t y)
 	LCD_dev->cursor(LCD_dev, x + 25, y + 5);
 	switch(render_state){
 	case SET_TIME:{
-		char* disp_str = "Set Time";
-		LCD_dev->cursor(LCD_dev, x + 4, y + 43);
+
+		char* disp_str = "SET";
+		LCD_dev->cursor(LCD_dev, x + 90, y + 45);
 		LCD_dev->string(LCD_dev, disp_str);
-		RTC_dev->get_time(RTC_dev);
+
 		if(blink_flag && (set_state == SETTING_DIGIT)){
 			draw_time_blink(x + 10, y + 5, TIME, set_target);
 		}else if((set_state == NOT_SETTING) || (set_state == SETTING_MOVE)){
@@ -206,10 +201,11 @@ void draw_set_states( uint8_t x, uint8_t y)
 		break;
 	}
 	case SET_ALARM1:{
-		char* disp_str = "Set Alarm 1";
-		LCD_dev->cursor(LCD_dev, x + 4, y + 43);
+
+		char* disp_str = "SET 1";
+		LCD_dev->cursor(LCD_dev, x + 70, y + 45);
 		LCD_dev->string(LCD_dev, disp_str);
-		RTC_dev->get_alarm(RTC_dev, ALARM_ONE);
+
 		if(blink_flag && (set_state == SETTING_DIGIT)){
 			draw_time_blink( x + 10, y + 5, ALARM_ONE, set_target);
 		}else if(set_state == NOT_SETTING){
@@ -220,10 +216,10 @@ void draw_set_states( uint8_t x, uint8_t y)
 		break;
 	}
 	case SET_ALARM2:{
-		char* disp_str = "Set Alarm 2";
-		LCD_dev->cursor(LCD_dev, x + 4 , y + 43);
+		char* disp_str = "SET 2";
+		LCD_dev->cursor(LCD_dev, x + 70, y + 45);
 		LCD_dev->string(LCD_dev, disp_str);
-		RTC_dev->get_alarm(RTC_dev, ALARM_TWO);
+
 		if(blink_flag && (set_state == SETTING_DIGIT)){
 			draw_time_blink( x + 10, y + 5, ALARM_TWO, set_target);
 		}else if(set_state == NOT_SETTING){
@@ -237,65 +233,67 @@ void draw_set_states( uint8_t x, uint8_t y)
 		break;
 	}
 
-	LCD_dev->cursor(LCD_dev, x + 15, y + 25);
-
-	switch(set_target){
-	case SET_HOUR:
-		LCD_dev->string(LCD_dev, "hour");
-		break;
-	case SET_MIN:
-		LCD_dev->string(LCD_dev, "min");
-		break;
-	case SET_SEC:
-		LCD_dev->string(LCD_dev, "sec");
-		break;
-	case SET_PM:
-		LCD_dev->string(LCD_dev, "pm");
-		break;
-	case SET_DAY:
-		LCD_dev->string(LCD_dev, "day");
-		break;
-	case SET_DATE:
-		LCD_dev->string(LCD_dev, "date");
-		break;
-	case SET_MONTH:
-		LCD_dev->string(LCD_dev, "month");
-		break;
-	case SET_YEAR:
-		LCD_dev->string(LCD_dev, "year");
-		break;
-	case SET_DATE_OR_DAY:
-		LCD_dev->string(LCD_dev, "date/day");
-		break;
-	case SET_ALARM_TYPE:
-		LCD_dev->string(LCD_dev, "al type");
-		break;
-	case SET_TWELVE_HOUR:
-		LCD_dev->string(LCD_dev, "twelve");
-		break;
-	default:
-		break;
-	}
+//	LCD_dev->cursor(LCD_dev, x + 65, y + 45);
+//
+//	switch(set_target){
+//	case SET_HOUR:
+//		LCD_dev->string(LCD_dev, "hour");
+//		break;
+//	case SET_MIN:
+//		LCD_dev->string(LCD_dev, "min");
+//		break;
+//	case SET_SEC:
+//		LCD_dev->string(LCD_dev, "sec");
+//		break;
+//	case SET_PM:
+//		LCD_dev->string(LCD_dev, "pm");
+//		break;
+//	case SET_DAY:
+//		LCD_dev->string(LCD_dev, "day");
+//		break;
+//	case SET_DATE:
+//		LCD_dev->string(LCD_dev, "date");
+//		break;
+//	case SET_MONTH:
+//		LCD_dev->string(LCD_dev, "month");
+//		break;
+//	case SET_YEAR:
+//		LCD_dev->string(LCD_dev, "year");
+//		break;
+//	case SET_DATE_OR_DAY:
+//		LCD_dev->string(LCD_dev, "date/day");
+//		break;
+//	case SET_ALARM_TYPE:
+//		LCD_dev->string(LCD_dev, "al type");
+//		break;
+//	case SET_TWELVE_HOUR:
+//		LCD_dev->string(LCD_dev, "twelve");
+//		break;
+//	default:
+//		break;
+//	}
 }
 
 void draw_time_blink( uint8_t x, uint8_t y,TYPE_TIME_t type,
 		SET_TARGET_t blink_target)
 {
 	char time_str[] = "12:59:59";
-
-	LCD_dev->cursor(LCD_dev, x, y);
-
 	uint8_t sec = 0, min = 0, hour = 0;
 
+	sprintf(time_str, "%d:%d:%d", hour, min, sec);
+
 	if(type == ALARM_ONE){
+		draw_alarm(x,y, ALARM_ONE);
 		sec = RTC_dev->alarm_1->sec;
 		min = RTC_dev->alarm_1->min;
 		hour = RTC_dev->alarm_1->hour;
 	}else if(type == ALARM_TWO){
+		draw_alarm(x,y, ALARM_TWO);
 		sec = 0;
 		min = RTC_dev->alarm_2->min;
 		hour = RTC_dev->alarm_2->hour;
 	}else if(type == TIME){
+		draw_time(x, y);
 		sec = RTC_dev->time_1->sec;
 		min = RTC_dev->time_1->min;
 		hour = RTC_dev->time_1->hour;
@@ -304,19 +302,36 @@ void draw_time_blink( uint8_t x, uint8_t y,TYPE_TIME_t type,
 	switch(blink_target){
 	case SET_HOUR:
 		sprintf(time_str, "--:%d:%d", min, sec);
+		LCD_dev->cursor(LCD_dev, x, y);
+		LCD_dev->string(LCD_dev, time_str);
 		break;
 	case SET_MIN:
 		sprintf(time_str, "%d:--:%d", hour, sec);
+		LCD_dev->cursor(LCD_dev, x, y);
+		LCD_dev->string(LCD_dev, time_str);
 		break;
 	case SET_SEC:
 		sprintf(time_str, "%d:%d:--", hour, min);
+		LCD_dev->cursor(LCD_dev, x, y);
+		LCD_dev->string(LCD_dev, time_str);
+		break;
+	case SET_DAY:{
+		char day_str = "___";
+		LCD_dev->cursor(LCD_dev, x, y + 20);
+		LCD_dev->string(LCD_dev, day_str);
+		}
+		break;
+	case SET_DATE:
+		break;
+	case SET_MONTH:
+		break;
+	case SET_YEAR:
 		break;
 	case SET_PM:
 		break;
 	default:
 		break;
 	}
-	LCD_dev->string(LCD_dev, time_str);
 }
 
 //char* get_time_string(ds3231_time_t* time){

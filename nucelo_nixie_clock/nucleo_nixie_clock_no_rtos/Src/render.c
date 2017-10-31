@@ -20,13 +20,16 @@ void render_task_callback(void)
 	switch(render_state)
 	{
 	case DISP_TIME:
-		draw_disp_time_state( 0, 0);
+		RTC_dev->get_time(RTC_dev);
+		draw_time( 10, 5);
 		break;
 	case DISP_ALARM1:
-		draw_disp_alarm1_state( 0, 0);
+		RTC_dev->get_alarm(RTC_dev, ALARM_ONE);
+		draw_alarm(10, 5, ALARM_ONE);
 		break;
 	case DISP_ALARM2:
-		draw_disp_alarm2_state( 0, 0);
+		RTC_dev->get_alarm(RTC_dev, ALARM_ONE);
+		draw_alarm(10, 5, ALARM_TWO);
 		break;
 	case SET_TIME:
 		draw_set_states( 0, 0);
