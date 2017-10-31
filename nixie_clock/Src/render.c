@@ -10,8 +10,8 @@
 #include "render.h"
 #include "draw.h"
 
-SCREEN_RENDER_STATE render_state = DISP_TIME;
-SET_STATE set_state = SET_HOUR;
+SCREEN_RENDER_STATE_t render_state = DISP_TIME;
+SET_STATE_t set_state = SET_HOUR;
 
 
 void ScreenRenderTask(){

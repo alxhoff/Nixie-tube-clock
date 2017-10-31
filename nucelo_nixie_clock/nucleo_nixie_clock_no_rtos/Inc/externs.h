@@ -19,6 +19,8 @@ extern DS3231_device_t* RTC_dev;
 
 extern I2C_HandleTypeDef hi2c2;
 
+extern uint8_t blink_flag;
+
 //BUTTONS
 uint8_t button_input[NUM_OF_BUTTONS];
 uint8_t button_last_state[NUM_OF_BUTTONS];

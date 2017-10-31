@@ -108,7 +108,7 @@ void draw_set_states(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, void* timeSt
 	}
 }
 
-void draw_alarm_blink(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, ds3231_alarm_t* alarm, BLINK_TIME blink){
+void draw_alarm_blink(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, ds3231_alarm_t* alarm, BLINK_TIME_t blink){
 	char time_str[] = "12:59:59";
 	ssd1306_SetCursor(x, y);
 	switch(blink){
@@ -136,7 +136,7 @@ void draw_alarm(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, ds3231_alarm_t* a
 	ssd1306_WriteString(time_str,Font_11x18,Black);
 }
 
-void draw_time_blink(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, ds3231_time_t* time, BLINK_TIME blink){
+void draw_time_blink(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, ds3231_time_t* time, BLINK_TIME_t blink){
 	char time_str[9];
 	ssd1306_SetCursor(x, y);
 	switch(blink){

@@ -57,12 +57,7 @@ SSD1306_device_t* LCD_dev;
 //RTC
 DS3231_device_t* RTC_dev;
 
-//BUTTONS
-uint8_t button_input[NUM_OF_BUTTONS] = {0};
-uint8_t button_last_state[NUM_OF_BUTTONS] = {0};
-uint8_t button_current_state[NUM_OF_BUTTONS] = {0};
-uint32_t button_last_time[NUM_OF_BUTTONS] = {0};
-uint32_t debounce_delay = DEBOUNCE_DELAY;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -183,6 +178,22 @@ int main(void)
 	RTC_dev->alarm_1->sec = 6;
 	RTC_dev->alarm_1->alarm_type = ALARM_MATCH_MINUTES;
 
+	//test alarm2
+	RTC_dev->alarm_2->min = 7;
+	RTC_dev->alarm_2->hour = 6;
+	RTC_dev->alarm_2->date = 20;
+	RTC_dev->alarm_2->week_day = 5;
+	RTC_dev->alarm_2->alarm_type = ALARM_MATCH_MINUTES;
+
+	RTC_dev->set_alarm(RTC_dev, ALARM_TWO);
+
+	RTC_dev->alarm_2->min = 6;
+	RTC_dev->alarm_2->hour = 6;
+	RTC_dev->alarm_2->alarm_type = ALARM_MATCH_MINUTES;
+
+	//blink flag
+	uint32_t ticks = HAL_GetTick();
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -192,6 +203,12 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
+	  if(HAL_GetTick() > ticks + BLINK_SPEED){
+	 		  blink_flag = !blink_flag;
+	 		  ticks = HAL_GetTick();
+	  }
+
+
 
 	  buttons_listener_callback();
 	  render_task_callback();

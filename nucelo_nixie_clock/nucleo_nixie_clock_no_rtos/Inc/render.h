@@ -11,15 +11,34 @@
 #include <ds3231.h>
 #include "ssd1306.h"
 
-typedef enum {DISP_TIME, SET_TIME, DISP_ALARM1, DISP_ALARM2,
-	SET_ALARM1, SET_ALARM2} SCREEN_RENDER_STATE;
+#define BLINK_SPEED		1000
 
-typedef enum {SET_HOUR, SET_MIN, SET_SEC, SET_DAY, SET_DATE,
-	SET_MONTH, SET_YEAR, SET_PM, SET_TWELVE_HOUR, SET_DATE_OR_DAY, SET_ALARM_TYPE} SET_STATE;
+typedef enum {
+	DISP_TIME,
+	SET_TIME,
+	DISP_ALARM1,
+	DISP_ALARM2,
+	SET_ALARM1,
+	SET_ALARM2
+} SCREEN_RENDER_STATE_t;
+
+typedef enum {
+	SET_HOUR,
+	SET_MIN,
+	SET_SEC,
+	SET_DAY,
+	SET_DATE,
+	SET_MONTH,
+	SET_YEAR,
+	SET_PM,
+	SET_TWELVE_HOUR,
+	SET_DATE_OR_DAY,
+	SET_ALARM_TYPE
+} SET_STATE_t;
 
 extern ds3231_time_t testStruct;
-extern SCREEN_RENDER_STATE render_state;
-extern SET_STATE set_state;
+extern SCREEN_RENDER_STATE_t render_state;
+extern SET_STATE_t set_state;
 
 void render_task_callback(void);
 

@@ -10,14 +10,14 @@
 
 #include "render.h"
 
-typedef enum {BLINK_HOUR, BLINK_MINUTE, BLINK_SEC, BLINK_PM} BLINK_TIME;
+typedef enum {BLINK_HOUR, BLINK_MINUTE, BLINK_SEC, BLINK_PM} BLINK_TIME_t;
 
 void draw_disp_time_state(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, ds3231_time_t* time);
 void draw_disp_alarm1_state(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, ds3231_alarm_t* alarm);
 void draw_set_states(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, void* timeStruct);
-void draw_alarm_blink(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, ds3231_alarm_t* alarm, BLINK_TIME blink);
+void draw_alarm_blink(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, ds3231_alarm_t* alarm, BLINK_TIME_t blink);
 void draw_alarm(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, ds3231_alarm_t* alarm);
-void draw_time_blink(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, ds3231_time_t* time, BLINK_TIME blink);
+void draw_time_blink(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, ds3231_time_t* time, BLINK_TIME_t blink);
 void draw_time(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, ds3231_time_t* time);
 void draw_am_pm(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, TIME_OF_DAY_12HR_t pm);
 void draw_date(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, uint8_t date);

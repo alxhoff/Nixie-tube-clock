@@ -10,6 +10,8 @@
 #include "draw.h"
 #include "externs.h"
 
+uint8_t blink_flag = 0;
+
 //STATES
 void draw_time(uint8_t x, uint8_t y, ds3231_time_t* time)
 {
@@ -141,18 +143,29 @@ void draw_disp_time_state(uint8_t x, uint8_t y)
 	draw_year( x + 45, y + 45, RTC_dev->time_1->year);
 }
 
-void draw_alarm( uint8_t x, uint8_t y, ds3231_alarm_t* alarm)
+void draw_alarm( uint8_t x, uint8_t y, TYPE_TIME_t alarm)
 {
 	char time_str[] = "12:59:59";
 	LCD_dev->cursor(LCD_dev, x, y);
-	sprintf(time_str, "%d:%d:%d", alarm->hour, alarm->min, alarm->sec);
+	switch(alarm){
+	case ALARM_ONE:
+		sprintf(time_str, "%d:%d:%d", RTC_dev->alarm_1->hour,
+				RTC_dev->alarm_1->min, RTC_dev->alarm_1->sec);
+		break;
+	case ALARM_TWO:
+		sprintf(time_str, "%d:%d:%d", RTC_dev->alarm_1->hour,
+				RTC_dev->alarm_1->min, 0);
+		break;
+	default:
+		break;
+	}
 	LCD_dev->string(LCD_dev, time_str);
 }
 
 void draw_disp_alarm1_state(uint8_t x, uint8_t y)
 {
 	RTC_dev->get_alarm(RTC_dev, ALARM_ONE);
-	draw_alarm(x+10, y+5, RTC_dev->alarm_1);
+	draw_alarm(x+10, y+5, ALARM_ONE);
 	if(RTC_dev->alarm_1->twelve_hour)
 		draw_am_pm(x + 100, y + 5, RTC_dev->alarm_1->pm);
 
@@ -160,134 +173,142 @@ void draw_disp_alarm1_state(uint8_t x, uint8_t y)
 	draw_date( x + 35, y + 25, RTC_dev->alarm_1->date);
 }
 
-//void draw_set_states(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y,
-//		void* timeStruct)
-//{
-//	ssd1306_SetCursor(23,5);
-//	switch(render_state){
-//	case SET_TIME:{
-//		ds3231_time_t* time = (ds3231_time_t*)timeStruct;
-//		if(xSemaphoreTake(set_blink_semaphoreHandle, 10)){
-//			draw_time(hi2c, x + 10, y + 5, timeStruct);
-//		}else{
-//			draw_time_blink(hi2c, x + 10, y + 5, timeStruct, set_state);
-//		}
-//		break;
-//	}
-//	case SET_ALARM1:{
-//		ds3231_alarm_t* time = (ds3231_alarm_t*)timeStruct;
-//		if(xSemaphoreTake(set_blink_semaphoreHandle, 10)){
-//			draw_alarm(hi2c, x + 10, y + 5, timeStruct);
-//		}else{
-//			draw_alarm_blink(hi2c, x + 10, y + 5, timeStruct, set_state);
-//		}
-//		break;
-//	}
-//	case SET_ALARM2:{
-//		ds3231_alarm_t* time = (ds3231_alarm_t*)timeStruct;
-//		if(xSemaphoreTake(set_blink_semaphoreHandle, 10)){
-//			draw_alarm(hi2c, x + 10, y + 5, timeStruct);
-//		}else{
-//			draw_alarm_blink(hi2c, x + 10, y + 5, timeStruct, set_state);
-//		}
-//		break;
-//	}
-//	default:
-//		break;
-//	}
-//
-//	ssd1306_SetCursor(23,35);
-//
-//	switch(set_state){
-//	case SET_HOUR:
-//		ssd1306_WriteString("hour",Font_11x18,Black);
-//		break;
-//	case SET_MIN:
-//		ssd1306_WriteString("min",Font_11x18,Black);
-//		break;
-//	case SET_SEC:
-//		ssd1306_WriteString("sec",Font_11x18,Black);
-//		break;
-//	case SET_PM:
-//		ssd1306_WriteString("pm",Font_11x18,Black);
-//		break;
-//	case SET_DAY:
-//		ssd1306_WriteString("day",Font_11x18,Black);
-//		break;
-//	case SET_DATE:
-//		ssd1306_WriteString("date",Font_11x18,Black);
-//		break;
-//	case SET_MONTH:
-//		ssd1306_WriteString("month",Font_11x18,Black);
-//		break;
-//	case SET_YEAR:
-//		ssd1306_WriteString("year",Font_11x18,Black);
-//		break;
-//	case SET_DATE_OR_DAY:
-//		ssd1306_WriteString("date/day",Font_11x18,Black);
-//		break;
-//	case SET_ALARM_TYPE:
-//		ssd1306_WriteString("al type",Font_11x18,Black);
-//		break;
-//	case SET_TWELVE_HOUR:
-//		ssd1306_WriteString("twelv",Font_11x18,Black);
-//		break;
-//	default:
-//		break;
-//	}
-//}
+void draw_disp_alarm2_state(uint8_t x, uint8_t y)
+{
+	RTC_dev->get_alarm(RTC_dev, ALARM_TWO);
+	draw_alarm(x+10, y+5, ALARM_TWO);
+	if(RTC_dev->alarm_2->twelve_hour)
+		draw_am_pm(x + 100, y + 5, RTC_dev->alarm_2->pm);
 
-void draw_alarm_blink(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, ds3231_alarm_t* alarm, BLINK_TIME blink){
+	draw_day( x + 4, y + 25, RTC_dev->alarm_2->week_day);
+	draw_date( x + 35, y + 25, RTC_dev->alarm_2->date);
+}
+
+void draw_set_states(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y,
+		void* timeStruct)
+{
+	LCD_dev->cursor(LCD_dev, 25, 5);
+	switch(render_state){
+	case SET_TIME:{
+		RTC_dev->get_time(RTC_dev);
+		if(blink_flag){
+			draw_time( x + 10, y + 5, RTC_dev->time_1);
+		}else{
+			draw_time_blink(x + 10, y + 5, TIME, set_state);
+		}
+		break;
+	}
+	case SET_ALARM1:{
+		RTC_dev->get_alarm(RTC_dev, ALARM_ONE);
+		if(blink_flag){
+			draw_alarm( x + 10, y + 5, ALARM_TWO);
+		}else{
+			draw_time_blink( x + 10, y + 5, ALARM_ONE, set_state);
+		}
+		break;
+	}
+	case SET_ALARM2:{
+		RTC_dev->get_alarm(RTC_dev, ALARM_TWO);
+		if(blink_flag){
+			draw_alarm( x + 10, y + 5, ALARM_TWO);
+		}else{
+			draw_time_blink( x + 10, y + 5, ALARM_TWO, set_state);
+		}
+		break;
+	}
+	default:
+		break;
+	}
+
+	LCD_dev->cursor(LCD_dev, 23, 35);
+
+	switch(set_state){
+	case SET_HOUR:
+		LCD_dev->string(LCD_dev, "hour");
+		break;
+	case SET_MIN:
+		LCD_dev->string(LCD_dev, "min");
+		break;
+	case SET_SEC:
+		LCD_dev->string(LCD_dev, "sec");
+		break;
+	case SET_PM:
+		LCD_dev->string(LCD_dev, "pm");
+		break;
+	case SET_DAY:
+		LCD_dev->string(LCD_dev, "day");
+		break;
+	case SET_DATE:
+		LCD_dev->string(LCD_dev, "date");
+		break;
+	case SET_MONTH:
+		LCD_dev->string(LCD_dev, "month");
+		break;
+	case SET_YEAR:
+		LCD_dev->string(LCD_dev, "year");
+		break;
+	case SET_DATE_OR_DAY:
+		LCD_dev->string(LCD_dev, "date/day");
+		break;
+	case SET_ALARM_TYPE:
+		LCD_dev->string(LCD_dev, "al type");
+		break;
+	case SET_TWELVE_HOUR:
+		LCD_dev->string(LCD_dev, "twelv");
+		break;
+	default:
+		break;
+	}
+}
+
+void draw_time_blink( uint8_t x, uint8_t y,TYPE_TIME_t type ,
+		BLINK_TIME_t blink)
+{
 	char time_str[] = "12:59:59";
-	ssd1306_SetCursor(x, y);
+
+	LCD_dev->cursor(LCD_dev, x, y);
+
+	uint8_t sec = 0, min = 0, hour = 0;
+
+	if(type == ALARM_ONE){
+		sec = RTC_dev->alarm_1->sec;
+		min = RTC_dev->alarm_1->min;
+		hour = RTC_dev->alarm_1->hour;
+	}else if(type == ALARM_TWO){
+		sec = 0;
+		min = RTC_dev->alarm_2->min;
+		hour = RTC_dev->alarm_2->hour;
+	}else if(type == TIME){
+		sec = RTC_dev->time_1->sec;
+		min = RTC_dev->time_1->min;
+		hour = RTC_dev->time_1->hour;
+	}
+
 	switch(blink){
 	case BLINK_HOUR:
-		sprintf(time_str, "--:%d:%d", alarm->min, alarm->sec);
+		sprintf(time_str, "--:%d:%d", min, sec);
 		break;
 	case BLINK_MINUTE:
-		sprintf(time_str, "%d:--:%d", alarm->hour, alarm->sec);
+		sprintf(time_str, "%d:--:%d", hour, sec);
 		break;
 	case BLINK_SEC:
-		sprintf(time_str, "%d:%d:--", alarm->hour, alarm->min);
+		sprintf(time_str, "%d:%d:--", hour, min);
 		break;
 	case BLINK_PM:
 		break;
 	default:
 		break;
 	}
-	ssd1306_WriteString(time_str,Font_11x18,Black);
+	LCD_dev->string(LCD_dev, time_str);
 }
 
-
-
-void draw_time_blink(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, ds3231_time_t* time, BLINK_TIME blink){
-	char time_str[9];
-	ssd1306_SetCursor(x, y);
-	switch(blink){
-	case BLINK_HOUR:
-		sprintf(time_str, "--:%d:%d", time->min, time->sec);
-		break;
-	case BLINK_MINUTE:
-		sprintf(time_str, "%d:--:%d", time->hour, time->sec);
-		break;
-	case BLINK_SEC:
-		sprintf(time_str, "%d:%d:--", time->hour, time->min);
-		break;
-	case BLINK_PM:
-		break;
-	default:
-		break;
-	}
-	ssd1306_WriteString(time_str,Font_11x18,Black);
-}
-
-char* get_time_string(ds3231_time_t* time){
-	static char time_str[9];
-
-	sprintf(time_str, "%d:%d:%d", time->hour, time->min, time->sec);
-
-	return time_str;
-}
+//char* get_time_string(ds3231_time_t* time){
+//	static char time_str[9];
+//
+//	sprintf(time_str, "%d:%d:%d", time->hour, time->min, time->sec);
+//
+//	return time_str;
+//}
 
 
 

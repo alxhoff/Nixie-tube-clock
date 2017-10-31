@@ -13,6 +13,13 @@
 ds3231_time_t set_time = {0};
 ds3231_alarm_t set_alarm = {0};
 
+//BUTTONS
+uint8_t button_input[NUM_OF_BUTTONS] = {0};
+uint8_t button_last_state[NUM_OF_BUTTONS] = {0};
+uint8_t button_current_state[NUM_OF_BUTTONS] = {0};
+uint32_t button_last_time[NUM_OF_BUTTONS] = {0};
+uint32_t debounce_delay = DEBOUNCE_DELAY;
+
 void ButtonsInit(){
 
 	GPIO_InitTypeDef GPIO_InitStruct;
@@ -58,15 +65,6 @@ void ButtonsInit(){
 void buttons_listener_callback(void)
 {
 
-//	uint8_t button_input[NUM_OF_BUTTONS] = {0};
-//	uint8_t button_last_state[NUM_OF_BUTTONS] = {0};
-//	uint8_t button_current_state[NUM_OF_BUTTONS] = {0};
-//	uint32_t button_last_time[NUM_OF_BUTTONS] = {0};
-//	uint32_t debounce_delay = DEBOUNCE_DELAY;
-
-  /* Infinite loop */
-//	for(;;)
-//	{
 		for(button_positions i=LEFT1;i<MAX_VALUE+1;i++){
 			switch(i){
 			case LEFT1:
@@ -505,5 +503,4 @@ void buttons_listener_callback(void)
 			}
 			button_last_state[i]=button_input[i];
 		}
-//	}
 }

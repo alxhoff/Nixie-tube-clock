@@ -27,7 +27,7 @@ typedef enum {ALARM_EVERY_SECOND, ALARM_MATCH_SECONDS,
 		ALARM_MATCH_MINUTES, ALARM_MATCH_HOURS,
 		ALARM_MATCH_DATE_OR_DAY} ALARM_TYPE_t;
 
-typedef enum {ALARM_ONE, ALARM_TWO, BOTH} ALARM_NUMBER_t;
+typedef enum {ALARM_ONE, ALARM_TWO, BOTH} TYPE_TIME_t;
 
 typedef enum {DAY_OF_MONTH, DAY_OF_WEEK} DY_DT_t;
 
@@ -130,7 +130,7 @@ void DS3231_set_time(I2C_HandleTypeDef *hi2c, ds3231_time_t* time);
 void DS3231_get_time(I2C_HandleTypeDef *hi2c, ds3231_time_t* return_struct);
 float DS3231_get_temp(I2C_HandleTypeDef *hi2c);
 void DS3231_set_alarm(I2C_HandleTypeDef *hi2c, ds3231_alarm_t* alarm_time,
-			ALARM_NUMBER_t alarm_number);
+			TYPE_TIME_t alarm_number);
 void DS3231_register_dump(I2C_HandleTypeDef *hi2c, ds3231_registers_t* return_struct);
 
 #endif /* DS3231_STM32_ALEX_H_ */
