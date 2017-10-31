@@ -13,11 +13,12 @@
 uint8_t blink_flag = 0;
 
 //STATES
-void draw_time(uint8_t x, uint8_t y, ds3231_time_t* time)
+void draw_time(uint8_t x, uint8_t y)
 {
 	char time_str[] = "12:59:59";
 	LCD_dev->cursor(LCD_dev, x, y);
-	sprintf(time_str, "%d:%d:%d", time->hour, time->min, time->sec);
+	sprintf(time_str, "%d:%d:%d", RTC_dev->time_1->hour,
+			RTC_dev->time_1->min, RTC_dev->time_1->sec);
 	LCD_dev->string(LCD_dev, time_str);
 }
 
@@ -133,7 +134,7 @@ void draw_year( uint8_t x, uint8_t y, uint16_t year)
 void draw_disp_time_state(uint8_t x, uint8_t y)
 {
 	RTC_dev->get_time(RTC_dev);
-	draw_time(x + 10, y + 5, RTC_dev->time_1);
+	draw_time(x + 10, y + 5);
 	if(RTC_dev->time_1->twelve_hour)
 		draw_am_pm( x + 100, y + 5, RTC_dev->time_1->pm);
 
@@ -151,15 +152,22 @@ void draw_alarm( uint8_t x, uint8_t y, TYPE_TIME_t alarm)
 	case ALARM_ONE:
 		sprintf(time_str, "%d:%d:%d", RTC_dev->alarm_1->hour,
 				RTC_dev->alarm_1->min, RTC_dev->alarm_1->sec);
+		LCD_dev->string(LCD_dev, time_str);
+		LCD_dev->cursor(LCD_dev, x, y + 40);
+		sprintf(time_str, "Alarm 1");
+		LCD_dev->string(LCD_dev, time_str);
 		break;
 	case ALARM_TWO:
 		sprintf(time_str, "%d:%d:%d", RTC_dev->alarm_1->hour,
 				RTC_dev->alarm_1->min, 0);
+		LCD_dev->string(LCD_dev, time_str);
+		LCD_dev->cursor(LCD_dev, x, y + 40);
+		sprintf(time_str, "Alarm 2");
+		LCD_dev->string(LCD_dev, time_str);
 		break;
 	default:
 		break;
 	}
-	LCD_dev->string(LCD_dev, time_str);
 }
 
 void draw_disp_alarm1_state(uint8_t x, uint8_t y)
@@ -169,8 +177,8 @@ void draw_disp_alarm1_state(uint8_t x, uint8_t y)
 	if(RTC_dev->alarm_1->twelve_hour)
 		draw_am_pm(x + 100, y + 5, RTC_dev->alarm_1->pm);
 
-	draw_day( x + 4, y + 25, RTC_dev->alarm_1->week_day);
-	draw_date( x + 35, y + 25, RTC_dev->alarm_1->date);
+	draw_day( x + 10, y + 25, RTC_dev->alarm_1->week_day);
+	draw_date( x + 50, y + 25, RTC_dev->alarm_1->date);
 }
 
 void draw_disp_alarm2_state(uint8_t x, uint8_t y)
@@ -180,19 +188,19 @@ void draw_disp_alarm2_state(uint8_t x, uint8_t y)
 	if(RTC_dev->alarm_2->twelve_hour)
 		draw_am_pm(x + 100, y + 5, RTC_dev->alarm_2->pm);
 
-	draw_day( x + 4, y + 25, RTC_dev->alarm_2->week_day);
-	draw_date( x + 35, y + 25, RTC_dev->alarm_2->date);
+	draw_day( x + 10, y + 25, RTC_dev->alarm_2->week_day);
+	draw_date( x + 50, y + 25, RTC_dev->alarm_2->date);
 }
 
-void draw_set_states(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y,
-		void* timeStruct)
+//TODO remove dependency on retrieving time a second time
+void draw_set_states( uint8_t x, uint8_t y)
 {
 	LCD_dev->cursor(LCD_dev, 25, 5);
 	switch(render_state){
 	case SET_TIME:{
 		RTC_dev->get_time(RTC_dev);
 		if(blink_flag){
-			draw_time( x + 10, y + 5, RTC_dev->time_1);
+			draw_time( x + 10, y + 5);
 		}else{
 			draw_time_blink(x + 10, y + 5, TIME, set_state);
 		}
@@ -220,7 +228,7 @@ void draw_set_states(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y,
 		break;
 	}
 
-	LCD_dev->cursor(LCD_dev, 23, 35);
+	LCD_dev->cursor(LCD_dev, x + 15, y + 25);
 
 	switch(set_state){
 	case SET_HOUR:

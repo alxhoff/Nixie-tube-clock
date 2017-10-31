@@ -10,8 +10,8 @@
 //#include "draw.h"
 #include "externs.h"
 
-SCREEN_RENDER_STATE_t render_state = DISP_ALARM2;
-SET_STATE_t set_state = SET_HOUR;
+SCREEN_RENDER_STATE_t render_state = SET_TIME;
+SET_STATE_t set_state = SET_SEC;
 
 void render_task_callback(void)
 {

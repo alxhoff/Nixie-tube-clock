@@ -206,6 +206,7 @@ int main(void)
 	  if(HAL_GetTick() > ticks + BLINK_SPEED){
 	 		  blink_flag = !blink_flag;
 	 		  ticks = HAL_GetTick();
+	 		  HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
 	  }
 
 
