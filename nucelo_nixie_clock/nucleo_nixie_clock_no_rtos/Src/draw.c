@@ -198,7 +198,7 @@ void draw_set_states( uint8_t x, uint8_t y)
 		RTC_dev->get_time(RTC_dev);
 		if(blink_flag && (set_state == SETTING_DIGIT)){
 			draw_time_blink(x + 10, y + 5, TIME, set_target);
-		}else if(set_state == NOT_SETTING){
+		}else if((set_state == NOT_SETTING) || (set_state == SETTING_MOVE)){
 			draw_time_blink(x + 10, y + 5, TIME, set_target);
 		}else{
 			draw_time( x + 10, y + 5);

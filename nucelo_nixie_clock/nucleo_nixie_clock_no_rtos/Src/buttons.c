@@ -50,6 +50,7 @@ void buttons_handle_center_not_setting(void)
 	case DISP_ALARM2:
 		break;
 	case SET_TIME:
+		set_state = SETTING_MOVE;
 		break;
 	case SET_ALARM1:
 		break;
@@ -210,7 +211,34 @@ void buttons_handle_left_setting_digit(void)
 
 void buttons_handle_left_setting_move(void)
 {
-
+	switch(set_target){
+		case SET_HOUR:
+			if((render_state == SET_ALARM1) || (render_state == SET_ALARM2))
+				set_target = SET_DATE;
+			else
+				set_target = SET_YEAR;
+			break;
+		case SET_MIN:
+			set_target = SET_HOUR;
+			break;
+		case SET_SEC:
+			set_target = SET_MIN;
+			break;
+		case SET_DAY:
+			set_target = SET_SEC;
+			break;
+		case SET_DATE:
+			set_target = SET_DAY;
+			break;
+		case SET_MONTH:
+			set_target = SET_DATE;
+			break;
+		case SET_YEAR:
+			set_target = SET_MONTH;
+			break;
+		default:
+			break;
+	}
 }
 
 void buttons_handle_left(void)
@@ -274,12 +302,38 @@ void buttons_handle_right_setting_digit(void)
 
 void buttons_handle_right_setting_move(void)
 {
-
+	switch(set_target){
+		case SET_HOUR:
+			set_target = SET_MIN;
+			break;
+		case SET_MIN:
+			set_target = SET_SEC;
+			break;
+		case SET_SEC:
+			set_target = SET_DAY;
+			break;
+		case SET_DAY:
+			set_target = SET_DATE;
+			break;
+		case SET_DATE:
+			if((render_state == SET_ALARM1) || (render_state == SET_ALARM2))
+				set_target = SET_HOUR;
+			else
+				set_target = SET_MONTH;
+			break;
+		case SET_MONTH:
+			set_target = SET_YEAR;;
+			break;
+		case SET_YEAR:
+			set_target = SET_HOUR;
+			break;
+		default:
+			break;
+	}
 }
 
 void buttons_handle_right(void)
 {
-
 	switch(set_state){
 	case NOT_SETTING:
 		buttons_handle_right_not_setting();
