@@ -224,8 +224,11 @@ void buttons_handle_left_setting_move(void)
 		case SET_SEC:
 			set_target = SET_MIN;
 			break;
-		case SET_DAY:
+		case SET_PM:
 			set_target = SET_SEC;
+			break;
+		case SET_DAY:
+			set_target = SET_PM;
 			break;
 		case SET_DATE:
 			set_target = SET_DAY;
@@ -310,6 +313,9 @@ void buttons_handle_right_setting_move(void)
 			set_target = SET_SEC;
 			break;
 		case SET_SEC:
+			set_target = SET_PM;
+			break;
+		case SET_PM:
 			set_target = SET_DAY;
 			break;
 		case SET_DAY:

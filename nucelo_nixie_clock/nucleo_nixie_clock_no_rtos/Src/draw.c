@@ -316,18 +316,34 @@ void draw_time_blink( uint8_t x, uint8_t y,TYPE_TIME_t type,
 		LCD_dev->string(LCD_dev, time_str);
 		break;
 	case SET_DAY:{
-		char day_str = "___";
+		char* day_str = "---";
 		LCD_dev->cursor(LCD_dev, x, y + 20);
 		LCD_dev->string(LCD_dev, day_str);
 		}
 		break;
-	case SET_DATE:
+	case SET_DATE:{
+		char* date_str = "--";
+		LCD_dev->cursor(LCD_dev, x + 35, y + 20);
+		LCD_dev->string(LCD_dev, date_str);
+		}
 		break;
-	case SET_MONTH:
+	case SET_MONTH:{
+		char* month_str = "---";
+		LCD_dev->cursor(LCD_dev, x + 65, y + 20);
+		LCD_dev->string(LCD_dev, month_str);
+		}
 		break;
-	case SET_YEAR:
+	case SET_YEAR:{
+		char* year_str = "----";
+		LCD_dev->cursor(LCD_dev, x, y + 40);
+		LCD_dev->string(LCD_dev, year_str);
+		}
 		break;
-	case SET_PM:
+	case SET_PM:{
+		char* pm_str = "--";
+		LCD_dev->cursor(LCD_dev, x + 90, y);
+		LCD_dev->string(LCD_dev, pm_str);
+		}
 		break;
 	default:
 		break;
