@@ -63,17 +63,16 @@ void buttons_handle_center_not_setting(void)
 
 void buttons_handle_center_setting_digit(void)
 {
-
+	set_state = SETTING_MOVE;
 }
 
 void buttons_handle_center_setting_move(void)
 {
-
+	set_state = SETTING_DIGIT;
 }
 
 void buttons_handle_center(void)
 {
-
 	switch(set_state){
 	case NOT_SETTING:
 		buttons_handle_center_not_setting();
@@ -91,157 +90,18 @@ void buttons_handle_center(void)
 
 void buttons_handle_left_not_setting(void)
 {
-	switch(render_state){
-	case DISP_TIME:
-		RTC_dev->get_alarm(RTC_dev, ALARM_TWO);
-		render_state = SET_ALARM2;
-		break;
-	case DISP_ALARM1:
-		RTC_dev->get_time(RTC_dev);
-		render_state = DISP_TIME;
-		break;
-	case DISP_ALARM2:
-		RTC_dev->get_alarm(RTC_dev, ALARM_ONE);
-		render_state = DISP_ALARM1;
-		break;
-	case SET_TIME:
-		RTC_dev->get_alarm(RTC_dev, ALARM_TWO);
-		render_state = DISP_ALARM2;
-		break;
-	case SET_ALARM1:
-		RTC_dev->get_time(RTC_dev);
-		render_state = SET_TIME;
-		break;
-	case SET_ALARM2:
-		RTC_dev->get_alarm(RTC_dev, ALARM_ONE);
-		render_state = SET_ALARM1;
-		break;
-	default:
-		break;
-	}
+	render_state = DISP_TIME;
 }
 
 
 void buttons_handle_left_setting_digit(void)
 {
-//	switch(render_state){
-//		case DISP_TIME:
-//			break;
-//		case DISP_ALARM1:
-//			break;
-//		case DISP_ALARM2:
-//			break;
-//		case SET_TIME:
-//			switch(set_state){
-//			case SET_HOUR:
-//				if(set_time.twelve_hour){
-//					if(set_time.hour == 12){
-//						set_time.hour = 1;
-//					}else{
-//						set_time.hour++;
-//					}
-//				}else{
-//					if(set_time.hour == 23){
-//						set_time.hour = 0;
-//					}else{
-//						set_time.hour++;
-//					}
-//				}
-//				break;
-//			case SET_MIN:
-//				if(set_time.min == 59){
-//					set_time.min = 0;
-//				}else{
-//					set_time.min++;
-//				}
-//				break;
-//			case SET_SEC:
-//				set_time.sec = 0;
-//				break;
-//			case SET_DAY:
-//				if(set_time.week_day == 7){
-//					set_time.week_day = 1;
-//				}else{
-//					set_time.week_day++;
-//				}
-//				break;
-//			case SET_DATE:
-//				if(set_time.date == 31){
-//					set_time.date = 1;
-//				}else{
-//					set_time.date++;
-//				}
-//				break;
-//			case SET_MONTH:
-//				if(set_time.month == 12){
-//					set_time.month = 1;
-//				}else{
-//					set_time.month++;
-//				}
-//				break;
-//			case SET_YEAR:
-//				set_time.year++;
-//				break;
-//			case SET_PM:
-//				if(set_time.pm == PM){
-//					set_time.pm = AM;
-//				}else{
-//					set_time.pm = PM;
-//				}
-//				break;
-//			case SET_TWELVE_HOUR:
-//				if(set_time.twelve_hour == TRUE){
-//					set_time.twelve_hour = FALSE;
-//				}else{
-//					set_time.twelve_hour = TRUE;
-//				}
-//				break;
-//			default:
-//				break;
-//			}
-//			break;
-//		case SET_ALARM1:
-//			break;
-//		case SET_ALARM2:
-//			break;
-//		default:
-//			break;
-//		}
+	set_state = SETTING_MOVE;
 }
 
 void buttons_handle_left_setting_move(void)
 {
-	switch(set_target){
-		case SET_HOUR:
-			if((render_state == SET_ALARM1) || (render_state == SET_ALARM2))
-				set_target = SET_DATE;
-			else
-				set_target = SET_YEAR;
-			break;
-		case SET_MIN:
-			set_target = SET_HOUR;
-			break;
-		case SET_SEC:
-			set_target = SET_MIN;
-			break;
-		case SET_PM:
-			set_target = SET_SEC;
-			break;
-		case SET_DAY:
-			set_target = SET_PM;
-			break;
-		case SET_DATE:
-			set_target = SET_DAY;
-			break;
-		case SET_MONTH:
-			set_target = SET_DATE;
-			break;
-		case SET_YEAR:
-			set_target = SET_MONTH;
-			break;
-		default:
-			break;
-	}
+	set_state = NOT_SETTING;
 }
 
 void buttons_handle_left(void)
@@ -261,10 +121,202 @@ void buttons_handle_left(void)
 	}
 }
 
-void buttons_handle_right_set_time(void)
+void buttons_handle_right_setting_digit(void)
 {
-
+	switch(render_state){
+		case DISP_TIME:
+		case DISP_ALARM1:
+		case DISP_ALARM2:
+			break;
+		case SET_TIME:
+			switch(set_target){
+			case SET_HOUR:
+				if(RTC_dev->time_1->twelve_hour){
+					if(RTC_dev->time_1->hour == 12){
+						RTC_dev->time_1->hour = 1;
+					}else{
+						RTC_dev->time_1->hour++;
+					}
+				}else{
+					if(RTC_dev->time_1->hour == 23){
+						RTC_dev->time_1->hour = 0;
+					}else{
+						RTC_dev->time_1->hour++;
+					}
+				}
+				break;
+			case SET_MIN:
+				if(RTC_dev->time_1->min == 59){
+					RTC_dev->time_1->min = 0;
+				}else{
+					RTC_dev->time_1->min++;
+				}
+				break;
+			case SET_SEC:
+				RTC_dev->time_1->sec = 0;
+				break;
+			case SET_DAY:
+				if(RTC_dev->time_1->week_day == 7){
+					RTC_dev->time_1->week_day = 1;
+				}else{
+					RTC_dev->time_1->week_day++;
+				}
+				break;
+			case SET_DATE:
+				if(RTC_dev->time_1->date == 31){
+					RTC_dev->time_1->date = 1;
+				}else{
+					RTC_dev->time_1->date++;
+				}
+				break;
+			case SET_MONTH:
+				if(RTC_dev->time_1->month == 12){
+					RTC_dev->time_1->month = 1;
+				}else{
+					RTC_dev->time_1->month++;
+				}
+				break;
+			case SET_YEAR:
+				RTC_dev->time_1->year++;
+				break;
+			case SET_PM:
+				if(RTC_dev->time_1->pm == PM){
+					RTC_dev->time_1->pm = AM;
+				}else{
+					RTC_dev->time_1->pm = PM;
+				}
+				break;
+			case SET_TWELVE_HOUR:
+				if(RTC_dev->time_1->twelve_hour == TRUE){
+					RTC_dev->time_1->twelve_hour = FALSE;
+				}else{
+					RTC_dev->time_1->twelve_hour = TRUE;
+				}
+				break;
+			default:
+				break;
+			}
+			break;
+		case SET_ALARM1:
+			switch(set_target){
+			case SET_HOUR:
+				if(RTC_dev->alarm_1->twelve_hour){
+					if(RTC_dev->alarm_1->hour == 12){
+						RTC_dev->alarm_1->hour = 1;
+					}else{
+						RTC_dev->alarm_1->hour++;
+					}
+				}else{
+					if(RTC_dev->alarm_1->hour == 23){
+						RTC_dev->alarm_1->hour = 0;
+					}else{
+						RTC_dev->alarm_1->hour++;
+					}
+				}
+				break;
+			case SET_MIN:
+				if(RTC_dev->alarm_1->min == 59){
+					RTC_dev->alarm_1->min = 0;
+				}else{
+					RTC_dev->alarm_1->min++;
+				}
+				break;
+			case SET_SEC:
+				RTC_dev->alarm_1->sec = 0;
+				break;
+			case SET_DAY:
+				if(RTC_dev->alarm_1->week_day == 7){
+					RTC_dev->alarm_1->week_day = 1;
+				}else{
+					RTC_dev->alarm_1->week_day++;
+				}
+				break;
+			case SET_DATE:
+				if(RTC_dev->alarm_1->date == 31){
+					RTC_dev->alarm_1->date = 1;
+				}else{
+					RTC_dev->alarm_1->date++;
+				}
+				break;
+			case SET_PM:
+				if(RTC_dev->alarm_1->pm == PM){
+					RTC_dev->alarm_1->pm = AM;
+				}else{
+					RTC_dev->alarm_1->pm = PM;
+				}
+				break;
+			case SET_TWELVE_HOUR:
+				if(RTC_dev->alarm_1->twelve_hour == TRUE){
+					RTC_dev->alarm_1->twelve_hour = FALSE;
+				}else{
+					RTC_dev->alarm_1->twelve_hour = TRUE;
+				}
+				break;
+			default:
+				break;
+			}
+			break;
+		case SET_ALARM2:
+			switch(set_target){
+			case SET_HOUR:
+				if(RTC_dev->alarm_2->twelve_hour){
+					if(RTC_dev->alarm_2->hour == 12){
+						RTC_dev->alarm_2->hour = 1;
+					}else{
+						RTC_dev->alarm_2->hour++;
+					}
+				}else{
+					if(RTC_dev->alarm_2->hour == 23){
+						RTC_dev->alarm_2->hour = 0;
+					}else{
+						RTC_dev->alarm_2->hour++;
+					}
+				}
+				break;
+			case SET_MIN:
+				if(RTC_dev->alarm_2->min == 59){
+					RTC_dev->alarm_2->min = 0;
+				}else{
+					RTC_dev->alarm_2->min++;
+				}
+				break;
+			case SET_DAY:
+				if(RTC_dev->alarm_2->week_day == 7){
+					RTC_dev->alarm_2->week_day = 1;
+				}else{
+					RTC_dev->alarm_2->week_day++;
+				}
+				break;
+			case SET_DATE:
+				if(RTC_dev->alarm_2->date == 31){
+					RTC_dev->alarm_2->date = 1;
+				}else{
+					RTC_dev->alarm_2->date++;
+				}
+				break;
+			case SET_PM:
+				if(RTC_dev->alarm_2->pm == PM){
+					RTC_dev->alarm_2->pm = AM;
+				}else{
+					RTC_dev->alarm_2->pm = PM;
+				}
+				break;
+			case SET_TWELVE_HOUR:
+				if(RTC_dev->alarm_2->twelve_hour == TRUE){
+					RTC_dev->alarm_2->twelve_hour = FALSE;
+				}else{
+					RTC_dev->alarm_2->twelve_hour = TRUE;
+				}
+				break;
+			default:
+				break;
+			}
+			break;
+		default:
+			break;
+	}
 }
+
 
 void buttons_handle_right_not_setting(void)
 {
@@ -296,11 +348,6 @@ void buttons_handle_right_not_setting(void)
 	default:
 		break;
 	}
-}
-
-void buttons_handle_right_setting_digit(void)
-{
-
 }
 
 void buttons_handle_right_setting_move(void)
@@ -358,313 +405,46 @@ void buttons_handle_right(void)
 void buttons_listener_callback(void)
 {
 
-		for(BUTTON_POSITIONS_t i=LEFT1;i<MAX_VALUE;i++){
-			switch(i){
-			case LEFT1:
-				button_input[i] = HAL_GPIO_ReadPin(LEFT_BUTTON1_PORT, LEFT_BUTTON1_PIN);
-				break;
-			case CENTER1:
-				button_input[i] = HAL_GPIO_ReadPin(CENTER_BUTTON1_PORT, CENTER_BUTTON1_PIN);
-				break;
-			case RIGHT1:
-				button_input[i] = HAL_GPIO_ReadPin(RIGHT_BUTTON1_PORT, RIGHT_BUTTON1_PIN);
-				break;
-			default:
-				break;
-			}
-			if(button_input[i] != button_last_state[i]){
-				button_last_time[i] = HAL_GetTick();
-			}
-			if((HAL_GetTick() - button_last_time[i]) > debounce_delay){
-				if(button_input[i] != button_current_state[i]){
-					button_current_state[i] = button_input[i];
-					//press
-					if(!button_input[i]){
-						switch(i){
-							case LEFT1:
-								buttons_handle_left();
-								break;
-							case CENTER1:
-								buttons_handle_center();
-								break;
-							case RIGHT1:
-								buttons_handle_right();
-								break;
-							default:
-								break;
-						}
-					//release
-					}else{
+	for(BUTTON_POSITIONS_t i=LEFT1;i<MAX_VALUE;i++){
+		switch(i){
+		case LEFT1:
+			button_input[i] = HAL_GPIO_ReadPin(LEFT_BUTTON1_PORT, LEFT_BUTTON1_PIN);
+			break;
+		case CENTER1:
+			button_input[i] = HAL_GPIO_ReadPin(CENTER_BUTTON1_PORT, CENTER_BUTTON1_PIN);
+			break;
+		case RIGHT1:
+			button_input[i] = HAL_GPIO_ReadPin(RIGHT_BUTTON1_PORT, RIGHT_BUTTON1_PIN);
+			break;
+		default:
+			break;
+		}
+		if(button_input[i] != button_last_state[i]){
+			button_last_time[i] = HAL_GetTick();
+		}
+		if((HAL_GetTick() - button_last_time[i]) > debounce_delay){
+			if(button_input[i] != button_current_state[i]){
+				button_current_state[i] = button_input[i];
+				//press
+				if(!button_input[i]){
+					switch(i){
+						case LEFT1:
+							buttons_handle_left();
+							break;
+						case CENTER1:
+							buttons_handle_center();
+							break;
+						case RIGHT1:
+							buttons_handle_right();
+							break;
+						default:
+							break;
 					}
+				//release
+				}else{
 				}
 			}
-			button_last_state[i]=button_input[i];
 		}
+		button_last_state[i]=button_input[i];
+	}
 }
-
-
-
-
-//							case LEFT2:
-//								switch(render_state){
-//								case DISP_TIME:
-//									break;
-//								case DISP_ALARM1:
-//									break;
-//								case DISP_ALARM2:
-//									break;
-//								case SET_TIME:
-//									switch(set_state){
-//									case SET_HOUR:
-//										if(set_time.twelve_hour){
-//											if(set_time.hour == 12){
-//												set_time.hour = 1;
-//											}else{
-//												set_time.hour++;
-//											}
-//										}else{
-//											if(set_time.hour == 23){
-//												set_time.hour = 0;
-//											}else{
-//												set_time.hour++;
-//											}
-//										}
-//										break;
-//									case SET_MIN:
-//										if(set_time.min == 59){
-//											set_time.min = 0;
-//										}else{
-//											set_time.min++;
-//										}
-//										break;
-//									case SET_SEC:
-//										set_time.sec = 0;
-//										break;
-//									case SET_DAY:
-//										if(set_time.week_day == 7){
-//											set_time.week_day = 1;
-//										}else{
-//											set_time.week_day++;
-//										}
-//										break;
-//									case SET_DATE:
-//										if(set_time.date == 31){
-//											set_time.date = 1;
-//										}else{
-//											set_time.date++;
-//									gl	}
-//										break;
-//									case SET_MONTH:
-//										if(set_time.month == 12){
-//											set_time.month = 1;
-//										}else{
-//											set_time.month++;
-//										}
-//										break;
-//									case SET_YEAR:
-//										set_time.year++;
-//										break;
-//									case SET_PM:
-//										if(set_time.pm == PM){
-//											set_time.pm = AM;
-//										}else{
-//											set_time.pm = PM;
-//										}
-//										break;
-//									case SET_TWELVE_HOUR:
-//										if(set_time.twelve_hour == TRUE){
-//											set_time.twelve_hour = FALSE;
-//										}else{
-//											set_time.twelve_hour = TRUE;
-//										}
-//										break;
-//									default:
-//										break;
-//									}
-//									break;
-//								case SET_ALARM1:
-//									break;
-//								case SET_ALARM2:
-//									break;
-//								default:
-//									break;
-//								}
-//								break;
-//							case CENTER2:
-//								HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
-//								break;
-//							case RIGHT2:
-//								switch(render_state){
-//								case DISP_TIME:
-//									break;
-//								case DISP_ALARM1:
-//									break;
-//								case DISP_ALARM2:
-//									break;
-//								case SET_TIME:
-//									switch(set_state){
-//									case SET_HOUR:
-//										if(set_time.twelve_hour){
-//											if(set_time.hour == 1){
-//												set_time.hour = 12;
-//											}else{
-//												set_time.hour--;
-//											}
-//										}else{
-//											if(set_time.hour == 0){
-//												set_time.hour = 23;
-//											}else{
-//												set_time.hour--;
-//											}
-//										}
-//										break;
-//									case SET_MIN:
-//										if(set_time.min == 0){
-//											set_time.min = 59;
-//										}else{
-//											set_time.min--;
-//										}
-//										break;
-//									case SET_SEC:
-//										set_time.sec = 0;
-//										break;
-//									case SET_DAY:
-//										if(set_time.week_day == 1){
-//											set_time.week_day = 7;
-//										}else{
-//											set_time.week_day--;
-//										}
-//										break;
-//									case SET_DATE:
-//										if(set_time.date == 1){
-//											set_time.date = 31;
-//										}else{
-//											set_time.date--;
-//										}
-//										break;
-//									case SET_MONTH:
-//										if(set_time.month == 1){
-//											set_time.month = 12;
-//										}else{
-//											set_time.month--;
-//										}
-//										break;
-//									case SET_YEAR:
-//										set_time.year--;
-//										break;
-//									case SET_PM:
-//										if(set_time.pm == AM){
-//											set_time.pm = PM;
-//										}else{
-//											set_time.pm = AM;
-//										}
-//										break;
-//									case SET_TWELVE_HOUR:
-//										if(set_time.twelve_hour == FALSE){
-//											set_time.twelve_hour = TRUE;
-//										}else{
-//											set_time.twelve_hour = FALSE;
-//										}
-//										break;
-//									default:
-//										break;
-//									}
-//									break;
-//								case SET_ALARM1:
-//									switch(render_state){
-//								case DISP_TIME:
-//									break;
-//								case DISP_ALARM1:
-//									break;
-//								case DISP_ALARM2:
-//									break;
-//								case SET_TIME:
-//									switch(set_state){
-//									case SET_HOUR:
-//										if(set_alarm.twelve_hour){
-//											if(set_alarm.hour == 1){
-//												set_alarm.hour = 12;
-//											}else{
-//												set_alarm.hour--;
-//											}
-//										}else{
-//											if(set_alarm.hour == 0){
-//												set_alarm.hour = 23;
-//											}else{
-//												set_alarm.hour--;
-//											}
-//										}
-//										break;
-//									case SET_MIN:
-//										if(set_alarm.min == 0){
-//											set_alarm.min = 59;
-//										}else{
-//											set_alarm.min--;
-//										}
-//										break;
-//									case SET_SEC:
-//										set_alarm.sec = 0;
-//										break;
-//									case SET_DAY:
-//										if(set_alarm.week_day == 1){
-//											set_alarm.week_day = 7;
-//										}else{
-//											set_alarm.week_day--;
-//										}
-//										break;
-//									case SET_DATE:
-//										if(set_alarm.date == 1){
-//											set_alarm.date = 31;
-//										}else{
-//											set_alarm.date--;
-//										}
-//										break;
-//									case SET_PM:
-//										if(set_alarm.pm == AM){
-//											set_alarm.pm = PM;
-//										}else{
-//											set_alarm.pm = AM;
-//										}
-//										break;
-//									case SET_TWELVE_HOUR:
-//										if(set_alarm.twelve_hour == FALSE){
-//											set_alarm.twelve_hour = TRUE;
-//										}else{
-//											set_alarm.twelve_hour = FALSE;
-//										}
-//										break;
-//									case SET_DATE_OR_DAY:
-//										if(set_alarm.date_or_day == DAY_OF_MONTH){
-//											set_alarm.date_or_day = DAY_OF_WEEK;
-//										}else{
-//											set_alarm.date_or_day = DAY_OF_MONTH;
-//										}
-//										break;
-//									case SET_ALARM_TYPE:
-//										if(set_alarm.alarm_type == ALARM_EVERY_SECOND){
-//											set_alarm.alarm_type = ALARM_MATCH_DATE_OR_DAY;
-//										}else{
-//											set_alarm.alarm_type--;
-//										}
-//										break;
-//									default:
-//										break;
-//									}
-//									break;
-//								case SET_ALARM1:
-//									break;
-//								case SET_ALARM2:
-//									break;
-//								default:
-//									break;
-//								}
-//								break;
-//									break;
-//								case SET_ALARM2:
-//									break;
-//								default:
-//									break;
-//								}
-//								break;
-//							default:
-//								break;
