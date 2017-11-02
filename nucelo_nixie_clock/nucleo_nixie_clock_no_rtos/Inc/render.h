@@ -8,7 +8,7 @@
 #ifndef RENDER_H_
 #define RENDER_H_
 
-#include <ds3231.h>
+#include "ds3231.h"
 #include "ssd1306.h"
 
 #define BLINK_SPEED		1000

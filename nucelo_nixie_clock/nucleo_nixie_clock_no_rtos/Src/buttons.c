@@ -34,27 +34,26 @@ void ButtonsInit(){
 	HAL_GPIO_Init(CENTER_BUTTON1_PORT, &GPIO_InitStruct);
 
 	/*Configure GPIO pin : PA3 */
-	GPIO_InitStruct.Pin = LEFT_BUTTON1_PIN;
+	GPIO_InitStruct.Pin = BACK_BUTTON1_PIN;
 	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
 	GPIO_InitStruct.Pull = GPIO_PULLUP;
-	HAL_GPIO_Init(LEFT_BUTTON1_PORT, &GPIO_InitStruct);
+	HAL_GPIO_Init(BACK_BUTTON1_PORT, &GPIO_InitStruct);
 }
 
 void buttons_handle_center_not_setting(void)
 {
 	switch(render_state){
 	case DISP_TIME:
-		break;
-	case DISP_ALARM1:
-		break;
-	case DISP_ALARM2:
-		break;
-	case SET_TIME:
+		render_state = SET_TIME;
 		set_state = SETTING_MOVE;
 		break;
-	case SET_ALARM1:
+	case DISP_ALARM1:
+		render_state = SET_ALARM1;
+		set_state = SETTING_MOVE;
 		break;
-	case SET_ALARM2:
+	case DISP_ALARM2:
+		render_state = SET_ALARM2;
+		set_state = SETTING_MOVE;
 		break;
 	default:
 		break;
@@ -63,7 +62,6 @@ void buttons_handle_center_not_setting(void)
 
 void buttons_handle_center_setting_digit(void)
 {
-	set_state = SETTING_MOVE;
 }
 
 void buttons_handle_center_setting_move(void)
@@ -88,33 +86,59 @@ void buttons_handle_center(void)
 	}
 }
 
-void buttons_handle_left_not_setting(void)
+void buttons_handle_back_not_setting(void)
 {
 	render_state = DISP_TIME;
 }
 
 
-void buttons_handle_left_setting_digit(void)
+void buttons_handle_back_setting_digit(void)
 {
 	set_state = SETTING_MOVE;
+	switch(render_state){
+	case SET_TIME:
+		RTC_dev->set_time(RTC_dev);
+		break;
+	case SET_ALARM1:
+		RTC_dev->set_alarm(RTC_dev, ALARM_ONE);
+		break;
+	case SET_ALARM2:
+		RTC_dev->set_alarm(RTC_dev, ALARM_TWO);
+		break;
+	default:
+		break;
+	}
 }
 
-void buttons_handle_left_setting_move(void)
+void buttons_handle_back_setting_move(void)
 {
 	set_state = NOT_SETTING;
+	switch(render_state){
+	case SET_TIME:
+		render_state = DISP_TIME;
+		break;
+	case SET_ALARM1:
+		render_state = DISP_ALARM1;
+		break;
+	case SET_ALARM2:
+		render_state = DISP_ALARM2;
+		break;
+	default:
+		break;
+	}
 }
 
-void buttons_handle_left(void)
+void buttons_handle_back(void)
 {
 	switch(set_state){
 	case NOT_SETTING:
-		buttons_handle_left_not_setting();
+		buttons_handle_back_not_setting();
 		break;
 	case SETTING_DIGIT:
-		buttons_handle_left_setting_digit();
+		buttons_handle_back_setting_digit();
 		break;
 	case SETTING_MOVE:
-		buttons_handle_left_setting_move();
+		buttons_handle_back_setting_move();
 		break;
 	default:
 		break;
@@ -317,7 +341,6 @@ void buttons_handle_right_setting_digit(void)
 	}
 }
 
-
 void buttons_handle_right_not_setting(void)
 {
 	switch(render_state){
@@ -330,18 +353,6 @@ void buttons_handle_right_not_setting(void)
 		render_state = DISP_ALARM2;
 		break;
 	case DISP_ALARM2:
-		RTC_dev->get_time(RTC_dev);
-		render_state = SET_TIME;
-		break;
-	case SET_TIME:
-		RTC_dev->get_alarm(RTC_dev, ALARM_ONE);
-		render_state = SET_ALARM1;
-		break;
-	case SET_ALARM1:
-		RTC_dev->get_alarm(RTC_dev, ALARM_TWO);
-		render_state = SET_ALARM2;
-		break;
-	case SET_ALARM2:
 		RTC_dev->get_time(RTC_dev);
 		render_state = DISP_TIME;
 		break;
@@ -405,10 +416,10 @@ void buttons_handle_right(void)
 void buttons_listener_callback(void)
 {
 
-	for(BUTTON_POSITIONS_t i=LEFT1;i<MAX_VALUE;i++){
+	for(BUTTON_POSITIONS_t i=BACK1;i<MAX_VALUE;i++){
 		switch(i){
-		case LEFT1:
-			button_input[i] = HAL_GPIO_ReadPin(LEFT_BUTTON1_PORT, LEFT_BUTTON1_PIN);
+		case BACK1:
+			button_input[i] = HAL_GPIO_ReadPin(BACK_BUTTON1_PORT, BACK_BUTTON1_PIN);
 			break;
 		case CENTER1:
 			button_input[i] = HAL_GPIO_ReadPin(CENTER_BUTTON1_PORT, CENTER_BUTTON1_PIN);
@@ -428,8 +439,8 @@ void buttons_listener_callback(void)
 				//press
 				if(!button_input[i]){
 					switch(i){
-						case LEFT1:
-							buttons_handle_left();
+						case BACK1:
+							buttons_handle_back();
 							break;
 						case CENTER1:
 							buttons_handle_center();
