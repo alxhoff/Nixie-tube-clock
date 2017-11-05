@@ -45,6 +45,7 @@
 #include "ssd1306.h"
 #include "render.h"
 #include "buttons.h"
+#include "nixie.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -57,6 +58,8 @@ SSD1306_device_t* LCD_dev;
 //RTC
 DS3231_device_t* RTC_dev;
 
+//NIXIE
+nixie_tube_array_t NIXIE_dev;
 
 /* USER CODE END PV */
 
@@ -103,6 +106,7 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
 
+  	  int8_t ret = 0;
 
 	//LCD
 	SSD1306_device_init_t LCD_init_dev =
@@ -129,7 +133,7 @@ int main(void)
 
 					.sec = 45,
 					.min = 59,
-					.hour = 11,
+					.hour = 12,
 					.pm = PM,
 
 					.week_day = 1,
@@ -193,6 +197,25 @@ int main(void)
 
 	//blink flag
 	uint32_t ticks = HAL_GetTick();
+
+	//TUBES
+  	ret = nixie_init_array(&NIXIE_dev, NIXIE_TUBE_ARRAY_SIZE);
+
+  	ret = nixie_enable_all(&NIXIE_dev);
+
+  	RTC_dev->get_time(RTC_dev);
+
+//  	NIXIE_dev.data_temp[0] = RTC_dev->time_1->hour / 10;
+//  	NIXIE_dev.data_temp[1] = RTC_dev->time_1->hour % 10;
+//  	NIXIE_dev.data_temp[2] = RTC_dev->time_1->min / 10;
+//  	NIXIE_dev.data_temp[3] = RTC_dev->time_1->min % 10;
+
+  	nixie_split_digit(RTC_dev->time_1->hour, &NIXIE_dev.data_temp[0]);
+  	nixie_split_digit(RTC_dev->time_1->min, &NIXIE_dev.data_temp[2]);
+
+  	nixie_set_tubes(&NIXIE_dev, NIXIE_dev.data_temp);
+
+  	nixie_compile_output(&NIXIE_dev);
 
   /* USER CODE END 2 */
 
