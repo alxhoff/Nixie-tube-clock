@@ -46,6 +46,7 @@
 #include "render.h"
 #include "buttons.h"
 #include "nixie.h"
+#include "SN54HC595.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -217,6 +218,27 @@ int main(void)
 
   	nixie_compile_output(&NIXIE_dev);
 
+  	//SHIFT REGISTERS
+  	shift_array_t SHIFT_dev = {
+  			.dev_count = 1,
+			.ser_in_pin = SHIFT_SER_DAT_Pin,
+			.ser_in_port = SHIFT_SER_DAT_GPIO_Port,
+			.ser_clk_pin 	= SHIFT_SER_CLK_Pin,
+			.ser_clk_port 	= SHIFT_SER_CLK_GPIO_Port,
+			.latch_pin 	= SHIFT_LATCH_Pin,
+			.latch_port 	= SHIFT_LATCH_GPIO_Port,
+			.out_ena_pin 	= SHIFT_ENA_Pin,
+			.out_ena_port 	= SHIFT_ENA_GPIO_Port,
+			.sr_clr_pin 	= SHIFT_CLR_Pin,
+			.sr_clr_port 	= SHIFT_CLR_GPIO_Port,
+  	};
+
+  	SN54HC595_init_obj(&SHIFT_dev);
+
+  	SHIFT_dev.set_byte(&SHIFT_dev, 0, 0x55);
+
+  	SHIFT_dev.output(&SHIFT_dev, 1);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -334,19 +356,28 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOC, SHIFT_SER_CLK_Pin|SHIFT_SER_DAT_Pin|SHIFT_ENA_Pin|SHIFT_CLR_Pin 
+                          |LD3_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, LD2_Pin|LD1_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, LD3_Pin|SER_OUT_Pin|SHIFT_CLR_Pin, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, BUZZ_Pin|SER_CLK_Pin|LAT_CLK_Pin|SHIFT_ENA_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(SHIFT_LATCH_GPIO_Port, SHIFT_LATCH_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : B1_Pin */
   GPIO_InitStruct.Pin = B1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : SHIFT_SER_CLK_Pin SHIFT_SER_DAT_Pin SHIFT_ENA_Pin SHIFT_CLR_Pin 
+                           LD3_Pin */
+  GPIO_InitStruct.Pin = SHIFT_SER_CLK_Pin|SHIFT_SER_DAT_Pin|SHIFT_ENA_Pin|SHIFT_CLR_Pin 
+                          |LD3_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pins : BUT0_Pin BUT1_Pin BUT2_Pin */
   GPIO_InitStruct.Pin = BUT0_Pin|BUT1_Pin|BUT2_Pin;
@@ -366,17 +397,11 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : LD3_Pin SER_OUT_Pin SHIFT_CLR_Pin */
-  GPIO_InitStruct.Pin = LD3_Pin|SER_OUT_Pin|SHIFT_CLR_Pin;
+  /*Configure GPIO pin : SHIFT_LATCH_Pin */
+  GPIO_InitStruct.Pin = SHIFT_LATCH_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : BUZZ_Pin SER_CLK_Pin LAT_CLK_Pin SHIFT_ENA_Pin */
-  GPIO_InitStruct.Pin = BUZZ_Pin|SER_CLK_Pin|LAT_CLK_Pin|SHIFT_ENA_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  HAL_GPIO_Init(SHIFT_LATCH_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : DHT_Pin */
   GPIO_InitStruct.Pin = DHT_Pin;

@@ -41,7 +41,7 @@
   /* Includes ------------------------------------------------------------------*/
 
 /* USER CODE BEGIN Includes */
-
+#define USE_SN54HC595_STRUCTS 1
 /* USER CODE END Includes */
 
 /* Private define ------------------------------------------------------------*/
@@ -49,6 +49,14 @@
 #define B1_Pin GPIO_PIN_13
 #define B1_GPIO_Port GPIOC
 #define B1_EXTI_IRQn EXTI15_10_IRQn
+#define SHIFT_SER_CLK_Pin GPIO_PIN_0
+#define SHIFT_SER_CLK_GPIO_Port GPIOC
+#define SHIFT_SER_DAT_Pin GPIO_PIN_1
+#define SHIFT_SER_DAT_GPIO_Port GPIOC
+#define SHIFT_ENA_Pin GPIO_PIN_2
+#define SHIFT_ENA_GPIO_Port GPIOC
+#define SHIFT_CLR_Pin GPIO_PIN_3
+#define SHIFT_CLR_GPIO_Port GPIOC
 #define BUT0_Pin GPIO_PIN_1
 #define BUT0_GPIO_Port GPIOA
 #define USART_TX_Pin GPIO_PIN_2
@@ -63,20 +71,10 @@
 #define BUT2_GPIO_Port GPIOA
 #define LD3_Pin GPIO_PIN_5
 #define LD3_GPIO_Port GPIOC
-#define BUZZ_Pin GPIO_PIN_0
-#define BUZZ_GPIO_Port GPIOB
+#define SHIFT_LATCH_Pin GPIO_PIN_0
+#define SHIFT_LATCH_GPIO_Port GPIOB
 #define DHT_Pin GPIO_PIN_1
 #define DHT_GPIO_Port GPIOB
-#define SER_CLK_Pin GPIO_PIN_13
-#define SER_CLK_GPIO_Port GPIOB
-#define LAT_CLK_Pin GPIO_PIN_14
-#define LAT_CLK_GPIO_Port GPIOB
-#define SHIFT_ENA_Pin GPIO_PIN_15
-#define SHIFT_ENA_GPIO_Port GPIOB
-#define SER_OUT_Pin GPIO_PIN_6
-#define SER_OUT_GPIO_Port GPIOC
-#define SHIFT_CLR_Pin GPIO_PIN_9
-#define SHIFT_CLR_GPIO_Port GPIOC
 #define LD1_Pin GPIO_PIN_11
 #define LD1_GPIO_Port GPIOA
 #define TMS_Pin GPIO_PIN_13
