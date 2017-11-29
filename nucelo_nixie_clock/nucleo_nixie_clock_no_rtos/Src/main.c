@@ -62,6 +62,19 @@ DS3231_device_t* RTC_dev;
 //NIXIE
 nixie_tube_array_t NIXIE_dev;
 
+shift_array_t SHIFT_dev = {
+		.dev_count 		= 2,
+	.ser_in_pin 	= SHIFT_SER_DAT_Pin,
+	.ser_in_port 	= SHIFT_SER_DAT_GPIO_Port,
+	.ser_clk_pin 	= SHIFT_SER_CLK_Pin,
+	.ser_clk_port 	= SHIFT_SER_CLK_GPIO_Port,
+	.latch_pin 		= SHIFT_LATCH_Pin,
+	.latch_port 	= SHIFT_LATCH_GPIO_Port,
+	.out_ena_pin 	= SHIFT_ENA_Pin,
+	.out_ena_port 	= SHIFT_ENA_GPIO_Port,
+	.sr_clr_pin 	= SHIFT_CLR_Pin,
+	.sr_clr_port 	= SHIFT_CLR_GPIO_Port,
+};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -75,7 +88,22 @@ static void MX_I2C2_Init(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
+void convert_time_to_shift(void)
+{
+	RTC_dev->get_time(RTC_dev);
 
+	nixie_split_digit(RTC_dev->time_1->hour, &NIXIE_dev.data_temp[0]);
+	nixie_split_digit(RTC_dev->time_1->min, &NIXIE_dev.data_temp[2]);
+
+	nixie_set_tubes(&NIXIE_dev, NIXIE_dev.data_temp);
+
+	nixie_compile_output(&NIXIE_dev);
+
+
+  	SHIFT_dev.set_data(&SHIFT_dev, NIXIE_dev.output);
+
+  	SHIFT_dev.output(&SHIFT_dev, 2);
+}
 /* USER CODE END 0 */
 
 int main(void)
@@ -106,48 +134,55 @@ int main(void)
   MX_I2C2_Init();
 
   /* USER CODE BEGIN 2 */
+//INIT
+  //LCD
+  	SSD1306_device_init_t LCD_init_dev =
+  	{
+  		.background = White,
+  		.width = 128,
+  		.height = 64,
+  		.port = &hi2c2,
+  		.font = &Font_11x18,
+  	};
 
-  	  int8_t ret = 0;
+  	LCD_dev = ssd1306_init(&LCD_init_dev);
 
-	//LCD
-	SSD1306_device_init_t LCD_init_dev =
-		{
-				.background = White,
-				.width = 128,
-				.height = 64,
-				.port = &hi2c2,
-				.font = &Font_11x18,
-		};
+  	LCD_dev->clear_wo_update(LCD_dev);
+  	LCD_dev->cursor(LCD_dev, 23, 23);
+  	LCD_dev->string(LCD_dev, "LCD Init'd");
+  	LCD_dev->update(LCD_dev);
 
-	LCD_dev = ssd1306_init(&LCD_init_dev);
+  	//SHIFT
+    	SN54HC595_init_obj(&SHIFT_dev);
 
-	LCD_dev->clear_wo_update(LCD_dev);
-	LCD_dev->cursor(LCD_dev, 23, 23);
-	LCD_dev->string(LCD_dev, "LCD Init'd");
-	LCD_dev->update(LCD_dev);
+    	//RTC
+  	ds3231_device_init_t RTC_init_dev =
+  	{
+  		.initial_time = {
+  			.twelve_hour = TRUE,
 
-	//RTC
-	ds3231_device_init_t RTC_init_dev =
-	{
-			.initial_time = {
-					.twelve_hour = TRUE,
+  			.sec = 45,
+  			.min = 59,
+  			.hour = 12,
+  			.pm = PM,
 
-					.sec = 45,
-					.min = 59,
-					.hour = 12,
-					.pm = PM,
+  			.week_day = 1,
+  			.date = 05,
+  			.month = 06,
+  			.year = 2017,
 
-					.week_day = 1,
-					.date = 05,
-					.month = 06,
-					.year = 2017,
+  			.dirty = 0
+  		},
+  		.i2c_handle = &hi2c2,
+  	};
 
-					.dirty = 0
-			},
-			.i2c_handle = &hi2c2,
-	};
+  	RTC_dev = DS3231_init(&RTC_init_dev);
 
-	RTC_dev = DS3231_init(&RTC_init_dev);
+  	//NIXIE ARRAY
+    	nixie_init_array(&NIXIE_dev, NIXIE_TUBE_ARRAY_SIZE);
+
+    	nixie_enable_all(&NIXIE_dev);
+//INIT END
 
 	ds3231_time_t test_return_time;
 
@@ -198,46 +233,7 @@ int main(void)
 
 	//blink flag
 	uint32_t ticks = HAL_GetTick();
-
-	//TUBES
-  	ret = nixie_init_array(&NIXIE_dev, NIXIE_TUBE_ARRAY_SIZE);
-
-  	ret = nixie_enable_all(&NIXIE_dev);
-
-  	RTC_dev->get_time(RTC_dev);
-
-//  	NIXIE_dev.data_temp[0] = RTC_dev->time_1->hour / 10;
-//  	NIXIE_dev.data_temp[1] = RTC_dev->time_1->hour % 10;
-//  	NIXIE_dev.data_temp[2] = RTC_dev->time_1->min / 10;
-//  	NIXIE_dev.data_temp[3] = RTC_dev->time_1->min % 10;
-
-  	nixie_split_digit(RTC_dev->time_1->hour, &NIXIE_dev.data_temp[0]);
-  	nixie_split_digit(RTC_dev->time_1->min, &NIXIE_dev.data_temp[2]);
-
-  	nixie_set_tubes(&NIXIE_dev, NIXIE_dev.data_temp);
-
-  	nixie_compile_output(&NIXIE_dev);
-
-  	//SHIFT REGISTERS
-  	shift_array_t SHIFT_dev = {
-  			.dev_count = 1,
-			.ser_in_pin = SHIFT_SER_DAT_Pin,
-			.ser_in_port = SHIFT_SER_DAT_GPIO_Port,
-			.ser_clk_pin 	= SHIFT_SER_CLK_Pin,
-			.ser_clk_port 	= SHIFT_SER_CLK_GPIO_Port,
-			.latch_pin 	= SHIFT_LATCH_Pin,
-			.latch_port 	= SHIFT_LATCH_GPIO_Port,
-			.out_ena_pin 	= SHIFT_ENA_Pin,
-			.out_ena_port 	= SHIFT_ENA_GPIO_Port,
-			.sr_clr_pin 	= SHIFT_CLR_Pin,
-			.sr_clr_port 	= SHIFT_CLR_GPIO_Port,
-  	};
-
-  	SN54HC595_init_obj(&SHIFT_dev);
-
-  	SHIFT_dev.set_byte(&SHIFT_dev, 0, 0x55);
-
-  	SHIFT_dev.output(&SHIFT_dev, 1);
+	uint32_t time_ticks = HAL_GetTick();
 
   /* USER CODE END 2 */
 
@@ -248,6 +244,13 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
+	  if(HAL_GetTick() > time_ticks + GET_TIME_SPEED){
+
+			  time_ticks = HAL_GetTick();
+
+			  convert_time_to_shift();
+	  }
+
 	  if(HAL_GetTick() > ticks + BLINK_SPEED){
 	 		  blink_flag ^= 1<<0;
 

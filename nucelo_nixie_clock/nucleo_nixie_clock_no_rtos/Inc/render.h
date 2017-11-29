@@ -12,6 +12,7 @@
 #include "ssd1306.h"
 
 #define BLINK_SPEED		1000
+#define GET_TIME_SPEED	50
 
 typedef enum {
 	DISP_TIME,

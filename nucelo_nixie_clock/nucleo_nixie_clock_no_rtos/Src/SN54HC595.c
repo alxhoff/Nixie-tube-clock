@@ -223,7 +223,7 @@ void set_byte_self(shift_array_t* self, uint8_t byte_index, uint8_t byte)
 
 void set_data_self(shift_array_t* self, uint8_t* data)
 {
-	memcpy(self->out_buf, data, self->dev_count);
+	memcpy(self->out_buf, data, sizeof(uint8_t) * self->dev_count);
 }
 
 void clock_data_self(shift_array_t* self)
@@ -288,7 +288,7 @@ void SN54HC595_init_obj(shift_array_t* self)
 
 	reset_latch_self(self);
 
-	self->out_buf = (uint8_t*)calloc(1, sizeof(uint8_t)* self->dev_count);
+	self->out_buf = (uint8_t*)calloc(self->dev_count, sizeof(uint8_t));
 
 	self->output = &output_self;
 	self->output_delay = &output_self_delay;

@@ -16,8 +16,6 @@ uint8_t nixie_bcd_to_dec(uint8_t bcd)
 	return (1 <<  ((bcd/16 * 10) + (bcd % 16)));
 }
 
-
-
 int8_t nixie_init_array(nixie_tube_array_t* array, uint8_t device_count)
 {
 	if(device_count <= 0) return -1;
