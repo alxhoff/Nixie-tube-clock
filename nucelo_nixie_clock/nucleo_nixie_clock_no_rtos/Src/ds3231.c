@@ -22,7 +22,7 @@ uint8_t bcd2dec(uint8_t b)
 
 //OBJECT ORIENTATED
 
-DS3231_device_t* DS3231_init(ds3231_device_init_t* init_struct)
+DS3231_device_t* DS3231_init_struct(ds3231_device_init_t* init_struct)
 {
 	DS3231_device_t* device = (DS3231_device_t*)calloc(1, sizeof(DS3231_device_t));
 
@@ -51,6 +51,47 @@ DS3231_device_t* DS3231_init(ds3231_device_init_t* init_struct)
 
 	return device;
 }
+
+DS3231_device_t* DS3231_init_(uint8_t twelve_hour, uint8_t hour, uint8_t min, uint8_t sec,
+		TIME_OF_DAY_12HR_t am_pm, uint8_t week_day, uint8_t date, uint8_t month, uint16_t year,
+		I2C_HandleTypeDef* i2c_handle)
+{
+	DS3231_device_t* device = (DS3231_device_t*)calloc(1, sizeof(DS3231_device_t));
+
+	device->time_1 = (ds3231_time_t*)calloc(1, sizeof(ds3231_time_t));
+	if(device->time_1 == NULL)
+		return NULL;
+
+	device->alarm_1 = (ds3231_alarm_t*)calloc(1, sizeof(ds3231_alarm_t));
+	device->alarm_2 = (ds3231_alarm_short_t*)calloc(1, sizeof(ds3231_alarm_short_t));
+
+	device->time_1->twelve_hour = twelve_hour;
+	device->time_1->hour = hour;
+	device->time_1->min;
+	device->time_1->sec;
+	device->time_1->pm = am_pm;
+	device->time_1->week_day = week_day;
+	device->time_1->date = date;
+	device->time_1->month = month;
+	device->time_1->year = year;
+
+	device->i2c_handle = i2c_handle;
+
+	//functions
+	device->set_time = &self_DS3231_set_time;
+	device->get_time = &self_DS3231_get_time;
+	device->set_date = &self_DS3231_set_date;
+	device->get_date = &self_DS3231_get_date;
+	device->set_alarm = &self_DS3231_set_alarm;
+	device->get_alarm = &self_DS3231_get_alarm;
+	device->get_temp = &self_DS3231_get_temp;
+	device->dump_register = &self_DS3231_register_dump;
+
+	device->set_time(device);
+
+	return device;
+}
+
 
 DS3231_ERR_t self_DS3231_set_time(DS3231_device_t* self)
 {

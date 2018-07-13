@@ -128,7 +128,7 @@ void draw_time(uint8_t x, uint8_t y)
 {
 	char time_str[] = "12:59:59";
 	LCD_dev->cursor(LCD_dev, x, y);
-	sprintf(time_str, "%d:%d:%d", RTC_dev->time_1->hour,
+	sprintf(time_str, "%02d:%02d:%02d", RTC_dev->time_1->hour,
 			RTC_dev->time_1->min, RTC_dev->time_1->sec);
 	LCD_dev->string(LCD_dev, time_str);
 
@@ -148,12 +148,12 @@ void draw_alarm( uint8_t x, uint8_t y, TYPE_TIME_t alarm)
 	LCD_dev->cursor(LCD_dev, x, y);
 	switch(alarm){
 	case ALARM_ONE:
-		sprintf(time_str, "%d:%d:%d", RTC_dev->alarm_1->hour,
+		sprintf(time_str, "%02d:%02d:%02d", RTC_dev->alarm_1->hour,
 				RTC_dev->alarm_1->min, RTC_dev->alarm_1->sec);
 		LCD_dev->string(LCD_dev, time_str);
 		break;
 	case ALARM_TWO:
-		sprintf(time_str, "%d:%d:%d", RTC_dev->alarm_2->hour,
+		sprintf(time_str, "%02d:%02d:%02d", RTC_dev->alarm_2->hour,
 				RTC_dev->alarm_2->min, 0);
 		LCD_dev->string(LCD_dev, time_str);
 		break;
@@ -280,7 +280,7 @@ void draw_time_blink( uint8_t x, uint8_t y,TYPE_TIME_t type,
 	char time_str[] = "12:59:59";
 	uint8_t sec = 0, min = 0, hour = 0;
 
-	sprintf(time_str, "%d:%d:%d", hour, min, sec);
+	sprintf(time_str, "%02d:%02d:%02d", hour, min, sec);
 
 	if(type == ALARM_ONE){
 		draw_alarm(x,y, ALARM_ONE);
@@ -301,17 +301,17 @@ void draw_time_blink( uint8_t x, uint8_t y,TYPE_TIME_t type,
 
 	switch(blink_target){
 	case SET_HOUR:
-		sprintf(time_str, "--:%d:%d", min, sec);
+		sprintf(time_str, "--:%02d:%02d", min, sec);
 		LCD_dev->cursor(LCD_dev, x, y);
 		LCD_dev->string(LCD_dev, time_str);
 		break;
 	case SET_MIN:
-		sprintf(time_str, "%d:--:%d", hour, sec);
+		sprintf(time_str, "%02d:--:%02d", hour, sec);
 		LCD_dev->cursor(LCD_dev, x, y);
 		LCD_dev->string(LCD_dev, time_str);
 		break;
 	case SET_SEC:
-		sprintf(time_str, "%d:%d:--", hour, min);
+		sprintf(time_str, "%02d:%02d:--", hour, min);
 		LCD_dev->cursor(LCD_dev, x, y);
 		LCD_dev->string(LCD_dev, time_str);
 		break;

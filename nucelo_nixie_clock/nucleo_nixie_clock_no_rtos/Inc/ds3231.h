@@ -214,7 +214,7 @@ struct ds3231_device{
 };
 
 //self
-DS3231_device_t* DS3231_init(ds3231_device_init_t* init_struct);
+DS3231_device_t* DS3231_init_struct(ds3231_device_init_t* init_struct);
 DS3231_ERR_t self_DS3231_set_time(DS3231_device_t* self);
 DS3231_ERR_t self_DS3231_get_time(DS3231_device_t* self);
 DS3231_ERR_t self_DS3231_set_date(DS3231_device_t* self);

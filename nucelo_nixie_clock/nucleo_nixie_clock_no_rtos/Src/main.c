@@ -63,7 +63,7 @@ DS3231_device_t* RTC_dev;
 nixie_tube_array_t NIXIE_dev;
 
 shift_array_t SHIFT_dev = {
-		.dev_count 		= 2,
+	.dev_count 		= 2,
 	.ser_in_pin 	= SHIFT_SER_DAT_Pin,
 	.ser_in_port 	= SHIFT_SER_DAT_GPIO_Port,
 	.ser_clk_pin 	= SHIFT_SER_CLK_Pin,
@@ -153,7 +153,10 @@ int main(void)
   	LCD_dev->update(LCD_dev);
 
   	//SHIFT
-    	SN54HC595_init_obj(&SHIFT_dev);
+    SN54HC595_init_obj(&SHIFT_dev);
+    SHIFT_dev.out_buf[0]=0b10101010;
+    SHIFT_dev.out_buf[1]=0b10101010;
+    SHIFT_dev.output(&SHIFT_dev, SHIFT_dev.dev_count);
 
     	//RTC
   	ds3231_device_init_t RTC_init_dev =
@@ -176,7 +179,7 @@ int main(void)
   		.i2c_handle = &hi2c2,
   	};
 
-  	RTC_dev = DS3231_init(&RTC_init_dev);
+  	RTC_dev = DS3231_init_struct(&RTC_init_dev);
 
   	//NIXIE ARRAY
     	nixie_init_array(&NIXIE_dev, NIXIE_TUBE_ARRAY_SIZE);
@@ -244,7 +247,7 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-	  if(HAL_GetTick() > time_ticks + GET_TIME_SPEED){
+	  if((HAL_GetTick() > time_ticks + GET_TIME_SPEED) && render_state != SET_TIME){
 
 			  time_ticks = HAL_GetTick();
 
