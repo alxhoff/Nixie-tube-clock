@@ -162,8 +162,20 @@ void output_self(shift_array_t* self, uint8_t byte_count)
 	//Set serial clock and latch pin low
 	HAL_GPIO_WritePin(self->ser_clk_port, self->ser_clk_pin, GPIO_PIN_RESET);
 	for(uint8_t i = 0; i < byte_count; i++){
-		for(uint8_t j = 0; j < 8; j++){
-			if(*(self->out_buf + (i * sizeof(uint8_t))) & (1 << (7 - j)))
+		//first digit
+		for(uint8_t j = 4; j < 8; j++){
+//			if(*(self->out_buf + (i * sizeof(uint8_t))) & (1 << (7 - j)))
+			if((self->out_buf[i] >> (7 - j)) & 0x01)
+				HAL_GPIO_WritePin(self->ser_in_port, self->ser_in_pin, GPIO_PIN_SET);
+			else
+				HAL_GPIO_WritePin(self->ser_in_port, self->ser_in_pin, GPIO_PIN_RESET);
+			//clock bit
+			self->clock_data(self);
+		}
+		//second digit
+		for(uint8_t j = 0; j < 4; j++){
+		//			if(*(self->out_buf + (i * sizeof(uint8_t))) & (1 << (7 - j)))
+			if((self->out_buf[i] >> (7 - j)) & 0x01)
 				HAL_GPIO_WritePin(self->ser_in_port, self->ser_in_pin, GPIO_PIN_SET);
 			else
 				HAL_GPIO_WritePin(self->ser_in_port, self->ser_in_pin, GPIO_PIN_RESET);

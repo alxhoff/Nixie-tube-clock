@@ -63,7 +63,7 @@ DS3231_device_t* RTC_dev;
 nixie_tube_array_t NIXIE_dev;
 
 shift_array_t SHIFT_dev = {
-	.dev_count 		= 2,
+	.dev_count 		= 1,
 	.ser_in_pin 	= SHIFT_SER_DAT_Pin,
 	.ser_in_port 	= SHIFT_SER_DAT_GPIO_Port,
 	.ser_clk_pin 	= SHIFT_SER_CLK_Pin,
@@ -92,17 +92,19 @@ void convert_time_to_shift(void)
 {
 	RTC_dev->get_time(RTC_dev);
 
-	nixie_split_digit(RTC_dev->time_1->hour, &NIXIE_dev.data_temp[0]);
-	nixie_split_digit(RTC_dev->time_1->min, &NIXIE_dev.data_temp[2]);
+	if(RTC_dev->time_1->sec == 1)
+	        	        		HAL_Delay(1000);
 
+	nixie_split_digit(RTC_dev->time_1->sec, &NIXIE_dev.data_temp[0]);
+//	nixie_split_digit(RTC_dev->time_1->min, &NIXIE_dev.data_temp[2]);
+	//set tube values from temp values
 	nixie_set_tubes(&NIXIE_dev, NIXIE_dev.data_temp);
 
 	nixie_compile_output(&NIXIE_dev);
 
-
   	SHIFT_dev.set_data(&SHIFT_dev, NIXIE_dev.output);
 
-  	SHIFT_dev.output(&SHIFT_dev, 2);
+  	SHIFT_dev.output(&SHIFT_dev, SHIFT_dev.dev_count);
 }
 /* USER CODE END 0 */
 
@@ -154,8 +156,8 @@ int main(void)
 
   	//SHIFT
     SN54HC595_init_obj(&SHIFT_dev);
-    SHIFT_dev.out_buf[0]=0b10101010;
-    SHIFT_dev.out_buf[1]=0b10101010;
+    SHIFT_dev.out_buf[0]=0;
+    SHIFT_dev.out_buf[1]=0;
     SHIFT_dev.output(&SHIFT_dev, SHIFT_dev.dev_count);
 
     	//RTC
@@ -186,6 +188,21 @@ int main(void)
 
     	nixie_enable_all(&NIXIE_dev);
 //INIT END
+
+//        while(1){
+//    //    	if(SHIFT_dev.out_buf[0] == 9) SHIFT_dev.out_buf[0] = 0;
+//    //    	else SHIFT_dev.out_buf[0]++;
+//    //
+//    //    	if(SHIFT_dev.out_buf[1] == 9) SHIFT_dev.out_buf[1] = 0;
+//    //			else SHIFT_dev.out_buf[1]++;
+//
+//    //        SHIFT_dev.output(&SHIFT_dev, SHIFT_dev.dev_count);
+//
+//
+//        	convert_time_to_shift();
+//
+//            HAL_Delay(1000);
+//        }
 
 	ds3231_time_t test_return_time;
 

@@ -90,8 +90,10 @@ int8_t nixie_set_tube(nixie_tube_array_t* array, uint8_t index, uint8_t value)
 
 int8_t nixie_set_tubes(nixie_tube_array_t* array, uint8_t* data)
 {
-	for(uint8_t i = 0; i < array->count; i++)
-		array->tubes[i]->value = data[i];
+	for(uint8_t i = 0; i < (array->count); i++){
+		memcpy(&(array->tubes[i]->value), &data[i], sizeof(uint8_t));
+//		array->tubes[i]->value = data[i];
+	}
 
 	return 0;
 }
@@ -105,15 +107,22 @@ void nixie_split_digit(uint8_t input, uint8_t* output)
 int8_t nixie_compile_output(nixie_tube_array_t* array)
 {
 	if(array->count){
+//		for(uint8_t i = 0; i < array->count; i++){
+//			if(array->mask & (1 << (array->count - i))){
+//				if(i%2 == 0)
+//					array->output[i/2] = (array->tubes[i]->value << 4);
+//				else
+//					array->output[i/2] |= array->tubes[i]->value;
+//			}
+//		}
 		for(uint8_t i = 0; i < array->count; i++){
-			if(array->mask & (1 << (array->count - i))){
-				if(i%2 == 0)
-					array->output[i/2] = (array->tubes[i]->value << 4);
-				else
-					array->output[i/2] |= array->tubes[i]->value;
-			}
+			if(i%2 == 0)
+				array->output[i/2] = (array->tubes[i]->value << 4);
+			else
+				array->output[i/2] |= array->tubes[i]->value;
+//			INFINITE LOOP HERE?!?!?!
 		}
-
+		return 0;
 	}else
 		return -1;
 	return 0;

@@ -18,7 +18,7 @@
 #define false 0
 #endif
 
-#define NIXIE_TUBE_ARRAY_SIZE	4
+#define NIXIE_TUBE_ARRAY_SIZE	2
 
 typedef struct nixie_tube nixie_tube_t;
 
