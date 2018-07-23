@@ -9,7 +9,7 @@
   * inserted by the user or by software development tools
   * are owned by their respective copyright owners.
   *
-  * COPYRIGHT(c) 2017 STMicroelectronics
+  * COPYRIGHT(c) 2018 STMicroelectronics
   *
   * Redistribution and use in source and binary forms, with or without modification,
   * are permitted provided that the following conditions are met:
@@ -40,13 +40,8 @@
 #include "stm32f1xx_hal.h"
 
 /* USER CODE BEGIN Includes */
-#include "externs.h"
-#include "ds3231.h"
 #include "ssd1306.h"
-#include "render.h"
-#include "buttons.h"
-#include "nixie.h"
-#include "SN54HC595.h"
+
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -56,25 +51,6 @@ I2C_HandleTypeDef hi2c2;
 /* Private variables ---------------------------------------------------------*/
 SSD1306_device_t* LCD_dev;
 
-//RTC
-DS3231_device_t* RTC_dev;
-
-//NIXIE
-nixie_tube_array_t NIXIE_dev;
-
-shift_array_t SHIFT_dev = {
-	.dev_count 		= 2,
-	.ser_in_pin 	= SHIFT_SER_DAT_Pin,
-	.ser_in_port 	= SHIFT_SER_DAT_GPIO_Port,
-	.ser_clk_pin 	= SHIFT_SER_CLK_Pin,
-	.ser_clk_port 	= SHIFT_SER_CLK_GPIO_Port,
-	.latch_pin 		= SHIFT_LATCH_Pin,
-	.latch_port 	= SHIFT_LATCH_GPIO_Port,
-	.out_ena_pin 	= SHIFT_ENA_Pin,
-	.out_ena_port 	= SHIFT_ENA_GPIO_Port,
-	.sr_clr_pin 	= SHIFT_CLR_Pin,
-	.sr_clr_port 	= SHIFT_CLR_GPIO_Port,
-};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -88,24 +64,7 @@ static void MX_I2C2_Init(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
-void convert_time_to_shift(void)
-{
-	RTC_dev->get_time(RTC_dev);
 
-	if(RTC_dev->time_1->sec == 1)
-	        	        		HAL_Delay(1000);
-
-	nixie_split_digit(RTC_dev->time_1->sec, &NIXIE_dev.data_temp[0]);
-//	nixie_split_digit(RTC_dev->time_1->min, &NIXIE_dev.data_temp[2]);
-	//set tube values from temp values
-	nixie_set_tubes(&NIXIE_dev, NIXIE_dev.data_temp);
-
-	nixie_compile_output(&NIXIE_dev);
-
-  	SHIFT_dev.set_data(&SHIFT_dev, NIXIE_dev.output);
-
-  	SHIFT_dev.output(&SHIFT_dev, SHIFT_dev.dev_count);
-}
 /* USER CODE END 0 */
 
 int main(void)
@@ -136,16 +95,16 @@ int main(void)
   MX_I2C2_Init();
 
   /* USER CODE BEGIN 2 */
-//INIT
-  //LCD
-  	SSD1306_device_init_t LCD_init_dev =
-  	{
-  		.background = White,
-  		.width = 128,
-  		.height = 64,
-  		.port = &hi2c2,
-  		.font = &Font_11x18,
-  	};
+  uint8_t button1 = 0, button2 = 0;
+
+	SSD1306_device_init_t LCD_init_dev =
+	{
+		.background = White,
+		.width = 128,
+		.height = 64,
+		.port = &hi2c2,
+		.font = &Font_11x18,
+	};
 
   	LCD_dev = ssd1306_init(&LCD_init_dev);
 
@@ -154,96 +113,15 @@ int main(void)
   	LCD_dev->string(LCD_dev, "LCD Init'd");
   	LCD_dev->update(LCD_dev);
 
-  	//SHIFT
-    SN54HC595_init_obj(&SHIFT_dev);
-    SHIFT_dev.out_buf[0]=0;
-    SHIFT_dev.out_buf[1]=0;
-    SHIFT_dev.output(&SHIFT_dev, SHIFT_dev.dev_count);
+  	uint8_t count = 0;
+  	uint16_t tmp = 0;
+  	char buffer[4];
 
-    	//RTC
-  	ds3231_device_init_t RTC_init_dev =
-  	{
-  		.initial_time = {
-  			.twelve_hour = TRUE,
-
-  			.sec = 45,
-  			.min = 59,
-  			.hour = 12,
-  			.pm = PM,
-
-  			.week_day = 1,
-  			.date = 05,
-  			.month = 06,
-  			.year = 2017,
-
-  			.dirty = 0
-  		},
-  		.i2c_handle = &hi2c2,
-  	};
-
-  	RTC_dev = DS3231_init_struct(&RTC_init_dev);
-
-  	//NIXIE ARRAY
-    	nixie_init_array(&NIXIE_dev, NIXIE_TUBE_ARRAY_SIZE);
-
-    	nixie_enable_all(&NIXIE_dev);
-//INIT END
-
-    	SHIFT_dev.set_byte(&SHIFT_dev, 0, 0b01010101);
-    	SHIFT_dev.set_byte(&SHIFT_dev, 1, 0b01010101);
-    	SHIFT_dev.output(&SHIFT_dev, SHIFT_dev.dev_count);
-
-	ds3231_time_t test_return_time;
-
-//	ds3231_time_t testTime = {
-//	  		.twelve_hour = TRUE,
-//	  		.sec = 55,
-//	  		.min = 59,
-//	  		.hour = 11,
-//	  		.pm = PM,
-//	  		.week_day = 5,
-//	  		.date = 31,
-//	  		.month = 12,
-//	  		.year = 2017
-//	  	};
-//	DS3231_set_time(&hi2c2, &testTime);
-
-	RTC_dev->get_time(RTC_dev);
-
-	DS3231_get_time(&hi2c2, &test_return_time);
-
-	//test alarm
-	RTC_dev->alarm_1->sec = 45;
-	RTC_dev->alarm_1->min = 8;
-	RTC_dev->alarm_1->hour = 7;
-	RTC_dev->alarm_1->date = 1;
-	RTC_dev->alarm_1->week_day = 2;
-	RTC_dev->alarm_1->alarm_type = ALARM_MATCH_MINUTES;
-
-	RTC_dev->set_alarm(RTC_dev, ALARM_ONE);
-
-	RTC_dev->alarm_1->min = 6;
-	RTC_dev->alarm_1->hour = 6;
-	RTC_dev->alarm_1->sec = 6;
-	RTC_dev->alarm_1->alarm_type = ALARM_MATCH_MINUTES;
-
-	//test alarm2
-	RTC_dev->alarm_2->min = 7;
-	RTC_dev->alarm_2->hour = 6;
-	RTC_dev->alarm_2->date = 20;
-	RTC_dev->alarm_2->week_day = 5;
-	RTC_dev->alarm_2->alarm_type = ALARM_MATCH_MINUTES;
-
-	RTC_dev->set_alarm(RTC_dev, ALARM_TWO);
-
-	RTC_dev->alarm_2->min = 6;
-	RTC_dev->alarm_2->hour = 6;
-	RTC_dev->alarm_2->alarm_type = ALARM_MATCH_MINUTES;
-
-	//blink flag
-	uint32_t ticks = HAL_GetTick();
-	uint32_t time_ticks = HAL_GetTick();
-
+  	HAL_Delay(1000);
+  	LCD_dev->clear_wo_update(LCD_dev);
+  	LCD_dev->cursor(LCD_dev, 23, 23);
+  	LCD_dev->string(LCD_dev, "hi");
+  	LCD_dev->update(LCD_dev);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -253,28 +131,34 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-	  if((HAL_GetTick() > time_ticks + GET_TIME_SPEED) && render_state != SET_TIME){
-
-			  time_ticks = HAL_GetTick();
-
-			  convert_time_to_shift();
+	  //	  if(HAL_GPIO_ReadPin(BTN2_GPIO_Port, BTN2_Pin) | HAL_GPIO_ReadPin(BTN1_GPIO_Port, BTN1_Pin))
+	  //		  HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+	  button1 = HAL_GPIO_ReadPin(BTN2_GPIO_Port, BTN2_Pin);
+	  button2 = HAL_GPIO_ReadPin(BTN1_GPIO_Port, BTN1_Pin);
+	  if(button1){
+		  HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
+	  } else{
+		  HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET);
 	  }
-
-	  if(HAL_GetTick() > ticks + BLINK_SPEED){
-	 		  blink_flag ^= 1<<0;
-
-	 		  ticks = HAL_GetTick();
-
-	 		  HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-
-	 		  if(blink_flag)
-	 			  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_SET);
-	 		  else
-	 			  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_RESET);
+	  if(tmp == 20000){
+		  count++;
+		  tmp = 0;
+		  sprintf(buffer, "%d", count);
+		  	LCD_dev->clear_wo_update(LCD_dev);
+		  	LCD_dev->cursor(LCD_dev, 1, 1);
+		  	LCD_dev->string(LCD_dev, "HELLO");
+		  	LCD_dev->cursor(LCD_dev, 23, 23);
+		  	LCD_dev->string(LCD_dev, buffer);
+		  	LCD_dev->update(LCD_dev);
 	  }
+	  else
+		  tmp++;
 
-	  buttons_listener_callback();
-	  render_task_callback();
+	  if((button2 == 0) && (tmp%100 == 0)){
+	  		  HAL_GPIO_TogglePin(BUZZER_GPIO_Port, BUZZER_Pin);
+	  	  }else{
+			  HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_RESET);
+	  	  }
   }
   /* USER CODE END 3 */
 
@@ -353,8 +237,6 @@ static void MX_I2C2_Init(void)
         * Output
         * EVENT_OUT
         * EXTI
-     PA2   ------> USART2_TX
-     PA3   ------> USART2_RX
 */
 static void MX_GPIO_Init(void)
 {
@@ -363,67 +245,31 @@ static void MX_GPIO_Init(void)
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOC_CLK_ENABLE();
-  __HAL_RCC_GPIOD_CLK_ENABLE();
-  __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, SHIFT_SER_CLK_Pin|SHIFT_SER_DAT_Pin|SHIFT_ENA_Pin|SHIFT_CLR_Pin 
-                          |LD3_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, LD2_Pin|LD1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(SHIFT_LATCH_GPIO_Port, SHIFT_LATCH_Pin, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin : B1_Pin */
-  GPIO_InitStruct.Pin = B1_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : SHIFT_SER_CLK_Pin SHIFT_SER_DAT_Pin SHIFT_ENA_Pin SHIFT_CLR_Pin 
-                           LD3_Pin */
-  GPIO_InitStruct.Pin = SHIFT_SER_CLK_Pin|SHIFT_SER_DAT_Pin|SHIFT_ENA_Pin|SHIFT_CLR_Pin 
-                          |LD3_Pin;
+  /*Configure GPIO pin : LED_Pin */
+  GPIO_InitStruct.Pin = LED_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+  HAL_GPIO_Init(LED_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : BUT0_Pin BUT1_Pin BUT2_Pin */
-  GPIO_InitStruct.Pin = BUT0_Pin|BUT1_Pin|BUT2_Pin;
+  /*Configure GPIO pins : BTN1_Pin BTN2_Pin */
+  GPIO_InitStruct.Pin = BTN1_Pin|BTN2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : USART_TX_Pin USART_RX_Pin */
-  GPIO_InitStruct.Pin = USART_TX_Pin|USART_RX_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : LD2_Pin LD1_Pin */
-  GPIO_InitStruct.Pin = LD2_Pin|LD1_Pin;
+  /*Configure GPIO pin : BUZZER_Pin */
+  GPIO_InitStruct.Pin = BUZZER_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : SHIFT_LATCH_Pin */
-  GPIO_InitStruct.Pin = SHIFT_LATCH_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(SHIFT_LATCH_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : DHT_Pin */
-  GPIO_InitStruct.Pin = DHT_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(DHT_GPIO_Port, &GPIO_InitStruct);
-
-  /* EXTI interrupt init*/
-  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+  HAL_GPIO_Init(BUZZER_GPIO_Port, &GPIO_InitStruct);
 
 }
 
@@ -442,6 +288,7 @@ void _Error_Handler(char * file, int line)
   /* User can add his own implementation to report the HAL error return state */
   while(1) 
   {
+
   }
   /* USER CODE END Error_Handler_Debug */ 
 }
