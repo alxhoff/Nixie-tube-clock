@@ -52,25 +52,18 @@ typedef enum {
 	ALARM_MATCH_MINUTES,
 	ALARM_MATCH_HOURS,
 	ALARM_MATCH_DATE_OR_DAY
-}ALARM_TYPE_t;
+} ALARM_TYPE_t;
 
 typedef enum {
-	ALARM_ONE,
-	ALARM_TWO,
-	BOTH,
-	TIME,
+	ALARM_ONE, ALARM_TWO, BOTH, TIME,
 } TYPE_TIME_t;
 
 typedef enum {
-	DAY_OF_MONTH,
-	DAY_OF_WEEK
+	DAY_OF_MONTH, DAY_OF_WEEK
 } DY_DT_t;
 
 typedef enum {
-	ONE_K,
-	ONE_POINT_K,
-	FOUR_K,
-	EIGHT_K
+	ONE_K, ONE_POINT_K, FOUR_K, EIGHT_K
 } WAVE_FREQ_t;
 
 typedef enum {
@@ -89,23 +82,15 @@ typedef enum {
 	DECEMBER
 } MONTHS_e;
 
-typedef enum{
-	EMPTY_DAY,
-	MONDAY,
-	TUESDAY,
-	WEDNESDAY,
-	THURSDAY,
-	FRIDAY,
-	SATURDAY,
-	SUNDAY
+typedef enum {
+	EMPTY_DAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
 } WEEKDAYS_e;
 
-typedef enum{
-	AM,
-	PM
+typedef enum {
+	AM, PM
 } AM_OR_PM_e;
 
-typedef struct ds3231_time{
+typedef struct ds3231_time {
 	uint8_t twelve_hour;
 	uint8_t sec;
 	uint8_t min;
@@ -119,9 +104,9 @@ typedef struct ds3231_time{
 	uint8_t dirty;
 } ds3231_time_t;
 
-typedef struct ds3231_alarm{
+typedef struct ds3231_alarm {
 	uint8_t twelve_hour;
-	uint8_t	sec;
+	uint8_t sec;
 	uint8_t min;
 	uint8_t hour;
 	AM_OR_PM_e pm;
@@ -133,7 +118,7 @@ typedef struct ds3231_alarm{
 	uint8_t invalid;
 } ds3231_alarm_t;
 
-typedef struct ds3231_alarm_short{
+typedef struct ds3231_alarm_short {
 	uint8_t twelve_hour;
 	uint8_t min;
 	uint8_t hour;
@@ -146,13 +131,18 @@ typedef struct ds3231_alarm_short{
 	uint8_t invalid;
 } ds3231_alarm_short_t;
 
-union ds3231_alarm_unknown{
+union ds3231_alarm_unknown {
 	ds3231_alarm_t long_alarm;
 	ds3231_alarm_short_t short_alarm;
 };
 
-
-//self
-
+signed char DS3231_write_time(I2C_HandleTypeDef *hi2c, ds3231_time_t* time);
+signed char DS3231_read_time(I2C_HandleTypeDef *hi2c,
+		ds3231_time_t* return_struct);
+signed char DS3231_write_date(I2C_HandleTypeDef *hi2c, uint16_t year,
+uint8_t month, uint8_t date, uint8_t weekday);
+signed char DS3231_read_date(I2C_HandleTypeDef *hi2c, uint16_t* year,
+uint8_t* month, uint8_t* date, uint8_t* day);
+signed char DS3231_read_temp(I2C_HandleTypeDef *hi2c, float *temp);
 
 #endif /* DS3231_STM32_ALEX_H_ */
