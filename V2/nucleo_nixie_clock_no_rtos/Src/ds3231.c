@@ -44,7 +44,7 @@ uint8_t bcd2dec(uint8_t b) {
 
 void DS3231_write_time_short(I2C_HandleTypeDef *hi2c, uint8_t twelve_hour,
 uint8_t hour, uint8_t min, uint8_t sec) {
-	uint8_t write_buffer[3] = {0};
+	uint8_t write_buffer[3] = { 0 };
 	write_buffer[0] = dec2bcd(sec);
 	write_buffer[1] = dec2bcd(min);
 
@@ -155,7 +155,7 @@ signed char DS3231_write_time(I2C_HandleTypeDef *hi2c, ds3231_time_t* time) {
 
 	if (time->twelve_hour) {
 		//12 hour
-		if (time->pm == PM) {
+		if (time->am_or_pm == PM) {
 			//PM
 			hour = dec2bcd(time->hour & 0x1F);
 			//set flags
@@ -177,7 +177,7 @@ signed char DS3231_write_time(I2C_HandleTypeDef *hi2c, ds3231_time_t* time) {
 	write_buffer[0] = dec2bcd(time->sec);
 	write_buffer[1] = dec2bcd(time->min);
 	write_buffer[2] = hour;
-	write_buffer[3] = dec2bcd(time->week_day);
+	write_buffer[3] = dec2bcd(time->weekday);
 	write_buffer[4] = dec2bcd(time->date);
 	write_buffer[5] = (dec2bcd(time->month) | century);
 	write_buffer[6] = dec2bcd(year);
@@ -206,22 +206,22 @@ signed char DS3231_read_time(I2C_HandleTypeDef *hi2c,
 		return_struct->twelve_hour = TRUE;
 		if (hour_byte & (1 << PM_AM_FLAG)) {
 			//PM
-			return_struct->pm = PM;
+			return_struct->am_or_pm = PM;
 		} else {
 			//AM
-			return_struct->pm = AM;
+			return_struct->am_or_pm = AM;
 		}
 		return_struct->hour = bcd2dec(hour_byte & 0x1F);
 	} else {
 		//24 hour
 		return_struct->twelve_hour = FALSE;
-		return_struct->pm = AM;
+		return_struct->am_or_pm = AM;
 		return_struct->hour = bcd2dec(hour_byte & 0x3F);
 	}
 
 	return_struct->sec = bcd2dec(read_buffer[0]);
 	return_struct->min = bcd2dec(read_buffer[1]);
-	return_struct->week_day = bcd2dec(read_buffer[3]);
+	return_struct->weekday = bcd2dec(read_buffer[3]);
 	return_struct->date = bcd2dec(read_buffer[4]);
 	return_struct->month = bcd2dec(read_buffer[5] & 0x1F);
 	century = (read_buffer[5] & 0x80) >> 7;
@@ -279,7 +279,7 @@ void DS3231_register_dump(I2C_HandleTypeDef *hi2c,
 //untested
 signed char DS3231_set_alarm_short(I2C_HandleTypeDef *hi2c, uint8_t twelve_hour,
 uint8_t hour, uint8_t min, uint8_t sec, TYPE_TIME_t alarm_number) {
-	uint8_t write_buffer[3] = {0};
+	uint8_t write_buffer[3] = { 0 };
 	write_buffer[0] = dec2bcd(sec);
 	write_buffer[1] = dec2bcd(min);
 
@@ -297,7 +297,8 @@ uint8_t hour, uint8_t min, uint8_t sec, TYPE_TIME_t alarm_number) {
 		write_buffer[2] |= dec2bcd(hour & 0x3F);
 	}
 
-	if(HAL_I2C_Mem_Write(hi2c, DS3231_ADDR8, 0x07, 1, write_buffer, 3, 10) != HAL_OK)
+	if (HAL_I2C_Mem_Write(hi2c, DS3231_ADDR8, 0x07, 1, write_buffer, 3, 10)
+			!= HAL_OK)
 		return -1;
 	return 0;
 }
@@ -358,7 +359,8 @@ signed char DS3231_set_alarm(I2C_HandleTypeDef *hi2c,
 
 	write_buffer[3] = day_date_byte;
 
-	if (alarm_number == ALARM_ONE && alarm_time->alarm_type == ALARM_EVERY_SECOND) {
+	if (alarm_number == ALARM_ONE
+			&& alarm_time->alarm_type == ALARM_EVERY_SECOND) {
 		write_buffer[0] |= (1 << ALARM_MASK_BITS);
 		write_buffer[1] |= (1 << ALARM_MASK_BITS);
 		write_buffer[2] |= (1 << ALARM_MASK_BITS);
@@ -408,8 +410,8 @@ signed char DS3231_set_alarm(I2C_HandleTypeDef *hi2c,
 }
 
 //untested
-signed char DS3231_get_alarm(I2C_HandleTypeDef *hi2c, ds3231_alarm_t* return_struct,
-		TYPE_TIME_t alarm_number) {
+signed char DS3231_get_alarm(I2C_HandleTypeDef *hi2c,
+		ds3231_alarm_t* return_struct, TYPE_TIME_t alarm_number) {
 	uint8_t read_buffer[4];
 	volatile uint8_t alarm_register_addr = 0x00;
 
@@ -425,10 +427,11 @@ signed char DS3231_get_alarm(I2C_HandleTypeDef *hi2c, ds3231_alarm_t* return_str
 		break;
 	}
 
-	if(HAL_I2C_Mem_Read(hi2c, DS3231_ADDR8, alarm_register_addr, 1, read_buffer, 4, 10) != HAL_OK)
+	if (HAL_I2C_Mem_Read(hi2c, DS3231_ADDR8, alarm_register_addr, 1,
+			read_buffer, 4, 10) != HAL_OK)
 		return -1;
 
-	if(alarm_number == ALARM_ONE)
+	if (alarm_number == ALARM_ONE)
 		return_struct->sec = bcd2dec(read_buffer[0] & 0x7F);
 	return_struct->min = bcd2dec(read_buffer[1] & 0x7F);
 
@@ -562,8 +565,6 @@ void DS3231_change_wave_freq(I2C_HandleTypeDef *hi2c, WAVE_FREQ_t frequency) {
 
 	HAL_I2C_Mem_Write(hi2c, DS3231_ADDR8, 0x0E, 1, &control_register, 1, 10);
 }
-
-
 
 //untested
 void DS3231_stop_triggered_alarms(I2C_HandleTypeDef *hi2c) {

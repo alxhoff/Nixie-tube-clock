@@ -81,53 +81,57 @@ typedef enum {
 } MONTHS_e;
 
 typedef enum {
-	EMPTY_DAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
+	EMPTY_DAY = 0,
+	SUNDAY = 1,
+	MONDAY = 2,
+	TUESDAY = 3,
+	WEDNESDAY = 4,
+	THURSDAY = 5,
+	FRIDAY = 6,
+	SATURDAY = 7,
 } WEEKDAYS_e;
 
 typedef enum {
-	AM, PM
+	AM = 0, PM = 1,
 } AM_OR_PM_e;
 
+typedef enum {
+	HOUR_24 = 0, HOUR_12 = 1,
+} HOUR_12_OR_24_e;
+
 typedef struct ds3231_time {
-	uint8_t twelve_hour;
+	HOUR_12_OR_24_e twelve_hour;
 	uint8_t sec;
 	uint8_t min;
 	uint8_t hour;
-	AM_OR_PM_e pm;
-	uint8_t week_day;
+	AM_OR_PM_e am_or_pm;
+	WEEKDAYS_e weekday;
 	uint8_t date;
-	uint8_t month;
+	MONTHS_e month;
 	uint16_t year;
-
-	uint8_t dirty;
 } ds3231_time_t;
 
 typedef struct ds3231_alarm {
-	uint8_t twelve_hour;
+	HOUR_12_OR_24_e twelve_hour;
 	uint8_t min;
 	uint8_t hour;
 	AM_OR_PM_e pm;
-	uint8_t week_day;
+	WEEKDAYS_e week_day;
 	uint8_t date;
 	DY_DT_t date_or_day;
 	ALARM_TYPE_t alarm_type;
-
-	uint8_t invalid;
-
 	uint8_t sec;
 } ds3231_alarm_t;
 
 typedef struct ds3231_alarm_short {
-	uint8_t twelve_hour;
+	HOUR_12_OR_24_e twelve_hour;
 	uint8_t min;
 	uint8_t hour;
 	AM_OR_PM_e pm;
-	uint8_t week_day;
+	WEEKDAYS_e week_day;
 	uint8_t date;
 	DY_DT_t date_or_day;
 	ALARM_TYPE_t alarm_type;
-
-	uint8_t invalid;
 } ds3231_alarm_short_t;
 
 typedef union ds3231_alarm_u {
@@ -145,7 +149,7 @@ uint8_t* month, uint8_t* date, uint8_t* day);
 signed char DS3231_read_temp(I2C_HandleTypeDef *hi2c, float *temp);
 signed char DS3231_set_alarm(I2C_HandleTypeDef *hi2c,
 		ds3231_alarm_t* alarm_time, TYPE_TIME_t alarm_number);
-signed char DS3231_get_alarm(I2C_HandleTypeDef *hi2c, ds3231_alarm_t* return_struct,
-		TYPE_TIME_t alarm_number);
+signed char DS3231_get_alarm(I2C_HandleTypeDef *hi2c,
+		ds3231_alarm_t* return_struct, TYPE_TIME_t alarm_number);
 
 #endif /* DS3231_STM32_ALEX_H_ */

@@ -118,6 +118,12 @@ int main(void) {
 	screen_add_line("Init'd");
 	screen_refresh(NULL);
 
+	RTC_dev_init();
+
+	HAL_Delay(5);
+
+	RTC_dev_init();
+
 	//SHIFT
 //	SN54HC595_init_obj(&SHIFT_dev);
 //	SHIFT_dev.out_buf[0] = 0;
@@ -200,8 +206,8 @@ int main(void) {
 //	RTC_dev->alarm_2->alarm_type = ALARM_MATCH_MINUTES;
 
 	//blink flag
-	uint32_t ticks = HAL_GetTick();
-	uint32_t time_ticks = HAL_GetTick();
+//	uint32_t ticks = HAL_GetTick();
+//	uint32_t time_ticks = HAL_GetTick();
 
 	/* USER CODE END 2 */
 
