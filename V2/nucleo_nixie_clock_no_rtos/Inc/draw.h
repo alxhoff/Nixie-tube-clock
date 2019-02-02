@@ -21,15 +21,15 @@ void draw_disp_time_state(uint8_t x, uint8_t y);
 void draw_disp_alarm1_state(uint8_t x, uint8_t y);
 void draw_disp_alarm2_state(uint8_t x, uint8_t y);
 void draw_set_states( uint8_t x, uint8_t y);
-void draw_alarm_blink(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, ds3231_alarm_t* alarm, BLINK_TIME_t blink);
+//void draw_alarm_blink(I2C_HandleTypeDef *hi2c, uint8_t x, uint8_t y, ds3231_alarm_t* alarm, BLINK_TIME_t blink);
 void draw_alarm( uint8_t x, uint8_t y, TYPE_TIME_t alarm);
 void draw_time_blink( uint8_t x, uint8_t y,TYPE_TIME_t type,
 		SET_TARGET_t blink_target);
 void draw_time(uint8_t x, uint8_t y);
-void draw_am_pm( uint8_t x, uint8_t y, TIME_OF_DAY_12HR_t pm);
+void draw_am_pm( uint8_t x, uint8_t y, AM_OR_PM_e pm);
 void draw_date( uint8_t x, uint8_t y, uint8_t date);
 void draw_year( uint8_t x, uint8_t y, uint16_t year);
-void draw_month( uint8_t x, uint8_t y, months month);
-void draw_day( uint8_t x, uint8_t y, DAYS_t day);
+void draw_month( uint8_t x, uint8_t y, MONTHS_e month);
+void draw_day( uint8_t x, uint8_t y, WEEKDAYS_e day);
 
 #endif /* DRAW_H_ */

@@ -15,7 +15,7 @@ uint8_t blink_flag = 0;
 //STATES
 
 
-void draw_am_pm( uint8_t x, uint8_t y, TIME_OF_DAY_12HR_t pm)
+void draw_am_pm( uint8_t x, uint8_t y, AM_OR_PM_e pm)
 {
 	LCD_dev->cursor(LCD_dev, x, y);
 	if(pm == PM){
@@ -25,7 +25,7 @@ void draw_am_pm( uint8_t x, uint8_t y, TIME_OF_DAY_12HR_t pm)
 	}
 }
 
-void draw_day( uint8_t x, uint8_t y, DAYS_t day)
+void draw_day( uint8_t x, uint8_t y, WEEKDAYS_e day)
 {
 	char day_str[3];
 
@@ -67,7 +67,7 @@ void draw_date( uint8_t x, uint8_t y, uint8_t date)
 	LCD_dev->string(LCD_dev, date_str);
 }
 
-void draw_month( uint8_t x, uint8_t y, months month)
+void draw_month( uint8_t x, uint8_t y, MONTHS_e month)
 {
 	char month_str[3];
 
@@ -126,58 +126,58 @@ void draw_year( uint8_t x, uint8_t y, uint16_t year)
 
 void draw_time(uint8_t x, uint8_t y)
 {
-	char time_str[] = "12:59:59";
-	LCD_dev->cursor(LCD_dev, x, y);
-	sprintf(time_str, "%02d:%02d:%02d", RTC_dev->time_1->hour,
-			RTC_dev->time_1->min, RTC_dev->time_1->sec);
-	LCD_dev->string(LCD_dev, time_str);
-
-	if(RTC_dev->time_1->twelve_hour)
-			draw_am_pm( x + 90, y , RTC_dev->time_1->pm);
-
-	draw_day( x , y + 20, RTC_dev->time_1->week_day);
-	draw_date( x + 35, y + 20, RTC_dev->time_1->date);
-	draw_month( x + 65, y + 20, RTC_dev->time_1->month);
-	draw_year( x, y + 40, RTC_dev->time_1->year);
+//	char time_str[] = "12:59:59";
+//	LCD_dev->cursor(LCD_dev, x, y);
+//	sprintf(time_str, "%02d:%02d:%02d", RTC_dev->time_1->hour,
+//			RTC_dev->time_1->min, RTC_dev->time_1->sec);
+//	LCD_dev->string(LCD_dev, time_str);
+//
+//	if(RTC_dev->time_1->twelve_hour)
+//			draw_am_pm( x + 90, y , RTC_dev->time_1->pm);
+//
+//	draw_day( x , y + 20, RTC_dev->time_1->week_day);
+//	draw_date( x + 35, y + 20, RTC_dev->time_1->date);
+//	draw_month( x + 65, y + 20, RTC_dev->time_1->month);
+//	draw_year( x, y + 40, RTC_dev->time_1->year);
 }
 
 void draw_alarm( uint8_t x, uint8_t y, TYPE_TIME_t alarm)
 {
 
-	char time_str[] = "12:59:59";
-	LCD_dev->cursor(LCD_dev, x, y);
-	switch(alarm){
-	case ALARM_ONE:
-		sprintf(time_str, "%02d:%02d:%02d", RTC_dev->alarm_1->hour,
-				RTC_dev->alarm_1->min, RTC_dev->alarm_1->sec);
-		LCD_dev->string(LCD_dev, time_str);
-		break;
-	case ALARM_TWO:
-		sprintf(time_str, "%02d:%02d:%02d", RTC_dev->alarm_2->hour,
-				RTC_dev->alarm_2->min, 0);
-		LCD_dev->string(LCD_dev, time_str);
-		break;
-	default:
-		break;
-	}
-
-	if(RTC_dev->alarm_1->twelve_hour)
-		draw_am_pm(x + 100, y + 5, RTC_dev->alarm_1->pm);
-
-	draw_day( x , y + 20, RTC_dev->alarm_1->week_day);
-	draw_date( x + 35, y + 20, RTC_dev->alarm_1->date);
+//	char time_str[] = "12:59:59";
+//	LCD_dev->cursor(LCD_dev, x, y);
+//	switch(alarm){
+//	case ALARM_ONE:
+//		sprintf(time_str, "%02d:%02d:%02d", RTC_dev->alarm_1->hour,
+//				RTC_dev->alarm_1->min, RTC_dev->alarm_1->sec);
+//		LCD_dev->string(LCD_dev, time_str);
+//		break;
+//	case ALARM_TWO:
+//		sprintf(time_str, "%02d:%02d:%02d", RTC_dev->alarm_2->hour,
+//				RTC_dev->alarm_2->min, 0);
+//		LCD_dev->string(LCD_dev, time_str);
+//		break;
+//	default:
+//		break;
+//	}
+//
+//	if(RTC_dev->alarm_1->twelve_hour)
+//		draw_am_pm(x + 100, y + 5, RTC_dev->alarm_1->pm);
+//
+//	draw_day( x , y + 20, RTC_dev->alarm_1->week_day);
+//	draw_date( x + 35, y + 20, RTC_dev->alarm_1->date);
 }
 
 
 void draw_disp_alarm2_state(uint8_t x, uint8_t y)
 {
-	RTC_dev->get_alarm(RTC_dev, ALARM_TWO);
-	draw_alarm(x+10, y+5, ALARM_TWO);
-	if(RTC_dev->alarm_2->twelve_hour)
-		draw_am_pm(x + 100, y + 5, RTC_dev->alarm_2->pm);
-
-	draw_day( x + 10, y + 25, RTC_dev->alarm_2->week_day);
-	draw_date( x + 50, y + 25, RTC_dev->alarm_2->date);
+//	RTC_dev->get_alarm(RTC_dev, ALARM_TWO);
+//	draw_alarm(x+10, y+5, ALARM_TWO);
+//	if(RTC_dev->alarm_2->twelve_hour)
+//		draw_am_pm(x + 100, y + 5, RTC_dev->alarm_2->pm);
+//
+//	draw_day( x + 10, y + 25, RTC_dev->alarm_2->week_day);
+//	draw_date( x + 50, y + 25, RTC_dev->alarm_2->date);
 }
 
 //TODO remove dependency on retrieving time a second time
@@ -282,22 +282,22 @@ void draw_time_blink( uint8_t x, uint8_t y,TYPE_TIME_t type,
 
 	sprintf(time_str, "%02d:%02d:%02d", hour, min, sec);
 
-	if(type == ALARM_ONE){
-		draw_alarm(x,y, ALARM_ONE);
-		sec = RTC_dev->alarm_1->sec;
-		min = RTC_dev->alarm_1->min;
-		hour = RTC_dev->alarm_1->hour;
-	}else if(type == ALARM_TWO){
-		draw_alarm(x,y, ALARM_TWO);
-		sec = 0;
-		min = RTC_dev->alarm_2->min;
-		hour = RTC_dev->alarm_2->hour;
-	}else if(type == TIME){
-		draw_time(x, y);
-		sec = RTC_dev->time_1->sec;
-		min = RTC_dev->time_1->min;
-		hour = RTC_dev->time_1->hour;
-	}
+//	if(type == ALARM_ONE){
+//		draw_alarm(x,y, ALARM_ONE);
+//		sec = RTC_dev->alarm_1->sec;
+//		min = RTC_dev->alarm_1->min;
+//		hour = RTC_dev->alarm_1->hour;
+//	}else if(type == ALARM_TWO){
+//		draw_alarm(x,y, ALARM_TWO);
+//		sec = 0;
+//		min = RTC_dev->alarm_2->min;
+//		hour = RTC_dev->alarm_2->hour;
+//	}else if(type == TIME){
+//		draw_time(x, y);
+//		sec = RTC_dev->time_1->sec;
+//		min = RTC_dev->time_1->min;
+//		hour = RTC_dev->time_1->hour;
+//	}
 
 	switch(blink_target){
 	case SET_HOUR:

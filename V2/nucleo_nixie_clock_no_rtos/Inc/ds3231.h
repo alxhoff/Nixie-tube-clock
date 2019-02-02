@@ -87,8 +87,7 @@ typedef enum {
 	OCTOBER,
 	NOVEMBER,
 	DECEMBER
-}
-months;
+} MONTHS_e;
 
 typedef enum{
 	EMPTY_DAY,
@@ -99,50 +98,19 @@ typedef enum{
 	FRIDAY,
 	SATURDAY,
 	SUNDAY
-} DAYS_t;
+} WEEKDAYS_e;
 
 typedef enum{
 	AM,
 	PM
-} TIME_OF_DAY_12HR_t;
-
-typedef enum{
-	DS3231_OK 			= 0,
-	DS3231_MEM 			= 1,
-	DS3231_I2C			= 2,
-	DS3231_MISSING_ARG	= 3
-} DS3231_ERR_t;
-
-typedef struct ds3231_registers{
-        uint8_t sec;
-        uint8_t min;
-        uint8_t hour;
-		uint8_t week_day;
-        uint8_t date;
-        uint8_t month;
-        uint16_t year;
-        uint8_t	alarm1_sec;
-        uint8_t alarm1_min;
-        uint8_t alarm1_hour;
-        uint8_t alarm1_date;
-        uint8_t alarm2_min;
-        uint8_t alarm2_hour;
-        uint8_t alarm2_date;
-        uint8_t control;
-        uint8_t status;
-        uint8_t offset;
-        uint8_t MSB_temp;
-        uint8_t LSB_temp;
-    } ds3231_registers_t;
-
-//TODO handle dirty flags
+} AM_OR_PM_e;
 
 typedef struct ds3231_time{
 	uint8_t twelve_hour;
 	uint8_t sec;
 	uint8_t min;
 	uint8_t hour;
-	TIME_OF_DAY_12HR_t pm;
+	AM_OR_PM_e pm;
 	uint8_t week_day;
 	uint8_t date;
 	uint8_t month;
@@ -156,26 +124,26 @@ typedef struct ds3231_alarm{
 	uint8_t	sec;
 	uint8_t min;
 	uint8_t hour;
-	TIME_OF_DAY_12HR_t pm;
+	AM_OR_PM_e pm;
 	uint8_t week_day;
 	uint8_t date;
 	DY_DT_t date_or_day;
 	ALARM_TYPE_t alarm_type;
 
-	uint8_t dirty;
+	uint8_t invalid;
 } ds3231_alarm_t;
 
 typedef struct ds3231_alarm_short{
 	uint8_t twelve_hour;
 	uint8_t min;
 	uint8_t hour;
-	TIME_OF_DAY_12HR_t pm;
+	AM_OR_PM_e pm;
 	uint8_t week_day;
 	uint8_t date;
 	DY_DT_t date_or_day;
 	ALARM_TYPE_t alarm_type;
 
-	uint8_t dirty;
+	uint8_t invalid;
 } ds3231_alarm_short_t;
 
 union ds3231_alarm_unknown{
@@ -183,64 +151,8 @@ union ds3231_alarm_unknown{
 	ds3231_alarm_short_t short_alarm;
 };
 
-typedef struct ds3231_device_init{
-	ds3231_time_t initial_time;
-
-	I2C_HandleTypeDef* i2c_handle;
-
-} ds3231_device_init_t;
-
-typedef struct ds3231_device DS3231_device_t;
-
-struct ds3231_device{
-	ds3231_time_t* time_1;
-	ds3231_alarm_t* alarm_1;
-	ds3231_alarm_short_t* alarm_2;
-
-	I2C_HandleTypeDef* i2c_handle;
-
-	float temp;
-
-	ds3231_registers_t* registers;
-
-	DS3231_ERR_t (*get_time)(DS3231_device_t*);
-	DS3231_ERR_t (*set_time)(DS3231_device_t*);
-	DS3231_ERR_t (*get_date)(DS3231_device_t*);
-	DS3231_ERR_t (*set_date)(DS3231_device_t*);
-	DS3231_ERR_t (*get_alarm)(DS3231_device_t*, TYPE_TIME_t);
-	DS3231_ERR_t (*set_alarm)(DS3231_device_t*, TYPE_TIME_t);
-	DS3231_ERR_t (*get_temp)(DS3231_device_t*);
-	DS3231_ERR_t (*dump_register)(DS3231_device_t*);
-};
 
 //self
-DS3231_device_t* DS3231_init_struct(ds3231_device_init_t* init_struct);
-DS3231_ERR_t self_DS3231_set_time(DS3231_device_t* self);
-DS3231_ERR_t self_DS3231_get_time(DS3231_device_t* self);
-DS3231_ERR_t self_DS3231_set_date(DS3231_device_t* self);
-DS3231_ERR_t self_DS3231_get_date(DS3231_device_t* self);
-DS3231_ERR_t self_DS3231_set_alarm(DS3231_device_t* self,
-			TYPE_TIME_t alarm_number);
-DS3231_ERR_t self_DS3231_get_alarm(DS3231_device_t* self,
-		TYPE_TIME_t alarm_number);
-DS3231_ERR_t self_DS3231_get_temp(DS3231_device_t* self);
-DS3231_ERR_t self_DS3231_register_dump(DS3231_device_t* self);
 
-uint8_t dec2bcd(uint8_t d);
-uint8_t bcd2dec(uint8_t b);
-void DS3231_set_time_short(I2C_HandleTypeDef *hi2c, uint8_t twelve_hour,
-		uint8_t hour, uint8_t min, uint8_t sec);
-void DS3231_get_time_short(I2C_HandleTypeDef *hi2c, uint8_t* pm,
-		uint8_t* twelve_hour, uint8_t* hour, uint8_t*min, uint8_t* sec);
-void DS3231_set_date_short(I2C_HandleTypeDef *hi2c, uint16_t year,
-		uint8_t month, uint8_t date, uint8_t day);
-void DS3231_get_date_short(I2C_HandleTypeDef *hi2c, uint16_t* year,
-		uint8_t* month, uint8_t* date, uint8_t* day);
-void DS3231_set_time(I2C_HandleTypeDef *hi2c, ds3231_time_t* time);
-void DS3231_get_time(I2C_HandleTypeDef *hi2c, ds3231_time_t* return_struct);
-float DS3231_get_temp(I2C_HandleTypeDef *hi2c);
-void DS3231_set_alarm(I2C_HandleTypeDef *hi2c, ds3231_alarm_t* alarm_time,
-			TYPE_TIME_t alarm_number);
-void DS3231_register_dump(I2C_HandleTypeDef *hi2c, ds3231_registers_t* return_struct);
 
 #endif /* DS3231_STM32_ALEX_H_ */

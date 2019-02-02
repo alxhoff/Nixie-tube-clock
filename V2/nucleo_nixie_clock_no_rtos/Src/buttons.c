@@ -8,7 +8,7 @@
 #include "buttons.h"
 #include "render.h"
 
-#include "main.h"
+#include "RTC_dev.h"
 
 //BUTTONS
 uint8_t button_input[NUM_OF_BUTTONS] = {0};
@@ -95,19 +95,19 @@ void buttons_handle_back_not_setting(void)
 void buttons_handle_back_setting_digit(void)
 {
 	set_state = SETTING_MOVE;
-	switch(render_state){
-	case SET_TIME:
-		RTC_dev->set_time(RTC_dev);
-		break;
-	case SET_ALARM1:
-		RTC_dev->set_alarm(RTC_dev, ALARM_ONE);
-		break;
-	case SET_ALARM2:
-		RTC_dev->set_alarm(RTC_dev, ALARM_TWO);
-		break;
-	default:
-		break;
-	}
+//	switch(render_state){
+//	case SET_TIME:
+//		RTC_dev->set_time(RTC_dev);
+//		break;
+//	case SET_ALARM1:
+//		RTC_dev->set_alarm(RTC_dev, ALARM_ONE);
+//		break;
+//	case SET_ALARM2:
+//		RTC_dev->set_alarm(RTC_dev, ALARM_TWO);
+//		break;
+//	default:
+//		break;
+//	}
 }
 
 void buttons_handle_back_setting_move(void)
@@ -147,218 +147,218 @@ void buttons_handle_back(void)
 
 void buttons_handle_right_setting_digit(void)
 {
-	switch(render_state){
-		case DISP_TIME:
-		case DISP_ALARM1:
-		case DISP_ALARM2:
-			break;
-		case SET_TIME:
-			switch(set_target){
-			case SET_HOUR:
-				if(RTC_dev->time_1->twelve_hour){
-					if(RTC_dev->time_1->hour == 12){
-						RTC_dev->time_1->hour = 1;
-					}else{
-						RTC_dev->time_1->hour++;
-					}
-				}else{
-					if(RTC_dev->time_1->hour == 23){
-						RTC_dev->time_1->hour = 0;
-					}else{
-						RTC_dev->time_1->hour++;
-					}
-				}
-				break;
-			case SET_MIN:
-				if(RTC_dev->time_1->min == 59){
-					RTC_dev->time_1->min = 0;
-				}else{
-					RTC_dev->time_1->min++;
-				}
-				break;
-			case SET_SEC:
-				RTC_dev->time_1->sec = 0;
-				break;
-			case SET_DAY:
-				if(RTC_dev->time_1->week_day == 7){
-					RTC_dev->time_1->week_day = 1;
-				}else{
-					RTC_dev->time_1->week_day++;
-				}
-				break;
-			case SET_DATE:
-				if(RTC_dev->time_1->date == 31){
-					RTC_dev->time_1->date = 1;
-				}else{
-					RTC_dev->time_1->date++;
-				}
-				break;
-			case SET_MONTH:
-				if(RTC_dev->time_1->month == 12){
-					RTC_dev->time_1->month = 1;
-				}else{
-					RTC_dev->time_1->month++;
-				}
-				break;
-			case SET_YEAR:
-				RTC_dev->time_1->year++;
-				break;
-			case SET_PM:
-				if(RTC_dev->time_1->pm == PM){
-					RTC_dev->time_1->pm = AM;
-				}else{
-					RTC_dev->time_1->pm = PM;
-				}
-				break;
-			case SET_TWELVE_HOUR:
-				if(RTC_dev->time_1->twelve_hour == TRUE){
-					RTC_dev->time_1->twelve_hour = FALSE;
-				}else{
-					RTC_dev->time_1->twelve_hour = TRUE;
-				}
-				break;
-			default:
-				break;
-			}
-			break;
-		case SET_ALARM1:
-			switch(set_target){
-			case SET_HOUR:
-				if(RTC_dev->alarm_1->twelve_hour){
-					if(RTC_dev->alarm_1->hour == 12){
-						RTC_dev->alarm_1->hour = 1;
-					}else{
-						RTC_dev->alarm_1->hour++;
-					}
-				}else{
-					if(RTC_dev->alarm_1->hour == 23){
-						RTC_dev->alarm_1->hour = 0;
-					}else{
-						RTC_dev->alarm_1->hour++;
-					}
-				}
-				break;
-			case SET_MIN:
-				if(RTC_dev->alarm_1->min == 59){
-					RTC_dev->alarm_1->min = 0;
-				}else{
-					RTC_dev->alarm_1->min++;
-				}
-				break;
-			case SET_SEC:
-				RTC_dev->alarm_1->sec = 0;
-				break;
-			case SET_DAY:
-				if(RTC_dev->alarm_1->week_day == 7){
-					RTC_dev->alarm_1->week_day = 1;
-				}else{
-					RTC_dev->alarm_1->week_day++;
-				}
-				break;
-			case SET_DATE:
-				if(RTC_dev->alarm_1->date == 31){
-					RTC_dev->alarm_1->date = 1;
-				}else{
-					RTC_dev->alarm_1->date++;
-				}
-				break;
-			case SET_PM:
-				if(RTC_dev->alarm_1->pm == PM){
-					RTC_dev->alarm_1->pm = AM;
-				}else{
-					RTC_dev->alarm_1->pm = PM;
-				}
-				break;
-			case SET_TWELVE_HOUR:
-				if(RTC_dev->alarm_1->twelve_hour == TRUE){
-					RTC_dev->alarm_1->twelve_hour = FALSE;
-				}else{
-					RTC_dev->alarm_1->twelve_hour = TRUE;
-				}
-				break;
-			default:
-				break;
-			}
-			break;
-		case SET_ALARM2:
-			switch(set_target){
-			case SET_HOUR:
-				if(RTC_dev->alarm_2->twelve_hour){
-					if(RTC_dev->alarm_2->hour == 12){
-						RTC_dev->alarm_2->hour = 1;
-					}else{
-						RTC_dev->alarm_2->hour++;
-					}
-				}else{
-					if(RTC_dev->alarm_2->hour == 23){
-						RTC_dev->alarm_2->hour = 0;
-					}else{
-						RTC_dev->alarm_2->hour++;
-					}
-				}
-				break;
-			case SET_MIN:
-				if(RTC_dev->alarm_2->min == 59){
-					RTC_dev->alarm_2->min = 0;
-				}else{
-					RTC_dev->alarm_2->min++;
-				}
-				break;
-			case SET_DAY:
-				if(RTC_dev->alarm_2->week_day == 7){
-					RTC_dev->alarm_2->week_day = 1;
-				}else{
-					RTC_dev->alarm_2->week_day++;
-				}
-				break;
-			case SET_DATE:
-				if(RTC_dev->alarm_2->date == 31){
-					RTC_dev->alarm_2->date = 1;
-				}else{
-					RTC_dev->alarm_2->date++;
-				}
-				break;
-			case SET_PM:
-				if(RTC_dev->alarm_2->pm == PM){
-					RTC_dev->alarm_2->pm = AM;
-				}else{
-					RTC_dev->alarm_2->pm = PM;
-				}
-				break;
-			case SET_TWELVE_HOUR:
-				if(RTC_dev->alarm_2->twelve_hour == TRUE){
-					RTC_dev->alarm_2->twelve_hour = FALSE;
-				}else{
-					RTC_dev->alarm_2->twelve_hour = TRUE;
-				}
-				break;
-			default:
-				break;
-			}
-			break;
-		default:
-			break;
-	}
+//	switch(render_state){
+//		case DISP_TIME:
+//		case DISP_ALARM1:
+//		case DISP_ALARM2:
+//			break;
+//		case SET_TIME:
+//			switch(set_target){
+//			case SET_HOUR:
+//				if(RTC_dev->time_1->twelve_hour){
+//					if(RTC_dev->time_1->hour == 12){
+//						RTC_dev->time_1->hour = 1;
+//					}else{
+//						RTC_dev->time_1->hour++;
+//					}
+//				}else{
+//					if(RTC_dev->time_1->hour == 23){
+//						RTC_dev->time_1->hour = 0;
+//					}else{
+//						RTC_dev->time_1->hour++;
+//					}
+//				}
+//				break;
+//			case SET_MIN:
+//				if(RTC_dev->time_1->min == 59){
+//					RTC_dev->time_1->min = 0;
+//				}else{
+//					RTC_dev->time_1->min++;
+//				}
+//				break;
+//			case SET_SEC:
+//				RTC_dev->time_1->sec = 0;
+//				break;
+//			case SET_DAY:
+//				if(RTC_dev->time_1->week_day == 7){
+//					RTC_dev->time_1->week_day = 1;
+//				}else{
+//					RTC_dev->time_1->week_day++;
+//				}
+//				break;
+//			case SET_DATE:
+//				if(RTC_dev->time_1->date == 31){
+//					RTC_dev->time_1->date = 1;
+//				}else{
+//					RTC_dev->time_1->date++;
+//				}
+//				break;
+//			case SET_MONTH:
+//				if(RTC_dev->time_1->month == 12){
+//					RTC_dev->time_1->month = 1;
+//				}else{
+//					RTC_dev->time_1->month++;
+//				}
+//				break;
+//			case SET_YEAR:
+//				RTC_dev->time_1->year++;
+//				break;
+//			case SET_PM:
+//				if(RTC_dev->time_1->pm == PM){
+//					RTC_dev->time_1->pm = AM;
+//				}else{
+//					RTC_dev->time_1->pm = PM;
+//				}
+//				break;
+//			case SET_TWELVE_HOUR:
+//				if(RTC_dev->time_1->twelve_hour == TRUE){
+//					RTC_dev->time_1->twelve_hour = FALSE;
+//				}else{
+//					RTC_dev->time_1->twelve_hour = TRUE;
+//				}
+//				break;
+//			default:
+//				break;
+//			}
+//			break;
+//		case SET_ALARM1:
+//			switch(set_target){
+//			case SET_HOUR:
+//				if(RTC_dev->alarm_1->twelve_hour){
+//					if(RTC_dev->alarm_1->hour == 12){
+//						RTC_dev->alarm_1->hour = 1;
+//					}else{
+//						RTC_dev->alarm_1->hour++;
+//					}
+//				}else{
+//					if(RTC_dev->alarm_1->hour == 23){
+//						RTC_dev->alarm_1->hour = 0;
+//					}else{
+//						RTC_dev->alarm_1->hour++;
+//					}
+//				}
+//				break;
+//			case SET_MIN:
+//				if(RTC_dev->alarm_1->min == 59){
+//					RTC_dev->alarm_1->min = 0;
+//				}else{
+//					RTC_dev->alarm_1->min++;
+//				}
+//				break;
+//			case SET_SEC:
+//				RTC_dev->alarm_1->sec = 0;
+//				break;
+//			case SET_DAY:
+//				if(RTC_dev->alarm_1->week_day == 7){
+//					RTC_dev->alarm_1->week_day = 1;
+//				}else{
+//					RTC_dev->alarm_1->week_day++;
+//				}
+//				break;
+//			case SET_DATE:
+//				if(RTC_dev->alarm_1->date == 31){
+//					RTC_dev->alarm_1->date = 1;
+//				}else{
+//					RTC_dev->alarm_1->date++;
+//				}
+//				break;
+//			case SET_PM:
+//				if(RTC_dev->alarm_1->pm == PM){
+//					RTC_dev->alarm_1->pm = AM;
+//				}else{
+//					RTC_dev->alarm_1->pm = PM;
+//				}
+//				break;
+//			case SET_TWELVE_HOUR:
+//				if(RTC_dev->alarm_1->twelve_hour == TRUE){
+//					RTC_dev->alarm_1->twelve_hour = FALSE;
+//				}else{
+//					RTC_dev->alarm_1->twelve_hour = TRUE;
+//				}
+//				break;
+//			default:
+//				break;
+//			}
+//			break;
+//		case SET_ALARM2:
+//			switch(set_target){
+//			case SET_HOUR:
+//				if(RTC_dev->alarm_2->twelve_hour){
+//					if(RTC_dev->alarm_2->hour == 12){
+//						RTC_dev->alarm_2->hour = 1;
+//					}else{
+//						RTC_dev->alarm_2->hour++;
+//					}
+//				}else{
+//					if(RTC_dev->alarm_2->hour == 23){
+//						RTC_dev->alarm_2->hour = 0;
+//					}else{
+//						RTC_dev->alarm_2->hour++;
+//					}
+//				}
+//				break;
+//			case SET_MIN:
+//				if(RTC_dev->alarm_2->min == 59){
+//					RTC_dev->alarm_2->min = 0;
+//				}else{
+//					RTC_dev->alarm_2->min++;
+//				}
+//				break;
+//			case SET_DAY:
+//				if(RTC_dev->alarm_2->week_day == 7){
+//					RTC_dev->alarm_2->week_day = 1;
+//				}else{
+//					RTC_dev->alarm_2->week_day++;
+//				}
+//				break;
+//			case SET_DATE:
+//				if(RTC_dev->alarm_2->date == 31){
+//					RTC_dev->alarm_2->date = 1;
+//				}else{
+//					RTC_dev->alarm_2->date++;
+//				}
+//				break;
+//			case SET_PM:
+//				if(RTC_dev->alarm_2->pm == PM){
+//					RTC_dev->alarm_2->pm = AM;
+//				}else{
+//					RTC_dev->alarm_2->pm = PM;
+//				}
+//				break;
+//			case SET_TWELVE_HOUR:
+//				if(RTC_dev->alarm_2->twelve_hour == TRUE){
+//					RTC_dev->alarm_2->twelve_hour = FALSE;
+//				}else{
+//					RTC_dev->alarm_2->twelve_hour = TRUE;
+//				}
+//				break;
+//			default:
+//				break;
+//			}
+//			break;
+//		default:
+//			break;
+//	}
 }
 
 void buttons_handle_right_not_setting(void)
 {
-	switch(render_state){
-	case DISP_TIME:
-		RTC_dev->get_alarm(RTC_dev, ALARM_ONE);
-		render_state = DISP_ALARM1;
-		break;
-	case DISP_ALARM1:
-		RTC_dev->get_alarm(RTC_dev, ALARM_TWO);
-		render_state = DISP_ALARM2;
-		break;
-	case DISP_ALARM2:
-		RTC_dev->get_time(RTC_dev);
-		render_state = DISP_TIME;
-		break;
-	default:
-		break;
-	}
+//	switch(render_state){
+//	case DISP_TIME:
+//		RTC_dev->get_alarm(RTC_dev, ALARM_ONE);
+//		render_state = DISP_ALARM1;
+//		break;
+//	case DISP_ALARM1:
+//		RTC_dev->get_alarm(RTC_dev, ALARM_TWO);
+//		render_state = DISP_ALARM2;
+//		break;
+//	case DISP_ALARM2:
+//		RTC_dev->get_time(RTC_dev);
+//		render_state = DISP_TIME;
+//		break;
+//	default:
+//		break;
+//	}
 }
 
 void buttons_handle_right_setting_move(void)

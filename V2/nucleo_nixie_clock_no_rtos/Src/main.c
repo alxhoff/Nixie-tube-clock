@@ -91,12 +91,12 @@ static void MX_I2C2_Init(void);
 /* USER CODE BEGIN 0 */
 void convert_time_to_shift(void)
 {
-	RTC_dev->get_time(RTC_dev);
-
-	if(RTC_dev->time_1->sec == 1)
-	        	        		HAL_Delay(1000);
-
-	nixie_split_digit(RTC_dev->time_1->sec, &NIXIE_dev.data_temp[0]);
+//	RTC_dev->get_time(RTC_dev);
+//
+//	if(RTC_dev->time_1->sec == 1)
+//	        	        		HAL_Delay(1000);
+//
+//	nixie_split_digit(RTC_dev->time_1->sec, &NIXIE_dev.data_temp[0]);
 //	nixie_split_digit(RTC_dev->time_1->min, &NIXIE_dev.data_temp[2]);
 	//set tube values from temp values
 	nixie_set_tubes(&NIXIE_dev, NIXIE_dev.data_temp);
@@ -161,28 +161,7 @@ int main(void)
     SHIFT_dev.out_buf[1]=0;
     SHIFT_dev.output(&SHIFT_dev, SHIFT_dev.dev_count);
 
-    	//RTC
-  	ds3231_device_init_t RTC_init_dev =
-  	{
-  		.initial_time = {
-  			.twelve_hour = TRUE,
-
-  			.sec = 45,
-  			.min = 59,
-  			.hour = 12,
-  			.pm = PM,
-
-  			.week_day = 1,
-  			.date = 05,
-  			.month = 06,
-  			.year = 2017,
-
-  			.dirty = 0
-  		},
-  		.i2c_handle = &hi2c2,
-  	};
-
-  	RTC_dev = DS3231_init_struct(&RTC_init_dev);
+  	RTC_dev = DS3231_dev_init(TRUE, 12, 59, 45, PM, 1, 05, 06, 2017, &hi2c2);
 
   	//NIXIE ARRAY
     	nixie_init_array(&NIXIE_dev, NIXIE_TUBE_ARRAY_SIZE);
@@ -228,37 +207,37 @@ int main(void)
 //	  	};
 //	DS3231_set_time(&hi2c2, &testTime);
 
-	RTC_dev->get_time(RTC_dev);
-
-	DS3231_get_time(&hi2c2, &test_return_time);
-
-	//test alarm
-	RTC_dev->alarm_1->sec = 45;
-	RTC_dev->alarm_1->min = 8;
-	RTC_dev->alarm_1->hour = 7;
-	RTC_dev->alarm_1->date = 1;
-	RTC_dev->alarm_1->week_day = 2;
-	RTC_dev->alarm_1->alarm_type = ALARM_MATCH_MINUTES;
-
-	RTC_dev->set_alarm(RTC_dev, ALARM_ONE);
-
-	RTC_dev->alarm_1->min = 6;
-	RTC_dev->alarm_1->hour = 6;
-	RTC_dev->alarm_1->sec = 6;
-	RTC_dev->alarm_1->alarm_type = ALARM_MATCH_MINUTES;
-
-	//test alarm2
-	RTC_dev->alarm_2->min = 7;
-	RTC_dev->alarm_2->hour = 6;
-	RTC_dev->alarm_2->date = 20;
-	RTC_dev->alarm_2->week_day = 5;
-	RTC_dev->alarm_2->alarm_type = ALARM_MATCH_MINUTES;
-
-	RTC_dev->set_alarm(RTC_dev, ALARM_TWO);
-
-	RTC_dev->alarm_2->min = 6;
-	RTC_dev->alarm_2->hour = 6;
-	RTC_dev->alarm_2->alarm_type = ALARM_MATCH_MINUTES;
+//	RTC_dev->get_time(RTC_dev);
+//
+//	DS3231_read_time(&hi2c2, &test_return_time);
+//
+//	//test alarm
+//	RTC_dev->alarm_1->sec = 45;
+//	RTC_dev->alarm_1->min = 8;
+//	RTC_dev->alarm_1->hour = 7;
+//	RTC_dev->alarm_1->date = 1;
+//	RTC_dev->alarm_1->week_day = 2;
+//	RTC_dev->alarm_1->alarm_type = ALARM_MATCH_MINUTES;
+//
+//	RTC_dev->set_alarm(RTC_dev, ALARM_ONE);
+//
+//	RTC_dev->alarm_1->min = 6;
+//	RTC_dev->alarm_1->hour = 6;
+//	RTC_dev->alarm_1->sec = 6;
+//	RTC_dev->alarm_1->alarm_type = ALARM_MATCH_MINUTES;
+//
+//	//test alarm2
+//	RTC_dev->alarm_2->min = 7;
+//	RTC_dev->alarm_2->hour = 6;
+//	RTC_dev->alarm_2->date = 20;
+//	RTC_dev->alarm_2->week_day = 5;
+//	RTC_dev->alarm_2->alarm_type = ALARM_MATCH_MINUTES;
+//
+//	RTC_dev->set_alarm(RTC_dev, ALARM_TWO);
+//
+//	RTC_dev->alarm_2->min = 6;
+//	RTC_dev->alarm_2->hour = 6;
+//	RTC_dev->alarm_2->alarm_type = ALARM_MATCH_MINUTES;
 
 	//blink flag
 	uint32_t ticks = HAL_GetTick();
