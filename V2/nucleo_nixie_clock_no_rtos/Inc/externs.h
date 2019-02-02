@@ -12,8 +12,6 @@
 #include "ds3231.h"
 #include "buttons.h"
 
-extern SSD1306_device_t* LCD_dev;
-
 extern I2C_HandleTypeDef hi2c2;
 
 extern uint8_t blink_flag;

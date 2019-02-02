@@ -419,7 +419,7 @@ signed char DS3231_get_alarm(I2C_HandleTypeDef *hi2c, ds3231_alarm_t* return_str
 		alarm_register_addr = 0x07;
 		break;
 	case ALARM_TWO:
-		alarm_register_addr = 0x0B;
+		alarm_register_addr = 0x0A; /* first byte is ignored, alarm starts at 0x0B */
 		break;
 	default:
 		break;
@@ -428,7 +428,8 @@ signed char DS3231_get_alarm(I2C_HandleTypeDef *hi2c, ds3231_alarm_t* return_str
 	if(HAL_I2C_Mem_Read(hi2c, DS3231_ADDR8, alarm_register_addr, 1, read_buffer, 4, 10) != HAL_OK)
 		return -1;
 
-	return_struct->sec = bcd2dec(read_buffer[0] & 0x7F);
+	if(alarm_number == ALARM_ONE)
+		return_struct->sec = bcd2dec(read_buffer[0] & 0x7F);
 	return_struct->min = bcd2dec(read_buffer[1] & 0x7F);
 
 	if (read_buffer[2] & (1 << TWELVE_FLAG)) {

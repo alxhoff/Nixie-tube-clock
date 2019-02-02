@@ -17,12 +17,12 @@ uint8_t blink_flag = 0;
 
 void draw_am_pm( uint8_t x, uint8_t y, AM_OR_PM_e pm)
 {
-	LCD_dev->cursor(LCD_dev, x, y);
-	if(pm == PM){
-		LCD_dev->string(LCD_dev, "PM");
-	}else{
-		LCD_dev->string(LCD_dev, "AM");
-	}
+//	LCD_dev->cursor(LCD_dev, x, y);
+//	if(pm == PM){
+//		LCD_dev->string(LCD_dev, "PM");
+//	}else{
+//		LCD_dev->string(LCD_dev, "AM");
+//	}
 }
 
 void draw_day( uint8_t x, uint8_t y, WEEKDAYS_e day)
@@ -55,16 +55,16 @@ void draw_day( uint8_t x, uint8_t y, WEEKDAYS_e day)
 			strcpy(day_str, "XXX");
 			break;
 		}
-	LCD_dev->cursor(LCD_dev, x, y);
-	LCD_dev->string(LCD_dev, day_str);
+//	LCD_dev->cursor(LCD_dev, x, y);
+//	LCD_dev->string(LCD_dev, day_str);
 }
 
 void draw_date( uint8_t x, uint8_t y, uint8_t date)
 {
 	char date_str[2];
-	sprintf(date_str, "%2d", date);
-	LCD_dev->cursor(LCD_dev, x, y);
-	LCD_dev->string(LCD_dev, date_str);
+//	sprintf(date_str, "%2d", date);
+//	LCD_dev->cursor(LCD_dev, x, y);
+//	LCD_dev->string(LCD_dev, date_str);
 }
 
 void draw_month( uint8_t x, uint8_t y, MONTHS_e month)
@@ -112,16 +112,16 @@ void draw_month( uint8_t x, uint8_t y, MONTHS_e month)
 			break;
 		}
 
-	LCD_dev->cursor(LCD_dev, x, y);
-	LCD_dev->string(LCD_dev, month_str);
+//	LCD_dev->cursor(LCD_dev, x, y);
+//	LCD_dev->string(LCD_dev, month_str);
 }
 
 void draw_year( uint8_t x, uint8_t y, uint16_t year)
 {
-	char year_str[4];
-	sprintf(year_str, "%4d", year);
-	LCD_dev->cursor(LCD_dev, x, y);
-	LCD_dev->string(LCD_dev, year_str);
+//	char year_str[4];
+//	sprintf(year_str, "%4d", year);
+//	LCD_dev->cursor(LCD_dev, x, y);
+//	LCD_dev->string(LCD_dev, year_str);
 }
 
 void draw_time(uint8_t x, uint8_t y)
@@ -183,55 +183,55 @@ void draw_disp_alarm2_state(uint8_t x, uint8_t y)
 //TODO remove dependency on retrieving time a second time
 void draw_set_states( uint8_t x, uint8_t y)
 {
-	LCD_dev->cursor(LCD_dev, x + 25, y + 5);
-	switch(render_state){
-	case SET_TIME:{
-
-		char* disp_str = "SET";
-		LCD_dev->cursor(LCD_dev, x + 90, y + 45);
-		LCD_dev->string(LCD_dev, disp_str);
-
-		if(blink_flag && (set_state == SETTING_DIGIT)){
-			draw_time_blink(x + 10, y + 5, TIME, set_target);
-		}else if(set_state == SETTING_MOVE){
-			draw_time_blink(x + 10, y + 5, TIME, set_target);
-		}else{
-			draw_time( x + 10, y + 5);
-		}
-		break;
-	}
-	case SET_ALARM1:{
-
-		char* disp_str = "SET 1";
-		LCD_dev->cursor(LCD_dev, x + 70, y + 45);
-		LCD_dev->string(LCD_dev, disp_str);
-
-		if(blink_flag && (set_state == SETTING_DIGIT)){
-			draw_time_blink( x + 10, y + 5, ALARM_ONE, set_target);
-		}else if(set_state == NOT_SETTING){
-			draw_time_blink( x + 10, y + 5, ALARM_ONE, set_target);
-		}else{
-			draw_alarm( x + 10, y + 5, ALARM_ONE);
-		}
-		break;
-	}
-	case SET_ALARM2:{
-		char* disp_str = "SET 2";
-		LCD_dev->cursor(LCD_dev, x + 70, y + 45);
-		LCD_dev->string(LCD_dev, disp_str);
-
-		if(blink_flag && (set_state == SETTING_DIGIT)){
-			draw_time_blink( x + 10, y + 5, ALARM_TWO, set_target);
-		}else if(set_state == NOT_SETTING){
-			draw_time_blink( x + 10, y + 5, ALARM_TWO, set_target);
-		}else{
-			draw_alarm( x + 10, y + 5, ALARM_TWO);
-		}
-		break;
-	}
-	default:
-		break;
-	}
+//	LCD_dev->cursor(LCD_dev, x + 25, y + 5);
+//	switch(render_state){
+//	case SET_TIME:{
+//
+//		char* disp_str = "SET";
+//		LCD_dev->cursor(LCD_dev, x + 90, y + 45);
+//		LCD_dev->string(LCD_dev, disp_str);
+//
+//		if(blink_flag && (set_state == SETTING_DIGIT)){
+//			draw_time_blink(x + 10, y + 5, TIME, set_target);
+//		}else if(set_state == SETTING_MOVE){
+//			draw_time_blink(x + 10, y + 5, TIME, set_target);
+//		}else{
+//			draw_time( x + 10, y + 5);
+//		}
+//		break;
+//	}
+//	case SET_ALARM1:{
+//
+//		char* disp_str = "SET 1";
+//		LCD_dev->cursor(LCD_dev, x + 70, y + 45);
+//		LCD_dev->string(LCD_dev, disp_str);
+//
+//		if(blink_flag && (set_state == SETTING_DIGIT)){
+//			draw_time_blink( x + 10, y + 5, ALARM_ONE, set_target);
+//		}else if(set_state == NOT_SETTING){
+//			draw_time_blink( x + 10, y + 5, ALARM_ONE, set_target);
+//		}else{
+//			draw_alarm( x + 10, y + 5, ALARM_ONE);
+//		}
+//		break;
+//	}
+//	case SET_ALARM2:{
+//		char* disp_str = "SET 2";
+//		LCD_dev->cursor(LCD_dev, x + 70, y + 45);
+//		LCD_dev->string(LCD_dev, disp_str);
+//
+//		if(blink_flag && (set_state == SETTING_DIGIT)){
+//			draw_time_blink( x + 10, y + 5, ALARM_TWO, set_target);
+//		}else if(set_state == NOT_SETTING){
+//			draw_time_blink( x + 10, y + 5, ALARM_TWO, set_target);
+//		}else{
+//			draw_alarm( x + 10, y + 5, ALARM_TWO);
+//		}
+//		break;
+//	}
+//	default:
+//		break;
+//	}
 
 //	LCD_dev->cursor(LCD_dev, x + 65, y + 45);
 //
@@ -299,55 +299,55 @@ void draw_time_blink( uint8_t x, uint8_t y,TYPE_TIME_t type,
 //		hour = RTC_dev->time_1->hour;
 //	}
 
-	switch(blink_target){
-	case SET_HOUR:
-		sprintf(time_str, "--:%02d:%02d", min, sec);
-		LCD_dev->cursor(LCD_dev, x, y);
-		LCD_dev->string(LCD_dev, time_str);
-		break;
-	case SET_MIN:
-		sprintf(time_str, "%02d:--:%02d", hour, sec);
-		LCD_dev->cursor(LCD_dev, x, y);
-		LCD_dev->string(LCD_dev, time_str);
-		break;
-	case SET_SEC:
-		sprintf(time_str, "%02d:%02d:--", hour, min);
-		LCD_dev->cursor(LCD_dev, x, y);
-		LCD_dev->string(LCD_dev, time_str);
-		break;
-	case SET_DAY:{
-		char* day_str = "---";
-		LCD_dev->cursor(LCD_dev, x, y + 20);
-		LCD_dev->string(LCD_dev, day_str);
-		}
-		break;
-	case SET_DATE:{
-		char* date_str = "--";
-		LCD_dev->cursor(LCD_dev, x + 35, y + 20);
-		LCD_dev->string(LCD_dev, date_str);
-		}
-		break;
-	case SET_MONTH:{
-		char* month_str = "---";
-		LCD_dev->cursor(LCD_dev, x + 65, y + 20);
-		LCD_dev->string(LCD_dev, month_str);
-		}
-		break;
-	case SET_YEAR:{
-		char* year_str = "----";
-		LCD_dev->cursor(LCD_dev, x, y + 40);
-		LCD_dev->string(LCD_dev, year_str);
-		}
-		break;
-	case SET_PM:{
-		char* pm_str = "--";
-		LCD_dev->cursor(LCD_dev, x + 90, y);
-		LCD_dev->string(LCD_dev, pm_str);
-		}
-		break;
-	default:
-		break;
-	}
+//	switch(blink_target){
+//	case SET_HOUR:
+//		sprintf(time_str, "--:%02d:%02d", min, sec);
+//		LCD_dev->cursor(LCD_dev, x, y);
+//		LCD_dev->string(LCD_dev, time_str);
+//		break;
+//	case SET_MIN:
+//		sprintf(time_str, "%02d:--:%02d", hour, sec);
+//		LCD_dev->cursor(LCD_dev, x, y);
+//		LCD_dev->string(LCD_dev, time_str);
+//		break;
+//	case SET_SEC:
+//		sprintf(time_str, "%02d:%02d:--", hour, min);
+//		LCD_dev->cursor(LCD_dev, x, y);
+//		LCD_dev->string(LCD_dev, time_str);
+//		break;
+//	case SET_DAY:{
+//		char* day_str = "---";
+//		LCD_dev->cursor(LCD_dev, x, y + 20);
+//		LCD_dev->string(LCD_dev, day_str);
+//		}
+//		break;
+//	case SET_DATE:{
+//		char* date_str = "--";
+//		LCD_dev->cursor(LCD_dev, x + 35, y + 20);
+//		LCD_dev->string(LCD_dev, date_str);
+//		}
+//		break;
+//	case SET_MONTH:{
+//		char* month_str = "---";
+//		LCD_dev->cursor(LCD_dev, x + 65, y + 20);
+//		LCD_dev->string(LCD_dev, month_str);
+//		}
+//		break;
+//	case SET_YEAR:{
+//		char* year_str = "----";
+//		LCD_dev->cursor(LCD_dev, x, y + 40);
+//		LCD_dev->string(LCD_dev, year_str);
+//		}
+//		break;
+//	case SET_PM:{
+//		char* pm_str = "--";
+//		LCD_dev->cursor(LCD_dev, x + 90, y);
+//		LCD_dev->string(LCD_dev, pm_str);
+//		}
+//		break;
+//	default:
+//		break;
+//	}
 }
 
 //char* get_time_string(ds3231_time_t* time){

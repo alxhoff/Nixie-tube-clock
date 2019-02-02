@@ -21,8 +21,6 @@
 
 #define DS3231_ADDR8	0xD0
 
-#define STM_I2C_PORT	hi2c2
-
 #define PM_AM_FLAG		5
 #define TWELVE_FLAG		6
 #define DY_DT_FLAG		6

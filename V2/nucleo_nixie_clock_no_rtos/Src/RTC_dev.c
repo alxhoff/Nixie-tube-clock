@@ -9,7 +9,7 @@
 
 #include "RTC_dev.h"
 #include "stm32f1xx_hal.h"
-#include "RTC_config.h"
+#include "config.h"
 
 typedef struct DS3231_device DS3231_device_t;
 
@@ -32,7 +32,7 @@ struct DS3231_device {
 	signed char (*dump_register)(DS3231_device_t*);
 };
 
-DS3231_device_t ds3231_dev = { 0 };
+DS3231_device_t DS3231_dev = { 0 };
 
 signed char DS3231_dev_write_time(DS3231_device_t* self) {
 	if (DS3231_write_time(self->i2c_handle, &self->time_1))
@@ -66,7 +66,7 @@ signed char DS3231_dev_write_alarm(DS3231_device_t* self,
 		return DS3231_set_alarm(self->i2c_handle, &self->alarm_1, alarm_number);
 	case ALARM_TWO: //short
 		return DS3231_set_alarm(self->i2c_handle,
-				(ds3231_alarm_t) &self->alarm_2, alarm_number);
+				(ds3231_alarm_t *) &self->alarm_2, alarm_number);
 	default:
 		break;
 	}
@@ -100,74 +100,15 @@ signed char DS3231_dev_get_alarm(DS3231_device_t* self,
 	//TODO last case
 	switch (alarm_number) {
 	case ALARM_ONE: //long
-		self->alarm_1.sec = bcd2dec(read_buffer[0] & 0x7F);
-		self->alarm_1.min = bcd2dec(read_buffer[1] & 0x7F);
-
-		if (read_buffer[2] & (1 << TWELVE_FLAG)) {
-			//12 hour
-			self->alarm_1.twelve_hour = TRUE;
-			if (read_buffer[2] & (1 << PM_AM_FLAG)) {
-				//PM
-				self->alarm_1.pm = PM;
-			} else {
-				//AM
-				self->alarm_1.pm = AM;
-			}
-			self->alarm_1.hour = bcd2dec(read_buffer[2] & 0x1F);
-		} else {
-			//24 hour
-			self->alarm_1.twelve_hour = FALSE;
-			self->alarm_1.pm = AM;
-			self->alarm_1.hour = bcd2dec(read_buffer[2] & 0x3F);
-		}
-
-		if (read_buffer[3] & (1 << DY_DT_FLAG)) {
-			//day of month
-			self->alarm_1.date_or_day = DAY_OF_MONTH;
-			self->alarm_1.date = bcd2dec(read_buffer[3] & 0x3F);
-		} else {
-			//day of week
-			self->alarm_1.date_or_day = DAY_OF_WEEK;
-			self->alarm_1.week_day = bcd2dec(read_buffer[3] & 0x0F);
-		}
-		break;
+		return DS3231_get_alarm(self->i2c_handle, &self->alarm_1, alarm_number);
 	case ALARM_TWO: //short
-		self->alarm_2.min = bcd2dec(read_buffer[0] & 0x7F);
-
-		if (read_buffer[1] & (1 << TWELVE_FLAG)) {
-			//12 hour
-			self->alarm_2.twelve_hour = TRUE;
-			if (read_buffer[1] & (1 << PM_AM_FLAG)) {
-				//PM
-				self->alarm_2.pm = PM;
-			} else {
-				//AM
-				self->alarm_2.pm = AM;
-			}
-			self->alarm_2.hour = bcd2dec(read_buffer[3] & 0x1F);
-		} else {
-			//24 hour
-			self->alarm_2.twelve_hour = FALSE;
-			self->alarm_2.pm = AM;
-			self->alarm_2.hour = bcd2dec(read_buffer[3] & 0x3F);
-		}
-
-		if (read_buffer[4] & (1 << DY_DT_FLAG)) {
-			//day of month
-			self->alarm_2.date_or_day = DAY_OF_MONTH;
-			self->alarm_2.date = bcd2dec(read_buffer[4] & 0x3F);
-		} else {
-			//day of week
-			self->alarm_2.date_or_day = DAY_OF_WEEK;
-			self->alarm_2.week_day = bcd2dec(read_buffer[4] & 0x0F);
-		}
-		break;
+		return DS3231_get_alarm(self->i2c_handle,
+				(ds3231_alarm_t *) &self->alarm_2, alarm_number);
 	default:
-		return -1;
 		break;
 	}
 
-	return 0;
+	return -1;
 }
 
 //untested
@@ -235,7 +176,7 @@ uint8_t date, uint8_t month, uint16_t year, I2C_HandleTypeDef* i2c_handle) {
 }
 
 void RTC_dev_init(void) {
-	DS3231_dev_init(&ds3231_dev, RTC_DEF_TWELVE_HR, RTC_DEF_HOUR, RTC_DEF_MIN,
+	DS3231_dev_init(&DS3231_dev, RTC_DEF_TWELVE_HR, RTC_DEF_HOUR, RTC_DEF_MIN,
 	RTC_DEF_SEC,
 	RTC_DEF_AM_PM, RTC_DEF_WEEKDAY, RTC_DEF_DATE, RTC_DEF_MONTH,
 	RTC_DEF_YEAR, RTC_DEF_I2C);

@@ -15,7 +15,7 @@ SET_STATE_t set_state = NOT_SETTING;
 
 void render_task_callback(void)
 {
-	LCD_dev->clear_wo_update(LCD_dev);
+//	LCD_dev->clear_wo_update(LCD_dev);
 
 //	switch(render_state)
 //	{
@@ -44,5 +44,5 @@ void render_task_callback(void)
 //		break;
 //	}
 
-	LCD_dev->update(LCD_dev);
+//	LCD_dev->update(LCD_dev);
 }
