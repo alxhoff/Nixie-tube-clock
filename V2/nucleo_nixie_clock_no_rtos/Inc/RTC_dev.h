@@ -10,5 +10,6 @@
 
 #include "ds3231.h"
 
+void RTC_dev_init(void);
 
 #endif /* RTC_DEV_H_ */

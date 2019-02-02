@@ -37,4 +37,7 @@
 #define SHIFT_SER_CLR_PORT	SHIFT_CLR_GPIO_Port
 #define SHIFT_SER_CLR_PIN	SHIFT_CLR_Pin
 
+//NIXIES
+#define NIXIE_DEVICES		2
+
 #endif /* CONFIG_H_ */
