@@ -9,6 +9,7 @@
 #include "error.h"
 
 //states
+#include "draw.h"
 
 #include <string.h>
 #include <stdlib.h>
@@ -118,7 +119,14 @@ unsigned char states_init(void) {
 
 	//send state
 //	states_add(send_init, send_enter, send_run, send_exit, state_send, "send");
-
+	states_add(draw_time_init, draw_time_enter, draw_time_run, draw_time_exit,
+			state_time, "Show time");
+	states_add(draw_set_time_init, draw_set_time_enter, draw_set_time_run,
+			draw_set_time_exit, state_time_set, "Set time");
+	states_add(draw_alarm1_init, draw_alarm1_enter, draw_alarm1_run,
+			draw_alarm1_exit, state_alarm_1_set, "Set alarm 1");
+	states_add(draw_alarm2_init, draw_alarm2_enter, draw_alarm2_run,
+			draw_alarm2_exit, state_alarm_2_set, "Set alarm 2");
 
 	//set initial state
 	SET_INITIAL_STATE(state_time);

@@ -359,9 +359,78 @@ void draw_time_blink( uint8_t x, uint8_t y,TYPE_TIME_t type,
 //}
 
 
+//STATES
+//TIME
+unsigned char draw_time_init(void){
 
+	return 0;
+}
 
+void draw_time_enter(void){
 
+}
+
+void draw_time_run(void){
+
+}
+
+void draw_time_exit(void){
+
+}
+
+//SET TIME
+unsigned char draw_set_time_init(void){
+
+	return 0;
+}
+
+void draw_set_time_enter(void){
+
+}
+
+void draw_set_time_run(void){
+
+}
+
+void draw_set_time_exit(void){
+
+}
+
+//SET ALARM 1
+unsigned char draw_alarm1_init(void){
+
+	return 0;
+}
+
+void draw_alarm1_enter(void){
+
+}
+
+void draw_alarm1_run(void){
+
+}
+
+void draw_alarm1_exit(void){
+
+}
+
+//SET ALARM 2
+unsigned char draw_alarm2_init(void){
+
+	return 0;
+}
+
+void draw_alarm2_enter(void){
+
+}
+
+void draw_alarm2_run(void){
+
+}
+
+void draw_alarm2_exit(void){
+
+}
 
 
 
