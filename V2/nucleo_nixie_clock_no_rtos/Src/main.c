@@ -43,6 +43,8 @@
 #include "screen.h"
 #include "ssd1306.h"
 #include "RTC_dev.h"
+#include "nixie.h"
+#include "states.h"
 #include "SN54HC595.h"
 /* USER CODE END Includes */
 
@@ -122,93 +124,44 @@ int main(void) {
 
 	HAL_Delay(5);
 
-	RTC_dev_init();
+	RTC_dev_read_time();
 
-	//SHIFT
-//	SN54HC595_init_obj(&SHIFT_dev);
-//	SHIFT_dev.out_buf[0] = 0;
-//	SHIFT_dev.out_buf[1] = 0;
-//	SHIFT_dev.output(&SHIFT_dev, SHIFT_dev.dev_count);
+	nixie_init();
+	states_init();
+
+/*	//SHIFT
+	SN54HC595_init_obj(&SHIFT_dev);
+	SHIFT_dev.out_buf[0] = 0;
+	SHIFT_dev.out_buf[1] = 0;
+	SHIFT_dev.output(&SHIFT_dev, SHIFT_dev.dev_count);
 
 	//NIXIE ARRAY
-//	nixie_init_array(&NIXIE_dev, NIXIE_TUBE_ARRAY_SIZE);
-//
-//	nixie_enable_all(&NIXIE_dev);
-//
-//	uint8_t test_receive[66] = { 0 };
-//
-//	uint8_t test_bytes[66] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
-//			15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
-//			32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48,
-//			49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65,
-//			66 };
-//	// eeprom
-//	AT24Cxx_devices_t device_array;
-//
-//	AT24Cxx_init(&device_array, 0x00, &hi2c2);
-////INIT END
-//
-//	AT24Cxx_write_byte_buffer(device_array.devices[0], 0x0010, test_bytes, 66);
-//
-//	HAL_Delay(2);
-//
-//	AT24Cxx_read_byte_buffer(device_array.devices[0], 0x0010, test_receive, 66);
+	nixie_init_array(&NIXIE_dev, NIXIE_TUBE_ARRAY_SIZE);
 
-//	SHIFT_dev.set_byte(&SHIFT_dev, 0, 0b01010101);
-//	SHIFT_dev.set_byte(&SHIFT_dev, 1, 0b01010101);
-//	SHIFT_dev.output(&SHIFT_dev, SHIFT_dev.dev_count);
+	nixie_enable_all(&NIXIE_dev);
 
-//	ds3231_time_t test_return_time;
+	uint8_t test_receive[66] = { 0 };
 
-//	ds3231_time_t testTime = {
-//	  		.twelve_hour = TRUE,
-//	  		.sec = 55,
-//	  		.min = 59,
-//	  		.hour = 11,
-//	  		.pm = PM,
-//	  		.week_day = 5,
-//	  		.date = 31,
-//	  		.month = 12,
-//	  		.year = 2017
-//	  	};
-//	DS3231_set_time(&hi2c2, &testTime);
+	uint8_t test_bytes[66] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+			15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+			32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48,
+			49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65,
+			66 };
+	// eeprom
+	AT24Cxx_devices_t device_array;
 
-//	RTC_dev->get_time(RTC_dev);
-//
-//	DS3231_read_time(&hi2c2, &test_return_time);
-//
-//	//test alarm
-//	RTC_dev->alarm_1->sec = 45;
-//	RTC_dev->alarm_1->min = 8;
-//	RTC_dev->alarm_1->hour = 7;
-//	RTC_dev->alarm_1->date = 1;
-//	RTC_dev->alarm_1->week_day = 2;
-//	RTC_dev->alarm_1->alarm_type = ALARM_MATCH_MINUTES;
-//
-//	RTC_dev->set_alarm(RTC_dev, ALARM_ONE);
-//
-//	RTC_dev->alarm_1->min = 6;
-//	RTC_dev->alarm_1->hour = 6;
-//	RTC_dev->alarm_1->sec = 6;
-//	RTC_dev->alarm_1->alarm_type = ALARM_MATCH_MINUTES;
-//
-//	//test alarm2
-//	RTC_dev->alarm_2->min = 7;
-//	RTC_dev->alarm_2->hour = 6;
-//	RTC_dev->alarm_2->date = 20;
-//	RTC_dev->alarm_2->week_day = 5;
-//	RTC_dev->alarm_2->alarm_type = ALARM_MATCH_MINUTES;
-//
-//	RTC_dev->set_alarm(RTC_dev, ALARM_TWO);
-//
-//	RTC_dev->alarm_2->min = 6;
-//	RTC_dev->alarm_2->hour = 6;
-//	RTC_dev->alarm_2->alarm_type = ALARM_MATCH_MINUTES;
+	AT24Cxx_init(&device_array, 0x00, &hi2c2);
+//INIT END
 
-	//blink flag
-//	uint32_t ticks = HAL_GetTick();
-//	uint32_t time_ticks = HAL_GetTick();
+	AT24Cxx_write_byte_buffer(device_array.devices[0], 0x0010, test_bytes, 66);
 
+	HAL_Delay(2);
+
+	AT24Cxx_read_byte_buffer(device_array.devices[0], 0x0010, test_receive, 66);
+
+	SHIFT_dev.set_byte(&SHIFT_dev, 0, 0b01010101);
+	SHIFT_dev.set_byte(&SHIFT_dev, 1, 0b01010101);
+	SHIFT_dev.output(&SHIFT_dev, SHIFT_dev.dev_count);*/
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
