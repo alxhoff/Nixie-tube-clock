@@ -106,7 +106,6 @@ typedef struct ds3231_time {
 
 typedef struct ds3231_alarm {
 	uint8_t twelve_hour;
-	uint8_t sec;
 	uint8_t min;
 	uint8_t hour;
 	AM_OR_PM_e pm;
@@ -116,6 +115,8 @@ typedef struct ds3231_alarm {
 	ALARM_TYPE_t alarm_type;
 
 	uint8_t invalid;
+
+	uint8_t sec;
 } ds3231_alarm_t;
 
 typedef struct ds3231_alarm_short {
@@ -131,10 +132,10 @@ typedef struct ds3231_alarm_short {
 	uint8_t invalid;
 } ds3231_alarm_short_t;
 
-union ds3231_alarm_unknown {
+typedef union ds3231_alarm_u {
 	ds3231_alarm_t long_alarm;
 	ds3231_alarm_short_t short_alarm;
-};
+} ds3231_alarm_ut;
 
 signed char DS3231_write_time(I2C_HandleTypeDef *hi2c, ds3231_time_t* time);
 signed char DS3231_read_time(I2C_HandleTypeDef *hi2c,
@@ -144,5 +145,9 @@ uint8_t month, uint8_t date, uint8_t weekday);
 signed char DS3231_read_date(I2C_HandleTypeDef *hi2c, uint16_t* year,
 uint8_t* month, uint8_t* date, uint8_t* day);
 signed char DS3231_read_temp(I2C_HandleTypeDef *hi2c, float *temp);
+signed char DS3231_set_alarm(I2C_HandleTypeDef *hi2c,
+		ds3231_alarm_t* alarm_time, TYPE_TIME_t alarm_number);
+signed char DS3231_get_alarm(I2C_HandleTypeDef *hi2c, ds3231_alarm_t* return_struct,
+		TYPE_TIME_t alarm_number);
 
 #endif /* DS3231_STM32_ALEX_H_ */
