@@ -146,7 +146,7 @@ ALARM_TYPE_e RTC_dev_alarm2_get_type(void) {
 signed char self_RTC_dev_set_time(DS3231_device_t* dev, unsigned char hour,
 		unsigned char min, unsigned char sec, TIME_FORMAT_e format,
 		AM_OR_PM_e am_pm) {
-	dev->time_1.hour = hour;
+	dev->time_1.hour = (format == HOUR_12 && hour > 12) ? hour - 12 : hour;
 	dev->time_1.min = min;
 	dev->time_1.sec = sec;
 	dev->time_1.format = format;
@@ -201,7 +201,7 @@ signed char self_RTC_dev_set_alarm(DS3231_device_t* dev,
 	//TODO last case
 	switch (alarm_number) {
 	case ALARM_ONE: //long
-		dev->alarm_1.hour = hour;
+		dev->alarm_1.hour = (format == HOUR_12 && hour > 12) ? hour - 12 : hour;
 		dev->alarm_1.min = min;
 		dev->alarm_1.sec = 0;
 		dev->alarm_1.format = format;
@@ -212,7 +212,7 @@ signed char self_RTC_dev_set_alarm(DS3231_device_t* dev,
 		dev->alarm_1.type = type;
 		return DS3231_set_alarm(dev->i2c_handle, &dev->alarm_1, alarm_number);
 	case ALARM_TWO: //short
-		dev->alarm_2.hour = hour;
+		dev->alarm_2.hour = (format == HOUR_12 && hour > 12) ? hour - 12 : hour;
 		dev->alarm_2.min = min;
 		dev->alarm_2.format = format;
 		dev->alarm_2.am_or_pm = am_pm;
