@@ -59,6 +59,10 @@ void screen_set_framebuffer(char **fb) {
 	screen_dev.framebuffer = fb;
 }
 
+void screen_clear(void){
+	screen_dev.clear_screen();
+}
+
 void screen_refresh(void const *args) {
 #ifdef FREERTOS
 	TickType_t xLastWakeTime = xTaskGetTickCount();

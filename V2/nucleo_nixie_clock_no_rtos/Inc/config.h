@@ -13,7 +13,7 @@
 #define SSD1306_I2C_PORT		hi2c2
 
 //RTC
-#define RTC_DEF_TWELVE_HR	TRUE
+#define RTC_DEF_TWELVE_HR	1
 #define RTC_DEF_HOUR		11
 #define RTC_DEF_MIN			59
 #define RTC_DEF_SEC			50
@@ -22,6 +22,26 @@
 #define RTC_DEF_DATE		05
 #define RTC_DEF_MONTH		06
 #define RTC_DEF_YEAR		2017
+
+#define RTC_DEF_ALM1_TWELVE_HR		HOUR_12
+#define RTC_DEF_ALM1_HOUR			1
+#define RTC_DEF_ALM1_MIN			2
+#define RTC_DEF_ALM1_AM_PM			AM
+#define RTC_DEF_ALM1_WEEKDAY		2
+#define RTC_DEF_ALM1_DATE			3
+#define RTC_DEF_ALM1_DAY_OR_DATE	DAY_OF_MONTH
+#define RTC_DEF_ALM1_TYPE			3
+#define RTC_DEV_ALM1_SEC			0
+
+#define RTC_DEF_ALM2_TWELVE_HR		HOUR_12
+#define RTC_DEF_ALM2_HOUR			14
+#define RTC_DEF_ALM2_MIN			5
+#define RTC_DEF_ALM2_AM_PM			PM
+#define RTC_DEF_ALM2_WEEKDAY		5
+#define RTC_DEF_ALM2_DATE			14
+#define RTC_DEF_ALM2_DAY_OR_DATE	DAY_OF_WEEK
+#define RTC_DEF_ALM2_TYPE			3
+
 #define RTC_DEF_I2C			&hi2c2
 
 //SHIFT

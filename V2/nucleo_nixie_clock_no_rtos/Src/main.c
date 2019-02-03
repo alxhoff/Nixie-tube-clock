@@ -112,19 +112,17 @@ int main(void) {
 	MX_I2C2_Init();
 
 	/* USER CODE BEGIN 2 */
-	RTC_dev_init();
-
 	ssd1306_init();
 	screen_init();
 
 	screen_add_line("Init'd");
 	screen_refresh(NULL);
 
-	RTC_dev_init();
+	RTC_dev_init(1);
 
 	HAL_Delay(5);
 
-	RTC_dev_read_time();
+	RTC_dev_get_time();
 
 	nixie_init();
 	states_init();
@@ -170,6 +168,7 @@ int main(void) {
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
+		screen_clear();
 		states_run();
 		screen_refresh(NULL);
 //		if ((HAL_GetTick() > time_ticks + GET_TIME_SPEED)

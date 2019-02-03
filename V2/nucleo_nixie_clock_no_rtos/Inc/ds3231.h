@@ -23,7 +23,7 @@
 
 #define PM_AM_FLAG		5
 #define TWELVE_FLAG		6
-#define DY_DT_FLAG		6
+#define DAY_OR_DATE_FLAG		6
 #define ALARM_MASK_BITS	7
 
 #define ALARM_INTERRUPT_ENABLE		2
@@ -36,48 +36,40 @@
 #define RS1							3
 #define RS2							4
 
-#ifndef uint8_t
-#define uint8_t uint8_t
-#endif
-
-#ifndef uint16_t
-#define uint16_t uint16_t
-#endif
+typedef enum {
+	ALARM_EVERY_SECOND = 1,
+	ALARM_MATCH_SECONDS = 2,
+	ALARM_MATCH_MINUTES = 3,
+	ALARM_MATCH_HOURS = 4,
+	ALARM_MATCH_DATE_OR_DAY = 5
+} ALARM_TYPE_e;
 
 typedef enum {
-	ALARM_EVERY_SECOND,
-	ALARM_MATCH_SECONDS,
-	ALARM_MATCH_MINUTES,
-	ALARM_MATCH_HOURS,
-	ALARM_MATCH_DATE_OR_DAY
-} ALARM_TYPE_t;
+	ALARM_ONE = 1, ALARM_TWO = 2, BOTH = 3, TIME = 4,
+} TIME_TYPE_e;
 
 typedef enum {
-	ALARM_ONE, ALARM_TWO, BOTH, TIME,
-} TYPE_TIME_t;
-
-typedef enum {
-	DAY_OF_MONTH, DAY_OF_WEEK
-} DY_DT_t;
+	DAY_OF_MONTH = 0, DAY_OF_WEEK = 1
+} DAY_OR_DATE_e;
 
 typedef enum {
 	ONE_K, ONE_POINT_K, FOUR_K, EIGHT_K
-} WAVE_FREQ_t;
+} WAVE_FREQ_e;
 
 typedef enum {
 	EMPTY_MONTH,
-	JANUARY,
-	FEBUARY,
-	MARCH,
-	APRIL,
-	MAY,
-	JUNE,
-	JULY,
-	AUGUST,
-	SEPTERMBER,
-	OCTOBER,
-	NOVEMBER,
-	DECEMBER
+	JANUARY = 1,
+	FEBUARY = 2,
+	MARCH = 3,
+	APRIL = 4,
+	MAY = 5,
+	JUNE = 6,
+	JULY = 7,
+	AUGUST = 8,
+	SEPTERMBER = 9,
+	OCTOBER = 10,
+	NOVEMBER = 11,
+	DECEMBER = 12
 } MONTHS_e;
 
 typedef enum {
@@ -97,41 +89,42 @@ typedef enum {
 
 typedef enum {
 	HOUR_24 = 0, HOUR_12 = 1,
-} HOUR_12_OR_24_e;
+} TIME_FORMAT_e;
 
 typedef struct ds3231_time {
-	HOUR_12_OR_24_e twelve_hour;
-	uint8_t sec;
-	uint8_t min;
-	uint8_t hour;
+	TIME_FORMAT_e format;
+	unsigned char min;
+	unsigned char hour;
 	AM_OR_PM_e am_or_pm;
 	WEEKDAYS_e weekday;
-	uint8_t date;
+	unsigned char date;
 	MONTHS_e month;
 	uint16_t year;
+
+	unsigned char sec;
 } ds3231_time_t;
 
 typedef struct ds3231_alarm {
-	HOUR_12_OR_24_e twelve_hour;
-	uint8_t min;
-	uint8_t hour;
-	AM_OR_PM_e pm;
-	WEEKDAYS_e week_day;
-	uint8_t date;
-	DY_DT_t date_or_day;
-	ALARM_TYPE_t alarm_type;
-	uint8_t sec;
+	TIME_FORMAT_e format;
+	unsigned char min;
+	unsigned char hour;
+	AM_OR_PM_e am_or_pm;
+	WEEKDAYS_e weekday;
+	unsigned char date;
+	DAY_OR_DATE_e day_or_date;
+	ALARM_TYPE_e type;
+	unsigned char sec;
 } ds3231_alarm_t;
 
 typedef struct ds3231_alarm_short {
-	HOUR_12_OR_24_e twelve_hour;
-	uint8_t min;
-	uint8_t hour;
-	AM_OR_PM_e pm;
-	WEEKDAYS_e week_day;
-	uint8_t date;
-	DY_DT_t date_or_day;
-	ALARM_TYPE_t alarm_type;
+	TIME_FORMAT_e format;
+	unsigned char min;
+	unsigned char hour;
+	AM_OR_PM_e am_or_pm;
+	WEEKDAYS_e weekday;
+	unsigned char date;
+	DAY_OR_DATE_e day_or_date;
+	ALARM_TYPE_e type;
 } ds3231_alarm_short_t;
 
 typedef union ds3231_alarm_u {
@@ -139,17 +132,17 @@ typedef union ds3231_alarm_u {
 	ds3231_alarm_short_t short_alarm;
 } ds3231_alarm_ut;
 
-signed char DS3231_write_time(I2C_HandleTypeDef *hi2c, ds3231_time_t* time);
-signed char DS3231_read_time(I2C_HandleTypeDef *hi2c,
+signed char DS3231_set_time(I2C_HandleTypeDef *hi2c, ds3231_time_t* time);
+signed char DS3231_get_time(I2C_HandleTypeDef *hi2c,
 		ds3231_time_t* return_struct);
-signed char DS3231_write_date(I2C_HandleTypeDef *hi2c, uint16_t year,
-uint8_t month, uint8_t date, uint8_t weekday);
-signed char DS3231_read_date(I2C_HandleTypeDef *hi2c, uint16_t* year,
-uint8_t* month, uint8_t* date, uint8_t* day);
-signed char DS3231_read_temp(I2C_HandleTypeDef *hi2c, float *temp);
+signed char DS3231_set_date(I2C_HandleTypeDef *hi2c, uint16_t year,
+unsigned char month, unsigned char date, unsigned char weekday);
+signed char DS3231_get_date(I2C_HandleTypeDef *hi2c, uint16_t* year,
+unsigned char* month, unsigned char* date, unsigned char* day);
+signed char DS3231_get_temp(I2C_HandleTypeDef *hi2c, float *temp);
 signed char DS3231_set_alarm(I2C_HandleTypeDef *hi2c,
-		ds3231_alarm_t* alarm_time, TYPE_TIME_t alarm_number);
+		ds3231_alarm_t* alarm_time, TIME_TYPE_e alarm_number);
 signed char DS3231_get_alarm(I2C_HandleTypeDef *hi2c,
-		ds3231_alarm_t* return_struct, TYPE_TIME_t alarm_number);
+		ds3231_alarm_t* return_struct, TIME_TYPE_e alarm_number);
 
 #endif /* DS3231_STM32_ALEX_H_ */
