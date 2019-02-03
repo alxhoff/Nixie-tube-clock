@@ -112,6 +112,12 @@ int main(void) {
 	MX_I2C2_Init();
 
 	/* USER CODE BEGIN 2 */
+	SN54HC595_init();
+
+	unsigned char test_bytes[2] = {1,2};
+
+	SN54HC595_out_bytes(test_bytes, SHIFT_DEVICES);
+
 	ssd1306_init();
 	screen_init();
 

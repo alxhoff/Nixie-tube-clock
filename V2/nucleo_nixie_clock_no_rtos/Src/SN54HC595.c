@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "stm32f4xx_hal.h"
+#include "stm32f1xx_hal.h"
 #include "SN54HC595.h"
 #include "error.h"
 
