@@ -128,7 +128,7 @@ unsigned char states_init(void) {
 			draw_alarm2_exit, state_alarm_2_set, "Set alarm 2");
 
 	//set initial state
-	SET_INITIAL_STATE(state_alarm_2_set);
+	SET_INITIAL_STATE(state_time);
 
 	states_init_states();
 	return 0;

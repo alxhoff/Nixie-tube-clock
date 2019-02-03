@@ -13,42 +13,6 @@
 
 uint8_t blink_flag = 0;
 
-void draw_alarm(uint8_t x, uint8_t y, TIME_TYPE_e alarm) {
-
-//	char time_str[] = "12:59:59";
-//	LCD_dev->cursor(LCD_dev, x, y);
-//	switch(alarm){
-//	case ALARM_ONE:
-//		sprintf(time_str, "%02d:%02d:%02d", RTC_dev->alarm_1->hour,
-//				RTC_dev->alarm_1->min, RTC_dev->alarm_1->sec);
-//		LCD_dev->string(LCD_dev, time_str);
-//		break;
-//	case ALARM_TWO:
-//		sprintf(time_str, "%02d:%02d:%02d", RTC_dev->alarm_2->hour,
-//				RTC_dev->alarm_2->min, 0);
-//		LCD_dev->string(LCD_dev, time_str);
-//		break;
-//	default:
-//		break;
-//	}
-//
-//	if(RTC_dev->alarm_1->twelve_hour)
-//		draw_am_pm(x + 100, y + 5, RTC_dev->alarm_1->pm);
-//
-//	draw_day( x , y + 20, RTC_dev->alarm_1->week_day);
-//	draw_date( x + 35, y + 20, RTC_dev->alarm_1->date);
-}
-
-void draw_disp_alarm2_state(uint8_t x, uint8_t y) {
-//	RTC_dev->get_alarm(RTC_dev, ALARM_TWO);
-//	draw_alarm(x+10, y+5, ALARM_TWO);
-//	if(RTC_dev->alarm_2->twelve_hour)
-//		draw_am_pm(x + 100, y + 5, RTC_dev->alarm_2->pm);
-//
-//	draw_day( x + 10, y + 25, RTC_dev->alarm_2->week_day);
-//	draw_date( x + 50, y + 25, RTC_dev->alarm_2->date);
-}
-
 void get_weekday_string(WEEKDAYS_e weekday, char *buf) {
 	switch (weekday) {
 	case MONDAY:
