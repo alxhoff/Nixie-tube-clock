@@ -118,7 +118,6 @@ static unsigned char states_init_states(void) {
 unsigned char states_init(void) {
 
 	//send state
-//	states_add(send_init, send_enter, send_run, send_exit, state_send, "send");
 	states_add(draw_time_init, draw_time_enter, draw_time_run, draw_time_exit,
 			state_time, "Show time");
 	states_add(draw_set_time_init, draw_set_time_enter, draw_set_time_run,

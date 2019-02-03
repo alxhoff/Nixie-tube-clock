@@ -170,6 +170,8 @@ int main(void) {
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
+		states_run();
+		screen_refresh(NULL);
 //		if ((HAL_GetTick() > time_ticks + GET_TIME_SPEED)
 //				&& render_state != SET_TIME) {
 //

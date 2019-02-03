@@ -23,10 +23,12 @@ struct DS3231_device {
 	float temp;
 
 	signed char (*get_time)(DS3231_device_t*);
-	signed char (*set_time)(DS3231_device_t*, uint8_t, uint8_t, uint8_t);
+	signed char (*set_time)(DS3231_device_t*, unsigned char, unsigned char,
+			unsigned char);
 	signed char (*get_date)(DS3231_device_t*);
-	signed char (*set_date)(DS3231_device_t*, WEEKDAYS_e, uint8_t, MONTHS_e,
-			uint16_t);
+	signed char (*set_date)(DS3231_device_t*, WEEKDAYS_e, unsigned char,
+			MONTHS_e,
+			unsigned short);
 	signed char (*get_alarm)(DS3231_device_t*, TYPE_TIME_t);
 	signed char (*set_alarm)(DS3231_device_t*, TYPE_TIME_t);
 	signed char (*get_temp)(DS3231_device_t*);
@@ -35,45 +37,44 @@ struct DS3231_device {
 
 DS3231_device_t RTC_dev = { 0 };
 
-HOUR_12_OR_24_e RTC_dev_time_get_twelve_hour(void){
+HOUR_12_OR_24_e RTC_dev_time_get_twelve_hour(void) {
 	return RTC_dev.time_1.twelve_hour;
 }
 
-uint8_t RTC_dev_time_get_hour(void){
+unsigned char RTC_dev_time_get_hour(void) {
 	return RTC_dev.time_1.hour;
 }
 
-uint8_t RTC_dev_time_get_min(void){
+unsigned char RTC_dev_time_get_min(void) {
 	return RTC_dev.time_1.min;
 }
 
-uint8_t RTC_dev_time_get_sec(void){
+unsigned char RTC_dev_time_get_sec(void) {
 	return RTC_dev.time_1.sec;
 }
 
-AM_OR_PM_e RTC_dev_time_get_AM_or_PM(void){
+AM_OR_PM_e RTC_dev_time_get_AM_or_PM(void) {
 	return RTC_dev.time_1.am_or_pm;
 }
 
-WEEKDAYS_e RTC_dev_time_get_weekday(void){
+WEEKDAYS_e RTC_dev_time_get_weekday(void) {
 	return RTC_dev.time_1.weekday;
 }
 
-uint8_t RTC_dev_time_get_date(void){
+unsigned char RTC_dev_time_get_date(void) {
 	return RTC_dev.time_1.date;
 }
 
-MONTHS_e RTC_dev_time_get_month(void){
+MONTHS_e RTC_dev_time_get_month(void) {
 	return RTC_dev.time_1.month;
 }
 
-uint16_t RTC_dev_time_get_year(void){
+unsigned short RTC_dev_time_get_year(void) {
 	return RTC_dev.time_1.year;
 }
 
-signed char self_RTC_dev_write_time(DS3231_device_t* dev, uint8_t hour,
-		uint8_t min,
-		uint8_t sec) {
+signed char self_RTC_dev_write_time(DS3231_device_t* dev, unsigned char hour,
+		unsigned char min, unsigned char sec) {
 	dev->time_1.hour = hour;
 	dev->time_1.min = min;
 	dev->time_1.sec = sec;
@@ -84,7 +85,8 @@ signed char self_RTC_dev_write_time(DS3231_device_t* dev, uint8_t hour,
 	return 0;
 }
 
-signed char RTC_dev_write_time(uint8_t hour, uint8_t min, uint8_t sec) {
+signed char RTC_dev_write_time(unsigned char hour, unsigned char min,
+		unsigned char sec) {
 	return RTC_dev.set_time(&RTC_dev, hour, min, sec);
 }
 
@@ -106,7 +108,7 @@ signed char RTC_dev_read_time(void) {
 }
 
 signed char self_RTC_dev_write_date(DS3231_device_t* dev, WEEKDAYS_e weekday,
-		uint8_t date, MONTHS_e month, uint16_t year) {
+		unsigned char date, MONTHS_e month, unsigned short year) {
 	dev->time_1.weekday = weekday;
 	dev->time_1.date = date;
 	dev->time_1.month = month;
@@ -116,8 +118,9 @@ signed char self_RTC_dev_write_date(DS3231_device_t* dev, WEEKDAYS_e weekday,
 			dev->time_1.month, dev->time_1.date, dev->time_1.weekday);
 }
 
-signed char RTC_dev_write_date(WEEKDAYS_e weekday, uint8_t date, MONTHS_e month,
-		uint16_t year) {
+signed char RTC_dev_write_date(WEEKDAYS_e weekday, unsigned char date,
+		MONTHS_e month,
+		unsigned short year) {
 	return RTC_dev.set_date(&RTC_dev, weekday, date, month, year);
 }
 
@@ -151,8 +154,8 @@ signed char RTC_dev_write_alarm(TYPE_TIME_t alarm_number) {
 //untested
 signed char self_RTC_dev_get_alarm(DS3231_device_t* dev,
 		TYPE_TIME_t alarm_number) {
-	uint8_t read_buffer[4];
-	volatile uint8_t alarm_register_addr = 0x00;
+	unsigned char read_buffer[4];
+	volatile unsigned char alarm_register_addr = 0x00;
 
 	//TODO last case
 	switch (alarm_number) {
@@ -198,9 +201,10 @@ signed char RTC_dev_get_temp(void) {
 	return RTC_dev.get_temp(&RTC_dev);
 }
 
-DS3231_device_t* RTC_dev_create(uint8_t twelve_hour, uint8_t hour,
-uint8_t min, uint8_t sec, AM_OR_PM_e am_pm, uint8_t week_day,
-uint8_t date, uint8_t month, uint16_t year, I2C_HandleTypeDef* i2c_handle) {
+DS3231_device_t* RTC_dev_create(unsigned char twelve_hour, unsigned char hour,
+		unsigned char min, unsigned char sec, AM_OR_PM_e am_pm,
+		unsigned char week_day, unsigned char date, unsigned char month,
+		unsigned short year, I2C_HandleTypeDef* i2c_handle) {
 	DS3231_device_t* device = (DS3231_device_t*) calloc(1,
 			sizeof(DS3231_device_t));
 

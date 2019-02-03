@@ -131,7 +131,21 @@ void screen_add_line(char *line) {
 	for (unsigned char i = screen_dev.rows - 1; i > 0; i--)
 		screen_dev.framebuffer[i] = screen_dev.framebuffer[i - 1];
 
-	screen_dev.framebuffer[0] = malloc(sizeof(char) * (strlen(line) + 1));
+	screen_dev.framebuffer[0] = realloc(screen_dev.framebuffer[0],
+			sizeof(char) * (strlen(line) + 1));
 	strcpy(screen_dev.framebuffer[0], line);
 }
 
+signed char screen_add_line_at_index(unsigned char i, char *line) {
+	unsigned char rows = SCREEN_GET_ROWS;
+	if(i > (rows - 1))
+		return -1;
+
+	screen_dev.framebuffer[i] = realloc(screen_dev.framebuffer[i], sizeof(char) * (strlen(line) + 1));
+	if(!screen_dev.framebuffer[i])
+		return -1;
+
+	strcpy(screen_dev.framebuffer[i], line);
+
+	return 0;
+}
