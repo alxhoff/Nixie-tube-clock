@@ -43,7 +43,7 @@ unsigned char bcd2dec(unsigned char b) {
 //OBJECT ORIENTATED END
 
 void DS3231_set_time_short(I2C_HandleTypeDef *hi2c, unsigned char twelve_hour,
-unsigned char hour, unsigned char min, unsigned char sec) {
+		unsigned char hour, unsigned char min, unsigned char sec) {
 	unsigned char write_buffer[3] = { 0 };
 	write_buffer[0] = dec2bcd(sec);
 	write_buffer[1] = dec2bcd(min);
@@ -66,7 +66,7 @@ unsigned char hour, unsigned char min, unsigned char sec) {
 }
 
 void DS3231_get_time_short(I2C_HandleTypeDef *hi2c, unsigned char* pm,
-unsigned char* twelve_hour, unsigned char* hour, unsigned char*min,
+		unsigned char* twelve_hour, unsigned char* hour, unsigned char*min,
 		unsigned char* sec) {
 	unsigned char read_buffer[3];
 	unsigned char return_hour;
@@ -97,7 +97,7 @@ unsigned char* twelve_hour, unsigned char* hour, unsigned char*min,
 }
 
 signed char DS3231_set_date(I2C_HandleTypeDef *hi2c, uint16_t year,
-unsigned char month, unsigned char date, unsigned char weekday) {
+		unsigned char month, unsigned char date, unsigned char weekday) {
 	unsigned char write_buffer[4];
 	unsigned char century = 0;
 
@@ -121,7 +121,7 @@ unsigned char month, unsigned char date, unsigned char weekday) {
 }
 
 signed char DS3231_get_date(I2C_HandleTypeDef *hi2c, uint16_t* year,
-unsigned char* month, unsigned char* date, unsigned char* weekday) {
+		unsigned char* month, unsigned char* date, unsigned char* weekday) {
 	unsigned char read_buffer[4];
 	volatile unsigned char century = 0;
 
@@ -279,9 +279,8 @@ void DS3231_register_dump(I2C_HandleTypeDef *hi2c,
 
 //untested
 signed char DS3231_set_alarm_short(I2C_HandleTypeDef *hi2c,
-		unsigned char twelve_hour,
-		unsigned char hour, unsigned char min, unsigned char sec,
-		TIME_TYPE_e alarm_number) {
+		unsigned char twelve_hour, unsigned char hour, unsigned char min,
+		unsigned char sec, TIME_TYPE_e alarm_number) {
 	unsigned char write_buffer[3] = { 0 };
 	write_buffer[0] = dec2bcd(sec);
 	write_buffer[1] = dec2bcd(min);
@@ -362,19 +361,13 @@ signed char DS3231_set_alarm(I2C_HandleTypeDef *hi2c,
 
 	write_buffer[3] = day_date_byte;
 
-	if (alarm_number == ALARM_ONE
-			&& alarm_time->type == ALARM_EVERY_SECOND) {
+	switch (alarm_time->type) {
+	case ALARM_EVERY_SECOND:
 		write_buffer[0] |= (1 << ALARM_MASK_BITS);
 		write_buffer[1] |= (1 << ALARM_MASK_BITS);
 		write_buffer[2] |= (1 << ALARM_MASK_BITS);
 		write_buffer[3] |= (1 << ALARM_MASK_BITS);
-		if (HAL_I2C_Mem_Write(hi2c, DS3231_ADDR8, alarm_register_addr, 1,
-				write_buffer, 3, 10) != HAL_OK)
-			return -1;
-		goto alarm_set;
-	}
-
-	switch (alarm_time->type) {
+		break;
 	case ALARM_MATCH_SECONDS:
 		write_buffer[0] &= ~(1 << ALARM_MASK_BITS);
 		write_buffer[1] |= (1 << ALARM_MASK_BITS);
@@ -403,13 +396,14 @@ signed char DS3231_set_alarm(I2C_HandleTypeDef *hi2c,
 		break;
 
 	}
-
-	if (HAL_I2C_Mem_Write(hi2c, DS3231_ADDR8, alarm_register_addr, 1,
-			write_buffer + sizeof(unsigned char), 4, 10) != HAL_OK)
+	if (alarm_number == ALARM_ONE) {
+		if (HAL_I2C_Mem_Write(hi2c, DS3231_ADDR8, alarm_register_addr, 1,
+				write_buffer, 4, 10) != HAL_OK)
+			return -1;
+	} else if (HAL_I2C_Mem_Write(hi2c, DS3231_ADDR8, alarm_register_addr, 1,
+			write_buffer + sizeof(unsigned char), 3, 10) != HAL_OK)
 		return -1;
-
-	alarm_set: return 0;
-
+	return 0;
 }
 
 //untested
