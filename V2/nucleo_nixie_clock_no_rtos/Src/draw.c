@@ -171,6 +171,16 @@ void get_alarm_time_string(char *buf, TIME_TYPE_e type){
 				sprintf(buf, "%02d:%02d%s", hour, min, "PM");
 		break;
 	case ALARM_TWO:
+		hour = RTC_dev_alarm2_get_hour();
+		min = RTC_dev_alarm2_get_min();
+
+		if(RTC_dev_alarm2_get_format() == HOUR_24)
+			sprintf(buf, "%02d:%02d", hour, min);
+		else
+			if(RTC_dev_alarm2_get_am_pm() == AM)
+				sprintf(buf, "%02d:%02d%s", hour, min, "AM");
+			else
+				sprintf(buf, "%02d:%02d%s", hour, min, "PM");
 		break;
 	default:
 		break;

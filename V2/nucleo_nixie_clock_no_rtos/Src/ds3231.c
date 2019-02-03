@@ -278,34 +278,6 @@ void DS3231_register_dump(I2C_HandleTypeDef *hi2c,
 }
 
 //untested
-signed char DS3231_set_alarm_short(I2C_HandleTypeDef *hi2c,
-		unsigned char twelve_hour, unsigned char hour, unsigned char min,
-		unsigned char sec, TIME_TYPE_e alarm_number) {
-	unsigned char write_buffer[3] = { 0 };
-	write_buffer[0] = dec2bcd(sec);
-	write_buffer[1] = dec2bcd(min);
-
-	if (twelve_hour) {
-		write_buffer[2] |= (1 << TWELVE_FLAG);
-		if (hour >= 12) {
-			write_buffer[2] |= (1 << PM_AM_FLAG);
-			write_buffer[2] |= dec2bcd((hour & 0x1F) - 12);
-		} else {
-			write_buffer[2] &= ~(1 << PM_AM_FLAG);
-			write_buffer[2] |= dec2bcd(hour & 0x1F);
-		}
-	} else {
-		write_buffer[2] &= ~(1 << TWELVE_FLAG);
-		write_buffer[2] |= dec2bcd(hour & 0x3F);
-	}
-
-	if (HAL_I2C_Mem_Write(hi2c, DS3231_ADDR8, 0x07, 1, write_buffer, 3, 10)
-			!= HAL_OK)
-		return -1;
-	return 0;
-}
-
-//untested
 signed char DS3231_set_alarm(I2C_HandleTypeDef *hi2c,
 		ds3231_alarm_t* alarm_time, TIME_TYPE_e alarm_number) {
 	unsigned char alarm_register_addr = 0x07;
@@ -453,11 +425,11 @@ signed char DS3231_get_alarm(I2C_HandleTypeDef *hi2c,
 	if ((read_buffer[3] >> DAY_OR_DATE_FLAG) & 1) {
 		//day of week
 		return_struct->day_or_date = DAY_OF_WEEK;
-		return_struct->date = bcd2dec(read_buffer[3] & 0x3F);
+		return_struct->weekday = bcd2dec(read_buffer[3] & 0x0F);
 	} else {
 		//day of month
 		return_struct->day_or_date = DAY_OF_MONTH;
-		return_struct->weekday = bcd2dec(read_buffer[3] & 0x0F);
+		return_struct->date = bcd2dec(read_buffer[3] & 0x3F);
 	}
 
 	return 0;

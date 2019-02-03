@@ -60,7 +60,10 @@ void screen_set_framebuffer(char **fb) {
 }
 
 void screen_clear(void){
-	screen_dev.clear_screen();
+	unsigned char rows = SCREEN_GET_ROWS;
+	unsigned char cols = SCREEN_GET_COLS;
+	memset(screen_dev.framebuffer, 0,
+			sizeof(char) * rows * cols);
 }
 
 void screen_refresh(void const *args) {

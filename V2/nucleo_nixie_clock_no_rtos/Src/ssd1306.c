@@ -100,7 +100,6 @@ unsigned char ssd1306_write_command(uint8_t command) {
 }
 
 void ssd1306_fill(void) {
-
 	for (int i = 0; i < sizeof(ssd1306_dev.buffer); i++) {
 		ssd1306_dev.buffer[i] = (ssd1306_dev.background == Black) ? 0xFF : 0x00;
 	}

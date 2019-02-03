@@ -111,7 +111,7 @@ unsigned char RTC_dev_alarm1_get_sec(void) {
 	return RTC_dev.alarm_1.sec;
 }
 
-TIME_FORMAT_e RTC_dev_alarm2_get_twelve_hour(void) {
+TIME_FORMAT_e RTC_dev_alarm2_get_format(void) {
 	return RTC_dev.alarm_2.format;
 }
 
