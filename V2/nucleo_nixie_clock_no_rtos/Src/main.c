@@ -46,6 +46,7 @@
 #include "nixie.h"
 #include "states.h"
 #include "SN54HC595.h"
+#include "config.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -66,22 +67,14 @@ static void MX_I2C2_Init(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
+#define NIXIE_SEC_INDEX_LSB		0
+#define NIXIE_MIN_INDEX_LSB		2
+
 void convert_time_to_shift(void) {
-//	RTC_dev->get_time(RTC_dev);
-//
-//	if(RTC_dev->time_1->sec == 1)
-//	        	        		HAL_Delay(1000);
-//
-//	nixie_split_digit(RTC_dev->time_1->sec, &NIXIE_dev.data_temp[0]);
-//	nixie_split_digit(RTC_dev->time_1->min, &NIXIE_dev.data_temp[2]);
-	//set tube values from temp values
-//	nixie_set_tubes(&NIXIE_dev, NIXIE_dev.data_temp);
-//
-//	nixie_compile_output(&NIXIE_dev);
-//
-//	SHIFT_dev.set_data(&SHIFT_dev, NIXIE_dev.output);
-//
-//	SHIFT_dev.output(&SHIFT_dev, SHIFT_dev.dev_count);
+	volatile unsigned char seconds = RTC_dev_time_get_sec();
+	nixie_split_set_digit(seconds , NIXIE_SEC_INDEX_LSB);
+	volatile unsigned char *output = nixie_compile_output();
+	SN54HC595_out_bytes((unsigned char *)output, CHECK_ODD(NIXIE_DEVICES));
 }
 /* USER CODE END 0 */
 
@@ -114,23 +107,18 @@ int main(void) {
 	/* USER CODE BEGIN 2 */
 	SN54HC595_init();
 
-	unsigned char test_bytes[2] = {1,2};
+	unsigned char test_bytes[1] = {0x33};
 
 	SN54HC595_out_bytes(test_bytes, SHIFT_DEVICES);
 
 	ssd1306_init();
 	screen_init();
 
-	screen_add_line("Init'd");
-	screen_refresh(NULL);
-
 	RTC_dev_init(1);
 
-	HAL_Delay(5);
-
-	RTC_dev_get_time();
-
 	nixie_init();
+	nixie_enable_all();
+
 	states_init();
 
 /*	//SHIFT
@@ -163,9 +151,6 @@ int main(void) {
 
 	AT24Cxx_read_byte_buffer(device_array.devices[0], 0x0010, test_receive, 66);
 
-	SHIFT_dev.set_byte(&SHIFT_dev, 0, 0b01010101);
-	SHIFT_dev.set_byte(&SHIFT_dev, 1, 0b01010101);
-	SHIFT_dev.output(&SHIFT_dev, SHIFT_dev.dev_count);*/
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -176,6 +161,7 @@ int main(void) {
 		/* USER CODE BEGIN 3 */
 		screen_clear();
 		states_run();
+		convert_time_to_shift();
 		screen_refresh(NULL);
 //		if ((HAL_GetTick() > time_ticks + GET_TIME_SPEED)
 //				&& render_state != SET_TIME) {
