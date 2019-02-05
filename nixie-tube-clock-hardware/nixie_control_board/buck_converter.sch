@@ -84,17 +84,6 @@ Wire Wire Line
 Wire Wire Line
 	3900 3750 3900 3900
 Connection ~ 3900 3900
-$Comp
-L nixie_control_board-rescue:+12V-power #PWR0128
-U 1 1 5B628ADE
-P 3900 3450
-F 0 "#PWR0128" H 3900 3300 50  0001 C CNN
-F 1 "+12V" H 3915 3623 50  0000 C CNN
-F 2 "" H 3900 3450 50  0001 C CNN
-F 3 "" H 3900 3450 50  0001 C CNN
-	1    3900 3450
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	3900 3450 3900 3750
 Connection ~ 3900 3750
@@ -240,17 +229,6 @@ Connection ~ 6550 3900
 Connection ~ 6550 3750
 Wire Wire Line
 	6550 3750 6800 3750
-$Comp
-L nixie_control_board-rescue:+3.3V-power #PWR0132
-U 1 1 5B62DCE7
-P 6800 3750
-F 0 "#PWR0132" H 6800 3600 50  0001 C CNN
-F 1 "+3.3V" V 6815 3878 50  0000 L CNN
-F 2 "" H 6800 3750 50  0001 C CNN
-F 3 "" H 6800 3750 50  0001 C CNN
-	1    6800 3750
-	0    1    1    0   
-$EndComp
 Wire Wire Line
 	6000 4450 6000 4500
 Wire Wire Line
@@ -274,4 +252,26 @@ Wire Wire Line
 Connection ~ 6550 4050
 Wire Wire Line
 	6550 4050 6550 4250
+$Comp
+L nixie_control_board-rescue:+5V-power #PWR0143
+U 1 1 5C5A50CD
+P 6800 3750
+F 0 "#PWR0143" H 6800 3600 50  0001 C CNN
+F 1 "+5V-power" V 6815 3878 50  0000 L CNN
+F 2 "" H 6800 3750 50  0001 C CNN
+F 3 "" H 6800 3750 50  0001 C CNN
+	1    6800 3750
+	0    1    1    0   
+$EndComp
+$Comp
+L nixie_control_board-rescue:+12V-power #PWR0144
+U 1 1 5C5A514C
+P 3900 3450
+F 0 "#PWR0144" H 3900 3300 50  0001 C CNN
+F 1 "+12V-power" H 3915 3623 50  0000 C CNN
+F 2 "" H 3900 3450 50  0001 C CNN
+F 3 "" H 3900 3450 50  0001 C CNN
+	1    3900 3450
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC

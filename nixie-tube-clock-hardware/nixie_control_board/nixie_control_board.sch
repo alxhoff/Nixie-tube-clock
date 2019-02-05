@@ -62,17 +62,6 @@ Text GLabel 3500 3250 2    60   Input ~ 0
 SCL
 Text GLabel 3250 3350 2    60   Input ~ 0
 SDA
-$Comp
-L nixie_control_board-rescue:+5V-power #PWR02
-U 1 1 59A32A23
-P 1450 3350
-F 0 "#PWR02" H 1450 3200 50  0001 C CNN
-F 1 "+5V" H 1450 3490 50  0000 C CNN
-F 2 "" H 1450 3350 50  0000 C CNN
-F 3 "" H 1450 3350 50  0000 C CNN
-	1    1450 3350
-	0    -1   -1   0   
-$EndComp
 Text GLabel 2150 3450 0    60   Input ~ 0
 SQW
 $Comp
@@ -95,28 +84,6 @@ F 1 "C_Small" V 10500 3350 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0603" H 10350 3450 50  0001 C CNN
 F 3 "" H 10350 3450 50  0000 C CNN
 	1    10350 3450
-	1    0    0    -1  
-$EndComp
-$Comp
-L nixie_control_board-rescue:+5V-power #PWR05
-U 1 1 59A33A70
-P 9250 2950
-F 0 "#PWR05" H 9250 2800 50  0001 C CNN
-F 1 "+5V" H 9250 3090 50  0000 C CNN
-F 2 "" H 9250 2950 50  0000 C CNN
-F 3 "" H 9250 2950 50  0000 C CNN
-	1    9250 2950
-	1    0    0    -1  
-$EndComp
-$Comp
-L nixie_control_board-rescue:+5V-power #PWR06
-U 1 1 59A33CE6
-P 10700 3550
-F 0 "#PWR06" H 10700 3400 50  0001 C CNN
-F 1 "+5V" H 10700 3690 50  0000 C CNN
-F 2 "" H 10700 3550 50  0000 C CNN
-F 3 "" H 10700 3550 50  0000 C CNN
-	1    10700 3550
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -144,17 +111,6 @@ F 2 "Resistors_SMD:R_Array_Convex_4x0402" H 9900 2150 50  0001 C CNN
 F 3 "" H 9900 2150 50  0000 C CNN
 	1    9900 2150
 	-1   0    0    1   
-$EndComp
-$Comp
-L nixie_control_board-rescue:+5V-power #PWR08
-U 1 1 59A34403
-P 9900 1950
-F 0 "#PWR08" H 9900 1800 50  0001 C CNN
-F 1 "+5V" H 9900 2090 50  0000 C CNN
-F 2 "" H 9900 1950 50  0000 C CNN
-F 3 "" H 9900 1950 50  0000 C CNN
-	1    9900 1950
-	1    0    0    -1  
 $EndComp
 Text GLabel 10100 2350 3    60   Input ~ 0
 SDA
@@ -429,17 +385,6 @@ SCL
 Text GLabel 3400 2300 2    60   Input ~ 0
 SDA
 $Comp
-L nixie_control_board-rescue:+5V-power #PWR016
-U 1 1 59A4329B
-P 3200 2600
-F 0 "#PWR016" H 3200 2450 50  0001 C CNN
-F 1 "+5V" H 3200 2740 50  0000 C CNN
-F 2 "" H 3200 2600 50  0000 C CNN
-F 3 "" H 3200 2600 50  0000 C CNN
-	1    3200 2600
-	0    1    1    0   
-$EndComp
-$Comp
 L nixie_control_board-rescue:GND-power #PWR017
 U 1 1 59A43332
 P 3300 2700
@@ -617,17 +562,6 @@ Wire Wire Line
 	1800 1000 1950 1000
 Wire Wire Line
 	5400 2600 5400 2500
-$Comp
-L nixie_control_board-rescue:+5V-power #PWR023
-U 1 1 59A46C05
-P 6650 2500
-F 0 "#PWR023" H 6650 2350 50  0001 C CNN
-F 1 "+5V" H 6650 2640 50  0000 C CNN
-F 2 "" H 6650 2500 50  0000 C CNN
-F 3 "" H 6650 2500 50  0000 C CNN
-	1    6650 2500
-	0    1    1    0   
-$EndComp
 Wire Wire Line
 	6300 2500 6550 2500
 Wire Wire Line
@@ -666,34 +600,12 @@ F 3 "" H 7300 1400 50  0000 C CNN
 	1    7300 1400
 	1    0    0    -1  
 $EndComp
-$Comp
-L nixie_control_board-rescue:+5V-power #PWR026
-U 1 1 59A473AC
-P 7200 1550
-F 0 "#PWR026" H 7200 1400 50  0001 C CNN
-F 1 "+5V" H 7200 1690 50  0000 C CNN
-F 2 "" H 7200 1550 50  0000 C CNN
-F 3 "" H 7200 1550 50  0000 C CNN
-	1    7200 1550
-	-1   0    0    1   
-$EndComp
 Wire Wire Line
 	7200 1550 7200 1400
 Text GLabel 1950 1900 0    60   Input ~ 0
 SCK
 Wire Wire Line
 	8250 1600 8250 1350
-$Comp
-L nixie_control_board-rescue:+5V-power #PWR027
-U 1 1 59A49CC6
-P 7950 1350
-F 0 "#PWR027" H 7950 1200 50  0001 C CNN
-F 1 "+5V" H 7950 1490 50  0000 C CNN
-F 2 "" H 7950 1350 50  0000 C CNN
-F 3 "" H 7950 1350 50  0000 C CNN
-	1    7950 1350
-	-1   0    0    1   
-$EndComp
 $Comp
 L nixie_control_board-rescue:GND-power #PWR028
 U 1 1 59A49D3A
@@ -790,41 +702,8 @@ F 3 "" H 8950 1350 50  0000 C CNN
 	1    8950 1350
 	1    0    0    -1  
 $EndComp
-$Comp
-L nixie_control_board-rescue:+5V-power #PWR033
-U 1 1 59A56456
-P 8850 1550
-F 0 "#PWR033" H 8850 1400 50  0001 C CNN
-F 1 "+5V" H 8850 1690 50  0000 C CNN
-F 2 "" H 8850 1550 50  0000 C CNN
-F 3 "" H 8850 1550 50  0000 C CNN
-	1    8850 1550
-	-1   0    0    1   
-$EndComp
 Wire Wire Line
 	8850 1550 8850 1350
-$Comp
-L nixie_control_board-rescue:+12V-power #PWR034
-U 1 1 59A43861
-P 5400 2500
-F 0 "#PWR034" H 5400 2350 50  0001 C CNN
-F 1 "+12V" H 5400 2640 50  0000 C CNN
-F 2 "" H 5400 2500 50  0000 C CNN
-F 3 "" H 5400 2500 50  0000 C CNN
-	1    5400 2500
-	0    -1   -1   0   
-$EndComp
-$Comp
-L nixie_control_board-rescue:+12V-power #PWR035
-U 1 1 59A441BB
-P 7450 4400
-F 0 "#PWR035" H 7450 4250 50  0001 C CNN
-F 1 "+12V" H 7450 4540 50  0000 C CNN
-F 2 "" H 7450 4400 50  0000 C CNN
-F 3 "" H 7450 4400 50  0000 C CNN
-	1    7450 4400
-	1    0    0    -1  
-$EndComp
 Text GLabel 9050 1550 3    60   Input ~ 0
 DHT
 Wire Wire Line
@@ -844,8 +723,6 @@ F 3 "" H 2000 3250 50  0000 C CNN
 $EndComp
 Wire Wire Line
 	2200 3250 2350 3250
-Wire Wire Line
-	3200 2600 3150 2600
 Text GLabel 7400 1600 3    60   Input ~ 0
 BUZZER
 Wire Wire Line
@@ -1122,7 +999,6 @@ F 3 "" H 10350 3200 50  0000 C CNN
 $EndComp
 Wire Wire Line
 	10350 3200 10350 3350
-Connection ~ 5400 2500
 Connection ~ 6300 2500
 Connection ~ 3550 4200
 $Comp
@@ -1424,28 +1300,6 @@ F 3 "" H 3450 5400 50  0000 C CNN
 	1    3450 5400
 	0    -1   -1   0   
 $EndComp
-$Comp
-L nixie_control_board-rescue:+3.3V-power #PWR0124
-U 1 1 5B61C891
-P 3450 5300
-F 0 "#PWR0124" H 3450 5150 50  0001 C CNN
-F 1 "+3.3V" V 3465 5428 50  0000 L CNN
-F 2 "" H 3450 5300 50  0001 C CNN
-F 3 "" H 3450 5300 50  0001 C CNN
-	1    3450 5300
-	0    1    1    0   
-$EndComp
-$Comp
-L nixie_control_board-rescue:+3.3V-power #PWR0125
-U 1 1 5B61CAA4
-P 1450 5050
-F 0 "#PWR0125" H 1450 4900 50  0001 C CNN
-F 1 "+3.3V" H 1465 5223 50  0000 C CNN
-F 2 "" H 1450 5050 50  0001 C CNN
-F 3 "" H 1450 5050 50  0001 C CNN
-	1    1450 5050
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	1450 5050 1450 5200
 Connection ~ 1450 5200
@@ -1498,17 +1352,6 @@ SDA
 Text GLabel 3650 6300 2    60   Input ~ 0
 SCL
 $Comp
-L nixie_control_board-rescue:+3.3V-power #PWR0118
-U 1 1 5B66BD99
-P 3150 2800
-F 0 "#PWR0118" H 3150 2650 50  0001 C CNN
-F 1 "+3.3V" V 3165 2928 50  0000 L CNN
-F 2 "" H 3150 2800 50  0001 C CNN
-F 3 "" H 3150 2800 50  0001 C CNN
-	1    3150 2800
-	0    1    1    0   
-$EndComp
-$Comp
 L nixie_control_board-rescue:Buzzer-device BZ1
 U 1 1 5B66C38D
 P 5350 3800
@@ -1560,31 +1403,8 @@ Wire Wire Line
 	4850 4200 4950 4200
 Text GLabel 4550 4200 0    60   Input ~ 0
 BUZZER
-$Comp
-L nixie_control_board-rescue:+5V-power #PWR0120
-U 1 1 5B68D9F4
-P 5250 3550
-F 0 "#PWR0120" H 5250 3400 50  0001 C CNN
-F 1 "+5V" H 5250 3690 50  0000 C CNN
-F 2 "" H 5250 3550 50  0000 C CNN
-F 3 "" H 5250 3550 50  0000 C CNN
-	1    5250 3550
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	5250 3550 5250 3700
-Connection ~ 7450 4400
-$Comp
-L nixie_control_board-rescue:+12P-power #PWR0121
-U 1 1 5B69437C
-P 6600 4400
-F 0 "#PWR0121" H 6600 4250 50  0001 C CNN
-F 1 "+12P" H 6615 4573 50  0000 C CNN
-F 2 "" H 6600 4400 50  0001 C CNN
-F 3 "" H 6600 4400 50  0001 C CNN
-	1    6600 4400
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	6550 4850 6550 5250
 $Comp
@@ -1609,17 +1429,6 @@ F 3 "" H 7650 3200 50  0000 C CNN
 	1    7650 3200
 	0    -1   -1   0   
 $EndComp
-$Comp
-L nixie_control_board-rescue:+5V-power #PWR0123
-U 1 1 5B597C33
-P 7650 3100
-F 0 "#PWR0123" H 7650 2950 50  0001 C CNN
-F 1 "+5V" H 7650 3240 50  0000 C CNN
-F 2 "" H 7650 3100 50  0000 C CNN
-F 3 "" H 7650 3100 50  0000 C CNN
-	1    7650 3100
-	0    1    1    0   
-$EndComp
 Text GLabel 3150 1400 2    50   Input ~ 0
 TX
 Text GLabel 3150 1500 2    50   Input ~ 0
@@ -1637,6 +1446,209 @@ F 1 "Conn_01x02_Female" H 4477 1285 50  0000 L CNN
 F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 4450 1400 50  0001 C CNN
 F 3 "~" H 4450 1400 50  0001 C CNN
 	1    4450 1400
+	1    0    0    -1  
+$EndComp
+$Comp
+L nixie_control_board-rescue:+5V-power #PWR0118
+U 1 1 5C5AA42E
+P 10700 3550
+F 0 "#PWR0118" H 10700 3400 50  0001 C CNN
+F 1 "+5V-power" H 10715 3723 50  0000 C CNN
+F 2 "" H 10700 3550 50  0001 C CNN
+F 3 "" H 10700 3550 50  0001 C CNN
+	1    10700 3550
+	1    0    0    -1  
+$EndComp
+$Comp
+L nixie_control_board-rescue:+5V-power #PWR0120
+U 1 1 5C5AA57D
+P 9250 2950
+F 0 "#PWR0120" H 9250 2800 50  0001 C CNN
+F 1 "+5V-power" H 9265 3123 50  0000 C CNN
+F 2 "" H 9250 2950 50  0001 C CNN
+F 3 "" H 9250 2950 50  0001 C CNN
+	1    9250 2950
+	1    0    0    -1  
+$EndComp
+$Comp
+L nixie_control_board-rescue:+5V-power #PWR0121
+U 1 1 5C5AA6C5
+P 9900 1950
+F 0 "#PWR0121" H 9900 1800 50  0001 C CNN
+F 1 "+5V-power" H 9915 2123 50  0000 C CNN
+F 2 "" H 9900 1950 50  0001 C CNN
+F 3 "" H 9900 1950 50  0001 C CNN
+	1    9900 1950
+	1    0    0    -1  
+$EndComp
+$Comp
+L nixie_control_board-rescue:+5V-power #PWR0123
+U 1 1 5C5AA841
+P 5250 3550
+F 0 "#PWR0123" H 5250 3400 50  0001 C CNN
+F 1 "+5V-power" H 5265 3723 50  0000 C CNN
+F 2 "" H 5250 3550 50  0001 C CNN
+F 3 "" H 5250 3550 50  0001 C CNN
+	1    5250 3550
+	1    0    0    -1  
+$EndComp
+$Comp
+L nixie_control_board-rescue:+5V-power #PWR0124
+U 1 1 5C5AA8B2
+P 1450 3350
+F 0 "#PWR0124" H 1450 3200 50  0001 C CNN
+F 1 "+5V-power" V 1465 3477 50  0000 L CNN
+F 2 "" H 1450 3350 50  0001 C CNN
+F 3 "" H 1450 3350 50  0001 C CNN
+	1    1450 3350
+	0    -1   -1   0   
+$EndComp
+$Comp
+L nixie_control_board-rescue:+3.3V-power #PWR0125
+U 1 1 5C5AAADD
+P 1450 5050
+F 0 "#PWR0125" H 1450 4900 50  0001 C CNN
+F 1 "+3.3V-power" H 1465 5223 50  0000 C CNN
+F 2 "" H 1450 5050 50  0001 C CNN
+F 3 "" H 1450 5050 50  0001 C CNN
+	1    1450 5050
+	1    0    0    -1  
+$EndComp
+$Comp
+L nixie_control_board-rescue:+12V-power #PWR0128
+U 1 1 5C5AAC99
+P 7450 4400
+F 0 "#PWR0128" H 7450 4250 50  0001 C CNN
+F 1 "+12V-power" H 7465 4573 50  0000 C CNN
+F 2 "" H 7450 4400 50  0001 C CNN
+F 3 "" H 7450 4400 50  0001 C CNN
+	1    7450 4400
+	1    0    0    -1  
+$EndComp
+Connection ~ 7450 4400
+$Comp
+L nixie_control_board-rescue:+5V-power #PWR0134
+U 1 1 5C5AAEC0
+P 3600 2600
+F 0 "#PWR0134" H 3600 2450 50  0001 C CNN
+F 1 "+5V-power" V 3615 2728 50  0000 L CNN
+F 2 "" H 3600 2600 50  0001 C CNN
+F 3 "" H 3600 2600 50  0001 C CNN
+	1    3600 2600
+	0    1    1    0   
+$EndComp
+$Comp
+L nixie_control_board-rescue:+3.3V-power #PWR0135
+U 1 1 5C5AAFBC
+P 3600 2800
+F 0 "#PWR0135" H 3600 2650 50  0001 C CNN
+F 1 "+3.3V-power" V 3615 2928 50  0000 L CNN
+F 2 "" H 3600 2800 50  0001 C CNN
+F 3 "" H 3600 2800 50  0001 C CNN
+	1    3600 2800
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	3150 2600 3600 2600
+Wire Wire Line
+	3150 2800 3600 2800
+$Comp
+L nixie_control_board-rescue:+5V-power #PWR0136
+U 1 1 5C5B53DB
+P 5250 2500
+F 0 "#PWR0136" H 5250 2350 50  0001 C CNN
+F 1 "+5V-power" V 5265 2627 50  0000 L CNN
+F 2 "" H 5250 2500 50  0001 C CNN
+F 3 "" H 5250 2500 50  0001 C CNN
+	1    5250 2500
+	0    -1   -1   0   
+$EndComp
+$Comp
+L nixie_control_board-rescue:+3.3V-power #PWR0137
+U 1 1 5C5B54E5
+P 6650 2500
+F 0 "#PWR0137" H 6650 2350 50  0001 C CNN
+F 1 "+3.3V-power" V 6665 2628 50  0000 L CNN
+F 2 "" H 6650 2500 50  0001 C CNN
+F 3 "" H 6650 2500 50  0001 C CNN
+	1    6650 2500
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	5250 2500 5400 2500
+Connection ~ 5400 2500
+$Comp
+L nixie_control_board-rescue:+5V-power #PWR0138
+U 1 1 5C5BAAF8
+P 8850 1550
+F 0 "#PWR0138" H 8850 1400 50  0001 C CNN
+F 1 "+5V-power" H 8865 1723 50  0000 C CNN
+F 2 "" H 8850 1550 50  0001 C CNN
+F 3 "" H 8850 1550 50  0001 C CNN
+	1    8850 1550
+	-1   0    0    1   
+$EndComp
+$Comp
+L nixie_control_board-rescue:+5V-power #PWR0139
+U 1 1 5C5BAC9B
+P 7950 1350
+F 0 "#PWR0139" H 7950 1200 50  0001 C CNN
+F 1 "+5V-power" H 7965 1523 50  0000 C CNN
+F 2 "" H 7950 1350 50  0001 C CNN
+F 3 "" H 7950 1350 50  0001 C CNN
+	1    7950 1350
+	-1   0    0    1   
+$EndComp
+$Comp
+L nixie_control_board-rescue:+5V-power #PWR0140
+U 1 1 5C5BAD0C
+P 7200 1550
+F 0 "#PWR0140" H 7200 1400 50  0001 C CNN
+F 1 "+5V-power" H 7215 1723 50  0000 C CNN
+F 2 "" H 7200 1550 50  0001 C CNN
+F 3 "" H 7200 1550 50  0001 C CNN
+	1    7200 1550
+	-1   0    0    1   
+$EndComp
+$Comp
+L nixie_control_board-rescue:+5V-power #PWR0141
+U 1 1 5C5BADB1
+P 7900 3100
+F 0 "#PWR0141" H 7900 2950 50  0001 C CNN
+F 1 "+5V-power" V 7915 3228 50  0000 L CNN
+F 2 "" H 7900 3100 50  0001 C CNN
+F 3 "" H 7900 3100 50  0001 C CNN
+	1    7900 3100
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	7900 3100 7650 3100
+$Comp
+L nixie_control_board-rescue:+3.3V-power #PWR0142
+U 1 1 5C5C046E
+P 3700 5300
+F 0 "#PWR0142" H 3700 5150 50  0001 C CNN
+F 1 "+3.3V-power" V 3715 5428 50  0000 L CNN
+F 2 "" H 3700 5300 50  0001 C CNN
+F 3 "" H 3700 5300 50  0001 C CNN
+	1    3700 5300
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	3700 5300 3450 5300
+Wire Wire Line
+	6200 2350 6300 2350
+Wire Wire Line
+	6300 2350 6300 2500
+$Comp
+L nixie_control_board-rescue:+12P-power #PWR?
+U 1 1 5C5CCF02
+P 6600 4400
+F 0 "#PWR?" H 6600 4250 50  0001 C CNN
+F 1 "+12P-power" H 6615 4573 50  0000 C CNN
+F 2 "" H 6600 4400 50  0001 C CNN
+F 3 "" H 6600 4400 50  0001 C CNN
+	1    6600 4400
 	1    0    0    -1  
 $EndComp
 $EndSCHEMATC

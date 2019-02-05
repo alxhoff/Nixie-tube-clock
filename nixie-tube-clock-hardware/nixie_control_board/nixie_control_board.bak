@@ -37,7 +37,7 @@ F 3 "" H 2850 3750 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:Battery BT1
+L nixie_control_board-rescue:Battery-device BT1
 U 1 1 59A3268C
 P 3550 3650
 F 0 "BT1" H 3650 3700 50  0000 L CNN
@@ -48,7 +48,7 @@ F 3 "" V 3550 3690 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR01
+L nixie_control_board-rescue:GND-power #PWR01
 U 1 1 59A327A3
 P 3550 4200
 F 0 "#PWR01" H 3550 3950 50  0001 C CNN
@@ -62,21 +62,10 @@ Text GLabel 3500 3250 2    60   Input ~ 0
 SCL
 Text GLabel 3250 3350 2    60   Input ~ 0
 SDA
-$Comp
-L power:+5V #PWR02
-U 1 1 59A32A23
-P 1450 3350
-F 0 "#PWR02" H 1450 3200 50  0001 C CNN
-F 1 "+5V" H 1450 3490 50  0000 C CNN
-F 2 "" H 1450 3350 50  0000 C CNN
-F 3 "" H 1450 3350 50  0000 C CNN
-	1    1450 3350
-	0    -1   -1   0   
-$EndComp
 Text GLabel 2150 3450 0    60   Input ~ 0
 SQW
 $Comp
-L device:C_Small C1
+L nixie_control_board-rescue:C_Small-device C1
 U 1 1 59A33289
 P 1600 3500
 F 0 "C1" H 1610 3570 50  0000 L CNN
@@ -87,7 +76,7 @@ F 3 "" H 1600 3500 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:C_Small C2
+L nixie_control_board-rescue:C_Small-device C2
 U 1 1 59A332E7
 P 10350 3450
 F 0 "C2" H 10360 3520 50  0000 L CNN
@@ -98,29 +87,7 @@ F 3 "" H 10350 3450 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:+5V #PWR05
-U 1 1 59A33A70
-P 9250 2950
-F 0 "#PWR05" H 9250 2800 50  0001 C CNN
-F 1 "+5V" H 9250 3090 50  0000 C CNN
-F 2 "" H 9250 2950 50  0000 C CNN
-F 3 "" H 9250 2950 50  0000 C CNN
-	1    9250 2950
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:+5V #PWR06
-U 1 1 59A33CE6
-P 10700 3550
-F 0 "#PWR06" H 10700 3400 50  0001 C CNN
-F 1 "+5V" H 10700 3690 50  0000 C CNN
-F 2 "" H 10700 3550 50  0000 C CNN
-F 3 "" H 10700 3550 50  0000 C CNN
-	1    10700 3550
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR07
+L nixie_control_board-rescue:GND-power #PWR07
 U 1 1 59A33D06
 P 10300 3650
 F 0 "#PWR07" H 10300 3400 50  0001 C CNN
@@ -135,7 +102,7 @@ SCL
 Text GLabel 10800 3850 2    60   Input ~ 0
 SDA
 $Comp
-L device:R_Pack04 RP1
+L nixie_control_board-rescue:R_Pack04-device RP1
 U 1 1 59A343F6
 P 9900 2150
 F 0 "RP1" H 9900 2600 50  0000 C CNN
@@ -144,17 +111,6 @@ F 2 "Resistors_SMD:R_Array_Convex_4x0402" H 9900 2150 50  0001 C CNN
 F 3 "" H 9900 2150 50  0000 C CNN
 	1    9900 2150
 	-1   0    0    1   
-$EndComp
-$Comp
-L power:+5V #PWR08
-U 1 1 59A34403
-P 9900 1950
-F 0 "#PWR08" H 9900 1800 50  0001 C CNN
-F 1 "+5V" H 9900 2090 50  0000 C CNN
-F 2 "" H 9900 1950 50  0000 C CNN
-F 3 "" H 9900 1950 50  0000 C CNN
-	1    9900 1950
-	1    0    0    -1  
 $EndComp
 Text GLabel 10100 2350 3    60   Input ~ 0
 SDA
@@ -172,7 +128,7 @@ F 3 "" H 8100 1150 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L switches:SW_Push SW1
+L nixie_control_board-rescue:SW_Push-switches SW1
 U 1 1 59A34D3A
 P 6200 1050
 F 0 "SW1" H 6350 1160 50  0000 C CNN
@@ -183,7 +139,7 @@ F 3 "" H 6200 1050 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR09
+L nixie_control_board-rescue:GND-power #PWR09
 U 1 1 59A36607
 P 8350 5750
 F 0 "#PWR09" H 8350 5500 50  0001 C CNN
@@ -194,7 +150,7 @@ F 3 "" H 8350 5750 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L conn:Conn_01x02 P1
+L nixie_control_board-rescue:Conn_01x02-conn P1
 U 1 1 59A36B46
 P 6350 4750
 F 0 "P1" H 6350 4900 50  0000 C CNN
@@ -205,7 +161,7 @@ F 3 "" H 6350 4750 50  0000 C CNN
 	-1   0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR010
+L nixie_control_board-rescue:GND-power #PWR010
 U 1 1 59A37047
 P 7450 5450
 F 0 "#PWR010" H 7450 5200 50  0001 C CNN
@@ -216,7 +172,7 @@ F 3 "" H 7450 5450 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:CP1_Small C3
+L nixie_control_board-rescue:CP1_Small-device C3
 U 1 1 59A37156
 P 7450 4950
 F 0 "C3" H 7460 5020 50  0000 L CNN
@@ -227,7 +183,7 @@ F 3 "" H 7450 4950 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:C_Small C4
+L nixie_control_board-rescue:C_Small-device C4
 U 1 1 59A371EF
 P 7750 4950
 F 0 "C4" H 7760 5020 50  0000 L CNN
@@ -238,7 +194,7 @@ F 3 "" H 7750 4950 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:C_Small C5
+L nixie_control_board-rescue:C_Small-device C5
 U 1 1 59A37253
 P 7900 5700
 F 0 "C5" H 7910 5770 50  0000 L CNN
@@ -249,7 +205,7 @@ F 3 "" H 7900 5700 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR011
+L nixie_control_board-rescue:GND-power #PWR011
 U 1 1 59A372A2
 P 7900 5850
 F 0 "#PWR011" H 7900 5600 50  0001 C CNN
@@ -260,7 +216,7 @@ F 3 "" H 7900 5850 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:Q_NMOS_DGS Q1
+L nixie_control_board-rescue:Q_NMOS_DGS-device Q1
 U 1 1 59A3835A
 P 9100 5150
 F 0 "Q1" H 9400 5200 50  0000 R CNN
@@ -271,7 +227,7 @@ F 3 "" H 9100 5150 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:R_Small R1
+L nixie_control_board-rescue:R_Small-device R1
 U 1 1 59A39755
 P 9200 5600
 F 0 "R1" H 9230 5620 50  0000 L CNN
@@ -282,7 +238,7 @@ F 3 "" H 9200 5600 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L pspice:INDUCTOR L1
+L nixie_control_board-rescue:INDUCTOR-pspice L1
 U 1 1 59A39DCD
 P 8900 4400
 F 0 "L1" H 8900 4500 50  0000 C CNN
@@ -293,7 +249,7 @@ F 3 "" H 8900 4400 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:D_Small D1
+L nixie_control_board-rescue:D_Small-device D1
 U 1 1 59A39F64
 P 9350 4750
 F 0 "D1" H 9300 4830 50  0000 L CNN
@@ -304,7 +260,7 @@ F 3 "" V 9350 4750 50  0000 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L device:CP1_Small C6
+L nixie_control_board-rescue:CP1_Small-device C6
 U 1 1 59A39FC1
 P 9600 4900
 F 0 "C6" H 9610 4970 50  0000 L CNN
@@ -315,7 +271,7 @@ F 3 "" H 9600 4900 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR012
+L nixie_control_board-rescue:GND-power #PWR012
 U 1 1 59A3A0F1
 P 9600 5000
 F 0 "#PWR012" H 9600 4750 50  0001 C CNN
@@ -326,7 +282,7 @@ F 3 "" H 9600 5000 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:R_Small R2
+L nixie_control_board-rescue:R_Small-device R2
 U 1 1 59A3A738
 P 9900 5250
 F 0 "R2" V 10000 5300 50  0000 L CNN
@@ -337,7 +293,7 @@ F 3 "" H 9900 5250 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:R_Small R3
+L nixie_control_board-rescue:R_Small-device R3
 U 1 1 59A3A7DF
 P 9900 6050
 F 0 "R3" H 9930 6070 50  0000 L CNN
@@ -348,7 +304,7 @@ F 3 "" H 9900 6050 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:POT RV1
+L nixie_control_board-rescue:POT-device RV1
 U 1 1 59A3A83B
 P 9900 5650
 F 0 "RV1" H 9750 5650 50  0000 C CNN
@@ -359,7 +315,7 @@ F 3 "" H 9900 5650 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR013
+L nixie_control_board-rescue:GND-power #PWR013
 U 1 1 59A3AA79
 P 9900 6200
 F 0 "#PWR013" H 9900 5950 50  0001 C CNN
@@ -370,7 +326,7 @@ F 3 "" H 9900 6200 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:C_Small C7
+L nixie_control_board-rescue:C_Small-device C7
 U 1 1 59A3AE68
 P 10300 4950
 F 0 "C7" H 10310 5020 50  0000 L CNN
@@ -381,7 +337,7 @@ F 3 "" H 10300 4950 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR014
+L nixie_control_board-rescue:GND-power #PWR014
 U 1 1 59A3AF27
 P 10300 5150
 F 0 "#PWR014" H 10300 4900 50  0001 C CNN
@@ -392,7 +348,7 @@ F 3 "" H 10300 5150 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L conn:Conn_01x02 P2
+L nixie_control_board-rescue:Conn_01x02-conn P2
 U 1 1 59A3B055
 P 10900 4750
 F 0 "P2" H 10900 4900 50  0000 C CNN
@@ -403,7 +359,7 @@ F 3 "" H 10900 4750 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR015
+L nixie_control_board-rescue:GND-power #PWR015
 U 1 1 59A3B16F
 P 10700 5050
 F 0 "#PWR015" H 10700 4800 50  0001 C CNN
@@ -429,18 +385,7 @@ SCL
 Text GLabel 3400 2300 2    60   Input ~ 0
 SDA
 $Comp
-L power:+5V #PWR016
-U 1 1 59A4329B
-P 3200 2600
-F 0 "#PWR016" H 3200 2450 50  0001 C CNN
-F 1 "+5V" H 3200 2740 50  0000 C CNN
-F 2 "" H 3200 2600 50  0000 C CNN
-F 3 "" H 3200 2600 50  0000 C CNN
-	1    3200 2600
-	0    1    1    0   
-$EndComp
-$Comp
-L power:GND #PWR017
+L nixie_control_board-rescue:GND-power #PWR017
 U 1 1 59A43332
 P 3300 2700
 F 0 "#PWR017" H 3300 2450 50  0001 C CNN
@@ -451,7 +396,7 @@ F 3 "" H 3300 2700 50  0000 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L power:GND #PWR018
+L nixie_control_board-rescue:GND-power #PWR018
 U 1 1 59A43391
 P 1950 900
 F 0 "#PWR018" H 1950 650 50  0001 C CNN
@@ -462,7 +407,7 @@ F 3 "" H 1950 900 50  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L power:GND #PWR019
+L nixie_control_board-rescue:GND-power #PWR019
 U 1 1 59A43658
 P 1800 1000
 F 0 "#PWR019" H 1800 750 50  0001 C CNN
@@ -484,7 +429,7 @@ F 3 "" H 5850 2550 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:R R4
+L nixie_control_board-rescue:R-device R4
 U 1 1 59A43C12
 P 6300 2650
 F 0 "R4" V 6380 2650 50  0000 C CNN
@@ -495,7 +440,7 @@ F 3 "" H 6300 2650 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:R R5
+L nixie_control_board-rescue:R-device R5
 U 1 1 59A43C13
 P 6300 2950
 F 0 "R5" V 6380 2950 50  0000 C CNN
@@ -506,7 +451,7 @@ F 3 "" H 6300 2950 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR020
+L nixie_control_board-rescue:GND-power #PWR020
 U 1 1 59A43C14
 P 6300 3100
 F 0 "#PWR020" H 6300 2850 50  0001 C CNN
@@ -517,7 +462,7 @@ F 3 "" H 6300 3100 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:CP1 C9
+L nixie_control_board-rescue:CP1-device C9
 U 1 1 59A43C15
 P 6550 2750
 F 0 "C9" H 6575 2850 50  0000 L CNN
@@ -528,7 +473,7 @@ F 3 "" H 6550 2750 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR021
+L nixie_control_board-rescue:GND-power #PWR021
 U 1 1 59A43C16
 P 6550 2900
 F 0 "#PWR021" H 6550 2650 50  0001 C CNN
@@ -539,7 +484,7 @@ F 3 "" H 6550 2900 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:C C8
+L nixie_control_board-rescue:C-device C8
 U 1 1 59A43C17
 P 5400 2750
 F 0 "C8" H 5425 2850 50  0000 L CNN
@@ -550,7 +495,7 @@ F 3 "" H 5400 2750 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR022
+L nixie_control_board-rescue:GND-power #PWR022
 U 1 1 59A43C18
 P 5400 2900
 F 0 "#PWR022" H 5400 2650 50  0001 C CNN
@@ -617,24 +562,13 @@ Wire Wire Line
 	1800 1000 1950 1000
 Wire Wire Line
 	5400 2600 5400 2500
-$Comp
-L power:+5V #PWR023
-U 1 1 59A46C05
-P 6650 2500
-F 0 "#PWR023" H 6650 2350 50  0001 C CNN
-F 1 "+5V" H 6650 2640 50  0000 C CNN
-F 2 "" H 6650 2500 50  0000 C CNN
-F 3 "" H 6650 2500 50  0000 C CNN
-	1    6650 2500
-	0    1    1    0   
-$EndComp
 Wire Wire Line
 	6300 2500 6550 2500
 Wire Wire Line
 	6550 2600 6550 2500
 Connection ~ 6550 2500
 $Comp
-L power:GND #PWR024
+L nixie_control_board-rescue:GND-power #PWR024
 U 1 1 59A4705C
 P 5850 2800
 F 0 "#PWR024" H 5850 2550 50  0001 C CNN
@@ -656,7 +590,7 @@ F 3 "" H 7350 1200 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR025
+L nixie_control_board-rescue:GND-power #PWR025
 U 1 1 59A47338
 P 7300 1400
 F 0 "#PWR025" H 7300 1150 50  0001 C CNN
@@ -666,17 +600,6 @@ F 3 "" H 7300 1400 50  0000 C CNN
 	1    7300 1400
 	1    0    0    -1  
 $EndComp
-$Comp
-L power:+5V #PWR026
-U 1 1 59A473AC
-P 7200 1550
-F 0 "#PWR026" H 7200 1400 50  0001 C CNN
-F 1 "+5V" H 7200 1690 50  0000 C CNN
-F 2 "" H 7200 1550 50  0000 C CNN
-F 3 "" H 7200 1550 50  0000 C CNN
-	1    7200 1550
-	-1   0    0    1   
-$EndComp
 Wire Wire Line
 	7200 1550 7200 1400
 Text GLabel 1950 1900 0    60   Input ~ 0
@@ -684,18 +607,7 @@ SCK
 Wire Wire Line
 	8250 1600 8250 1350
 $Comp
-L power:+5V #PWR027
-U 1 1 59A49CC6
-P 7950 1350
-F 0 "#PWR027" H 7950 1200 50  0001 C CNN
-F 1 "+5V" H 7950 1490 50  0000 C CNN
-F 2 "" H 7950 1350 50  0000 C CNN
-F 3 "" H 7950 1350 50  0000 C CNN
-	1    7950 1350
-	-1   0    0    1   
-$EndComp
-$Comp
-L power:GND #PWR028
+L nixie_control_board-rescue:GND-power #PWR028
 U 1 1 59A49D3A
 P 8050 1600
 F 0 "#PWR028" H 8050 1350 50  0001 C CNN
@@ -710,7 +622,7 @@ Wire Wire Line
 Wire Wire Line
 	3150 2700 3300 2700
 $Comp
-L power:GND #PWR029
+L nixie_control_board-rescue:GND-power #PWR029
 U 1 1 59A50233
 P 6400 1400
 F 0 "#PWR029" H 6400 1150 50  0001 C CNN
@@ -721,7 +633,7 @@ F 3 "" H 6400 1400 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR030
+L nixie_control_board-rescue:GND-power #PWR030
 U 1 1 59A502A4
 P 6400 1800
 F 0 "#PWR030" H 6400 1550 50  0001 C CNN
@@ -732,7 +644,7 @@ F 3 "" H 6400 1800 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR031
+L nixie_control_board-rescue:GND-power #PWR031
 U 1 1 59A50403
 P 6400 1050
 F 0 "#PWR031" H 6400 800 50  0001 C CNN
@@ -780,7 +692,7 @@ F 3 "" H 9000 1150 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR032
+L nixie_control_board-rescue:GND-power #PWR032
 U 1 1 59A563DF
 P 8950 1350
 F 0 "#PWR032" H 8950 1100 50  0001 C CNN
@@ -790,41 +702,8 @@ F 3 "" H 8950 1350 50  0000 C CNN
 	1    8950 1350
 	1    0    0    -1  
 $EndComp
-$Comp
-L power:+5V #PWR033
-U 1 1 59A56456
-P 8850 1550
-F 0 "#PWR033" H 8850 1400 50  0001 C CNN
-F 1 "+5V" H 8850 1690 50  0000 C CNN
-F 2 "" H 8850 1550 50  0000 C CNN
-F 3 "" H 8850 1550 50  0000 C CNN
-	1    8850 1550
-	-1   0    0    1   
-$EndComp
 Wire Wire Line
 	8850 1550 8850 1350
-$Comp
-L power:+12V #PWR034
-U 1 1 59A43861
-P 5400 2500
-F 0 "#PWR034" H 5400 2350 50  0001 C CNN
-F 1 "+12V" H 5400 2640 50  0000 C CNN
-F 2 "" H 5400 2500 50  0000 C CNN
-F 3 "" H 5400 2500 50  0000 C CNN
-	1    5400 2500
-	0    -1   -1   0   
-$EndComp
-$Comp
-L power:+12V #PWR035
-U 1 1 59A441BB
-P 7450 4400
-F 0 "#PWR035" H 7450 4250 50  0001 C CNN
-F 1 "+12V" H 7450 4540 50  0000 C CNN
-F 2 "" H 7450 4400 50  0000 C CNN
-F 3 "" H 7450 4400 50  0000 C CNN
-	1    7450 4400
-	1    0    0    -1  
-$EndComp
 Text GLabel 9050 1550 3    60   Input ~ 0
 DHT
 Wire Wire Line
@@ -832,25 +711,23 @@ Wire Wire Line
 Text GLabel 1950 1500 0    60   Input ~ 0
 DHT
 $Comp
-L conn:Conn_01x01 P5
+L nixie_control_board-rescue:Conn_01x01-conn P5
 U 1 1 59A47734
 P 2000 3250
 F 0 "P5" H 2000 3350 50  0000 C CNN
 F 1 "." V 2100 3250 50  0001 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x01_Pitch2.54mm" H 2000 3250 50  0001 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Horizontal" H 2000 3250 50  0001 C CNN
 F 3 "" H 2000 3250 50  0000 C CNN
 	1    2000 3250
 	-1   0    0    1   
 $EndComp
 Wire Wire Line
 	2200 3250 2350 3250
-Wire Wire Line
-	3200 2600 3150 2600
 Text GLabel 7400 1600 3    60   Input ~ 0
 BUZZER
 Wire Wire Line
 	7400 1600 7400 1400
-Text GLabel 3150 1400 2    60   Input ~ 0
+Text GLabel 3150 1800 2    60   Input ~ 0
 BUZZER
 $Comp
 L keyboard:AT24C02 U2
@@ -875,7 +752,7 @@ F 3 "" H 9950 1100 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR036
+L nixie_control_board-rescue:GND-power #PWR036
 U 1 1 59A60D39
 P 9500 3850
 F 0 "#PWR036" H 9500 3600 50  0001 C CNN
@@ -935,7 +812,7 @@ Wire Wire Line
 Wire Wire Line
 	9250 4750 9200 4750
 $Comp
-L power:GND #PWR037
+L nixie_control_board-rescue:GND-power #PWR037
 U 1 1 5B4D0AB3
 P 8550 4800
 F 0 "#PWR037" H 8550 4550 50  0001 C CNN
@@ -959,7 +836,7 @@ Connection ~ 9600 4750
 Wire Wire Line
 	9900 6200 9900 6150
 $Comp
-L device:CP1_Small C10
+L nixie_control_board-rescue:CP1_Small-device C10
 U 1 1 5B4D3355
 P 8550 4650
 F 0 "C10" H 8350 4750 50  0000 L CNN
@@ -1027,7 +904,7 @@ Wire Wire Line
 	10000 1950 10100 1950
 Connection ~ 10000 1950
 $Comp
-L device:R_Pack04 RP2
+L nixie_control_board-rescue:R_Pack04-device RP2
 U 1 1 5B56EA65
 P 9250 3150
 F 0 "RP2" H 9250 3600 50  0000 C CNN
@@ -1045,7 +922,7 @@ Wire Wire Line
 	9350 2950 9450 2950
 Connection ~ 9350 2950
 $Comp
-L switches:SW_Push SW2
+L nixie_control_board-rescue:SW_Push-switches SW2
 U 1 1 5B5760B9
 P 6200 1400
 F 0 "SW2" H 6350 1510 50  0000 C CNN
@@ -1056,7 +933,7 @@ F 3 "" H 6200 1400 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L switches:SW_Push SW3
+L nixie_control_board-rescue:SW_Push-switches SW3
 U 1 1 5B57630D
 P 6200 1800
 F 0 "SW3" H 6350 1910 50  0000 C CNN
@@ -1067,7 +944,7 @@ F 3 "" H 6200 1800 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L switches:SW_DIP_x01 SW4
+L nixie_control_board-rescue:SW_DIP_x01-switches SW4
 U 1 1 5B587F79
 P 6950 4750
 F 0 "SW4" H 6950 4483 50  0000 C CNN
@@ -1082,7 +959,7 @@ Connection ~ 9200 5350
 Wire Wire Line
 	10700 4850 10700 5050
 $Comp
-L ssd1306-oled:SSD1306-OLED U7
+L nixie_control_board-rescue:SSD1306-OLED-ssd1306-oled U7
 U 1 1 5B58EAB4
 P 2650 6300
 F 0 "U7" H 2700 7647 60  0000 C CNN
@@ -1110,7 +987,7 @@ Wire Wire Line
 	10350 3550 10700 3550
 Connection ~ 10350 3550
 $Comp
-L power:GND #PWR0101
+L nixie_control_board-rescue:GND-power #PWR0101
 U 1 1 5B59F085
 P 10350 3200
 F 0 "#PWR0101" H 10350 2950 50  0001 C CNN
@@ -1122,11 +999,10 @@ F 3 "" H 10350 3200 50  0000 C CNN
 $EndComp
 Wire Wire Line
 	10350 3200 10350 3350
-Connection ~ 5400 2500
 Connection ~ 6300 2500
 Connection ~ 3550 4200
 $Comp
-L device:C C15
+L nixie_control_board-rescue:C-device C15
 U 1 1 5B5C99B0
 P 1800 5750
 F 0 "C15" H 1825 5850 50  0000 L CNN
@@ -1137,7 +1013,7 @@ F 3 "" H 1800 5750 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:C C16
+L nixie_control_board-rescue:C-device C16
 U 1 1 5B5C9BF7
 P 1800 6150
 F 0 "C16" H 1825 6250 50  0000 L CNN
@@ -1148,7 +1024,7 @@ F 3 "" H 1800 6150 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:C C13
+L nixie_control_board-rescue:C-device C13
 U 1 1 5B5C9C6F
 P 1450 5650
 F 0 "C13" H 1475 5750 50  0000 L CNN
@@ -1159,7 +1035,7 @@ F 3 "" H 1450 5650 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:C C12
+L nixie_control_board-rescue:C-device C12
 U 1 1 5B5C9CED
 P 1250 5500
 F 0 "C12" H 1275 5600 50  0000 L CNN
@@ -1170,7 +1046,7 @@ F 3 "" H 1250 5500 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:C C11
+L nixie_control_board-rescue:C-device C11
 U 1 1 5B5C9D5F
 P 1050 5350
 F 0 "C11" H 1075 5450 50  0000 L CNN
@@ -1181,7 +1057,7 @@ F 3 "" H 1050 5350 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:C C14
+L nixie_control_board-rescue:C-device C14
 U 1 1 5B5C9DD7
 P 1650 6650
 F 0 "C14" H 1675 6750 50  0000 L CNN
@@ -1192,7 +1068,7 @@ F 3 "" H 1650 6650 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:R R6
+L nixie_control_board-rescue:R-device R6
 U 1 1 5B5CA047
 P 1400 6550
 F 0 "R6" V 1480 6550 50  0000 C CNN
@@ -1203,7 +1079,7 @@ F 3 "" H 1400 6550 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR0102
+L nixie_control_board-rescue:GND-power #PWR0102
 U 1 1 5B5CA5FD
 P 1450 5900
 F 0 "#PWR0102" H 1450 5650 50  0001 C CNN
@@ -1214,7 +1090,7 @@ F 3 "" H 1450 5900 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR0103
+L nixie_control_board-rescue:GND-power #PWR0103
 U 1 1 5B5CA6FD
 P 1250 5900
 F 0 "#PWR0103" H 1250 5650 50  0001 C CNN
@@ -1225,7 +1101,7 @@ F 3 "" H 1250 5900 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR0104
+L nixie_control_board-rescue:GND-power #PWR0104
 U 1 1 5B5CA766
 P 1050 5900
 F 0 "#PWR0104" H 1050 5650 50  0001 C CNN
@@ -1236,7 +1112,7 @@ F 3 "" H 1050 5900 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR0105
+L nixie_control_board-rescue:GND-power #PWR0105
 U 1 1 5B5CA7CF
 P 1650 7000
 F 0 "#PWR0105" H 1650 6750 50  0001 C CNN
@@ -1247,7 +1123,7 @@ F 3 "" H 1650 7000 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR0106
+L nixie_control_board-rescue:GND-power #PWR0106
 U 1 1 5B5CA838
 P 1400 7000
 F 0 "#PWR0106" H 1400 6750 50  0001 C CNN
@@ -1258,7 +1134,7 @@ F 3 "" H 1400 7000 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR0107
+L nixie_control_board-rescue:GND-power #PWR0107
 U 1 1 5B5CA8A1
 P 1950 7000
 F 0 "#PWR0107" H 1950 6750 50  0001 C CNN
@@ -1308,7 +1184,7 @@ Wire Wire Line
 Wire Wire Line
 	1050 5200 1450 5200
 $Comp
-L power:GND #PWR0108
+L nixie_control_board-rescue:GND-power #PWR0108
 U 1 1 5B60A6D6
 P 3450 7000
 F 0 "#PWR0108" H 3450 6750 50  0001 C CNN
@@ -1319,7 +1195,7 @@ F 3 "" H 3450 7000 50  0000 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L power:GND #PWR0109
+L nixie_control_board-rescue:GND-power #PWR0109
 U 1 1 5B60A888
 P 3450 6900
 F 0 "#PWR0109" H 3450 6650 50  0001 C CNN
@@ -1330,7 +1206,7 @@ F 3 "" H 3450 6900 50  0000 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L power:GND #PWR0110
+L nixie_control_board-rescue:GND-power #PWR0110
 U 1 1 5B60A8F1
 P 3450 6800
 F 0 "#PWR0110" H 3450 6550 50  0001 C CNN
@@ -1341,7 +1217,7 @@ F 3 "" H 3450 6800 50  0000 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L power:GND #PWR0111
+L nixie_control_board-rescue:GND-power #PWR0111
 U 1 1 5B60A95A
 P 3450 6700
 F 0 "#PWR0111" H 3450 6450 50  0001 C CNN
@@ -1352,7 +1228,7 @@ F 3 "" H 3450 6700 50  0000 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L power:GND #PWR0112
+L nixie_control_board-rescue:GND-power #PWR0112
 U 1 1 5B60A9C3
 P 3450 6600
 F 0 "#PWR0112" H 3450 6350 50  0001 C CNN
@@ -1370,7 +1246,7 @@ Connection ~ 3450 6400
 Wire Wire Line
 	3450 6300 3650 6300
 $Comp
-L power:GND #PWR0113
+L nixie_control_board-rescue:GND-power #PWR0113
 U 1 1 5B617497
 P 3450 6000
 F 0 "#PWR0113" H 3450 5750 50  0001 C CNN
@@ -1381,7 +1257,7 @@ F 3 "" H 3450 6000 50  0000 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L power:GND #PWR0114
+L nixie_control_board-rescue:GND-power #PWR0114
 U 1 1 5B617500
 P 3450 5900
 F 0 "#PWR0114" H 3450 5650 50  0001 C CNN
@@ -1392,7 +1268,7 @@ F 3 "" H 3450 5900 50  0000 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L power:GND #PWR0115
+L nixie_control_board-rescue:GND-power #PWR0115
 U 1 1 5B617569
 P 3450 5800
 F 0 "#PWR0115" H 3450 5550 50  0001 C CNN
@@ -1403,7 +1279,7 @@ F 3 "" H 3450 5800 50  0000 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L power:GND #PWR0116
+L nixie_control_board-rescue:GND-power #PWR0116
 U 1 1 5B6175D2
 P 3450 5200
 F 0 "#PWR0116" H 3450 4950 50  0001 C CNN
@@ -1414,7 +1290,7 @@ F 3 "" H 3450 5200 50  0000 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L power:GND #PWR0117
+L nixie_control_board-rescue:GND-power #PWR0117
 U 1 1 5B61763B
 P 3450 5400
 F 0 "#PWR0117" H 3450 5150 50  0001 C CNN
@@ -1423,28 +1299,6 @@ F 2 "" H 3450 5400 50  0000 C CNN
 F 3 "" H 3450 5400 50  0000 C CNN
 	1    3450 5400
 	0    -1   -1   0   
-$EndComp
-$Comp
-L power:+3.3V #PWR0124
-U 1 1 5B61C891
-P 3450 5300
-F 0 "#PWR0124" H 3450 5150 50  0001 C CNN
-F 1 "+3.3V" V 3465 5428 50  0000 L CNN
-F 2 "" H 3450 5300 50  0001 C CNN
-F 3 "" H 3450 5300 50  0001 C CNN
-	1    3450 5300
-	0    1    1    0   
-$EndComp
-$Comp
-L power:+3.3V #PWR0125
-U 1 1 5B61CAA4
-P 1450 5050
-F 0 "#PWR0125" H 1450 4900 50  0001 C CNN
-F 1 "+3.3V" H 1465 5223 50  0000 C CNN
-F 2 "" H 1450 5050 50  0001 C CNN
-F 3 "" H 1450 5050 50  0001 C CNN
-	1    1450 5050
-	1    0    0    -1  
 $EndComp
 Wire Wire Line
 	1450 5050 1450 5200
@@ -1455,7 +1309,7 @@ Wire Wire Line
 	1450 5200 1450 5450
 Connection ~ 1450 5450
 $Comp
-L power:GND #PWR0126
+L nixie_control_board-rescue:GND-power #PWR0126
 U 1 1 5B626905
 P 3450 5600
 F 0 "#PWR0126" H 3450 5350 50  0001 C CNN
@@ -1498,18 +1352,7 @@ SDA
 Text GLabel 3650 6300 2    60   Input ~ 0
 SCL
 $Comp
-L power:+3.3V #PWR0118
-U 1 1 5B66BD99
-P 3150 2800
-F 0 "#PWR0118" H 3150 2650 50  0001 C CNN
-F 1 "+3.3V" V 3165 2928 50  0000 L CNN
-F 2 "" H 3150 2800 50  0001 C CNN
-F 3 "" H 3150 2800 50  0001 C CNN
-	1    3150 2800
-	0    1    1    0   
-$EndComp
-$Comp
-L device:Buzzer BZ1
+L nixie_control_board-rescue:Buzzer-device BZ1
 U 1 1 5B66C38D
 P 5350 3800
 F 0 "BZ1" H 5503 3829 50  0000 L CNN
@@ -1520,7 +1363,7 @@ F 3 "" V 5325 3900 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:Q_PNP_BEC Q2
+L nixie_control_board-rescue:Q_PNP_BEC-device Q2
 U 1 1 5B67164A
 P 5150 4200
 F 0 "Q2" H 5341 4154 50  0000 L CNN
@@ -1531,7 +1374,7 @@ F 3 "" H 5150 4200 50  0001 C CNN
 	1    0    0    1   
 $EndComp
 $Comp
-L device:R R7
+L nixie_control_board-rescue:R-device R7
 U 1 1 5B67F38E
 P 4700 4200
 F 0 "R7" V 4780 4200 50  0000 C CNN
@@ -1542,7 +1385,7 @@ F 3 "" H 4700 4200 50  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L power:GND #PWR0119
+L nixie_control_board-rescue:GND-power #PWR0119
 U 1 1 5B67F644
 P 5250 4500
 F 0 "#PWR0119" H 5250 4250 50  0001 C CNN
@@ -1560,35 +1403,12 @@ Wire Wire Line
 	4850 4200 4950 4200
 Text GLabel 4550 4200 0    60   Input ~ 0
 BUZZER
-$Comp
-L power:+5V #PWR0120
-U 1 1 5B68D9F4
-P 5250 3550
-F 0 "#PWR0120" H 5250 3400 50  0001 C CNN
-F 1 "+5V" H 5250 3690 50  0000 C CNN
-F 2 "" H 5250 3550 50  0000 C CNN
-F 3 "" H 5250 3550 50  0000 C CNN
-	1    5250 3550
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	5250 3550 5250 3700
-Connection ~ 7450 4400
-$Comp
-L power:+12P #PWR0121
-U 1 1 5B69437C
-P 6600 4400
-F 0 "#PWR0121" H 6600 4250 50  0001 C CNN
-F 1 "+12P" H 6615 4573 50  0000 C CNN
-F 2 "" H 6600 4400 50  0001 C CNN
-F 3 "" H 6600 4400 50  0001 C CNN
-	1    6600 4400
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	6550 4850 6550 5250
 $Comp
-L conn:Conn_01x07 J1
+L nixie_control_board-rescue:Conn_01x07-conn J1
 U 1 1 5B58DE01
 P 7450 3400
 F 0 "J1" H 7370 2875 50  0000 C CNN
@@ -1599,7 +1419,7 @@ F 3 "~" H 7450 3400 50  0001 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L power:GND #PWR0122
+L nixie_control_board-rescue:GND-power #PWR0122
 U 1 1 5B597B29
 P 7650 3200
 F 0 "#PWR0122" H 7650 2950 50  0001 C CNN
@@ -1609,15 +1429,226 @@ F 3 "" H 7650 3200 50  0000 C CNN
 	1    7650 3200
 	0    -1   -1   0   
 $EndComp
+Text GLabel 3150 1400 2    50   Input ~ 0
+TX
+Text GLabel 3150 1500 2    50   Input ~ 0
+RX
+Text GLabel 4250 1400 0    50   Input ~ 0
+TX
+Text GLabel 4250 1500 0    50   Input ~ 0
+RX
 $Comp
-L power:+5V #PWR0123
-U 1 1 5B597C33
-P 7650 3100
-F 0 "#PWR0123" H 7650 2950 50  0001 C CNN
-F 1 "+5V" H 7650 3240 50  0000 C CNN
-F 2 "" H 7650 3100 50  0000 C CNN
-F 3 "" H 7650 3100 50  0000 C CNN
-	1    7650 3100
+L Connector:Conn_01x02_Female J2
+U 1 1 5C59CD0B
+P 4450 1400
+F 0 "J2" H 4477 1376 50  0000 L CNN
+F 1 "Conn_01x02_Female" H 4477 1285 50  0000 L CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 4450 1400 50  0001 C CNN
+F 3 "~" H 4450 1400 50  0001 C CNN
+	1    4450 1400
+	1    0    0    -1  
+$EndComp
+$Comp
+L nixie_control_board-rescue:+5V-power #PWR0118
+U 1 1 5C5AA42E
+P 10700 3550
+F 0 "#PWR0118" H 10700 3400 50  0001 C CNN
+F 1 "+5V-power" H 10715 3723 50  0000 C CNN
+F 2 "" H 10700 3550 50  0001 C CNN
+F 3 "" H 10700 3550 50  0001 C CNN
+	1    10700 3550
+	1    0    0    -1  
+$EndComp
+$Comp
+L nixie_control_board-rescue:+5V-power #PWR0120
+U 1 1 5C5AA57D
+P 9250 2950
+F 0 "#PWR0120" H 9250 2800 50  0001 C CNN
+F 1 "+5V-power" H 9265 3123 50  0000 C CNN
+F 2 "" H 9250 2950 50  0001 C CNN
+F 3 "" H 9250 2950 50  0001 C CNN
+	1    9250 2950
+	1    0    0    -1  
+$EndComp
+$Comp
+L nixie_control_board-rescue:+5V-power #PWR0121
+U 1 1 5C5AA6C5
+P 9900 1950
+F 0 "#PWR0121" H 9900 1800 50  0001 C CNN
+F 1 "+5V-power" H 9915 2123 50  0000 C CNN
+F 2 "" H 9900 1950 50  0001 C CNN
+F 3 "" H 9900 1950 50  0001 C CNN
+	1    9900 1950
+	1    0    0    -1  
+$EndComp
+$Comp
+L nixie_control_board-rescue:+5V-power #PWR0123
+U 1 1 5C5AA841
+P 5250 3550
+F 0 "#PWR0123" H 5250 3400 50  0001 C CNN
+F 1 "+5V-power" H 5265 3723 50  0000 C CNN
+F 2 "" H 5250 3550 50  0001 C CNN
+F 3 "" H 5250 3550 50  0001 C CNN
+	1    5250 3550
+	1    0    0    -1  
+$EndComp
+$Comp
+L nixie_control_board-rescue:+5V-power #PWR0124
+U 1 1 5C5AA8B2
+P 1450 3350
+F 0 "#PWR0124" H 1450 3200 50  0001 C CNN
+F 1 "+5V-power" V 1465 3477 50  0000 L CNN
+F 2 "" H 1450 3350 50  0001 C CNN
+F 3 "" H 1450 3350 50  0001 C CNN
+	1    1450 3350
+	0    -1   -1   0   
+$EndComp
+$Comp
+L nixie_control_board-rescue:+3.3V-power #PWR0125
+U 1 1 5C5AAADD
+P 1450 5050
+F 0 "#PWR0125" H 1450 4900 50  0001 C CNN
+F 1 "+3.3V-power" H 1465 5223 50  0000 C CNN
+F 2 "" H 1450 5050 50  0001 C CNN
+F 3 "" H 1450 5050 50  0001 C CNN
+	1    1450 5050
+	1    0    0    -1  
+$EndComp
+$Comp
+L nixie_control_board-rescue:+12V-power #PWR0128
+U 1 1 5C5AAC99
+P 7450 4400
+F 0 "#PWR0128" H 7450 4250 50  0001 C CNN
+F 1 "+12V-power" H 7465 4573 50  0000 C CNN
+F 2 "" H 7450 4400 50  0001 C CNN
+F 3 "" H 7450 4400 50  0001 C CNN
+	1    7450 4400
+	1    0    0    -1  
+$EndComp
+Connection ~ 7450 4400
+$Comp
+L nixie_control_board-rescue:+12V-power #PWR0132
+U 1 1 5C5AAE4F
+P 6600 4400
+F 0 "#PWR0132" H 6600 4250 50  0001 C CNN
+F 1 "+12V-power" H 6615 4573 50  0000 C CNN
+F 2 "" H 6600 4400 50  0001 C CNN
+F 3 "" H 6600 4400 50  0001 C CNN
+	1    6600 4400
+	1    0    0    -1  
+$EndComp
+$Comp
+L nixie_control_board-rescue:+5V-power #PWR0134
+U 1 1 5C5AAEC0
+P 3600 2600
+F 0 "#PWR0134" H 3600 2450 50  0001 C CNN
+F 1 "+5V-power" V 3615 2728 50  0000 L CNN
+F 2 "" H 3600 2600 50  0001 C CNN
+F 3 "" H 3600 2600 50  0001 C CNN
+	1    3600 2600
 	0    1    1    0   
 $EndComp
+$Comp
+L nixie_control_board-rescue:+3.3V-power #PWR0135
+U 1 1 5C5AAFBC
+P 3600 2800
+F 0 "#PWR0135" H 3600 2650 50  0001 C CNN
+F 1 "+3.3V-power" V 3615 2928 50  0000 L CNN
+F 2 "" H 3600 2800 50  0001 C CNN
+F 3 "" H 3600 2800 50  0001 C CNN
+	1    3600 2800
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	3150 2600 3600 2600
+Wire Wire Line
+	3150 2800 3600 2800
+$Comp
+L nixie_control_board-rescue:+5V-power #PWR0136
+U 1 1 5C5B53DB
+P 5250 2500
+F 0 "#PWR0136" H 5250 2350 50  0001 C CNN
+F 1 "+5V-power" V 5265 2627 50  0000 L CNN
+F 2 "" H 5250 2500 50  0001 C CNN
+F 3 "" H 5250 2500 50  0001 C CNN
+	1    5250 2500
+	0    -1   -1   0   
+$EndComp
+$Comp
+L nixie_control_board-rescue:+3.3V-power #PWR0137
+U 1 1 5C5B54E5
+P 6650 2500
+F 0 "#PWR0137" H 6650 2350 50  0001 C CNN
+F 1 "+3.3V-power" V 6665 2628 50  0000 L CNN
+F 2 "" H 6650 2500 50  0001 C CNN
+F 3 "" H 6650 2500 50  0001 C CNN
+	1    6650 2500
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	5250 2500 5400 2500
+Connection ~ 5400 2500
+$Comp
+L nixie_control_board-rescue:+5V-power #PWR0138
+U 1 1 5C5BAAF8
+P 8850 1550
+F 0 "#PWR0138" H 8850 1400 50  0001 C CNN
+F 1 "+5V-power" H 8865 1723 50  0000 C CNN
+F 2 "" H 8850 1550 50  0001 C CNN
+F 3 "" H 8850 1550 50  0001 C CNN
+	1    8850 1550
+	-1   0    0    1   
+$EndComp
+$Comp
+L nixie_control_board-rescue:+5V-power #PWR0139
+U 1 1 5C5BAC9B
+P 7950 1350
+F 0 "#PWR0139" H 7950 1200 50  0001 C CNN
+F 1 "+5V-power" H 7965 1523 50  0000 C CNN
+F 2 "" H 7950 1350 50  0001 C CNN
+F 3 "" H 7950 1350 50  0001 C CNN
+	1    7950 1350
+	-1   0    0    1   
+$EndComp
+$Comp
+L nixie_control_board-rescue:+5V-power #PWR0140
+U 1 1 5C5BAD0C
+P 7200 1550
+F 0 "#PWR0140" H 7200 1400 50  0001 C CNN
+F 1 "+5V-power" H 7215 1723 50  0000 C CNN
+F 2 "" H 7200 1550 50  0001 C CNN
+F 3 "" H 7200 1550 50  0001 C CNN
+	1    7200 1550
+	-1   0    0    1   
+$EndComp
+$Comp
+L nixie_control_board-rescue:+5V-power #PWR0141
+U 1 1 5C5BADB1
+P 7900 3100
+F 0 "#PWR0141" H 7900 2950 50  0001 C CNN
+F 1 "+5V-power" V 7915 3228 50  0000 L CNN
+F 2 "" H 7900 3100 50  0001 C CNN
+F 3 "" H 7900 3100 50  0001 C CNN
+	1    7900 3100
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	7900 3100 7650 3100
+$Comp
+L nixie_control_board-rescue:+3.3V-power #PWR0142
+U 1 1 5C5C046E
+P 3700 5300
+F 0 "#PWR0142" H 3700 5150 50  0001 C CNN
+F 1 "+3.3V-power" V 3715 5428 50  0000 L CNN
+F 2 "" H 3700 5300 50  0001 C CNN
+F 3 "" H 3700 5300 50  0001 C CNN
+	1    3700 5300
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	3700 5300 3450 5300
+Wire Wire Line
+	6200 2350 6300 2350
+Wire Wire Line
+	6300 2350 6300 2500
 $EndSCHEMATC
