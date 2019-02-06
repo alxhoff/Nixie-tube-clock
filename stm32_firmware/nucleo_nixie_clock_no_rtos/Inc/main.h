@@ -1,7 +1,9 @@
+/* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * File Name          : main.h
-  * Description        : This file contains the common defines of the application
+  * @file           : main.h
+  * @brief          : Header for main.c file.
+  *                   This file contains the common defines of the application.
   ******************************************************************************
   ** This notice applies to any and all portions of this file
   * that are not between comment pairs USER CODE BEGIN and
@@ -9,7 +11,7 @@
   * inserted by the user or by software development tools
   * are owned by their respective copyright owners.
   *
-  * COPYRIGHT(c) 2017 STMicroelectronics
+  * COPYRIGHT(c) 2019 STMicroelectronics
   *
   * Redistribution and use in source and binary forms, with or without modification,
   * are permitted provided that the following conditions are met:
@@ -35,70 +37,92 @@
   *
   ******************************************************************************
   */
+/* USER CODE END Header */
+
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __MAIN_H
 #define __MAIN_H
-  /* Includes ------------------------------------------------------------------*/
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/* Includes ------------------------------------------------------------------*/
+#include "stm32f1xx_hal.h"
+
+/* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #define USE_SN54HC595_STRUCTS 1
 /* USER CODE END Includes */
 
-/* Private define ------------------------------------------------------------*/
+/* Exported types ------------------------------------------------------------*/
+/* USER CODE BEGIN ET */
 
-#define B1_Pin 													GPIO_PIN_13
-#define B1_GPIO_Port 									GPIOC
-#define B1_EXTI_IRQn 									EXTI15_10_IRQn
-#define SHIFT_SER_CLK_Pin 							GPIO_PIN_0
-#define SHIFT_SER_CLK_GPIO_Port 			GPIOC
-#define SHIFT_SER_DAT_Pin 							GPIO_PIN_1
-#define SHIFT_SER_DAT_GPIO_Port 			GPIOC
-#define SHIFT_LATCH_Pin 								GPIO_PIN_0
-#define SHIFT_LATCH_GPIO_Port 				GPIOB
-#define SHIFT_ENA_Pin	 								GPIO_PIN_2
-#define SHIFT_ENA_GPIO_Port 					GPIOC
-#define SHIFT_CLR_Pin 									GPIO_PIN_3
-#define SHIFT_CLR_GPIO_Port 					GPIOC
-#define BUT0_Pin 												GPIO_PIN_1
-#define BUT0_GPIO_Port 								GPIOA
-#define USART_TX_Pin 									GPIO_PIN_2
-#define USART_TX_GPIO_Port 						GPIOA
-#define USART_RX_Pin 									GPIO_PIN_3
-#define USART_RX_GPIO_Port 					GPIOA
-#define BUT1_Pin 												GPIO_PIN_4
-#define BUT1_GPIO_Port 								GPIOA
-#define LD2_Pin 													GPIO_PIN_5
-#define LD2_GPIO_Port 									GPIOA
-#define BUT2_Pin 												GPIO_PIN_6
-#define BUT2_GPIO_Port 								GPIOA
-#define LD3_Pin 													GPIO_PIN_5
-#define LD3_GPIO_Port 									GPIOC
-#define DHT_Pin 												GPIO_PIN_1
-#define DHT_GPIO_Port 								GPIOB
-#define LD1_Pin 													GPIO_PIN_11
-#define LD1_GPIO_Port 									GPIOA
-#define TMS_Pin 												GPIO_PIN_13
-#define TMS_GPIO_Port 									GPIOA
-#define TCK_Pin 													GPIO_PIN_14
-#define TCK_GPIO_Port 									GPIOA
-#define SWO_Pin 												GPIO_PIN_3
-#define SWO_GPIO_Port 								GPIOB
+/* USER CODE END ET */
 
+/* Exported constants --------------------------------------------------------*/
+/* USER CODE BEGIN EC */
+
+/* USER CODE END EC */
+
+/* Exported macro ------------------------------------------------------------*/
+/* USER CODE BEGIN EM */
+
+/* USER CODE END EM */
+
+/* Exported functions prototypes ---------------------------------------------*/
+void Error_Handler(void);
+
+/* USER CODE BEGIN EFP */
+
+/* USER CODE END EFP */
+
+/* Private defines -----------------------------------------------------------*/
+#define B1_Pin GPIO_PIN_13
+#define B1_GPIO_Port GPIOC
+#define B1_EXTI_IRQn EXTI15_10_IRQn
+#define SHIFT_SER_CLK_Pin GPIO_PIN_0
+#define SHIFT_SER_CLK_GPIO_Port GPIOC
+#define SHIFT_SER_DAT_Pin GPIO_PIN_1
+#define SHIFT_SER_DAT_GPIO_Port GPIOC
+#define SHIFT_ENA_Pin GPIO_PIN_2
+#define SHIFT_ENA_GPIO_Port GPIOC
+#define SHIFT_CLR_Pin GPIO_PIN_3
+#define SHIFT_CLR_GPIO_Port GPIOC
+#define BUT0_Pin GPIO_PIN_1
+#define BUT0_GPIO_Port GPIOA
+#define USART_TX_Pin GPIO_PIN_2
+#define USART_TX_GPIO_Port GPIOA
+#define USART_RX_Pin GPIO_PIN_3
+#define USART_RX_GPIO_Port GPIOA
+#define BUT1_Pin GPIO_PIN_4
+#define BUT1_GPIO_Port GPIOA
+#define LD2_Pin GPIO_PIN_5
+#define LD2_GPIO_Port GPIOA
+#define BUT2_Pin GPIO_PIN_6
+#define BUT2_GPIO_Port GPIOA
+#define LD3_Pin GPIO_PIN_5
+#define LD3_GPIO_Port GPIOC
+#define SHIFT_LATCH_Pin GPIO_PIN_0
+#define SHIFT_LATCH_GPIO_Port GPIOB
+#define DHT_Pin GPIO_PIN_1
+#define DHT_GPIO_Port GPIOB
+#define LD1_Pin GPIO_PIN_11
+#define LD1_GPIO_Port GPIOA
+#define TMS_Pin GPIO_PIN_13
+#define TMS_GPIO_Port GPIOA
+#define TCK_Pin GPIO_PIN_14
+#define TCK_GPIO_Port GPIOA
+#define SWO_Pin GPIO_PIN_3
+#define SWO_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
 
-void _Error_Handler(char *, int);
-
-#define Error_Handler() _Error_Handler(__FILE__, __LINE__)
-
-/**
-  * @}
-  */ 
-
-/**
-  * @}
-*/ 
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __MAIN_H */
+
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

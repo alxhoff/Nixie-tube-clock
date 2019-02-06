@@ -8,6 +8,8 @@
 #ifndef CONFIG_H_
 #define CONFIG_H_
 
+#include "main.h"
+
 //SCREEN
 #define SCREEN_CURSOR_PERIOD	750
 #define SSD1306_I2C_PORT		hi2c2
