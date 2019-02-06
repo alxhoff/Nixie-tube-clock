@@ -80,7 +80,6 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define B1_Pin GPIO_PIN_13
 #define B1_GPIO_Port GPIOC
-#define B1_EXTI_IRQn EXTI15_10_IRQn
 #define SHIFT_SER_CLK_Pin GPIO_PIN_0
 #define SHIFT_SER_CLK_GPIO_Port GPIOC
 #define SHIFT_SER_DAT_Pin GPIO_PIN_1
@@ -91,16 +90,19 @@ void Error_Handler(void);
 #define SHIFT_CLR_GPIO_Port GPIOC
 #define BUT0_Pin GPIO_PIN_1
 #define BUT0_GPIO_Port GPIOA
+#define BUT0_EXTI_IRQn EXTI1_IRQn
 #define USART_TX_Pin GPIO_PIN_2
 #define USART_TX_GPIO_Port GPIOA
 #define USART_RX_Pin GPIO_PIN_3
 #define USART_RX_GPIO_Port GPIOA
 #define BUT1_Pin GPIO_PIN_4
 #define BUT1_GPIO_Port GPIOA
+#define BUT1_EXTI_IRQn EXTI4_IRQn
 #define LD2_Pin GPIO_PIN_5
 #define LD2_GPIO_Port GPIOA
 #define BUT2_Pin GPIO_PIN_6
 #define BUT2_GPIO_Port GPIOA
+#define BUT2_EXTI_IRQn EXTI9_5_IRQn
 #define LD3_Pin GPIO_PIN_5
 #define LD3_GPIO_Port GPIOC
 #define SHIFT_LATCH_Pin GPIO_PIN_0
