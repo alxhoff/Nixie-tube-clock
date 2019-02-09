@@ -10,8 +10,13 @@
 #include "screen.h"
 #include "draw.h"
 #include "RTC_dev.h"
+#include "stm32f1xx_hal.h"
 
 uint8_t blink_flag = 0;
+
+static char weekday[12];
+static char date[12];
+static char time[12];
 
 void get_weekday_string(WEEKDAYS_e weekday, char *buf) {
 	switch (weekday) {
@@ -117,34 +122,32 @@ void get_alarm_date_string(char *buf, TIME_TYPE_e type) {
 	}
 }
 
-void get_alarm_time_string(char *buf, TIME_TYPE_e type){
+void get_alarm_time_string(char *buf, TIME_TYPE_e type) {
 	unsigned char hour;
 	unsigned char min;
 
-	switch(type){
+	switch (type) {
 	case ALARM_ONE:
 		hour = RTC_dev_alarm1_get_hour();
 		min = RTC_dev_alarm1_get_min();
 
-		if(RTC_dev_alarm1_get_format() == HOUR_24)
+		if (RTC_dev_alarm1_get_format() == HOUR_24)
 			sprintf(buf, "%02d:%02d", hour, min);
+		else if (RTC_dev_alarm1_get_am_pm() == AM)
+			sprintf(buf, "%02d:%02d%s", hour, min, "AM");
 		else
-			if(RTC_dev_alarm1_get_am_pm() == AM)
-				sprintf(buf, "%02d:%02d%s", hour, min, "AM");
-			else
-				sprintf(buf, "%02d:%02d%s", hour, min, "PM");
+			sprintf(buf, "%02d:%02d%s", hour, min, "PM");
 		break;
 	case ALARM_TWO:
 		hour = RTC_dev_alarm2_get_hour();
 		min = RTC_dev_alarm2_get_min();
 
-		if(RTC_dev_alarm2_get_format() == HOUR_24)
+		if (RTC_dev_alarm2_get_format() == HOUR_24)
 			sprintf(buf, "%02d:%02d", hour, min);
+		else if (RTC_dev_alarm2_get_am_pm() == AM)
+			sprintf(buf, "%02d:%02d%s", hour, min, "AM");
 		else
-			if(RTC_dev_alarm2_get_am_pm() == AM)
-				sprintf(buf, "%02d:%02d%s", hour, min, "AM");
-			else
-				sprintf(buf, "%02d:%02d%s", hour, min, "PM");
+			sprintf(buf, "%02d:%02d%s", hour, min, "PM");
 		break;
 	default:
 		break;
@@ -184,22 +187,17 @@ void get_time_string(char *buf) {
 	}
 }
 
+unsigned char if_cursor(void){
+	unsigned long ticks = HAL_GetTick() >> 9;
+	if(ticks & 0x1)
+		return 1;
+	else
+		return 0;
+}
+
 //STATES
 //TIME
-unsigned char draw_time_init(void) {
-
-	return 0;
-}
-
-void draw_time_enter(void) {
-
-}
-
 void draw_time_run(void) {
-	static char weekday[12];
-	static char date[12];
-	static char time[12];
-
 	RTC_dev_get_time();
 
 	get_time_weekday_string(weekday);
@@ -211,42 +209,66 @@ void draw_time_run(void) {
 	screen_add_line_at_index(2, time);
 }
 
-void draw_time_exit(void) {
-
-}
-
 //SET TIME
-unsigned char draw_set_time_init(void) {
-
-	return 0;
-}
-
-void draw_set_time_enter(void) {
-
-}
+#define SET_TIME_DRAW_STATE(FROM, TO, LINE, LEFT_BUT, CENTER_BUT, RIGHT_BUT)	\
+		RTC_dev_get_time();	\
+		get_time_weekday_string(weekday);	\
+		get_date_string(date);		\
+		get_time_string(time);		\
+		weekday[3] = ' ';		\
+		weekday[4] = '*';		\
+		if(if_cursor())			\
+			for(unsigned char i = FROM; i <= TO; i++)	\
+				LINE[i] = '_';		\
+		screen_add_line_at_index(0, weekday); 	\
+		screen_add_line_at_index(1, date);		\
+		screen_add_line_at_index(2, time);		\
 
 void draw_set_time_run(void) {
+	RTC_dev_get_time();
 
+	get_time_weekday_string(weekday);
+	get_date_string(date);
+	get_time_string(time);
+
+	weekday[3] = ' ';
+	weekday[4] = '*';
+
+	screen_add_line_at_index(0, weekday);
+	screen_add_line_at_index(1, date);
+	screen_add_line_at_index(2, time);
 }
 
-void draw_set_time_exit(void) {
+void draw_set_time_sec_run(void) {
+	SET_TIME_DRAW_STATE(6, 7, time, NULL, NULL, NULL)
+}
 
+void draw_set_time_min_run(void) {
+	SET_TIME_DRAW_STATE(3, 4, time, NULL, NULL, NULL)
+}
+
+void draw_set_time_hour_run(void) {
+	SET_TIME_DRAW_STATE(0, 1, time, NULL, NULL, NULL)
+}
+
+void draw_set_time_date_run(void) {
+	SET_TIME_DRAW_STATE(0, 1, date, NULL, NULL, NULL)
+}
+
+void draw_set_time_month_run(void) {
+	SET_TIME_DRAW_STATE(3, 5, date, NULL, NULL, NULL)
+}
+
+void draw_set_time_year_run(void) {
+	SET_TIME_DRAW_STATE(7, 10, date, NULL, NULL, NULL)
+}
+
+void draw_set_time_day_run(void) {
+	SET_TIME_DRAW_STATE(0, 2, weekday, NULL, NULL, NULL)
 }
 
 //SET ALARM 1
-unsigned char draw_alarm1_init(void) {
-
-	return 0;
-}
-
-void draw_alarm1_enter(void) {
-
-}
-
 void draw_alarm1_run(void) {
-	static char date[12];
-	static char time[12];
-
 	RTC_dev_get_alarm(ALARM_ONE);
 
 	get_alarm_date_string(date, ALARM_ONE);
@@ -255,35 +277,3 @@ void draw_alarm1_run(void) {
 	screen_add_line_at_index(1, date);
 	screen_add_line_at_index(2, time);
 }
-
-void draw_alarm1_exit(void) {
-
-}
-
-//SET ALARM 2
-unsigned char draw_alarm2_init(void) {
-
-	return 0;
-}
-
-void draw_alarm2_enter(void) {
-
-}
-
-void draw_alarm2_run(void) {
-	static char date[12];
-	static char time[12];
-
-	RTC_dev_get_alarm(ALARM_TWO);
-
-	get_alarm_date_string(date, ALARM_TWO);
-	get_alarm_time_string(time, ALARM_TWO);
-
-	screen_add_line_at_index(1, date);
-	screen_add_line_at_index(2, time);
-}
-
-void draw_alarm2_exit(void) {
-
-}
-

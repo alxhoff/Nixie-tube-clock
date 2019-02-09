@@ -59,6 +59,13 @@ void screen_set_framebuffer(char **fb) {
 	screen_dev.framebuffer = fb;
 }
 
+char *screen_get_framebuffer_line(unsigned char line) {
+	unsigned char rows = SCREEN_GET_ROWS;
+	if(line >= 0 && line < rows)
+		return screen_dev.framebuffer[line];
+	return NULL;
+}
+
 void screen_clear(void){
 	unsigned char rows = SCREEN_GET_ROWS;
 	unsigned char cols = SCREEN_GET_COLS;

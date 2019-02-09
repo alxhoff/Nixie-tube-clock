@@ -5,9 +5,8 @@
  *      Author: alxhoff
  */
 
-#include "stm32f1xx_hal.h"
+#include "states.h"
 #include "config.h"
-#include "main.h"
 
 typedef struct button {
 	unsigned char state;
@@ -68,19 +67,24 @@ unsigned char check_button(GPIO_TypeDef *port, uint16_t pin, button_t *button) {
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	__HAL_GPIO_EXTI_CLEAR_IT(GPIO_Pin);
-	button_mask_e ret = no_press;
+	unsigned char ret = no_press;
 
 	if (GPIO_Pin == LEFT_BUTTON_PIN) {
-		ret = check_button(LEFT_BUTTON_PORT, LEFT_BUTTON_PIN, &button_dev[0]);
-		if(ret)
+		if(check_button(LEFT_BUTTON_PORT, LEFT_BUTTON_PIN, &button_dev[0])){
+			ret |= left;
 			HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
+		}
 	} else if (GPIO_Pin == CENTER_BUTTON_PIN) {
-		ret = check_button(CENTER_BUTTON_PORT, CENTER_BUTTON_PIN, &button_dev[1]);
-		if(ret)
+		if(check_button(CENTER_BUTTON_PORT, CENTER_BUTTON_PIN, &button_dev[1])){
+			ret |= center;
 			HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+		}
 	} else if (GPIO_Pin == RIGHT_BUTTON_PIN) {
-		ret = check_button(RIGHT_BUTTON_PORT, RIGHT_BUTTON_PIN, &button_dev[2]);
-		if(ret)
+		if(check_button(RIGHT_BUTTON_PORT, RIGHT_BUTTON_PIN, &button_dev[2])){
+			ret |= right;
 			HAL_GPIO_TogglePin(LD3_GPIO_Port, LD3_Pin);
+		}
 	}
+	if(ret)
+		states_set_input(ret);
 }
