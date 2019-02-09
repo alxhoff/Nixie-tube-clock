@@ -63,7 +63,7 @@ unsigned char states_run(void) {
 	return 0;
 }
 
-static unsigned char states_add(unsigned char (*probe)(void),
+static unsigned char states_add(void (*probe)(void),
 		void (*enter)(void), void (*run)(void), void (*exit)(void), state_e id,
 		char* name) {
 	unsigned char error = 0;
@@ -135,9 +135,12 @@ unsigned char states_init(void) {
 	states_add(NULL, NULL, draw_set_time_year_run, NULL, state_time_set_year, "Set year");
 	states_add(NULL, NULL, draw_set_time_day_run, NULL, state_time_set_day, "Set day");
 	states_add(NULL, NULL, draw_alarm1_run, NULL, state_alarm_1_set, "Set alarm 1");
+	states_add(NULL, NULL, draw_alarm1_min_run, NULL, state_alarm_1_set_min, "Set alarm 1 min");
+	states_add(NULL, NULL, draw_alarm1_hour_run, NULL, state_alarm_1_set_hour, "Set alarm 1 hour");
+	states_add(NULL, NULL, draw_alarm1_day_run, NULL, state_alarm_1_set_day, "Set alarm 1 day");
 
 	//set initial state
-	SET_INITIAL_STATE(state_alarm_1_set);
+	SET_INITIAL_STATE(state_time_set);
 
 	states_init_states();
 	return 0;

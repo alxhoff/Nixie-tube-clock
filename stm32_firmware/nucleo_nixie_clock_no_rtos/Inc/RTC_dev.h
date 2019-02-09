@@ -42,7 +42,7 @@ unsigned char RTC_dev_alarm1_get_date(void);
 DAY_OR_DATE_e RTC_dev_alarm1_get_day_or_date(void);
 ALARM_TYPE_e RTC_dev_alarm1_get_type(void);
 unsigned char RTC_dev_alarm1_get_sec(void);
-TIME_FORMAT_e RTC_dev_alarm2_get_twelve_hour(void);
+TIME_FORMAT_e RTC_dev_alarm2_get_format(void);
 unsigned char RTC_dev_alarm2_get_min(void);
 unsigned char RTC_dev_alarm2_get_hour(void);
 AM_OR_PM_e RTC_dev_alarm2_get_am_pm(void);

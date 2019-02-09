@@ -218,25 +218,14 @@ void draw_time_run(void) {
 		weekday[3] = ' ';		\
 		weekday[4] = '*';		\
 		if(if_cursor())			\
-			for(unsigned char i = FROM; i <= TO; i++)	\
+			for(signed char i = FROM; i <= TO; i++)	\
 				LINE[i] = '_';		\
 		screen_add_line_at_index(0, weekday); 	\
 		screen_add_line_at_index(1, date);		\
 		screen_add_line_at_index(2, time);		\
 
 void draw_set_time_run(void) {
-	RTC_dev_get_time();
-
-	get_time_weekday_string(weekday);
-	get_date_string(date);
-	get_time_string(time);
-
-	weekday[3] = ' ';
-	weekday[4] = '*';
-
-	screen_add_line_at_index(0, weekday);
-	screen_add_line_at_index(1, date);
-	screen_add_line_at_index(2, time);
+	SET_TIME_DRAW_STATE(0, -1, time, NULL, NULL, NULL)
 }
 
 void draw_set_time_sec_run(void) {
@@ -267,13 +256,31 @@ void draw_set_time_day_run(void) {
 	SET_TIME_DRAW_STATE(0, 2, weekday, NULL, NULL, NULL)
 }
 
+#define SET_ALARM_DRAW_STATE(FROM, TO, LINE, LEFT_BUT, CENTER_BUT, RIGHT_BUT)	\
+		RTC_dev_get_alarm(ALARM_ONE);	\
+		get_alarm_date_string(date, ALARM_ONE);		\
+		get_alarm_time_string(time, ALARM_ONE);		\
+		date[3] = ' ';		\
+		date[4] = '*';		\
+		if(if_cursor())		\
+			for(signed char i = FROM; i <= TO; i++)	\
+				LINE[i] = '_';		\
+		screen_add_line_at_index(1, date);		\
+		screen_add_line_at_index(2, time);		\
+
 //SET ALARM 1
 void draw_alarm1_run(void) {
-	RTC_dev_get_alarm(ALARM_ONE);
+	SET_ALARM_DRAW_STATE(0, -1, time, NULL, NULL, NULL)
+}
 
-	get_alarm_date_string(date, ALARM_ONE);
-	get_alarm_time_string(time, ALARM_ONE);
+void draw_alarm1_min_run(void) {
+	SET_ALARM_DRAW_STATE(3, 4, time, NULL, NULL, NULL)
+}
 
-	screen_add_line_at_index(1, date);
-	screen_add_line_at_index(2, time);
+void draw_alarm1_hour_run(void) {
+	SET_ALARM_DRAW_STATE(0, 1, time, NULL, NULL, NULL)
+}
+
+void draw_alarm1_day_run(void) {
+	SET_ALARM_DRAW_STATE(0, 2, date, NULL, NULL, NULL)
 }

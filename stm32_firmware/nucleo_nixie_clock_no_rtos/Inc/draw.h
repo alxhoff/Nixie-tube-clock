@@ -34,5 +34,8 @@ void draw_set_time_year_run(void);
 void draw_set_time_day_run(void);
 //SET ALARM 1
 void draw_alarm1_run(void);
+void draw_alarm1_min_run(void);
+void draw_alarm1_hour_run(void);
+void draw_alarm1_day_run(void);
 
 #endif /* DRAW_H_ */

@@ -20,6 +20,9 @@ typedef enum{
 	state_time_set_year,
 	state_time_set_day,
 	state_alarm_1_set,
+	state_alarm_1_set_min,
+	state_alarm_1_set_hour,
+	state_alarm_1_set_day,
 } state_e;
 
 unsigned char states_init(void);
