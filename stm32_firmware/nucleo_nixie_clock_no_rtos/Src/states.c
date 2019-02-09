@@ -43,8 +43,24 @@ typedef struct state_machine {
 
 state_machine_t state_machine_dev = { 0 };
 
-void states_set_input(unsigned char input){
+void states_set_input(unsigned char input) {
 	state_machine_dev.input = input;
+}
+
+unsigned char states_get_input(void) {
+	return state_machine_dev.input;
+}
+
+void states_clear_input(void){
+	state_machine_dev.input = 0;
+}
+
+unsigned char states_get_state(void) {
+	return state_machine_dev.current_state->id;
+}
+
+void states_set_state(unsigned char state) {
+	state_machine_dev.next_state = state_machine_dev.states[state];
 }
 
 unsigned char states_run(void) {
@@ -63,9 +79,8 @@ unsigned char states_run(void) {
 	return 0;
 }
 
-static unsigned char states_add(void (*probe)(void),
-		void (*enter)(void), void (*run)(void), void (*exit)(void), state_e id,
-		char* name) {
+static unsigned char states_add(void (*probe)(void), void (*enter)(void),
+		void (*run)(void), void (*exit)(void), state_e id, char* name) {
 	unsigned char error = 0;
 	state_t *ret = calloc(1, sizeof(state_t));
 	if (!ret)
@@ -87,7 +102,7 @@ static unsigned char states_add(void (*probe)(void),
 	state_machine_dev.states[state_machine_dev.count] = ret;
 	state_machine_dev.count++;
 
-	if(ret->probe)
+	if (ret->probe)
 		ret->probe();
 
 	if (error)
@@ -127,20 +142,31 @@ unsigned char states_init(void) {
 	//send state
 	states_add(NULL, NULL, draw_time_run, NULL, state_time, "Show time");
 	states_add(NULL, NULL, draw_set_time_run, NULL, state_time_set, "Set time");
-	states_add(NULL, NULL, draw_set_time_sec_run, NULL, state_time_set_sec, "Set sec");
-	states_add(NULL, NULL, draw_set_time_min_run, NULL, state_time_set_min, "Set min");
-	states_add(NULL, NULL, draw_set_time_hour_run, NULL, state_time_set_hour, "Set hour");
-	states_add(NULL, NULL, draw_set_time_date_run, NULL, state_time_set_date, "Set date");
-	states_add(NULL, NULL, draw_set_time_month_run, NULL, state_time_set_month, "Set month");
-	states_add(NULL, NULL, draw_set_time_year_run, NULL, state_time_set_year, "Set year");
-	states_add(NULL, NULL, draw_set_time_day_run, NULL, state_time_set_day, "Set day");
-	states_add(NULL, NULL, draw_alarm1_run, NULL, state_alarm_1_set, "Set alarm 1");
-	states_add(NULL, NULL, draw_alarm1_min_run, NULL, state_alarm_1_set_min, "Set alarm 1 min");
-	states_add(NULL, NULL, draw_alarm1_hour_run, NULL, state_alarm_1_set_hour, "Set alarm 1 hour");
-	states_add(NULL, NULL, draw_alarm1_day_run, NULL, state_alarm_1_set_day, "Set alarm 1 day");
+	states_add(NULL, NULL, draw_set_time_sec_run, NULL, state_time_set_sec,
+			"Set sec");
+	states_add(NULL, NULL, draw_set_time_min_run, NULL, state_time_set_min,
+			"Set min");
+	states_add(NULL, NULL, draw_set_time_hour_run, NULL, state_time_set_hour,
+			"Set hour");
+	states_add(NULL, NULL, draw_set_time_date_run, NULL, state_time_set_date,
+			"Set date");
+	states_add(NULL, NULL, draw_set_time_month_run, NULL, state_time_set_month,
+			"Set month");
+	states_add(NULL, NULL, draw_set_time_year_run, NULL, state_time_set_year,
+			"Set year");
+	states_add(NULL, NULL, draw_set_time_day_run, NULL, state_time_set_day,
+			"Set day");
+	states_add(NULL, NULL, draw_alarm1_run, NULL, state_alarm_1_set,
+			"Set alarm 1");
+	states_add(NULL, NULL, draw_alarm1_min_run, NULL, state_alarm_1_set_min,
+			"Set alarm 1 min");
+	states_add(NULL, NULL, draw_alarm1_hour_run, NULL, state_alarm_1_set_hour,
+			"Set alarm 1 hour");
+	states_add(NULL, NULL, draw_alarm1_day_run, NULL, state_alarm_1_set_day,
+			"Set alarm 1 day");
 
 	//set initial state
-	SET_INITIAL_STATE(state_time_set);
+	SET_INITIAL_STATE(state_time);
 
 	states_init_states();
 	return 0;

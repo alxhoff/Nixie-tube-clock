@@ -10,24 +10,29 @@
 
 //STATES
 typedef enum{
-	state_time,
-	state_time_set,
-	state_time_set_sec,
-	state_time_set_min,
-	state_time_set_hour,
-	state_time_set_date,
-	state_time_set_month,
-	state_time_set_year,
-	state_time_set_day,
-	state_alarm_1_set,
-	state_alarm_1_set_min,
-	state_alarm_1_set_hour,
-	state_alarm_1_set_day,
+	state_time = 0,
+	state_time_set = 1,
+	state_time_set_sec = 2,
+	state_time_set_min = 3,
+	state_time_set_hour = 4,
+	state_time_set_date = 5,
+	state_time_set_month = 6,
+	state_time_set_year = 7,
+	state_time_set_day = 8,
+	state_alarm_1_set = 9,
+	state_alarm_1_set_min = 10,
+	state_alarm_1_set_hour = 11,
+	state_alarm_1_set_day = 12,
 } state_e;
 
 unsigned char states_init(void);
 unsigned char states_run(void);
 void *get_state_data(void);
 void set_state_data(void *data);
+void states_set_input(unsigned char input);
+unsigned char states_get_state(void);
+void states_set_state(unsigned char state);
+unsigned char states_get_input(void);
+void states_clear_input(void);
 
 #endif /* STATES_H_ */

@@ -8,20 +8,10 @@
 #ifndef BUTTONS_H_
 #define BUTTONS_H_
 
-typedef enum {
-	BACK1,
-	CENTER1,
-	RIGHT1,
-	MAX_VALUE
-} BUTTON_POSITIONS_t;
-
-typedef enum{
-	NOT_SETTING,
-	SETTING_DIGIT,
-	SETTING_MOVE,
-} SET_STATE_t;
+typedef enum button_masks {
+	no_press = 0, left = 0b1, center = 0b10, right = 0b1000
+} button_mask_e;
 
 void ButtonsInit();
-void buttons_listener_callback(void);
 
 #endif /* BUTTONS_H_ */

@@ -8,17 +8,6 @@
 #ifndef DRAW_H_
 #define DRAW_H_
 
-#include "render.h"
-
-typedef enum {
-	BLINK_HOUR,
-	BLINK_MINUTE,
-	BLINK_SEC,
-	BLINK_PM
-} BLINK_TIME_t;
-
-
-
 //STATES
 //TIME
 void draw_time_run(void);

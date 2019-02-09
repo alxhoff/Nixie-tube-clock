@@ -7,15 +7,12 @@
 
 #include "states.h"
 #include "config.h"
+#include "buttons.h"
 
 typedef struct button {
 	unsigned char state;
 	unsigned long prev_press;
 } button_t;
-
-typedef enum button_masks {
-	no_press = 0, left = 0b1, center = 0b10, right = 0b1000
-} button_mask_e;
 
 typedef struct buttons {
 	char button_input[NUM_OF_BUTTONS];

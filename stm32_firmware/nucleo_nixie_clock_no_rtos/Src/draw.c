@@ -11,6 +11,8 @@
 #include "draw.h"
 #include "RTC_dev.h"
 #include "stm32f1xx_hal.h"
+#include "states.h"
+#include "buttons.h"
 
 uint8_t blink_flag = 0;
 
@@ -196,6 +198,24 @@ unsigned char if_cursor(void){
 }
 
 //STATES
+void change_big_states(void){
+	unsigned char cur_state = states_get_state();
+
+	switch(cur_state){
+	case state_time:
+		states_set_state(state_time_set);
+		break;
+	case state_time_set:
+		states_set_state(state_alarm_1_set);
+		break;
+	case state_alarm_1_set:
+		states_set_state(state_time);
+		break;
+	default:
+		break;
+	}
+	states_clear_input();
+}
 //TIME
 void draw_time_run(void) {
 	RTC_dev_get_time();
@@ -207,6 +227,14 @@ void draw_time_run(void) {
 	screen_add_line_at_index(0, weekday);
 	screen_add_line_at_index(1, date);
 	screen_add_line_at_index(2, time);
+
+	unsigned char input = states_get_input();
+	if((input >> left) & 0x1)
+		change_big_states();
+	else if((input >> center) & 0x1)
+		NULL;
+	else if((input >> right) & 0x1)
+		NULL;
 }
 
 //SET TIME
@@ -225,7 +253,15 @@ void draw_time_run(void) {
 		screen_add_line_at_index(2, time);		\
 
 void draw_set_time_run(void) {
-	SET_TIME_DRAW_STATE(0, -1, time, NULL, NULL, NULL)
+	SET_TIME_DRAW_STATE(0, -1, time, NULL, NULL, NULL);
+
+	unsigned char input = states_get_input();
+	if((input >> left) & 0x1)
+		change_big_states();
+	else if((input >> center) & 0x1)
+		NULL;
+	else if((input >> right) & 0x1)
+		NULL;
 }
 
 void draw_set_time_sec_run(void) {
