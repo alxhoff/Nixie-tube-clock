@@ -14,6 +14,8 @@
 #include <string.h>
 #include <stdlib.h>
 
+#define STATES_GET_INTPUT 	NULL
+
 typedef struct state state_t;
 struct state {
 	unsigned char id;
@@ -35,11 +37,15 @@ typedef struct state_machine {
 	state_t *current_state;
 	state_t *next_state;
 
+	unsigned char input;
+
+	unsigned char (*get_input)(void);
+
 	state_t **states;
 	unsigned char count;
 } state_machine_t;
 
-state_machine_t state_machine_dev = { 0 };
+state_machine_t state_machine_dev = { .get_input = STATES_GET_INTPUT };
 
 unsigned char states_run(void) {
 	if (state_machine_dev.next_state->id

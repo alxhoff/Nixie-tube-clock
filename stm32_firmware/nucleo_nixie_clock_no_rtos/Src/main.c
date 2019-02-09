@@ -1,41 +1,41 @@
 /* USER CODE BEGIN Header */
 /**
-  ******************************************************************************
-  * @file           : main.c
-  * @brief          : Main program body
-  ******************************************************************************
-  ** This notice applies to any and all portions of this file
-  * that are not between comment pairs USER CODE BEGIN and
-  * USER CODE END. Other portions of this file, whether 
-  * inserted by the user or by software development tools
-  * are owned by their respective copyright owners.
-  *
-  * COPYRIGHT(c) 2019 STMicroelectronics
-  *
-  * Redistribution and use in source and binary forms, with or without modification,
-  * are permitted provided that the following conditions are met:
-  *   1. Redistributions of source code must retain the above copyright notice,
-  *      this list of conditions and the following disclaimer.
-  *   2. Redistributions in binary form must reproduce the above copyright notice,
-  *      this list of conditions and the following disclaimer in the documentation
-  *      and/or other materials provided with the distribution.
-  *   3. Neither the name of STMicroelectronics nor the names of its contributors
-  *      may be used to endorse or promote products derived from this software
-  *      without specific prior written permission.
-  *
-  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-  * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-  * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-  *
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file           : main.c
+ * @brief          : Main program body
+ ******************************************************************************
+ ** This notice applies to any and all portions of this file
+ * that are not between comment pairs USER CODE BEGIN and
+ * USER CODE END. Other portions of this file, whether
+ * inserted by the user or by software development tools
+ * are owned by their respective copyright owners.
+ *
+ * COPYRIGHT(c) 2019 STMicroelectronics
+ *
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ *   1. Redistributions of source code must retain the above copyright notice,
+ *      this list of conditions and the following disclaimer.
+ *   2. Redistributions in binary form must reproduce the above copyright notice,
+ *      this list of conditions and the following disclaimer in the documentation
+ *      and/or other materials provided with the distribution.
+ *   3. Neither the name of STMicroelectronics nor the names of its contributors
+ *      may be used to endorse or promote products derived from this software
+ *      without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ ******************************************************************************
+ */
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
@@ -59,15 +59,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
-{
-    __HAL_GPIO_EXTI_CLEAR_IT(GPIO_Pin);
-  if(GPIO_Pin == GPIO_PIN_0)
-  {
-    /* Toggle LED1 */
-    HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
-  }
-}
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -99,9 +91,9 @@ static void MX_NVIC_Init(void);
 
 void convert_time_to_shift(void) {
 	volatile unsigned char seconds = RTC_dev_time_get_sec();
-	nixie_split_set_digit(seconds , NIXIE_SEC_INDEX_LSB);
+	nixie_split_set_digit(seconds, NIXIE_SEC_INDEX_LSB);
 	volatile unsigned char *output = nixie_compile_output();
-	SN54HC595_out_bytes((unsigned char *)output, CHECK_ODD(NIXIE_DEVICES));
+	SN54HC595_out_bytes((unsigned char *) output, CHECK_ODD(NIXIE_DEVICES));
 }
 /* USER CODE END 0 */
 
@@ -140,7 +132,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
 	SN54HC595_init();
 
-	unsigned char test_bytes[1] = {0x33};
+	unsigned char test_bytes[1] = { 0x33 };
 
 	SN54HC595_out_bytes(test_bytes, SHIFT_DEVICES);
 
@@ -154,18 +146,18 @@ int main(void)
 
 	states_init();
 
-/*
-	// eeprom
-	AT24Cxx_devices_t device_array;
+	/*
+	 // eeprom
+	 AT24Cxx_devices_t device_array;
 
-	AT24Cxx_init(&device_array, 0x00, &hi2c2);
-//INIT END
+	 AT24Cxx_init(&device_array, 0x00, &hi2c2);
+	 //INIT END
 
-	AT24Cxx_write_byte_buffer(device_array.devices[0], 0x0010, test_bytes, 66);
+	 AT24Cxx_write_byte_buffer(device_array.devices[0], 0x0010, test_bytes, 66);
 
-	HAL_Delay(2);
+	 HAL_Delay(2);
 
-	AT24Cxx_read_byte_buffer(device_array.devices[0], 0x0010, test_receive, 66);
+	 AT24Cxx_read_byte_buffer(device_array.devices[0], 0x0010, test_receive, 66);
 
   /* USER CODE END 2 */
 
@@ -335,7 +327,7 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pins : BUT0_Pin BUT1_Pin BUT2_Pin */
   GPIO_InitStruct.Pin = BUT0_Pin|BUT1_Pin|BUT2_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
