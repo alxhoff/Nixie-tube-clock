@@ -229,16 +229,17 @@ void draw_time_run(void) {
 	screen_add_line_at_index(2, time);
 
 	unsigned char input = states_get_input();
-	if((input >> left) & 0x1)
+	if((input >> 0) & 0x1)
 		change_big_states();
-	else if((input >> center) & 0x1)
+	else if((input >> 1) & 0x1)
 		NULL;
-	else if((input >> right) & 0x1)
+	else if((input >> 2) & 0x1)
 		NULL;
 }
 
 //SET TIME
 #define SET_TIME_DRAW_STATE(FROM, TO, LINE, LEFT_BUT, CENTER_BUT, RIGHT_BUT)	\
+		unsigned char input = states_get_input();\
 		RTC_dev_get_time();	\
 		get_time_weekday_string(weekday);	\
 		get_date_string(date);		\
@@ -251,45 +252,77 @@ void draw_time_run(void) {
 		screen_add_line_at_index(0, weekday); 	\
 		screen_add_line_at_index(1, date);		\
 		screen_add_line_at_index(2, time);		\
+		if((input >> 0) & 0x1)				\
+			LEFT_BUT;							\
+		else if((input >> 1) & 0x1)		\
+			CENTER_BUT;							\
+		else if((input >> 2) & 0x1)			\
+			RIGHT_BUT;							\
+
+void change_time_state(void){
+	unsigned char cur_state = states_get_state();
+
+	switch(cur_state){
+	case state_time_set:
+		states_set_state(state_time_set_sec);
+		break;
+	case state_time_set_sec:
+		states_set_state(state_time_set_min);
+		break;
+	case state_time_set_min:
+		states_set_state(state_time_set_hour);
+		break;
+	case state_time_set_hour:
+		states_set_state(state_time_set_date);
+		break;
+	case state_time_set_date:
+		states_set_state(state_time_set_month);
+		break;
+	case state_time_set_month:
+		states_set_state(state_time_set_year);
+		break;
+	case state_time_set_year:
+		states_set_state(state_time_set_day);
+		break;
+	case state_time_set_day:
+		states_set_state(state_time_set_sec);
+		break;
+	default:
+		break;
+	}
+	states_clear_input();
+}
 
 void draw_set_time_run(void) {
-	SET_TIME_DRAW_STATE(0, -1, time, NULL, NULL, NULL);
-
-	unsigned char input = states_get_input();
-	if((input >> left) & 0x1)
-		change_big_states();
-	else if((input >> center) & 0x1)
-		NULL;
-	else if((input >> right) & 0x1)
-		NULL;
+	SET_TIME_DRAW_STATE(0, -1, time, change_big_states(), change_time_state(), NULL);
 }
 
 void draw_set_time_sec_run(void) {
-	SET_TIME_DRAW_STATE(6, 7, time, NULL, NULL, NULL)
+	SET_TIME_DRAW_STATE(6, 7, time, states_set_state(state_time_set), change_time_state(), NULL)
 }
 
 void draw_set_time_min_run(void) {
-	SET_TIME_DRAW_STATE(3, 4, time, NULL, NULL, NULL)
+	SET_TIME_DRAW_STATE(3, 4, time, states_set_state(state_time_set), change_time_state(), NULL)
 }
 
 void draw_set_time_hour_run(void) {
-	SET_TIME_DRAW_STATE(0, 1, time, NULL, NULL, NULL)
+	SET_TIME_DRAW_STATE(0, 1, time, states_set_state(state_time_set), change_time_state(), NULL)
 }
 
 void draw_set_time_date_run(void) {
-	SET_TIME_DRAW_STATE(0, 1, date, NULL, NULL, NULL)
+	SET_TIME_DRAW_STATE(0, 1, date, states_set_state(state_time_set), change_time_state(), NULL)
 }
 
 void draw_set_time_month_run(void) {
-	SET_TIME_DRAW_STATE(3, 5, date, NULL, NULL, NULL)
+	SET_TIME_DRAW_STATE(3, 5, date, states_set_state(state_time_set), change_time_state(), NULL)
 }
 
 void draw_set_time_year_run(void) {
-	SET_TIME_DRAW_STATE(7, 10, date, NULL, NULL, NULL)
+	SET_TIME_DRAW_STATE(7, 10, date, states_set_state(state_time_set), change_time_state(), NULL)
 }
 
 void draw_set_time_day_run(void) {
-	SET_TIME_DRAW_STATE(0, 2, weekday, NULL, NULL, NULL)
+	SET_TIME_DRAW_STATE(0, 2, weekday, states_set_state(state_time_set), change_time_state(), NULL)
 }
 
 #define SET_ALARM_DRAW_STATE(FROM, TO, LINE, LEFT_BUT, CENTER_BUT, RIGHT_BUT)	\
@@ -307,6 +340,14 @@ void draw_set_time_day_run(void) {
 //SET ALARM 1
 void draw_alarm1_run(void) {
 	SET_ALARM_DRAW_STATE(0, -1, time, NULL, NULL, NULL)
+
+	unsigned char input = states_get_input();
+	if((input >> left) & 0x1)
+		change_big_states();
+	else if((input >> center) & 0x1)
+		NULL;
+	else if((input >> right) & 0x1)
+		NULL;
 }
 
 void draw_alarm1_min_run(void) {

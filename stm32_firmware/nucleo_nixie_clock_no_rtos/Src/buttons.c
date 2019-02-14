@@ -62,7 +62,7 @@ unsigned char check_button(GPIO_TypeDef *port, uint16_t pin, button_t *button) {
 	return 0;
 }
 
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+void HAL_GPIO_EXTI_Callback(volatile uint16_t GPIO_Pin) {
 	__HAL_GPIO_EXTI_CLEAR_IT(GPIO_Pin);
 	unsigned char ret = no_press;
 
