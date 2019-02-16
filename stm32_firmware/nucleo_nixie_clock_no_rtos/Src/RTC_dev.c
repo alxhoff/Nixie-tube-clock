@@ -143,6 +143,35 @@ ALARM_TYPE_e RTC_dev_alarm2_get_type(void) {
 	return RTC_dev.alarm_2.type;
 }
 
+signed char RTC_dev_set_time_sec(unsigned char sec){
+	return DS3231_set_time_sec(RTC_dev.i2c_handle, sec);
+}
+
+signed char RTC_dev_set_time_min(unsigned char min){
+	return DS3231_set_time_min(RTC_dev.i2c_handle, min);
+}
+
+signed char RTC_dev_set_time_hour(unsigned char hour,
+		TIME_FORMAT_e format, AM_OR_PM_e am_pm){
+	return DS3231_set_time_hour(RTC_dev.i2c_handle, hour, format, am_pm);
+}
+
+signed char RTC_dev_set_time_day(unsigned char day){
+	return DS3231_set_time_day(RTC_dev.i2c_handle, day);
+}
+
+signed char RTC_dev_set_time_date(unsigned char date){
+	return DS3231_set_time_date(RTC_dev.i2c_handle, date);
+}
+
+signed char RTC_dev_set_time_month(unsigned char month){
+	return DS3231_set_time_month(RTC_dev.i2c_handle, month);
+}
+
+signed char RTC_dev_set_time_year(unsigned char year){
+	return DS3231_set_time_year(RTC_dev.i2c_handle, year);
+}
+
 signed char self_RTC_dev_set_time(DS3231_device_t* dev, unsigned char hour,
 		unsigned char min, unsigned char sec, TIME_FORMAT_e format,
 		AM_OR_PM_e am_pm) {

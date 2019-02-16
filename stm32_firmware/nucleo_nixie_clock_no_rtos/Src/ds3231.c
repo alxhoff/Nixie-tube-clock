@@ -141,6 +141,113 @@ signed char DS3231_get_date(I2C_HandleTypeDef *hi2c, uint16_t* year,
 	return 0;
 }
 
+signed char DS3231_set_time_sec(I2C_HandleTypeDef *hi2c, unsigned char sec) {
+	unsigned char write_buffer = dec2bcd(sec);
+
+	if (HAL_I2C_Mem_Write(hi2c, DS3231_ADDR8, 0x00, 1, &write_buffer, 1, 10)
+			!= HAL_OK)
+		return -1;
+
+	return 0;
+}
+
+signed char DS3231_set_time_min(I2C_HandleTypeDef *hi2c, unsigned char min) {
+	unsigned char write_buffer = dec2bcd(min);
+
+	if (HAL_I2C_Mem_Write(hi2c, DS3231_ADDR8, 0x01, 1, &write_buffer, 1, 10)
+			!= HAL_OK)
+		return -1;
+
+	return 0;
+}
+
+signed char DS3231_set_time_hour(I2C_HandleTypeDef *hi2c, unsigned char hour,
+		TIME_FORMAT_e format, AM_OR_PM_e am_pm) {
+
+	unsigned char write_buffer = 0;
+
+	if (format) {
+		write_buffer = dec2bcd(hour & 0x1F);
+		if (am_pm == PM) {
+			write_buffer |= (1 << PM_AM_FLAG) | (1 << TWELVE_FLAG);
+		} else {
+			write_buffer |= (1 << TWELVE_FLAG);
+			write_buffer &= ~(1 << PM_AM_FLAG);
+		}
+	} else {
+		write_buffer = dec2bcd(hour & 0x3F);
+		hour &= ~(1 << TWELVE_FLAG);
+	}
+
+	if (HAL_I2C_Mem_Write(hi2c, DS3231_ADDR8, 0x02, 1, &write_buffer, 1, 10)
+			!= HAL_OK)
+		return -1;
+
+	return 0;
+}
+
+signed char DS3231_set_time_day(I2C_HandleTypeDef *hi2c, unsigned char day) {
+	unsigned char write_buffer = day & 0x07;
+
+	if (HAL_I2C_Mem_Write(hi2c, DS3231_ADDR8, 0x03, 1, &write_buffer, 1, 10)
+			!= HAL_OK)
+		return -1;
+
+	return 0;
+}
+
+signed char DS3231_set_time_date(I2C_HandleTypeDef *hi2c, unsigned char date) {
+	unsigned char write_buffer = dec2bcd(date) & 0x3F;
+
+	if (HAL_I2C_Mem_Write(hi2c, DS3231_ADDR8, 0x04, 1, &write_buffer, 1, 10)
+			!= HAL_OK)
+		return -1;
+
+	return 0;
+}
+
+signed char DS3231_set_time_month(I2C_HandleTypeDef *hi2c, unsigned char month) {
+	unsigned char read_buffer;
+	unsigned char write_buffer = dec2bcd(month) & 0x1F;
+
+	if (HAL_I2C_Mem_Read(hi2c, DS3231_ADDR8, 0x05, 1, &read_buffer, 1, 10)
+			!= HAL_OK)
+		return -1;
+
+	if (read_buffer >> 7 && 0x01)
+		write_buffer |= (1 << 7);
+
+	if (HAL_I2C_Mem_Write(hi2c, DS3231_ADDR8, 0x05, 1, &write_buffer, 1, 10)
+			!= HAL_OK)
+		return -1;
+
+	return 0;
+}
+
+signed char DS3231_set_time_year(I2C_HandleTypeDef *hi2c, unsigned char year) {
+	unsigned char read_buffer;
+	unsigned char write_buffer[2] = { 0 };
+
+	if (HAL_I2C_Mem_Read(hi2c, DS3231_ADDR8, 0x05, 1, &read_buffer, 1, 10)
+			!= HAL_OK)
+		return -1;
+
+	if (year >= 2000) {
+		write_buffer[0] = read_buffer | (1 << 7);
+		write_buffer[1] = dec2bcd(year - 2000);
+	} else {
+		write_buffer[0] = read_buffer;
+		write_buffer[0] &= ~(1 << 7);
+		write_buffer[1] = dec2bcd(year - 1900);
+	}
+
+	if (HAL_I2C_Mem_Write(hi2c, DS3231_ADDR8, 0x05, 1, write_buffer, 1, 10)
+			!= HAL_OK)
+		return -1;
+
+	return 0;
+}
+
 signed char DS3231_set_time(I2C_HandleTypeDef *hi2c, ds3231_time_t* time) {
 	unsigned char write_buffer[7];
 	unsigned char century = 0, year = time->year;
@@ -155,15 +262,14 @@ signed char DS3231_set_time(I2C_HandleTypeDef *hi2c, ds3231_time_t* time) {
 	}
 
 	if (time->format) {
+		hour = dec2bcd(time->hour & 0x1F);
 		//12 hour
-		if (time->am_or_pm == PM) {
+		if (time->am_or_pm == PM)
 			//PM
-			hour = dec2bcd(time->hour & 0x1F);
 			//set flags
 			hour |= (1 << PM_AM_FLAG) | (1 << TWELVE_FLAG);
-		} else {
+		else {
 			//AM
-			hour = dec2bcd(time->hour & 0x1F);
 			//set flags
 			hour |= (1 << TWELVE_FLAG);
 			hour &= ~(1 << PM_AM_FLAG);
