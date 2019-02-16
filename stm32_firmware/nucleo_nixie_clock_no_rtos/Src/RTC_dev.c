@@ -30,8 +30,8 @@ struct DS3231_device {
 			MONTHS_e, unsigned short);
 	signed char (*get_alarm)(DS3231_device_t*, TIME_TYPE_e);
 	signed char (*set_alarm)(DS3231_device_t*, TIME_TYPE_e, unsigned char,
-			unsigned char, TIME_FORMAT_e, AM_OR_PM_e, WEEKDAYS_e,
-			unsigned char, DAY_OR_DATE_e, ALARM_TYPE_e);
+			unsigned char, TIME_FORMAT_e, AM_OR_PM_e, WEEKDAYS_e, unsigned char,
+			DAY_OR_DATE_e, ALARM_TYPE_e);
 	signed char (*get_temp)(DS3231_device_t*);
 	signed char (*dump_register)(DS3231_device_t*);
 };
@@ -143,32 +143,109 @@ ALARM_TYPE_e RTC_dev_alarm2_get_type(void) {
 	return RTC_dev.alarm_2.type;
 }
 
-signed char RTC_dev_set_time_sec(unsigned char sec){
+void RTC_dev_set_time_sec_zero(void) {
+	RTC_dev.time_1.sec = 0;
+}
+
+signed char RTC_dev_set_time_sec(unsigned char sec) {
 	return DS3231_set_time_sec(RTC_dev.i2c_handle, sec);
 }
 
-signed char RTC_dev_set_time_min(unsigned char min){
+void RTC_dev_set_time_min_increment(void) {
+	if (RTC_dev.time_1.min == 59)
+		RTC_dev.time_1.min = 0;
+	else
+		RTC_dev.time_1.min++;
+}
+
+signed char RTC_dev_set_time_min(unsigned char min) {
 	return DS3231_set_time_min(RTC_dev.i2c_handle, min);
 }
 
-signed char RTC_dev_set_time_hour(unsigned char hour,
-		TIME_FORMAT_e format, AM_OR_PM_e am_pm){
+void RTC_dev_set_time_hour_increment(void) {
+	if (RTC_dev.time_1.format == HOUR_24)
+		if (RTC_dev.time_1.hour == 23)
+			RTC_dev.time_1.hour = 0;
+		else
+			RTC_dev.time_1.hour++;
+	else if (RTC_dev.time_1.hour == 12)
+		RTC_dev.time_1.hour = 1;
+	else
+		RTC_dev.time_1.hour++;
+}
+
+signed char RTC_dev_set_time_hour(unsigned char hour, TIME_FORMAT_e format,
+		AM_OR_PM_e am_pm) {
 	return DS3231_set_time_hour(RTC_dev.i2c_handle, hour, format, am_pm);
 }
 
-signed char RTC_dev_set_time_day(unsigned char day){
+void RTC_dev_set_time_day_increment(void) {
+	if (RTC_dev.time_1.weekday == SATURDAY)
+		RTC_dev.time_1.weekday = SUNDAY;
+	else
+		RTC_dev.time_1.weekday++;
+}
+
+signed char RTC_dev_set_time_day(unsigned char day) {
 	return DS3231_set_time_day(RTC_dev.i2c_handle, day);
 }
 
-signed char RTC_dev_set_time_date(unsigned char date){
+#define CHECK_MONTH_INCREMENT(DAYS)	\
+				if(RTC_dev.time_1.date == DAYS)	\
+					RTC_dev.time_1.date = 1;	\
+				else	\
+					RTC_dev.time_1.date++;
+
+void RTC_dev_set_time_date_increment(void) {
+	switch (RTC_dev.time_1.month) {
+	case JANUARY:
+	case MARCH:
+	case MAY:
+	case JULY:
+	case AUGUST:
+	case OCTOBER:
+	case DECEMBER:
+		CHECK_MONTH_INCREMENT(31)
+		break;
+	case FEBUARY:
+		if ((RTC_dev.time_1.year % 4) == 0) //leap year
+			CHECK_MONTH_INCREMENT(29)
+		else
+		CHECK_MONTH_INCREMENT(28)
+		break;
+		CHECK_MONTH_INCREMENT(31)
+		break;
+	case APRIL:
+	case JUNE:
+	case SEPTERMBER:
+	case NOVEMBER:
+		CHECK_MONTH_INCREMENT(30)
+		break;
+	default:
+		break;
+	}
+}
+
+signed char RTC_dev_set_time_date(unsigned char date) {
 	return DS3231_set_time_date(RTC_dev.i2c_handle, date);
 }
 
-signed char RTC_dev_set_time_month(unsigned char month){
+void RTC_dev_set_time_month_increment(void) {
+	if (RTC_dev.time_1.month == DECEMBER)
+		RTC_dev.time_1.month = JANUARY;
+	else
+		RTC_dev.time_1.month++;
+}
+
+signed char RTC_dev_set_time_month(unsigned char month) {
 	return DS3231_set_time_month(RTC_dev.i2c_handle, month);
 }
 
-signed char RTC_dev_set_time_year(unsigned char year){
+void RTC_dev_set_time_year_increment(void) {
+	RTC_dev.time_1.year++;
+}
+
+signed char RTC_dev_set_time_year(unsigned char year) {
 	return DS3231_set_time_year(RTC_dev.i2c_handle, year);
 }
 
@@ -207,8 +284,8 @@ signed char self_RTC_dev_set_date(DS3231_device_t* dev, WEEKDAYS_e weekday,
 	dev->time_1.month = month;
 	dev->time_1.year = year;
 
-	return DS3231_set_date(dev->i2c_handle, dev->time_1.year,
-			dev->time_1.month, dev->time_1.date, dev->time_1.weekday);
+	return DS3231_set_date(dev->i2c_handle, dev->time_1.year, dev->time_1.month,
+			dev->time_1.date, dev->time_1.weekday);
 }
 
 signed char RTC_dev_set_date(WEEKDAYS_e weekday, unsigned char date,
@@ -297,7 +374,7 @@ signed char RTC_dev_get_temp(void) {
 	return RTC_dev.get_temp(&RTC_dev);
 }
 
-signed char RTC_dev_actualize(DS3231_device_t *dev) {
+signed char self_RTC_dev_actualize(DS3231_device_t *dev) {
 
 	if (RTC_dev.set_time(dev, dev->time_1.hour, dev->time_1.min,
 			dev->time_1.sec, dev->time_1.format, dev->time_1.am_or_pm))
@@ -311,6 +388,10 @@ signed char RTC_dev_actualize(DS3231_device_t *dev) {
 			dev->alarm_2.date, dev->alarm_2.day_or_date, dev->alarm_2.type))
 		return -1;
 	return 0;
+}
+
+signed char RTC_dev_actualize(void){
+	return self_RTC_dev_actualize(&RTC_dev);
 }
 
 DS3231_device_t* RTC_dev_create(unsigned char twelve_hour, unsigned char hour,
@@ -341,7 +422,7 @@ DS3231_device_t* RTC_dev_create(unsigned char twelve_hour, unsigned char hour,
 	device->get_alarm = &self_RTC_dev_get_alarm;
 	device->get_temp = &self_RTC_dev_get_temp;
 
-	RTC_dev_actualize(device);
+	self_RTC_dev_actualize(device);
 
 	return device;
 }
@@ -392,5 +473,5 @@ signed char RTC_dev_init(unsigned char def_vals) {
 	RTC_dev.get_alarm = &self_RTC_dev_get_alarm;
 	RTC_dev.get_temp = &self_RTC_dev_get_temp;
 
-	return RTC_dev_actualize(&RTC_dev);
+	return self_RTC_dev_actualize(&RTC_dev);
 }

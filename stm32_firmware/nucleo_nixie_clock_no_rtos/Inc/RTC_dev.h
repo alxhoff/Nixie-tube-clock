@@ -11,6 +11,7 @@
 #include "ds3231.h"
 
 signed char RTC_dev_init(unsigned char def_vals);
+signed char RTC_dev_actualize(void);
 signed char RTC_dev_set_time(unsigned char hour, unsigned char min,
 		unsigned char sec, TIME_FORMAT_e format, AM_OR_PM_e am_pm);
 signed char RTC_dev_get_time(void);
@@ -22,6 +23,15 @@ signed char RTC_dev_get_alarm(TIME_TYPE_e alarm_number);
 signed char RTC_dev_set_date(WEEKDAYS_e, unsigned char date, MONTHS_e month,
 		unsigned short year);
 signed char RTC_dev_read_date(void);
+
+//INCREMENTS
+void RTC_dev_set_time_sec_zero(void);
+void RTC_dev_set_time_min_increment(void);
+void RTC_dev_set_time_hour_increment(void);
+void RTC_dev_set_time_day_increment(void);
+void RTC_dev_set_time_date_increment(void);
+void RTC_dev_set_time_month_increment(void);
+void RTC_dev_set_time_year_increment(void);
 
 //GETS
 TIME_FORMAT_e RTC_dev_time_get_format(void);

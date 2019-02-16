@@ -51,7 +51,7 @@ unsigned char states_get_input(void) {
 	return state_machine_dev.input;
 }
 
-void states_clear_input(void){
+void states_clear_input(void) {
 	state_machine_dev.input = 0;
 }
 
@@ -141,7 +141,8 @@ unsigned char states_init(void) {
 
 	//send state
 	states_add(NULL, NULL, draw_time_run, NULL, state_time, "Show time");
-	states_add(NULL, NULL, draw_set_time_run, NULL, state_time_set, "Set time");
+	states_add(NULL, NULL, draw_set_time_run, draw_set_time_enter,
+			state_time_set, "Set time");
 	states_add(NULL, NULL, draw_set_time_sec_run, NULL, state_time_set_sec,
 			"Set sec");
 	states_add(NULL, NULL, draw_set_time_min_run, NULL, state_time_set_min,
@@ -166,7 +167,7 @@ unsigned char states_init(void) {
 			"Set alarm 1 day");
 
 	//set initial state
-	SET_INITIAL_STATE(state_time);
+	SET_INITIAL_STATE(state_alarm_1_set);
 
 	states_init_states();
 	return 0;

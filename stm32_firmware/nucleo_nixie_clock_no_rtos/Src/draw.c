@@ -189,19 +189,19 @@ void get_time_string(char *buf) {
 	}
 }
 
-unsigned char if_cursor(void){
+unsigned char if_cursor(void) {
 	unsigned long ticks = HAL_GetTick() >> 9;
-	if(ticks & 0x1)
+	if (ticks & 0x1)
 		return 1;
 	else
 		return 0;
 }
 
 //STATES
-void change_big_states(void){
+void change_big_states(void) {
 	unsigned char cur_state = states_get_state();
 
-	switch(cur_state){
+	switch (cur_state) {
 	case state_time:
 		states_set_state(state_time_set);
 		break;
@@ -219,7 +219,6 @@ void change_big_states(void){
 //TIME
 void draw_time_run(void) {
 	RTC_dev_get_time();
-
 	get_time_weekday_string(weekday);
 	get_date_string(date);
 	get_time_string(time);
@@ -229,23 +228,21 @@ void draw_time_run(void) {
 	screen_add_line_at_index(2, time);
 
 	unsigned char input = states_get_input();
-	if((input >> 0) & 0x1)
+	if ((input >> 0) & 0x1)
 		change_big_states();
-	else if((input >> 1) & 0x1)
+	else if ((input >> 1) & 0x1)
 		NULL;
-	else if((input >> 2) & 0x1)
+	else if ((input >> 2) & 0x1)
 		NULL;
 }
 
 //SET TIME
 #define SET_TIME_DRAW_STATE(FROM, TO, LINE, LEFT_BUT, CENTER_BUT, RIGHT_BUT)	\
 		unsigned char input = states_get_input();\
-		RTC_dev_get_time();	\
 		get_time_weekday_string(weekday);	\
 		get_date_string(date);		\
 		get_time_string(time);		\
-		weekday[3] = ' ';		\
-		weekday[4] = '*';		\
+		strcpy( weekday + 3, " *");	\
 		if(if_cursor())			\
 			for(signed char i = FROM; i <= TO; i++)	\
 				LINE[i] = '_';		\
@@ -258,11 +255,12 @@ void draw_time_run(void) {
 			CENTER_BUT;							\
 		else if((input >> 2) & 0x1)			\
 			RIGHT_BUT;							\
+		states_clear_input();
 
-void change_time_state(void){
+void change_time_state(void) {
 	unsigned char cur_state = states_get_state();
 
-	switch(cur_state){
+	switch (cur_state) {
 	case state_time_set:
 		states_set_state(state_time_set_sec);
 		break;
@@ -293,36 +291,55 @@ void change_time_state(void){
 	states_clear_input();
 }
 
+void draw_set_time_enter(void) {
+	RTC_dev_get_time();
+}
+
+void draw_set_time_exit(void){
+	RTC_dev_actualize();
+	states_set_state(state_time_set);
+
+}
+
 void draw_set_time_run(void) {
-	SET_TIME_DRAW_STATE(0, -1, time, change_big_states(), change_time_state(), NULL);
+	RTC_dev_get_time();
+	SET_TIME_DRAW_STATE(0, -1, time, change_big_states(), change_time_state(),
+			NULL);
 }
 
 void draw_set_time_sec_run(void) {
-	SET_TIME_DRAW_STATE(6, 7, time, states_set_state(state_time_set), change_time_state(), NULL)
+	SET_TIME_DRAW_STATE(6, 7, time, draw_set_time_exit(),
+			change_time_state(), RTC_dev_set_time_sec_zero())
 }
 
 void draw_set_time_min_run(void) {
-	SET_TIME_DRAW_STATE(3, 4, time, states_set_state(state_time_set), change_time_state(), NULL)
+	SET_TIME_DRAW_STATE(3, 4, time, draw_set_time_exit(),
+			change_time_state(), RTC_dev_set_time_min_increment())
 }
 
 void draw_set_time_hour_run(void) {
-	SET_TIME_DRAW_STATE(0, 1, time, states_set_state(state_time_set), change_time_state(), NULL)
+	SET_TIME_DRAW_STATE(0, 1, time, draw_set_time_exit(),
+			change_time_state(), RTC_dev_set_time_hour_increment())
 }
 
 void draw_set_time_date_run(void) {
-	SET_TIME_DRAW_STATE(0, 1, date, states_set_state(state_time_set), change_time_state(), NULL)
+	SET_TIME_DRAW_STATE(0, 1, date, draw_set_time_exit(),
+			change_time_state(), RTC_dev_set_time_date_increment())
 }
 
 void draw_set_time_month_run(void) {
-	SET_TIME_DRAW_STATE(3, 5, date, states_set_state(state_time_set), change_time_state(), NULL)
+	SET_TIME_DRAW_STATE(3, 5, date, draw_set_time_exit(),
+			change_time_state(), RTC_dev_set_time_month_increment())
 }
 
 void draw_set_time_year_run(void) {
-	SET_TIME_DRAW_STATE(7, 10, date, states_set_state(state_time_set), change_time_state(), NULL)
+	SET_TIME_DRAW_STATE(7, 10, date, draw_set_time_exit(),
+			change_time_state(), RTC_dev_set_time_year_increment())
 }
 
 void draw_set_time_day_run(void) {
-	SET_TIME_DRAW_STATE(0, 2, weekday, states_set_state(state_time_set), change_time_state(), NULL)
+	SET_TIME_DRAW_STATE(0, 2, weekday, draw_set_time_exit(),
+			change_time_state(), RTC_dev_set_time_day_increment())
 }
 
 #define SET_ALARM_DRAW_STATE(FROM, TO, LINE, LEFT_BUT, CENTER_BUT, RIGHT_BUT)	\
@@ -339,15 +356,28 @@ void draw_set_time_day_run(void) {
 
 //SET ALARM 1
 void draw_alarm1_run(void) {
-	SET_ALARM_DRAW_STATE(0, -1, time, NULL, NULL, NULL)
-
+//	SET_ALARM_DRAW_STATE(0, -1, time, change_big_states(), NULL, NULL)
 	unsigned char input = states_get_input();
-	if((input >> left) & 0x1)
+
+	RTC_dev_get_alarm(ALARM_ONE);
+	get_alarm_date_string(date, ALARM_ONE);
+	get_alarm_time_string(time, ALARM_ONE);
+//	date[3] = ' ';
+//	date[4] = '*';
+	strcpy( date + 3, " *");
+//	if(if_cursor())
+//		for(signed char i = FROM; i <= TO; i++)
+//			LINE[i] = '_';
+	screen_add_line_at_index(1, date);
+	screen_add_line_at_index(2, time);
+
+	if ((input >> left) & 0x1)
 		change_big_states();
-	else if((input >> center) & 0x1)
+	else if ((input >> center) & 0x1)
 		NULL;
-	else if((input >> right) & 0x1)
+	else if ((input >> right) & 0x1)
 		NULL;
+	states_clear_input();
 }
 
 void draw_alarm1_min_run(void) {

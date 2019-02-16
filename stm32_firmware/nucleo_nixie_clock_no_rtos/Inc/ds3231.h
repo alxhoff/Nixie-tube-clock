@@ -132,13 +132,22 @@ typedef union ds3231_alarm_u {
 	ds3231_alarm_short_t short_alarm;
 } ds3231_alarm_ut;
 
+signed char DS3231_set_time_sec(I2C_HandleTypeDef *hi2c, unsigned char sec);
+signed char DS3231_set_time_min(I2C_HandleTypeDef *hi2c, unsigned char min);
+signed char DS3231_set_time_hour(I2C_HandleTypeDef *hi2c, unsigned char hour,
+		TIME_FORMAT_e format, AM_OR_PM_e am_pm);
+signed char DS3231_set_time_day(I2C_HandleTypeDef *hi2c, unsigned char day);
+signed char DS3231_set_time_date(I2C_HandleTypeDef *hi2c, unsigned char date);
+signed char DS3231_set_time_month(I2C_HandleTypeDef *hi2c, unsigned char month);
+signed char DS3231_set_time_year(I2C_HandleTypeDef *hi2c, unsigned char year);
+
 signed char DS3231_set_time(I2C_HandleTypeDef *hi2c, ds3231_time_t* time);
 signed char DS3231_get_time(I2C_HandleTypeDef *hi2c,
 		ds3231_time_t* return_struct);
 signed char DS3231_set_date(I2C_HandleTypeDef *hi2c, uint16_t year,
-unsigned char month, unsigned char date, unsigned char weekday);
+		unsigned char month, unsigned char date, unsigned char weekday);
 signed char DS3231_get_date(I2C_HandleTypeDef *hi2c, uint16_t* year,
-unsigned char* month, unsigned char* date, unsigned char* day);
+		unsigned char* month, unsigned char* date, unsigned char* day);
 signed char DS3231_get_temp(I2C_HandleTypeDef *hi2c, float *temp);
 signed char DS3231_set_alarm(I2C_HandleTypeDef *hi2c,
 		ds3231_alarm_t* alarm_time, TIME_TYPE_e alarm_number);

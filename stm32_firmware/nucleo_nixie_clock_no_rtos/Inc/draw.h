@@ -13,6 +13,7 @@
 void draw_time_run(void);
 
 //SET TIME
+void draw_set_time_enter(void);
 void draw_set_time_run(void);
 void draw_set_time_sec_run(void);
 void draw_set_time_min_run(void);
