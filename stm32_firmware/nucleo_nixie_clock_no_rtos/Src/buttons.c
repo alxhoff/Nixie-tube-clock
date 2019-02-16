@@ -64,7 +64,7 @@ unsigned char check_button(GPIO_TypeDef *port, uint16_t pin, button_t *button) {
 
 void HAL_GPIO_EXTI_Callback(volatile uint16_t GPIO_Pin) {
 	__HAL_GPIO_EXTI_CLEAR_IT(GPIO_Pin);
-	unsigned char ret = no_press;
+	volatile unsigned char ret = no_press;
 
 	if (GPIO_Pin == LEFT_BUTTON_PIN) {
 		if(check_button(LEFT_BUTTON_PORT, LEFT_BUTTON_PIN, &button_dev[0])){

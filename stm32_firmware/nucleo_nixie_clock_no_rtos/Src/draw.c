@@ -346,8 +346,7 @@ void draw_set_time_day_run(void) {
 		RTC_dev_get_alarm(ALARM_ONE);	\
 		get_alarm_date_string(date, ALARM_ONE);		\
 		get_alarm_time_string(time, ALARM_ONE);		\
-		date[3] = ' ';		\
-		date[4] = '*';		\
+		strcpy( date + 3, " *");					\
 		if(if_cursor())		\
 			for(signed char i = FROM; i <= TO; i++)	\
 				LINE[i] = '_';		\
@@ -357,7 +356,7 @@ void draw_set_time_day_run(void) {
 //SET ALARM 1
 void draw_alarm1_run(void) {
 //	SET_ALARM_DRAW_STATE(0, -1, time, change_big_states(), NULL, NULL)
-	unsigned char input = states_get_input();
+	volatile unsigned char input = states_get_input();
 
 	RTC_dev_get_alarm(ALARM_ONE);
 	get_alarm_date_string(date, ALARM_ONE);
@@ -371,11 +370,11 @@ void draw_alarm1_run(void) {
 	screen_add_line_at_index(1, date);
 	screen_add_line_at_index(2, time);
 
-	if ((input >> left) & 0x1)
+	if ((input >> 0) & 0x1)
 		change_big_states();
-	else if ((input >> center) & 0x1)
+	else if ((input >> 1) & 0x1)
 		NULL;
-	else if ((input >> right) & 0x1)
+	else if ((input >> 2) & 0x1)
 		NULL;
 	states_clear_input();
 }
