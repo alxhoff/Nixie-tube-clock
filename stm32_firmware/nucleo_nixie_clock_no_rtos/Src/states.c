@@ -167,7 +167,7 @@ unsigned char states_init(void) {
 			"Set alarm 1 day");
 
 	//set initial state
-	SET_INITIAL_STATE(state_alarm_1_set);
+	SET_INITIAL_STATE(state_time);
 
 	states_init_states();
 	return 0;

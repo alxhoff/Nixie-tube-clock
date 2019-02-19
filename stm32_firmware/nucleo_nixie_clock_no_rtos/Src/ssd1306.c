@@ -140,7 +140,6 @@ void ssd1306_set_draw_cursor(int x, int y) {
 	else
 		ssd1306_dev.x = x;
 
-	//TODO check this is correct
 	if (y > (SSD1306_HEIGHT - SSD1306_CHAR_HEIGHT))
 		ssd1306_dev.y = SSD1306_HEIGHT - SSD1306_CHAR_HEIGHT;
 	else if (y < SSD1306_Y_OFFSET)

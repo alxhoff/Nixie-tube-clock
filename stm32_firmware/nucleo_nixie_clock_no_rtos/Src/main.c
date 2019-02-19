@@ -169,7 +169,7 @@ int main(void)
     /* USER CODE BEGIN 3 */
 		screen_clear();
 		states_run();
-		convert_time_to_shift();
+//		convert_time_to_shift();
 		screen_refresh(NULL);
 //		if ((HAL_GetTick() > time_ticks + GET_TIME_SPEED)
 //				&& render_state != SET_TIME) {
