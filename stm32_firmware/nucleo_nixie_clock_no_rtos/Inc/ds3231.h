@@ -8,23 +8,22 @@
 #ifndef DS3231_STM32_ALEX_H_
 #define DS3231_STM32_ALEX_H_
 
-#include "externs.h"
 #include "stm32f1xx_hal.h"
 
 #ifndef TRUE
-#define TRUE	1
+#define TRUE						1
 #endif
 
-#ifndef	 FALSE
-#define FALSE	0
+#ifndef	FALSE
+#define FALSE						0
 #endif
 
-#define DS3231_ADDR8	0xD0
+#define DS3231_ADDR8				0xD0
 
-#define PM_AM_FLAG		5
-#define TWELVE_FLAG		6
-#define DAY_OR_DATE_FLAG		6
-#define ALARM_MASK_BITS	7
+#define PM_AM_FLAG					5
+#define TWELVE_FLAG					6
+#define DAY_OR_DATE_FLAG			6
+#define ALARM_MASK_BITS				7
 
 #define ALARM_INTERRUPT_ENABLE		2
 #define ALARM2_CRTL_ENABLE			1

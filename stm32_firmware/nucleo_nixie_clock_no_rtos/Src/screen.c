@@ -29,25 +29,27 @@ typedef struct screen_device {
 
 	char **framebuffer;
 
+	int row_count;
+
 	unsigned char cursor_on;
 	int cursor_period;
-	int cursor_location;
+	int cursor_location_x;
+	int cursor_location_y;
 
-	void (*draw_text)(char **);
+	void (*draw_text)(char **, unsigned char, int, int);
 	void (*clear_screen)(void);
-	unsigned char (*update_screen)(void);
+	signed char (*update_screen)(void);
 #ifdef SCREEN_USE_CURSOR
-	void (*draw_cursor)(unsigned char);
 	void (*mv_cursor_left)(void);
 	void (*mv_cursor_right)(void);
 #endif
 } screen_device_t;
 
 screen_device_t screen_dev = { .cursor_period = SCREEN_CURSOR_PERIOD,
-		.draw_text = &SCREEN_DRAW_TEXT,
-		.clear_screen = &SCREEN_CLEAR, .update_screen = &SCREEN_REFRESH,
+		.draw_text = &SCREEN_DRAW,
+		.clear_screen = &SCREEN_CLEAR,
+		.update_screen = &SCREEN_REFRESH,
 #ifdef SCREEN_USE_CURSOR
-		.draw_cursor = &SCREEN_DRAW_CURS,
 		.mv_cursor_left = &SCREEN_MV_CUR_LEFT,
 		.mv_cursor_right = &SCREEN_MV_CUR_RIGHT
 #endif
@@ -61,8 +63,37 @@ void screen_cursor_callback(TimerHandle_t timer) {
 }
 #endif
 
-void screen_set_framebuffer(char **fb) {
-	screen_dev.framebuffer = fb;
+void screen_move_cursor_left(void){
+	if(!screen_dev.cursor_location_x)
+		return;
+
+	screen_dev.cursor_location_x--;
+}
+
+char **screen_get_buffer(void){
+	if (!screen_dev.framebuffer)
+		return NULL;
+
+	return screen_dev.framebuffer;
+}
+
+int screen_get_cursor_x(void){
+	return screen_dev.cursor_location_x;
+}
+
+int screen_get_cursor_y(void){
+	return screen_dev.cursor_location_y;
+}
+
+void screen_move_cursor_right(void){
+	if(screen_dev.framebuffer && screen_dev.cursor_location_y < screen_dev.row_count)
+		if(screen_dev.framebuffer[screen_dev.cursor_location_y]){
+			int max_len = strlen(screen_dev.framebuffer[screen_dev.cursor_location_y]);
+			if(screen_dev.cursor_location_x >= max_len)
+				screen_dev.cursor_location_x = max_len - 1;
+			else
+				screen_dev.cursor_location_x++;
+		}
 }
 
 char *screen_get_framebuffer_line(unsigned char line) {
@@ -73,11 +104,9 @@ char *screen_get_framebuffer_line(unsigned char line) {
 }
 
 void screen_clear(void){
-	unsigned char rows = SCREEN_GET_ROWS;
-	unsigned char cols = SCREEN_GET_COLS;
-	for (unsigned char i = 0; i < rows; i++)
+	for (unsigned char i = 0; i < screen_dev.rows; i++)
 		memset(screen_dev.framebuffer[i], 0,
-			sizeof(char) * (cols + 1));
+			sizeof(char) * (screen_dev.cols + 1));
 }
 
 void screen_refresh(void const *args) {
@@ -89,10 +118,16 @@ void screen_refresh(void const *args) {
 		xSemaphoreTake(screen_dev.framebuffer_lock, portMAX_DELAY);
 		xSemaphoreTake(screen_dev.cursor_lock, portMAX_DELAY);
 #endif
+
 	screen_dev.clear_screen();
-	screen_dev.draw_text(screen_dev.framebuffer);
+
 #ifdef SCREEN_USE_CURSOR
-	screen_dev.draw_cursor(screen_dev.cursor_on);
+
+	screen_dev.draw_text(screen_dev.framebuffer, screen_dev.cursor_on,
+			screen_dev.cursor_location_x, screen_dev.cursor_location_y);
+
+#else
+	//TODO
 #endif
 	screen_dev.update_screen();
 #ifdef FREERTOS
@@ -105,19 +140,44 @@ void screen_refresh(void const *args) {
 #endif
 }
 
-unsigned char screen_init(void) {
-	screen_dev.rows = SCREEN_GET_ROWS
-	;
-	screen_dev.cols = SCREEN_GET_COLS
-	;
+signed char screen_add_line(char *line) {
+	screen_dev.framebuffer = realloc(screen_dev.framebuffer,sizeof(char) * (screen_dev.row_count + 1));
 
-	screen_dev.framebuffer = calloc(screen_dev.rows, sizeof(char*));
-	if (!screen_dev.framebuffer)
-			goto buffer_error;
+	if(!screen_dev.framebuffer)
+		return -ENOMEM;
 
-	//TODO error checking
-	for(unsigned char i = 0; i < screen_dev.rows; i++)
-		screen_dev.framebuffer[i] = calloc(SCREEN_FRAMEBUFFER_LENGTH, sizeof(char));
+	screen_dev.framebuffer[screen_dev.row_count] = malloc(sizeof(char) * (strlen(line) + 1));
+
+	if(!screen_dev.framebuffer[screen_dev.row_count])
+		return -ENOMEM;
+
+	strcpy(screen_dev.framebuffer[screen_dev.row_count], line);\
+	screen_dev.row_count++;
+
+	return 0;
+}
+
+signed char screen_add_line_at_index(unsigned char i, char *line) {
+	if(i >= screen_dev.row_count){
+		screen_dev.framebuffer = realloc(screen_dev.framebuffer, sizeof(char *) * screen_dev.row_count);
+		if(!screen_dev.row_count)
+			return-ENOMEM;
+	}
+
+	screen_dev.framebuffer[i] = realloc(screen_dev.framebuffer[i], sizeof(char) * (strlen(line) + 1));
+
+	if(!screen_dev.framebuffer[i])
+		return -ENOMEM;
+
+	strcpy(screen_dev.framebuffer[i], line);
+
+	return 0;
+}
+
+signed char screen_init(void) {
+
+	screen_dev.rows = SCREEN_GET_ROWS;
+	screen_dev.cols = SCREEN_GET_COLS;
 
 #ifdef FREERTOS
 	screen_dev.cursor_timer = xTimerCreate("Cursor Timer",
@@ -145,29 +205,7 @@ unsigned char screen_init(void) {
 	vSemaphoreDelete(screen_dev.cursor_lock);
 	c_lock_error:
 	xTimerDelete(screen_dev.cursor_timer, portMAX_DELAY);
-	timer_error: free(screen_dev.framebuffer);
+	timer_error:
+	return -ENOINIT;
 #endif
-	buffer_error: return -ENOINIT;
-}
-
-void screen_add_line(char *line) {
-	char *tmp = screen_dev.framebuffer[screen_dev.rows - 1];
-
-	for (unsigned char i = screen_dev.rows - 1; i > 0; i--)
-		screen_dev.framebuffer[i] = screen_dev.framebuffer[i - 1];
-
-	screen_dev.framebuffer[0] = tmp;
-
-	strcpy(screen_dev.framebuffer[0], line);
-}
-
-signed char screen_add_line_at_index(unsigned char i, char *line) {
-	unsigned char rows = SCREEN_GET_ROWS;
-
-	if(i > (rows - 1))
-		return -1;
-
-	strcpy(screen_dev.framebuffer[i], line);
-
-	return 0;
 }

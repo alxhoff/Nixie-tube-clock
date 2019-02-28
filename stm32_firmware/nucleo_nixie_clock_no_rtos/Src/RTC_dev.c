@@ -8,7 +8,6 @@
 #include <stdlib.h>
 
 #include "RTC_dev.h"
-#include "stm32f1xx_hal.h"
 #include "config.h"
 
 typedef struct DS3231_device DS3231_device_t;
@@ -462,7 +461,7 @@ signed char RTC_dev_init(unsigned char def_vals) {
 		RTC_dev.alarm_2.type = RTC_DEF_ALM2_TYPE;
 	}
 
-	RTC_dev.i2c_handle = RTC_DEF_I2C;
+	RTC_dev.i2c_handle = &RTC_I2C_PORT;
 
 	//functions
 	RTC_dev.set_time = &self_RTC_dev_set_time;
