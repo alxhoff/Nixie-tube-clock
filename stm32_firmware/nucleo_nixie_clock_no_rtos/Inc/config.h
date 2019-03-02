@@ -22,7 +22,7 @@
 #define RTC_DEF_TWELVE_HR			1
 #define RTC_DEF_HOUR				11
 #define RTC_DEF_MIN					59
-#define RTC_DEF_SEC					50
+#define RTC_DEF_SEC					54
 #define RTC_DEF_AM_PM				PM
 #define RTC_DEF_WEEKDAY				1
 #define RTC_DEF_DATE				05

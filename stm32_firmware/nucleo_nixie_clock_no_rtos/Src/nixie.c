@@ -87,7 +87,7 @@ unsigned char *nixie_compile_output(void) {
 		if (i % 2 == 0)
 			nixie_dev.output[i / 2] |= nixie_dev.tubes[i].value;
 		else
-			nixie_dev.output[i / 2] = (nixie_dev.tubes[i].value << 4);
+			nixie_dev.output[i / 2] |= (nixie_dev.tubes[i].value << 4);
 	}
 	return nixie_dev.output;
 }
