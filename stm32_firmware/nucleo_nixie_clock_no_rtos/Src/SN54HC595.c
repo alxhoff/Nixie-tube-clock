@@ -222,42 +222,42 @@ void SN54HC595_init_obj(shift_array_t* shift) {
 //	if(self->sr_clr_connected && self->sr_clr_clock_init)
 //		CLOCK_SWITCH(self->sr_clr_port);
 
-	GPIO_InitTypeDef GPIO_InitStruct;
-
-	/*Configure serial in */
-	GPIO_InitStruct.Pin = shift->ser_in_pin;
-	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	HAL_GPIO_Init(shift->ser_in_port, &GPIO_InitStruct);
-
-	/*Configure serial clock */
-	GPIO_InitStruct.Pin = shift->ser_clk_pin;
-	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	HAL_GPIO_Init(shift->ser_clk_port, &GPIO_InitStruct);
-
-	/*Configure latch pin */
-	GPIO_InitStruct.Pin = shift->latch_pin;
-	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	HAL_GPIO_Init(shift->latch_port, &GPIO_InitStruct);
-
-	/*Configure output enable */
-	GPIO_InitStruct.Pin = shift->out_ena_pin;
-	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	HAL_GPIO_Init(shift->out_ena_port, &GPIO_InitStruct);
-
-	/*Configure serial clear */
-	GPIO_InitStruct.Pin = shift->sr_clr_pin;
-	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	HAL_GPIO_Init(shift->sr_clr_port, &GPIO_InitStruct);
+//	GPIO_InitTypeDef GPIO_InitStruct;
+//
+//	/*Configure serial in */
+//	GPIO_InitStruct.Pin = shift->ser_in_pin;
+//	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+//	GPIO_InitStruct.Pull = GPIO_NOPULL;
+//	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+//	HAL_GPIO_Init(shift->ser_in_port, &GPIO_InitStruct);
+//
+//	/*Configure serial clock */
+//	GPIO_InitStruct.Pin = shift->ser_clk_pin;
+//	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+//	GPIO_InitStruct.Pull = GPIO_NOPULL;
+//	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+//	HAL_GPIO_Init(shift->ser_clk_port, &GPIO_InitStruct);
+//
+//	/*Configure latch pin */
+//	GPIO_InitStruct.Pin = shift->latch_pin;
+//	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+//	GPIO_InitStruct.Pull = GPIO_NOPULL;
+//	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+//	HAL_GPIO_Init(shift->latch_port, &GPIO_InitStruct);
+//
+//	/*Configure output enable */
+//	GPIO_InitStruct.Pin = shift->out_ena_pin;
+//	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+//	GPIO_InitStruct.Pull = GPIO_NOPULL;
+//	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+//	HAL_GPIO_Init(shift->out_ena_port, &GPIO_InitStruct);
+//
+//	/*Configure serial clear */
+//	GPIO_InitStruct.Pin = shift->sr_clr_pin;
+//	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+//	GPIO_InitStruct.Pull = GPIO_NOPULL;
+//	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+//	HAL_GPIO_Init(shift->sr_clr_port, &GPIO_InitStruct);
 
 	enable_self(shift);
 

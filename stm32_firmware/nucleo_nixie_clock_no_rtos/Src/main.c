@@ -131,20 +131,16 @@ int main(void)
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
 	SN54HC595_init();
+	ssd1306_init();
+	screen_init();
+	RTC_dev_init(1);
+	nixie_init();
+	nixie_enable_all();
+	states_init();
 
 	unsigned char test_bytes[1] = { 0x33 };
 
 	SN54HC595_out_bytes(test_bytes, SHIFT_DEVICES);
-
-	ssd1306_init();
-	screen_init();
-
-	RTC_dev_init(1);
-
-	nixie_init();
-	nixie_enable_all();
-
-	states_init();
 
 	/*
 	 // eeprom
@@ -169,31 +165,8 @@ int main(void)
     /* USER CODE BEGIN 3 */
 		screen_clear();
 		states_run();
-//		convert_time_to_shift();
+		convert_time_to_shift();
 		screen_refresh(NULL);
-//		if ((HAL_GetTick() > time_ticks + GET_TIME_SPEED)
-//				&& render_state != SET_TIME) {
-//
-//			time_ticks = HAL_GetTick();
-//
-//			convert_time_to_shift();
-//		}
-//
-//		if (HAL_GetTick() > ticks + BLINK_SPEED) {
-//			blink_flag ^= 1 << 0;
-//
-//			ticks = HAL_GetTick();
-//
-//			HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-//
-//			if (blink_flag)
-//				HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_SET);
-//			else
-//				HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_RESET);
-//		}
-//
-//		buttons_listener_callback();
-//		render_task_callback();
 	}
   /* USER CODE END 3 */
 }
@@ -301,11 +274,10 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, SHIFT_SER_CLK_Pin|SHIFT_SER_DAT_Pin|SHIFT_ENA_Pin|SHIFT_CLR_Pin 
-                          |LD3_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, SHIFT_SER_CLK_Pin|SHIFT_ENA_Pin|SHIFT_CLR_Pin|LD3_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, LD2_Pin|LD1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, SHIFT_SER_IN_Pin|LD2_Pin|LD1_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(SHIFT_LATCH_GPIO_Port, SHIFT_LATCH_Pin, GPIO_PIN_RESET);
@@ -316,14 +288,19 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : SHIFT_SER_CLK_Pin SHIFT_SER_DAT_Pin SHIFT_ENA_Pin SHIFT_CLR_Pin 
-                           LD3_Pin */
-  GPIO_InitStruct.Pin = SHIFT_SER_CLK_Pin|SHIFT_SER_DAT_Pin|SHIFT_ENA_Pin|SHIFT_CLR_Pin 
-                          |LD3_Pin;
+  /*Configure GPIO pins : SHIFT_SER_CLK_Pin SHIFT_ENA_Pin SHIFT_CLR_Pin LD3_Pin */
+  GPIO_InitStruct.Pin = SHIFT_SER_CLK_Pin|SHIFT_ENA_Pin|SHIFT_CLR_Pin|LD3_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : SHIFT_SER_IN_Pin LD2_Pin LD1_Pin */
+  GPIO_InitStruct.Pin = SHIFT_SER_IN_Pin|LD2_Pin|LD1_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : BUT0_Pin BUT1_Pin BUT2_Pin */
   GPIO_InitStruct.Pin = BUT0_Pin|BUT1_Pin|BUT2_Pin;
@@ -334,13 +311,6 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pins : USART_TX_Pin USART_RX_Pin */
   GPIO_InitStruct.Pin = USART_TX_Pin|USART_RX_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : LD2_Pin LD1_Pin */
-  GPIO_InitStruct.Pin = LD2_Pin|LD1_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 

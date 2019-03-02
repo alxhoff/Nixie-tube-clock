@@ -82,12 +82,12 @@ void Error_Handler(void);
 #define B1_GPIO_Port GPIOC
 #define SHIFT_SER_CLK_Pin GPIO_PIN_0
 #define SHIFT_SER_CLK_GPIO_Port GPIOC
-#define SHIFT_SER_DAT_Pin GPIO_PIN_1
-#define SHIFT_SER_DAT_GPIO_Port GPIOC
 #define SHIFT_ENA_Pin GPIO_PIN_2
 #define SHIFT_ENA_GPIO_Port GPIOC
 #define SHIFT_CLR_Pin GPIO_PIN_3
 #define SHIFT_CLR_GPIO_Port GPIOC
+#define SHIFT_SER_IN_Pin GPIO_PIN_0
+#define SHIFT_SER_IN_GPIO_Port GPIOA
 #define BUT0_Pin GPIO_PIN_1
 #define BUT0_GPIO_Port GPIOA
 #define BUT0_EXTI_IRQn EXTI1_IRQn

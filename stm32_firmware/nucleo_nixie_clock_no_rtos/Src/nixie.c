@@ -76,8 +76,8 @@ unsigned char nixie_split_set_digit(volatile unsigned char input, unsigned char 
 	if(index + 1 >= NIXIE_DEVICES)
 		return -1;
 
-	nixie_set_tube(index, input / 10);
-	nixie_set_tube(index + 1, input % 10);
+	nixie_set_tube(index + 1, input / 10);
+	nixie_set_tube(index, input % 10);
 
 	return 0;
 }
@@ -85,9 +85,9 @@ unsigned char nixie_split_set_digit(volatile unsigned char input, unsigned char 
 unsigned char *nixie_compile_output(void) {
 	for (unsigned char i = 0; i < NIXIE_DEVICES; i++) {
 		if (i % 2 == 0)
-			nixie_dev.output[i / 2] = (nixie_dev.tubes[i].value << 4);
-		else
 			nixie_dev.output[i / 2] |= nixie_dev.tubes[i].value;
+		else
+			nixie_dev.output[i / 2] = (nixie_dev.tubes[i].value << 4);
 	}
 	return nixie_dev.output;
 }
