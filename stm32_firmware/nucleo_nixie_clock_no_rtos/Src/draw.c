@@ -16,9 +16,9 @@
 
 uint8_t blink_flag = 0;
 
-static char weekday[12];
-static char date[12];
-static char time[12];
+static char weekday[12] = {0};
+static char date[12] = {0};
+static char time[12] = {0};
 
 void get_weekday_string(WEEKDAYS_e weekday, char *buf) {
 	switch (weekday) {
@@ -164,7 +164,9 @@ void get_date_string(char *buf) {
 	char month_str[4] = { 0 };
 	get_month_string(month, month_str);
 
-	sprintf(buf, "%02d %s %02hu", date, month_str, year);
+	sprintf(buf, "%02d %s %04hu", date, month_str, year);
+
+	return;
 }
 
 void get_time_weekday_string(char *buf) {

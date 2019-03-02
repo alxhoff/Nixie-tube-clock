@@ -104,7 +104,7 @@ char *screen_get_framebuffer_line(unsigned char line) {
 }
 
 void screen_clear(void){
-	for (unsigned char i = 0; i < screen_dev.rows; i++)
+	for (unsigned char i = 0; i < screen_dev.row_count; i++)
 		memset(screen_dev.framebuffer[i], 0,
 			sizeof(char) * (screen_dev.cols + 1));
 }
@@ -127,7 +127,7 @@ void screen_refresh(void const *args) {
 			screen_dev.cursor_location_x, screen_dev.cursor_location_y);
 
 #else
-	//TODO
+	screen_dev.draw_text(screen_dev.framebuffer, 0, 0, 0);
 #endif
 	screen_dev.update_screen();
 #ifdef FREERTOS
@@ -157,19 +157,24 @@ signed char screen_add_line(char *line) {
 	return 0;
 }
 
-signed char screen_add_line_at_index(unsigned char i, char *line) {
-	if(i >= screen_dev.row_count){
-		screen_dev.framebuffer = realloc(screen_dev.framebuffer, sizeof(char *) * screen_dev.row_count);
-		if(!screen_dev.row_count)
+signed char screen_add_line_at_index(unsigned char index, char *line) {
+	if(index + 1 >= screen_dev.row_count){
+		screen_dev.framebuffer = realloc(screen_dev.framebuffer, sizeof(char *) * (index + 1));
+		if(!screen_dev.framebuffer)
 			return-ENOMEM;
+		for (int i = screen_dev.row_count; i <= index; i++)
+			screen_dev.framebuffer[i] = NULL;
+		screen_dev.row_count = index + 1;
 	}
 
-	screen_dev.framebuffer[i] = realloc(screen_dev.framebuffer[i], sizeof(char) * (strlen(line) + 1));
+	volatile unsigned char length = strlen(line);
 
-	if(!screen_dev.framebuffer[i])
+	screen_dev.framebuffer[index] = realloc(screen_dev.framebuffer[index], sizeof(char) * (strlen(line) + 1));
+
+	if(!screen_dev.framebuffer[index])
 		return -ENOMEM;
 
-	strcpy(screen_dev.framebuffer[i], line);
+	strcpy(screen_dev.framebuffer[index], line); //CRASHES HERE
 
 	return 0;
 }

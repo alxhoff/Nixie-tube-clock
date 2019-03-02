@@ -261,7 +261,8 @@ void ssd1306_draw_cursor(unsigned char state, int x, int y) {
 
 void ssd1306_refresh(char **buf, unsigned char cursor_on, int cursor_x, int cursor_y) {
 	ssd1306_draw_framebuffer(buf, cursor_x);
-	ssd1306_draw_cursor(cursor_on, cursor_x, cursor_y);
+	if(cursor_on)
+		ssd1306_draw_cursor(cursor_on, cursor_x, cursor_y);
 }
 
 signed char ssd1306_init(void) {
