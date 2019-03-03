@@ -87,11 +87,16 @@ static void MX_NVIC_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 #define NIXIE_SEC_INDEX_LSB		0
-#define NIXIE_MIN_INDEX_LSB		2
+#define NIXIE_MIN_INDEX_LSB		0
+#define NIXIE_HOUR_INDEX_LSB	2
 
 void convert_time_to_shift(void) {
-	volatile unsigned char seconds = RTC_dev_time_get_sec();
-	nixie_split_set_digit(seconds, NIXIE_SEC_INDEX_LSB);
+//	volatile unsigned char seconds = RTC_dev_time_get_sec();
+//	nixie_split_set_digit(seconds, NIXIE_SEC_INDEX_LSB);
+	volatile unsigned char minutes = RTC_dev_time_get_min();
+	nixie_split_set_digit(minutes, NIXIE_MIN_INDEX_LSB);
+	volatile unsigned char hours = RTC_dev_time_get_hour();
+	nixie_split_set_digit(hours, NIXIE_HOUR_INDEX_LSB);
 	volatile unsigned char *output = nixie_compile_output();
 	SN54HC595_out_bytes((unsigned char *) output, CHECK_ODD(NIXIE_DEVICES));
 }
