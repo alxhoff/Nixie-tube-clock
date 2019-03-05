@@ -69,7 +69,7 @@
 
 //BUTTONS
 #define BUTTON_COUNT				3
-#define DEBOUNCE_DELAY 				13
+#define DEBOUNCE_DELAY 				50
 
 #define LEFT_BUTTON_PORT 			BUT0_GPIO_Port
 #define LEFT_BUTTON_PIN				BUT0_Pin
