@@ -85,9 +85,15 @@ unsigned char nixie_split_set_digit(volatile unsigned char input, unsigned char 
 unsigned char *nixie_compile_output(void) {
 	for (unsigned char i = 0; i < NIXIE_DEVICES; i++) {
 		if (i % 2 == 0)
-			nixie_dev.output[i / 2] = (nixie_dev.tubes[i].value << 4);
+			if(nixie_dev.tubes[i].enabled)
+				nixie_dev.output[i / 2] = (nixie_dev.tubes[i].value << 4);
+			else
+				nixie_dev.output[i/2] = 0xF0;
 		else
-			nixie_dev.output[i / 2] |= nixie_dev.tubes[i].value;
+			if(nixie_dev.tubes[i].enabled)
+				nixie_dev.output[i / 2] |= nixie_dev.tubes[i].value;
+			else
+				nixie_dev.output[i/2] |= 0x0F;
 	}
 	return &nixie_dev.output[0];
 }

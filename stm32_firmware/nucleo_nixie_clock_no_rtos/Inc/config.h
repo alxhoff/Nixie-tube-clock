@@ -64,6 +64,8 @@
 
 //NIXIES
 #define NIXIE_DEVICES				4
+#define NIXIE_MIN_INDEX_LSB			0
+#define NIXIE_HOUR_INDEX_LSB		2
 
 //BUTTONS
 #define BUTTON_COUNT				3

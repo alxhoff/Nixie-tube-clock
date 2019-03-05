@@ -135,8 +135,10 @@ int main(void) {
 	MX_NVIC_Init();
 	/* USER CODE BEGIN 2 */
 	SN54HC595_init();
+#ifdef SCREEN_ON
 	ssd1306_init();
 	screen_init();
+#endif
 	RTC_dev_init(1);
 	nixie_init();
 	nixie_enable_all();
@@ -163,10 +165,14 @@ int main(void) {
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
+#ifdef SCREEN_ON
 		screen_clear();
+#endif
 		states_run();
-		convert_time_to_shift();
+//		convert_time_to_shift();
+#ifdef SCREEN_ON
 		screen_refresh(NULL);
+#endif
 	}
 	/* USER CODE END 3 */
 }

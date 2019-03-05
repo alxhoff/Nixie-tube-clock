@@ -7,6 +7,7 @@
 
 #include "states.h"
 #include "error.h"
+#include "config.h"
 
 //states
 #include "draw.h"
@@ -143,12 +144,15 @@ unsigned char states_init(void) {
 	states_add(NULL, NULL, draw_time_run, NULL, state_time, "Show time");
 	states_add(NULL, NULL, draw_set_time_run, draw_set_time_enter,
 			state_time_set, "Set time");
+#ifdef SCREEN_ON
 	states_add(NULL, NULL, draw_set_time_sec_run, NULL, state_time_set_sec,
 			"Set sec");
+#endif
 	states_add(NULL, NULL, draw_set_time_min_run, NULL, state_time_set_min,
 			"Set min");
 	states_add(NULL, NULL, draw_set_time_hour_run, NULL, state_time_set_hour,
 			"Set hour");
+#ifdef SCREEN_ON
 	states_add(NULL, NULL, draw_set_time_date_run, NULL, state_time_set_date,
 			"Set date");
 	states_add(NULL, NULL, draw_set_time_month_run, NULL, state_time_set_month,
@@ -165,6 +169,7 @@ unsigned char states_init(void) {
 			"Set alarm 1 hour");
 	states_add(NULL, NULL, draw_alarm1_day_run, NULL, state_alarm_1_set_day,
 			"Set alarm 1 day");
+#endif
 
 	//set initial state
 	SET_INITIAL_STATE(state_time);

@@ -12,9 +12,10 @@
 typedef enum{
 	state_time = 0,
 	state_time_set = 1,
-	state_time_set_sec = 2,
-	state_time_set_min = 3,
-	state_time_set_hour = 4,
+	state_time_set_min = 2,
+	state_time_set_hour = 3,
+#ifdef SCREEN_ON
+	state_time_set_sec = 4,
 	state_time_set_date = 5,
 	state_time_set_month = 6,
 	state_time_set_year = 7,
@@ -23,6 +24,7 @@ typedef enum{
 	state_alarm_1_set_min = 10,
 	state_alarm_1_set_hour = 11,
 	state_alarm_1_set_day = 12,
+#endif
 } state_e;
 
 unsigned char states_init(void);
