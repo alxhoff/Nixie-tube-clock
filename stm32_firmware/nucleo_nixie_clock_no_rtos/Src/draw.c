@@ -227,8 +227,8 @@ void change_big_states(void) {
 }
 //TIME
 void draw_time_run(void) {
-#ifdef SCREEN_ON
 	RTC_dev_get_time();
+#ifdef SCREEN_ON
 	get_time_weekday_string(weekday);
 	get_date_string(date);
 	get_time_string(time);
