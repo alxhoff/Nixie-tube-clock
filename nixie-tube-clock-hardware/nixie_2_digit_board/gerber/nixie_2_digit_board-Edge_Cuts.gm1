@@ -1,14 +1,13 @@
-G04 #@! TF.GenerationSoftware,KiCad,Pcbnew,5.0.0*
-G04 #@! TF.CreationDate,2018-08-01T12:35:26+02:00*
-G04 #@! TF.ProjectId,nixie_2_digit_board,6E697869655F325F64696769745F626F,rev?*
+G04 #@! TF.GenerationSoftware,KiCad,Pcbnew,5.1.5*
+G04 #@! TF.CreationDate,2020-03-31T14:32:58+02:00*
+G04 #@! TF.ProjectId,nixie_2_digit_board,6e697869-655f-4325-9f64-696769745f62,rev?*
 G04 #@! TF.SameCoordinates,Original*
 G04 #@! TF.FileFunction,Profile,NP*
 %FSLAX46Y46*%
 G04 Gerber Fmt 4.6, Leading zero omitted, Abs format (unit mm)*
-G04 Created by KiCad (PCBNEW 5.0.0) date Wed Aug  1 12:35:26 2018*
+G04 Created by KiCad (PCBNEW 5.1.5) date 2020-03-31 14:32:58*
 %MOMM*%
 %LPD*%
-G01*
 G04 APERTURE LIST*
 %ADD10C,0.150000*%
 G04 APERTURE END LIST*
