@@ -8,20 +8,11 @@
 #ifndef DRAW_H_
 #define DRAW_H_
 
-//STATES
-//TIME
-void draw_time_run(void);
+extern unsigned char blink_flag;
 
-//SET TIME
-void draw_set_time_enter(void);
-void draw_set_time_run(void);
-void draw_set_time_sec_run(void);
-void draw_set_time_min_run(void);
-void draw_set_time_hour_run(void);
-void draw_set_time_date_run(void);
-void draw_set_time_month_run(void);
-void draw_set_time_year_run(void);
-void draw_set_time_day_run(void);
+void draw_get_and_draw_time(signed char m_hour, signed char m_min, signed char m_sec,
+		signed char m_weekday, signed char m_date, signed char m_month, signed short m_year);
+
 //SET ALARM 1
 void draw_alarm1_run(void);
 void draw_alarm1_min_run(void);

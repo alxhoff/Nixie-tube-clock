@@ -83,11 +83,11 @@ typedef enum {
 } WEEKDAYS_e;
 
 typedef enum {
-	AM = 0, PM = 1,
+	AM = 0, PM = 1, AM_PM_IGNORE,
 } AM_OR_PM_e;
 
 typedef enum {
-	HOUR_24 = 0, HOUR_12 = 1,
+	HOUR_24 = 0, HOUR_12 = 1, HOUR_IGNORE,
 } TIME_FORMAT_e;
 
 typedef struct ds3231_time {
@@ -138,7 +138,7 @@ signed char DS3231_set_time_hour(I2C_HandleTypeDef *hi2c, unsigned char hour,
 signed char DS3231_set_time_day(I2C_HandleTypeDef *hi2c, unsigned char day);
 signed char DS3231_set_time_date(I2C_HandleTypeDef *hi2c, unsigned char date);
 signed char DS3231_set_time_month(I2C_HandleTypeDef *hi2c, unsigned char month);
-signed char DS3231_set_time_year(I2C_HandleTypeDef *hi2c, unsigned char year);
+signed char DS3231_set_time_year(I2C_HandleTypeDef *hi2c, unsigned short year);
 
 signed char DS3231_set_time(I2C_HandleTypeDef *hi2c, ds3231_time_t* time);
 signed char DS3231_get_time(I2C_HandleTypeDef *hi2c,

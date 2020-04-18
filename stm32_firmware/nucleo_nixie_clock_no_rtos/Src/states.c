@@ -6,7 +6,6 @@
  */
 
 #include "states.h"
-#include "error.h"
 #include "config.h"
 
 //states
@@ -18,18 +17,9 @@
 typedef struct state state_t;
 struct state {
 	unsigned char id;
-
-	void* data;
-
-	char* name;
-
 	unsigned char initd;
 
-	void (*probe)(void);
-
-	void (*enter)(void);
-	void (*run)(void);
-	void (*exit)(void);
+	struct state_ops *ops;
 };
 
 typedef struct state_machine {
@@ -39,141 +29,140 @@ typedef struct state_machine {
 	unsigned char input;
 
 	state_t **states;
-	unsigned char count;
+	unsigned char state_count;
 } state_machine_t;
 
-state_machine_t state_machine_dev = { 0 };
+state_machine_t sm = { 0 };
 
-void states_set_input(unsigned char input) {
-	state_machine_dev.input = input;
+void states_set_input(unsigned char input)
+{
+	sm.input = input;
 }
 
-unsigned char states_get_input(void) {
-	return state_machine_dev.input;
+unsigned char states_get_input(void)
+{
+	return sm.input;
 }
 
-void states_clear_input(void) {
-	state_machine_dev.input = 0;
+void states_clear_input(void)
+{
+	sm.input = 0;
 }
 
-unsigned char states_get_state(void) {
-	return state_machine_dev.current_state->id;
+static state_t *states_get_state(unsigned char id)
+{
+	static unsigned int i;
+
+	for(i = 0; i < sm.state_count; i++)
+		if(sm.states[i]->id == id)
+			return sm.states[i];
+
+	return NULL;
 }
 
-void states_set_state(unsigned char state) {
-	state_machine_dev.next_state = state_machine_dev.states[state];
+void *states_get_data(void){
+	if(sm.current_state->ops)
+		return sm.current_state->ops->data;
+
+	return NULL;
 }
 
-unsigned char states_run(void) {
-	if (state_machine_dev.next_state->id
-			!= state_machine_dev.current_state->id) {
-		if (state_machine_dev.current_state->exit) /* Exit current state*/
-			(state_machine_dev.current_state->exit)();
-		if (state_machine_dev.next_state->enter) /* Enter next state*/
-			(state_machine_dev.next_state->enter)();
-		state_machine_dev.current_state = state_machine_dev.next_state; /* Change states*/
+void states_set_state(unsigned char state_id)
+{
+	state_t *next_state = states_get_state(state_id);
+
+	if(next_state)
+		sm.next_state = next_state;
+}
+
+unsigned char states_run(void)
+{
+	// Handle input
+	if(sm.input){
+		//only handle one input ever, keep it simple
+		if(((sm.input >> 0) & 0x01) && sm.current_state->ops->left_button)
+			(sm.current_state->ops->left_button)();
+		else if(((sm.input >> 1) & 0x01) && sm.current_state->ops->center_button)
+			(sm.current_state->ops->center_button)();
+		else if(((sm.input >> 2) & 0x01) && sm.current_state->ops->right_button)
+			(sm.current_state->ops->right_button)();
+
+		states_clear_input();
 	}
 
-	if (state_machine_dev.current_state->run) /* Run current state*/
-		(state_machine_dev.current_state->run)();
+	// Handle state change
+	if (sm.next_state !=
+	    sm.current_state) {
+
+		if (sm.current_state->ops->exit) /* Exit current state*/
+			(sm.current_state->ops->exit)();
+
+		sm.current_state =
+					sm.next_state; /* Change states*/
+
+		if (sm.current_state->ops->enter) /* Enter next state*/
+			(sm.current_state->ops->enter)();
+
+	}
+
+	// Run current state
+	if (sm.current_state->ops->run) /* Run current state*/
+		(sm.current_state->ops->run)();
 
 	return 0;
 }
 
-static unsigned char states_add(void (*probe)(void), void (*enter)(void),
-		void (*run)(void), void (*exit)(void), state_e id, char* name) {
-	unsigned char error = 0;
+static unsigned char states_add(unsigned char id, struct state_ops *ops)
+{
+	if (ops == NULL)
+		return -1;
+
 	state_t *ret = calloc(1, sizeof(state_t));
 	if (!ret)
-		return -ENOMEM;
+		return -1;
 
-	ret->enter = enter;
-	ret->run = run;
-	ret->exit = exit;
-	ret->probe = probe;
-
+	ret->ops = ops;
 	ret->id = id;
-	ret->name = malloc(sizeof(char) * (strlen(name) + 1));
-	if (!ret->name)
-		return -ENOMEM;
-	strcpy(ret->name, name);
 
-	state_machine_dev.states = realloc(state_machine_dev.states,
-			sizeof(state_t*) * (state_machine_dev.count + 1));
-	state_machine_dev.states[state_machine_dev.count] = ret;
-	state_machine_dev.count++;
+	sm.states =
+		realloc(sm.states,
+			sizeof(state_t *) * (sm.state_count + 1));
+	sm.states[sm.state_count] = ret;
+	sm.state_count++;
 
-	if (ret->probe)
-		ret->probe();
-
-	if (error)
-		return -ENOINIT;
+	if (ret->ops->probe)
+		ret->ops->probe();
 
 	ret->initd = 1;
 
 	return 0;
 }
 
-void *get_state_data(void) {
-	return state_machine_dev.current_state->data;
-}
+// Static state structures
+#include "user_states.h"
 
-void set_state_data(void *data) {
-	state_machine_dev.current_state->data = data;
-}
+#define SET_INITIAL_STATE(STATE)                                               \
+	sm.current_state = states_get_state(STATE);     \
+	sm.next_state = states_get_state(STATE);
 
-static unsigned char states_init_states(void) {
-
-	for (int i = 0; i < state_machine_dev.count; i++)
-		if (!state_machine_dev.states[i]->initd) {
-			if (state_machine_dev.states[i]->probe)
-				(state_machine_dev.states[i]->probe)();
-			state_machine_dev.states[i]->initd = 1;
-		}
-
-	return 0;
-}
-
-#define SET_INITIAL_STATE( STATE )	\
-			state_machine_dev.current_state = state_machine_dev.states[STATE];	\
-			state_machine_dev.next_state = state_machine_dev.states[STATE];
-
-unsigned char states_init(void) {
-
+void states_init(void)
+{
 	//send state
-	states_add(NULL, NULL, draw_time_run, NULL, state_time, "Show time");
-	states_add(NULL, NULL, draw_set_time_run, draw_set_time_enter,
-			state_time_set, "Set time");
+	states_add(state_time, &state_show_time);
+	states_add(state_time_set_hour, &state_set_time_hour);
+	states_add(state_time_set_min, &state_set_time_mins);
 #ifdef SCREEN_ON
-	states_add(NULL, NULL, draw_set_time_sec_run, NULL, state_time_set_sec,
-			"Set sec");
-#endif
-	states_add(NULL, NULL, draw_set_time_min_run, NULL, state_time_set_min,
-			"Set min");
-	states_add(NULL, NULL, draw_set_time_hour_run, NULL, state_time_set_hour,
-			"Set hour");
-#ifdef SCREEN_ON
-	states_add(NULL, NULL, draw_set_time_date_run, NULL, state_time_set_date,
-			"Set date");
-	states_add(NULL, NULL, draw_set_time_month_run, NULL, state_time_set_month,
-			"Set month");
-	states_add(NULL, NULL, draw_set_time_year_run, NULL, state_time_set_year,
-			"Set year");
-	states_add(NULL, NULL, draw_set_time_day_run, NULL, state_time_set_day,
-			"Set day");
-	states_add(NULL, NULL, draw_alarm1_run, NULL, state_alarm_1_set,
-			"Set alarm 1");
-	states_add(NULL, NULL, draw_alarm1_min_run, NULL, state_alarm_1_set_min,
-			"Set alarm 1 min");
-	states_add(NULL, NULL, draw_alarm1_hour_run, NULL, state_alarm_1_set_hour,
-			"Set alarm 1 hour");
-	states_add(NULL, NULL, draw_alarm1_day_run, NULL, state_alarm_1_set_day,
-			"Set alarm 1 day");
+	states_add(state_time_set_sec, &state_set_time_secs);
+	states_add(state_time_set_date, &state_set_time_date);
+	states_add(state_time_set_month, &state_set_time_month);
+	states_add(state_time_set_year, &state_set_time_year);
+	states_add(state_time_set_day, &state_set_time_day);
+	states_add(state_alarm_1_set, &state_show_alarm_1_set);
+	states_add(state_alarm_1_set_min, &state_show_alarm_1_set_hour);
+	states_add(state_alarm_1_set_hour, &state_show_alarm_1_set_min);
+	states_add(state_alarm_1_set_day, &state_show_alarm_1_set_day);
 #endif
 
 	//set initial state
 	SET_INITIAL_STATE(state_time);
-
-	states_init_states();
-	return 0;
 }

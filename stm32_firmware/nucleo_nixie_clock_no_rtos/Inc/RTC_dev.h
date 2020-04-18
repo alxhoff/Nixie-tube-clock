@@ -33,6 +33,15 @@ void RTC_dev_set_time_date_increment(void);
 void RTC_dev_set_time_month_increment(void);
 void RTC_dev_set_time_year_increment(void);
 
+//SETS
+signed char RTC_dev_time_set_hour(unsigned char hour);
+signed char RTC_dev_time_set_min(unsigned char min);
+signed char RTC_dev_time_set_sec(unsigned char sec);
+signed char RTC_dev_time_set_day(unsigned char day);
+signed char RTC_dev_time_set_date(unsigned char date);
+signed char RTC_dev_time_set_month(unsigned char month);
+signed char RTC_dev_time_set_year(unsigned short year);
+
 //GETS
 TIME_FORMAT_e RTC_dev_time_get_format(void);
 unsigned char RTC_dev_time_get_hour(void);

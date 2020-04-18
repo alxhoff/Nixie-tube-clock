@@ -224,7 +224,7 @@ signed char DS3231_set_time_month(I2C_HandleTypeDef *hi2c, unsigned char month) 
 	return 0;
 }
 
-signed char DS3231_set_time_year(I2C_HandleTypeDef *hi2c, unsigned char year) {
+signed char DS3231_set_time_year(I2C_HandleTypeDef *hi2c, unsigned short year) {
 	unsigned char read_buffer;
 	unsigned char write_buffer[2] = { 0 };
 
@@ -233,12 +233,12 @@ signed char DS3231_set_time_year(I2C_HandleTypeDef *hi2c, unsigned char year) {
 		return -1;
 
 	if (year >= 2000) {
-		write_buffer[0] = read_buffer | (1 << 7);
-		write_buffer[1] = dec2bcd(year - 2000);
-	} else {
 		write_buffer[0] = read_buffer;
 		write_buffer[0] &= ~(1 << 7);
-		write_buffer[1] = dec2bcd(year - 1900);
+		write_buffer[1] = (unsigned char)dec2bcd(year - 2000);
+	} else {
+		write_buffer[0] = read_buffer | (1 << 7);
+		write_buffer[1] = (unsigned char) dec2bcd(year - 1900);
 	}
 
 	if (HAL_I2C_Mem_Write(hi2c, DS3231_ADDR8, 0x05, 1, write_buffer, 1, 10)

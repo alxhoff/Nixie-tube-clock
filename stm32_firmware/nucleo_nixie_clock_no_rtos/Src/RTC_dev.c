@@ -21,11 +21,18 @@ struct DS3231_device {
 
 	float temp;
 
+	signed char (*set_hour)(DS3231_device_t*, unsigned char);
+	signed char (*set_min)(DS3231_device_t*, unsigned char);
+	signed char (*set_sec)(DS3231_device_t*, unsigned char);
+	signed char (*set_day)(DS3231_device_t*, unsigned char);
+	signed char (*set_date)(DS3231_device_t*, unsigned char);
+	signed char (*set_month)(DS3231_device_t*, unsigned char);
+	signed char (*set_year)(DS3231_device_t*, unsigned char);
 	signed char (*get_time)(DS3231_device_t*);
 	signed char (*set_time)(DS3231_device_t*, unsigned char, unsigned char,
 			unsigned char, TIME_FORMAT_e, AM_OR_PM_e);
-	signed char (*get_date)(DS3231_device_t*);
-	signed char (*set_date)(DS3231_device_t*, WEEKDAYS_e, unsigned char,
+	signed char (*get_date_complete)(DS3231_device_t*);
+	signed char (*set_date_complete)(DS3231_device_t*, WEEKDAYS_e, unsigned char,
 			MONTHS_e, unsigned short);
 	signed char (*get_alarm)(DS3231_device_t*, TIME_TYPE_e);
 	signed char (*set_alarm)(DS3231_device_t*, TIME_TYPE_e, unsigned char,
@@ -36,6 +43,70 @@ struct DS3231_device {
 };
 
 DS3231_device_t RTC_dev = { 0 };
+
+//SETS
+
+signed char self_RTC_dev_time_set_hour(DS3231_device_t *dev, unsigned char hour){
+	return DS3231_set_time_hour(dev->i2c_handle, hour, dev->time_1.format, dev->time_1.am_or_pm);
+}
+
+signed char RTC_dev_time_set_hour(unsigned char hour){
+	return RTC_dev.set_hour(&RTC_dev, hour);
+}
+signed char self_RTC_dev_time_set_min(DS3231_device_t *dev, unsigned char min){
+	return DS3231_set_time_min(dev->i2c_handle, min);
+}
+
+signed char RTC_dev_time_set_min(unsigned char min){
+	return RTC_dev.set_min(&RTC_dev, min);
+}
+
+signed char self_RTC_dev_time_set_sec(DS3231_device_t *dev, unsigned char sec){
+	return DS3231_set_time_sec(dev->i2c_handle, sec);
+}
+
+signed char RTC_dev_time_set_sec(unsigned char sec){
+	return RTC_dev.set_sec(&RTC_dev, sec);
+
+}
+
+signed char self_RTC_dev_time_set_day(DS3231_device_t *dev, unsigned char day){
+	return DS3231_set_time_day(dev->i2c_handle, day);
+}
+
+signed char RTC_dev_time_set_day(unsigned char day){
+	return RTC_dev.set_day(&RTC_dev, day);
+
+}
+
+signed char self_RTC_dev_time_set_date(DS3231_device_t *dev, unsigned char date){
+	return DS3231_set_time_date(dev->i2c_handle, date);
+}
+
+signed char RTC_dev_time_set_date(unsigned char date){
+	return RTC_dev.set_date(&RTC_dev, date);
+
+}
+
+signed char self_RTC_dev_time_set_month(DS3231_device_t *dev, unsigned char month){
+	return DS3231_set_time_month(dev->i2c_handle, month);
+}
+
+signed char RTC_dev_time_set_month(unsigned char month){
+	return RTC_dev.set_month(&RTC_dev, month);
+
+}
+
+signed char self_RTC_dev_time_set_year(DS3231_device_t *dev, unsigned short year){
+	return DS3231_set_time_year(dev->i2c_handle, year);
+}
+
+signed char RTC_dev_time_set_year(unsigned short year){
+	return RTC_dev.set_year(&RTC_dev, year);
+
+}
+
+
 
 //GETS
 TIME_FORMAT_e RTC_dev_time_get_format(void) {
@@ -276,7 +347,7 @@ signed char RTC_dev_get_time(void) {
 	return RTC_dev.get_time(&RTC_dev);
 }
 
-signed char self_RTC_dev_set_date(DS3231_device_t* dev, WEEKDAYS_e weekday,
+signed char self_RTC_dev_set_date_complete(DS3231_device_t* dev, WEEKDAYS_e weekday,
 		unsigned char date, MONTHS_e month, unsigned short year) {
 	dev->time_1.weekday = weekday;
 	dev->time_1.date = date;
@@ -287,9 +358,9 @@ signed char self_RTC_dev_set_date(DS3231_device_t* dev, WEEKDAYS_e weekday,
 			dev->time_1.date, dev->time_1.weekday);
 }
 
-signed char RTC_dev_set_date(WEEKDAYS_e weekday, unsigned char date,
+signed char RTC_dev_set_date_complete(WEEKDAYS_e weekday, unsigned char date,
 		MONTHS_e month, unsigned short year) {
-	return RTC_dev.set_date(&RTC_dev, weekday, date, month, year);
+	return RTC_dev.set_date_complete(&RTC_dev, weekday, date, month, year);
 }
 
 signed char self_RTC_dev_get_date(DS3231_device_t* dev) {
@@ -415,8 +486,8 @@ DS3231_device_t* RTC_dev_create(unsigned char twelve_hour, unsigned char hour,
 	//functions
 	device->set_time = &self_RTC_dev_set_time;
 	device->get_time = &self_RTC_dev_get_time;
-	device->set_date = &self_RTC_dev_set_date;
-	device->get_date = &self_RTC_dev_get_date;
+	device->set_date_complete = &self_RTC_dev_set_date_complete;
+	device->get_date_complete = &self_RTC_dev_get_date;
 	device->set_alarm = &self_RTC_dev_set_alarm;
 	device->get_alarm = &self_RTC_dev_get_alarm;
 	device->get_temp = &self_RTC_dev_get_temp;
@@ -464,10 +535,17 @@ signed char RTC_dev_init(unsigned char def_vals) {
 	RTC_dev.i2c_handle = &RTC_I2C_PORT;
 
 	//functions
+	RTC_dev.set_hour = &self_RTC_dev_time_set_hour;
+	RTC_dev.set_min = &self_RTC_dev_time_set_min;
+	RTC_dev.set_sec = &self_RTC_dev_time_set_sec;
+	RTC_dev.set_date = &self_RTC_dev_time_set_day;
+	RTC_dev.set_day = &self_RTC_dev_time_set_date;
+	RTC_dev.set_month = &self_RTC_dev_time_set_month;
+	RTC_dev.set_year = &self_RTC_dev_time_set_year;
 	RTC_dev.set_time = &self_RTC_dev_set_time;
 	RTC_dev.get_time = &self_RTC_dev_get_time;
-	RTC_dev.set_date = &self_RTC_dev_set_date;
-	RTC_dev.get_date = &self_RTC_dev_get_date;
+	RTC_dev.set_date_complete = &self_RTC_dev_set_date_complete;
+	RTC_dev.get_date_complete = &self_RTC_dev_get_date;
 	RTC_dev.set_alarm = &self_RTC_dev_set_alarm;
 	RTC_dev.get_alarm = &self_RTC_dev_get_alarm;
 	RTC_dev.get_temp = &self_RTC_dev_get_temp;
