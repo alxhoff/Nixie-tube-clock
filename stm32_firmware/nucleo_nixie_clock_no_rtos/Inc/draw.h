@@ -10,8 +10,10 @@
 
 extern unsigned char blink_flag;
 
-void draw_get_and_draw_time(signed char m_hour, signed char m_min, signed char m_sec,
-		signed char m_weekday, signed char m_date, signed char m_month, signed short m_year);
+void draw_get_and_draw_time(signed char m_hour, signed char m_min,
+			    signed char m_sec, signed char m_weekday,
+			    signed char m_date, signed char m_month,
+			    signed short m_year);
 
 //SET ALARM 1
 void draw_alarm1_run(void);

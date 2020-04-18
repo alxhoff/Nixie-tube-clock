@@ -31,9 +31,9 @@
 
 #include "AT24Cxx_stm32_hal.h"
 
-uint16_t AT24Cxx_get_max_addr ( AT24Cxx_device_t* dev )
+uint16_t AT24Cxx_get_max_addr(AT24Cxx_device_t *dev)
 {
-	switch(dev->dev_model){
+	switch (dev->dev_model) {
 	case AT24C01:
 		return AT24C01_MAX_ADDR;
 		break;
@@ -60,9 +60,9 @@ uint16_t AT24Cxx_get_max_addr ( AT24Cxx_device_t* dev )
 	return 0;
 }
 
-uint16_t AT24Cxx_get_pg_size ( AT24Cxx_device_t* dev )
+uint16_t AT24Cxx_get_pg_size(AT24Cxx_device_t *dev)
 {
-	switch(dev->dev_model){
+	switch (dev->dev_model) {
 	case AT24C01:
 		return AT24C01_PG_SIZE;
 		break;
@@ -89,17 +89,19 @@ uint16_t AT24Cxx_get_pg_size ( AT24Cxx_device_t* dev )
 	return 0;
 }
 
-AT24Cxx_ERR_TypeDef AT24Cxx_init( AT24Cxx_devices_t* devices, 
-	uint8_t init_dev_addr, I2C_HandleTypeDef* i2c_handle)
+AT24Cxx_ERR_TypeDef AT24Cxx_init(AT24Cxx_devices_t *devices,
+				 uint8_t init_dev_addr,
+				 I2C_HandleTypeDef *i2c_handle)
 {
 	//adds first device to AT32Cxx_devices array
 	//further devices should be added by calling AT24Cxx_add_dev()
-	AT24Cxx_device_t *at = (AT24Cxx_device_t*)calloc(1, sizeof(AT24Cxx_device_t));
-	if ( at == NULL )
+	AT24Cxx_device_t *at =
+		(AT24Cxx_device_t *)calloc(1, sizeof(AT24Cxx_device_t));
+	if (at == NULL)
 		return at_init_err;
 
-	for(uint8_t i = 0; i < 8; i++)
-			devices->devices[i] = 0x00;
+	for (uint8_t i = 0; i < 8; i++)
+		devices->devices[i] = 0x00;
 
 	at->dev_addr = init_dev_addr;
 	at->next_dev = NULL;
@@ -113,51 +115,57 @@ AT24Cxx_ERR_TypeDef AT24Cxx_init( AT24Cxx_devices_t* devices,
 	return at_ok;
 }
 
-AT24Cxx_ERR_TypeDef AT24Cxx_add_dev( AT24Cxx_devices_t* devices, 
-	uint8_t dev_addr, I2C_HandleTypeDef* i2c_handle)
+AT24Cxx_ERR_TypeDef AT24Cxx_add_dev(AT24Cxx_devices_t *devices,
+				    uint8_t dev_addr,
+				    I2C_HandleTypeDef *i2c_handle)
 {
-	if(devices->dev_count == 0 || devices->dev_count > 8)
+	if (devices->dev_count == 0 || devices->dev_count > 8)
 		return at_add_dev_err;
 
-	AT24Cxx_device_t *at = (AT24Cxx_device_t*)calloc(1, sizeof(AT24Cxx_device_t));
-	if ( at == NULL )
+	AT24Cxx_device_t *at =
+		(AT24Cxx_device_t *)calloc(1, sizeof(AT24Cxx_device_t));
+	if (at == NULL)
 		return at_add_dev_err;
 
 	at->dev_addr = dev_addr;
 	at->next_dev = NULL;
-	at->prev_dev = devices->devices[devices->dev_count-1];
+	at->prev_dev = devices->devices[devices->dev_count - 1];
 	at->dev_model = AT24Cxx_USED_MODEL;
 	at->dev_port = i2c_handle;
 	at->initialized = true;
 	devices->dev_count++;
-	devices->devices[devices->dev_count-1] = at;
+	devices->devices[devices->dev_count - 1] = at;
 
 	//update previous device's next device
-	devices->devices[devices->dev_count-2]->next_dev = at;
+	devices->devices[devices->dev_count - 2]->next_dev = at;
 	return at_ok;
 }
 
-AT24Cxx_device_t* AT24Cxx_get_dev( AT24Cxx_devices_t* devices, uint8_t index)
+AT24Cxx_device_t *AT24Cxx_get_dev(AT24Cxx_devices_t *devices, uint8_t index)
 {
 	return devices->devices[index];
 }
 
-AT24Cxx_ERR_TypeDef AT24Cxx_write_byte( AT24Cxx_device_t* dev, uint8_t data,
-		uint16_t mem_addr)
+AT24Cxx_ERR_TypeDef AT24Cxx_write_byte(AT24Cxx_device_t *dev, uint8_t data,
+				       uint16_t mem_addr)
 {
-	if(mem_addr > 0x00 && mem_addr < AT24Cxx_get_max_addr(dev)){
-		while(HAL_I2C_Mem_Write(dev->dev_port,
-					AT24Cxx_BASE_ADDR_W | (dev->dev_addr << 1) ,
-					(uint16_t) mem_addr, I2C_MEMADD_SIZE_16BIT, &data, 1,
-					AT24Cxx_I2C_TIMOUT) != HAL_OK);
+	if (mem_addr > 0x00 && mem_addr < AT24Cxx_get_max_addr(dev)) {
+		while (HAL_I2C_Mem_Write(
+			       dev->dev_port,
+			       AT24Cxx_BASE_ADDR_W | (dev->dev_addr << 1),
+			       (uint16_t)mem_addr, I2C_MEMADD_SIZE_16BIT, &data,
+			       1, AT24Cxx_I2C_TIMOUT) != HAL_OK)
+			;
 
 		return at_ok;
 	}
 	return at_w_byte_err;
 }
 
-AT24Cxx_ERR_TypeDef AT24Cxx_write_byte_buffer( AT24Cxx_device_t* dev,
-		uint8_t* data_buf, uint16_t mem_addr, uint16_t buf_length)
+AT24Cxx_ERR_TypeDef AT24Cxx_write_byte_buffer(AT24Cxx_device_t *dev,
+					      uint8_t *data_buf,
+					      uint16_t mem_addr,
+					      uint16_t buf_length)
 {
 	//TODO checks
 
@@ -169,74 +177,94 @@ AT24Cxx_ERR_TypeDef AT24Cxx_write_byte_buffer( AT24Cxx_device_t* dev,
 	uint8_t remainder_writes = (buf_length - page_remaining) % page_size;
 
 	//finish first page
-	if((mem_addr + page_remaining) > 0x00 &&
-		(mem_addr + page_remaining) < AT24Cxx_get_max_addr(dev)){
+	if ((mem_addr + page_remaining) > 0x00 &&
+	    (mem_addr + page_remaining) < AT24Cxx_get_max_addr(dev)) {
+		while (HAL_I2C_Mem_Write(
+			       dev->dev_port,
+			       AT24Cxx_BASE_ADDR_W | (dev->dev_addr << 1),
+			       (uint16_t)mem_addr, I2C_MEMADD_SIZE_16BIT,
+			       data_buf, page_remaining,
+			       AT24Cxx_I2C_TIMOUT) != HAL_OK)
+			;
+	} else
+		return at_w_bytes_err;
 
-		while(HAL_I2C_Mem_Write(dev->dev_port,
-				AT24Cxx_BASE_ADDR_W | (dev->dev_addr << 1) ,
-				(uint16_t) mem_addr,
-				I2C_MEMADD_SIZE_16BIT,
-				data_buf,
-				page_remaining,
-				AT24Cxx_I2C_TIMOUT) != HAL_OK);
-	}else return at_w_bytes_err;
-
-	for(uint8_t current_page = 0; current_page < page_writes; current_page++){
-		if((mem_addr + page_remaining + (current_page * page_size)) > 0x00 &&
-			(mem_addr + page_remaining + (current_page * page_size)) < AT24Cxx_get_max_addr(dev)){
-
-				while(HAL_I2C_Mem_Write(dev->dev_port,
-					AT24Cxx_BASE_ADDR_W | (dev->dev_addr << 1) ,
-					(uint16_t) mem_addr + page_remaining + (current_page * page_size),
-					I2C_MEMADD_SIZE_16BIT,
-					data_buf + page_remaining + (current_page * page_size),
-					page_size,
-					AT24Cxx_I2C_TIMOUT) != HAL_OK);
-		}else return at_w_bytes_err;
+	for (uint8_t current_page = 0; current_page < page_writes;
+	     current_page++) {
+		if ((mem_addr + page_remaining + (current_page * page_size)) >
+			    0x00 &&
+		    (mem_addr + page_remaining + (current_page * page_size)) <
+			    AT24Cxx_get_max_addr(dev)) {
+			while (HAL_I2C_Mem_Write(
+				       dev->dev_port,
+				       AT24Cxx_BASE_ADDR_W |
+					       (dev->dev_addr << 1),
+				       (uint16_t)mem_addr + page_remaining +
+					       (current_page * page_size),
+				       I2C_MEMADD_SIZE_16BIT,
+				       data_buf + page_remaining +
+					       (current_page * page_size),
+				       page_size, AT24Cxx_I2C_TIMOUT) != HAL_OK)
+				;
+		} else
+			return at_w_bytes_err;
 	}
 
-	if(remainder_writes){
-		if((mem_addr + page_remaining + (page_writes * page_size)) > 0x00 &&
-			(mem_addr + page_remaining + (page_writes * page_size)) < AT24Cxx_get_max_addr(dev)){
-
-			while(HAL_I2C_Mem_Write(dev->dev_port,
-				AT24Cxx_BASE_ADDR_W | (dev->dev_addr << 1) ,
-				(uint16_t) mem_addr + page_remaining + (page_writes * page_size),
-				I2C_MEMADD_SIZE_16BIT,
-				data_buf + page_remaining + (page_writes * page_size),
-				remainder_writes,
-				AT24Cxx_I2C_TIMOUT) != HAL_OK);
-		}else return at_w_bytes_err;
+	if (remainder_writes) {
+		if ((mem_addr + page_remaining + (page_writes * page_size)) >
+			    0x00 &&
+		    (mem_addr + page_remaining + (page_writes * page_size)) <
+			    AT24Cxx_get_max_addr(dev)) {
+			while (HAL_I2C_Mem_Write(
+				       dev->dev_port,
+				       AT24Cxx_BASE_ADDR_W |
+					       (dev->dev_addr << 1),
+				       (uint16_t)mem_addr + page_remaining +
+					       (page_writes * page_size),
+				       I2C_MEMADD_SIZE_16BIT,
+				       data_buf + page_remaining +
+					       (page_writes * page_size),
+				       remainder_writes,
+				       AT24Cxx_I2C_TIMOUT) != HAL_OK)
+				;
+		} else
+			return at_w_bytes_err;
 	}
 
 	return at_ok;
 }
 
-AT24Cxx_ERR_TypeDef AT24Cxx_read_byte( AT24Cxx_device_t* dev, uint8_t* data,
-		uint16_t mem_addr)
+AT24Cxx_ERR_TypeDef AT24Cxx_read_byte(AT24Cxx_device_t *dev, uint8_t *data,
+				      uint16_t mem_addr)
 {
-	if(mem_addr > 0x00 && mem_addr < AT24Cxx_get_max_addr(dev)){
-		while(HAL_I2C_Mem_Read(dev->dev_port,
-				AT24Cxx_BASE_ADDR_R | (dev->dev_addr << 1) ,
-				(uint16_t) mem_addr, I2C_MEMADD_SIZE_16BIT, data, 1,
-				AT24Cxx_I2C_TIMOUT) != HAL_OK);
+	if (mem_addr > 0x00 && mem_addr < AT24Cxx_get_max_addr(dev)) {
+		while (HAL_I2C_Mem_Read(
+			       dev->dev_port,
+			       AT24Cxx_BASE_ADDR_R | (dev->dev_addr << 1),
+			       (uint16_t)mem_addr, I2C_MEMADD_SIZE_16BIT, data,
+			       1, AT24Cxx_I2C_TIMOUT) != HAL_OK)
+			;
 		return at_ok;
 	}
 	return at_r_byte_err;
 }
 
-AT24Cxx_ERR_TypeDef AT24Cxx_read_byte_buffer( AT24Cxx_device_t* dev,
-		uint8_t* data_buf, uint16_t mem_addr, uint16_t buf_length)
+AT24Cxx_ERR_TypeDef AT24Cxx_read_byte_buffer(AT24Cxx_device_t *dev,
+					     uint8_t *data_buf,
+					     uint16_t mem_addr,
+					     uint16_t buf_length)
 {
-	if(mem_addr > 0x00 && mem_addr < AT24Cxx_get_max_addr(dev)){
-		while(HAL_I2C_Mem_Read(dev->dev_port,
-				AT24Cxx_BASE_ADDR_R | (dev->dev_addr << 1) ,
-				(uint16_t) mem_addr, I2C_MEMADD_SIZE_16BIT, data_buf, buf_length,
-				AT24Cxx_I2C_TIMOUT) != HAL_OK);
+	if (mem_addr > 0x00 && mem_addr < AT24Cxx_get_max_addr(dev)) {
+		while (HAL_I2C_Mem_Read(
+			       dev->dev_port,
+			       AT24Cxx_BASE_ADDR_R | (dev->dev_addr << 1),
+			       (uint16_t)mem_addr, I2C_MEMADD_SIZE_16BIT,
+			       data_buf, buf_length,
+			       AT24Cxx_I2C_TIMOUT) != HAL_OK)
+			;
 		return at_ok;
 	}
 	return at_r_bytes_err;
 }
-
 
 //TODO ADD ARRAY FUNCTIONALITY

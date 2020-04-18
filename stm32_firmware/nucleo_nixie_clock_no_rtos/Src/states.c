@@ -53,15 +53,16 @@ static state_t *states_get_state(unsigned char id)
 {
 	static unsigned int i;
 
-	for(i = 0; i < sm.state_count; i++)
-		if(sm.states[i]->id == id)
+	for (i = 0; i < sm.state_count; i++)
+		if (sm.states[i]->id == id)
 			return sm.states[i];
 
 	return NULL;
 }
 
-void *states_get_data(void){
-	if(sm.current_state->ops)
+void *states_get_data(void)
+{
+	if (sm.current_state->ops)
 		return sm.current_state->ops->data;
 
 	return NULL;
@@ -71,38 +72,37 @@ void states_set_state(unsigned char state_id)
 {
 	state_t *next_state = states_get_state(state_id);
 
-	if(next_state)
+	if (next_state)
 		sm.next_state = next_state;
 }
 
 unsigned char states_run(void)
 {
 	// Handle input
-	if(sm.input){
+	if (sm.input) {
 		//only handle one input ever, keep it simple
-		if(((sm.input >> 0) & 0x01) && sm.current_state->ops->left_button)
+		if (((sm.input >> 0) & 0x01) &&
+		    sm.current_state->ops->left_button)
 			(sm.current_state->ops->left_button)();
-		else if(((sm.input >> 1) & 0x01) && sm.current_state->ops->center_button)
+		else if (((sm.input >> 1) & 0x01) &&
+			 sm.current_state->ops->center_button)
 			(sm.current_state->ops->center_button)();
-		else if(((sm.input >> 2) & 0x01) && sm.current_state->ops->right_button)
+		else if (((sm.input >> 2) & 0x01) &&
+			 sm.current_state->ops->right_button)
 			(sm.current_state->ops->right_button)();
 
 		states_clear_input();
 	}
 
 	// Handle state change
-	if (sm.next_state !=
-	    sm.current_state) {
-
+	if (sm.next_state != sm.current_state) {
 		if (sm.current_state->ops->exit) /* Exit current state*/
 			(sm.current_state->ops->exit)();
 
-		sm.current_state =
-					sm.next_state; /* Change states*/
+		sm.current_state = sm.next_state; /* Change states*/
 
 		if (sm.current_state->ops->enter) /* Enter next state*/
 			(sm.current_state->ops->enter)();
-
 	}
 
 	// Run current state
@@ -125,8 +125,7 @@ static unsigned char states_add(unsigned char id, struct state_ops *ops)
 	ret->id = id;
 
 	sm.states =
-		realloc(sm.states,
-			sizeof(state_t *) * (sm.state_count + 1));
+		realloc(sm.states, sizeof(state_t *) * (sm.state_count + 1));
 	sm.states[sm.state_count] = ret;
 	sm.state_count++;
 
@@ -142,7 +141,7 @@ static unsigned char states_add(unsigned char id, struct state_ops *ops)
 #include "user_states.h"
 
 #define SET_INITIAL_STATE(STATE)                                               \
-	sm.current_state = states_get_state(STATE);     \
+	sm.current_state = states_get_state(STATE);                            \
 	sm.next_state = states_get_state(STATE);
 
 void states_init(void)

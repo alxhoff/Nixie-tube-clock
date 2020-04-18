@@ -9,7 +9,10 @@
 #define BUTTONS_H_
 
 typedef enum button_masks {
-	no_press = 0, left = 0b1, center = 0b10, right = 0b100
+	no_press = 0,
+	left = 0b1,
+	center = 0b10,
+	right = 0b100
 } button_mask_e;
 
 void ButtonsInit();

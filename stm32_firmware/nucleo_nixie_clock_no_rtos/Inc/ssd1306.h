@@ -25,10 +25,10 @@
  @endverbatim
  */
 
-
 void ssd1306_fill(void);
 signed char ssd1306_update_screen(void);
-void ssd1306_refresh(char **buf, unsigned char cursor_on, int cursor_x, int cursor_y);
+void ssd1306_refresh(char **buf, unsigned char cursor_on, int cursor_x,
+		     int cursor_y);
 void ssd1306_draw_cursor(unsigned char state, int x, int y);
 signed char ssd1306_init(void);
 void ssd1306_mv_cursor_left(void);

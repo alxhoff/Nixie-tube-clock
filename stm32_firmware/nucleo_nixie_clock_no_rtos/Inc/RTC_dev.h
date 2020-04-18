@@ -13,15 +13,17 @@
 signed char RTC_dev_init(unsigned char def_vals);
 signed char RTC_dev_actualize(void);
 signed char RTC_dev_set_time(unsigned char hour, unsigned char min,
-		unsigned char sec, TIME_FORMAT_e format, AM_OR_PM_e am_pm);
+			     unsigned char sec, TIME_FORMAT_e format,
+			     AM_OR_PM_e am_pm);
 signed char RTC_dev_get_time(void);
 signed char RTC_dev_set_alarm(TIME_TYPE_e alarm_number, unsigned char hour,
-		unsigned char min, TIME_FORMAT_e format, AM_OR_PM_e am_pm,
-		WEEKDAYS_e weekday, unsigned char date, DAY_OR_DATE_e date_or_day,
-		ALARM_TYPE_e type);
+			      unsigned char min, TIME_FORMAT_e format,
+			      AM_OR_PM_e am_pm, WEEKDAYS_e weekday,
+			      unsigned char date, DAY_OR_DATE_e date_or_day,
+			      ALARM_TYPE_e type);
 signed char RTC_dev_get_alarm(TIME_TYPE_e alarm_number);
 signed char RTC_dev_set_date(WEEKDAYS_e, unsigned char date, MONTHS_e month,
-		unsigned short year);
+			     unsigned short year);
 signed char RTC_dev_read_date(void);
 
 //INCREMENTS

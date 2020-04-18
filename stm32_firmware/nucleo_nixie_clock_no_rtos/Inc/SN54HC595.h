@@ -64,23 +64,23 @@
  */
 
 //PIN DEFS
-#define SER_IN_PIN			SHIFT_SER_IN_PIN //A8
-#define SER_IN_PORT			SHIFT_SER_IN_PORT
-#define SER_IN_CLOCK		CLOCK_ENABLE(SHIFT_SER_IN_PORT)
-#define SER_CLK_PIN			SHIFT_SER_CLK_PIN //G7
-#define SER_CLK_PORT		SHIFT_SER_CLK_PORT
-#define SER_CLK_CLOCK		CLOCK_ENABLE(SHIFT_SER_CLK_PORT)
+#define SER_IN_PIN SHIFT_SER_IN_PIN //A8
+#define SER_IN_PORT SHIFT_SER_IN_PORT
+#define SER_IN_CLOCK CLOCK_ENABLE(SHIFT_SER_IN_PORT)
+#define SER_CLK_PIN SHIFT_SER_CLK_PIN //G7
+#define SER_CLK_PORT SHIFT_SER_CLK_PORT
+#define SER_CLK_CLOCK CLOCK_ENABLE(SHIFT_SER_CLK_PORT)
 
-#define LATCH_PIN			SHIFT_LATCH_PIN //C6
-#define LATCH_PORT			SHIFT_LATCH_PORT
-#define LATCH_CLOCK			CLOCK_ENABLE(SHIFT_LATCH_PORT)
+#define LATCH_PIN SHIFT_LATCH_PIN //C6
+#define LATCH_PORT SHIFT_LATCH_PORT
+#define LATCH_CLOCK CLOCK_ENABLE(SHIFT_LATCH_PORT)
 
-#define OUT_ENA_PIN			SHIFT_OUT_ENA_PIN //C8
-#define OUT_ENA_PORT		SHIFT_OUT_ENA_PORT
-#define OUT_ENA_CLOCK		CLOCK_ENABLE(SHIFT_OUT_ENA_PIN)
-#define SR_CLR_PIN			SHIFT_SER_CLR_PIN //G5
-#define SR_CLR_PORT			SHIFT_SER_CLR_PORT
-#define SR_CLR_CLOCK		CLOCK_ENABLE(SHIFT_SER_CLR_PORT)
+#define OUT_ENA_PIN SHIFT_OUT_ENA_PIN //C8
+#define OUT_ENA_PORT SHIFT_OUT_ENA_PORT
+#define OUT_ENA_CLOCK CLOCK_ENABLE(SHIFT_OUT_ENA_PIN)
+#define SR_CLR_PIN SHIFT_SER_CLR_PIN //G5
+#define SR_CLR_PORT SHIFT_SER_CLR_PORT
+#define SR_CLR_CLOCK CLOCK_ENABLE(SHIFT_SER_CLR_PORT)
 
 void SN54HC595_init();
 
@@ -90,14 +90,15 @@ void SN54HC595_enable();
 
 unsigned char SN54HC595_get_dev_count(void);
 
-unsigned char SN54HC595_out_bytes(unsigned char* data, unsigned char byte_count);
+unsigned char SN54HC595_out_bytes(unsigned char *data,
+				  unsigned char byte_count);
 
-unsigned char SN54HC595_out_bytes_delay(unsigned char* data,
-		unsigned char byte_count, uint32_t delay);
+unsigned char SN54HC595_out_bytes_delay(unsigned char *data,
+					unsigned char byte_count,
+					uint32_t delay);
 
 void SN54HC595_out(void);
 
 void SN54HC595_clear(void);
-
 
 #endif /* SN54HC595_H_ */

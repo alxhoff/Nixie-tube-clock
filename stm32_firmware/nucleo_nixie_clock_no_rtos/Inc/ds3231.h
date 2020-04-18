@@ -11,29 +11,29 @@
 #include "stm32f1xx_hal.h"
 
 #ifndef TRUE
-#define TRUE						1
+#define TRUE 1
 #endif
 
-#ifndef	FALSE
-#define FALSE						0
+#ifndef FALSE
+#define FALSE 0
 #endif
 
-#define DS3231_ADDR8				0xD0
+#define DS3231_ADDR8 0xD0
 
-#define PM_AM_FLAG					5
-#define TWELVE_FLAG					6
-#define DAY_OR_DATE_FLAG			6
-#define ALARM_MASK_BITS				7
+#define PM_AM_FLAG 5
+#define TWELVE_FLAG 6
+#define DAY_OR_DATE_FLAG 6
+#define ALARM_MASK_BITS 7
 
-#define ALARM_INTERRUPT_ENABLE		2
-#define ALARM2_CRTL_ENABLE			1
-#define ALARM1_CRTL_ENABLE			0
+#define ALARM_INTERRUPT_ENABLE 2
+#define ALARM2_CRTL_ENABLE 1
+#define ALARM1_CRTL_ENABLE 0
 
-#define ALARM2_STATUS				1
-#define ALARM1_STATUS				0
+#define ALARM2_STATUS 1
+#define ALARM1_STATUS 0
 
-#define RS1							3
-#define RS2							4
+#define RS1 3
+#define RS2 4
 
 typedef enum {
 	ALARM_EVERY_SECOND = 1,
@@ -44,16 +44,15 @@ typedef enum {
 } ALARM_TYPE_e;
 
 typedef enum {
-	ALARM_ONE = 1, ALARM_TWO = 2, BOTH = 3, TIME = 4,
+	ALARM_ONE = 1,
+	ALARM_TWO = 2,
+	BOTH = 3,
+	TIME = 4,
 } TIME_TYPE_e;
 
-typedef enum {
-	DAY_OF_MONTH = 0, DAY_OF_WEEK = 1
-} DAY_OR_DATE_e;
+typedef enum { DAY_OF_MONTH = 0, DAY_OF_WEEK = 1 } DAY_OR_DATE_e;
 
-typedef enum {
-	ONE_K, ONE_POINT_K, FOUR_K, EIGHT_K
-} WAVE_FREQ_e;
+typedef enum { ONE_K, ONE_POINT_K, FOUR_K, EIGHT_K } WAVE_FREQ_e;
 
 typedef enum {
 	EMPTY_MONTH,
@@ -83,11 +82,15 @@ typedef enum {
 } WEEKDAYS_e;
 
 typedef enum {
-	AM = 0, PM = 1, AM_PM_IGNORE,
+	AM = 0,
+	PM = 1,
+	AM_PM_IGNORE,
 } AM_OR_PM_e;
 
 typedef enum {
-	HOUR_24 = 0, HOUR_12 = 1, HOUR_IGNORE,
+	HOUR_24 = 0,
+	HOUR_12 = 1,
+	HOUR_IGNORE,
 } TIME_FORMAT_e;
 
 typedef struct ds3231_time {
@@ -134,23 +137,27 @@ typedef union ds3231_alarm_u {
 signed char DS3231_set_time_sec(I2C_HandleTypeDef *hi2c, unsigned char sec);
 signed char DS3231_set_time_min(I2C_HandleTypeDef *hi2c, unsigned char min);
 signed char DS3231_set_time_hour(I2C_HandleTypeDef *hi2c, unsigned char hour,
-		TIME_FORMAT_e format, AM_OR_PM_e am_pm);
+				 TIME_FORMAT_e format, AM_OR_PM_e am_pm);
 signed char DS3231_set_time_day(I2C_HandleTypeDef *hi2c, unsigned char day);
 signed char DS3231_set_time_date(I2C_HandleTypeDef *hi2c, unsigned char date);
 signed char DS3231_set_time_month(I2C_HandleTypeDef *hi2c, unsigned char month);
 signed char DS3231_set_time_year(I2C_HandleTypeDef *hi2c, unsigned short year);
 
-signed char DS3231_set_time(I2C_HandleTypeDef *hi2c, ds3231_time_t* time);
+signed char DS3231_set_time(I2C_HandleTypeDef *hi2c, ds3231_time_t *time);
 signed char DS3231_get_time(I2C_HandleTypeDef *hi2c,
-		ds3231_time_t* return_struct);
+			    ds3231_time_t *return_struct);
 signed char DS3231_set_date(I2C_HandleTypeDef *hi2c, uint16_t year,
-		unsigned char month, unsigned char date, unsigned char weekday);
-signed char DS3231_get_date(I2C_HandleTypeDef *hi2c, uint16_t* year,
-		unsigned char* month, unsigned char* date, unsigned char* day);
+			    unsigned char month, unsigned char date,
+			    unsigned char weekday);
+signed char DS3231_get_date(I2C_HandleTypeDef *hi2c, uint16_t *year,
+			    unsigned char *month, unsigned char *date,
+			    unsigned char *day);
 signed char DS3231_get_temp(I2C_HandleTypeDef *hi2c, float *temp);
 signed char DS3231_set_alarm(I2C_HandleTypeDef *hi2c,
-		ds3231_alarm_t* alarm_time, TIME_TYPE_e alarm_number);
+			     ds3231_alarm_t *alarm_time,
+			     TIME_TYPE_e alarm_number);
 signed char DS3231_get_alarm(I2C_HandleTypeDef *hi2c,
-		ds3231_alarm_t* return_struct, TIME_TYPE_e alarm_number);
+			     ds3231_alarm_t *return_struct,
+			     TIME_TYPE_e alarm_number);
 
 #endif /* DS3231_STM32_ALEX_H_ */
