@@ -17,20 +17,19 @@
 
 unsigned char blink_flag = 0;
 
-#ifdef SCREEN_ON
-static char weekday[12] = {0};
-static char date[12] = {0};
-static char time[12] = {0};
-#endif
+static char weekday[12] = { 0 };
+static char date[12] = { 0 };
+static char time[12] = { 0 };
 
-const char *weekday_strings[8]= {
-		"XXX", "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN",
+const char *weekday_strings[8] = {
+	"XXX", "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN",
 };
-const char *month_strings[13]={
-		"XXX", "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
-};
+const char *month_strings[13] = { "XXX", "JAN", "FEB", "MAR", "APR",
+				  "MAY", "JUN", "JUL", "AUG", "SEP",
+				  "OCT", "NOV", "DEC" };
 
-static void get_weekday_string(WEEKDAYS_e weekday, char *buf) {
+static void get_weekday_string(WEEKDAYS_e weekday, char *buf)
+{
 	switch (weekday) {
 	case MONDAY:
 	case TUESDAY:
@@ -47,7 +46,8 @@ static void get_weekday_string(WEEKDAYS_e weekday, char *buf) {
 	}
 }
 
-static void get_month_string(MONTHS_e month, char *buf) {
+static void get_month_string(MONTHS_e month, char *buf)
+{
 	switch (month) {
 	case JANUARY:
 	case FEBUARY:
@@ -69,7 +69,8 @@ static void get_month_string(MONTHS_e month, char *buf) {
 	}
 }
 
-static void get_alarm_date_string(char *buf, TIME_TYPE_e type) {
+static void get_alarm_date_string(char *buf, TIME_TYPE_e type)
+{
 	unsigned char date;
 	WEEKDAYS_e weekday;
 	DAY_OR_DATE_e date_or_day;
@@ -101,7 +102,8 @@ static void get_alarm_date_string(char *buf, TIME_TYPE_e type) {
 	}
 }
 
-static void get_alarm_time_string(char *buf, TIME_TYPE_e type) {
+static void get_alarm_time_string(char *buf, TIME_TYPE_e type)
+{
 	unsigned char hour;
 	unsigned char min;
 
@@ -134,72 +136,75 @@ static void get_alarm_time_string(char *buf, TIME_TYPE_e type) {
 }
 
 static void get_date_string(char *buf, signed char manual_date,
-		signed char manual_month, signed short manual_year) {
+			    signed char manual_month, signed short manual_year)
+{
 	unsigned char date;
 	MONTHS_e month;
 	unsigned short year;
 	static char month_str[4] = { 0 };
 
-	if(manual_date == -1)
+	if (manual_date == -1)
 		date = RTC_dev_time_get_date();
 	else
 		date = manual_date;
 
-	if(manual_month == -1)
+	if (manual_month == -1)
 		month = RTC_dev_time_get_month();
 	else
 		month = manual_month;
 
-	if(manual_year == -1)
+	if (manual_year == -1)
 		year = RTC_dev_time_get_year();
 	else
-		year = (unsigned short) manual_year;
+		year = (unsigned short)manual_year;
 
 	get_month_string(month, month_str);
 
 	sprintf(buf, "%02d %s %04hu", date, month_str, year);
 
-	if((manual_date != -1) && blink_flag)
+	if ((manual_date != -1) && blink_flag)
 		strncpy(buf, "--", 2);
-	else if((manual_month != -1) && blink_flag)
+	else if ((manual_month != -1) && blink_flag)
 		strncpy(buf + 3, "---", 3);
-	else if((manual_year != -1) && blink_flag)
+	else if ((manual_year != -1) && blink_flag)
 		strncpy(buf + 7, "----", 4);
 
 	return;
 }
 
-static void get_time_weekday_string(char *buf, signed char manual_weekday) {
+static void get_time_weekday_string(char *buf, signed char manual_weekday)
+{
 	WEEKDAYS_e weekday;
 
-	if(manual_weekday == -1)
+	if (manual_weekday == -1)
 		weekday = RTC_dev_time_get_weekday();
 	else
 		weekday = manual_weekday;
 
-	if((manual_weekday != -1) &&blink_flag)
+	if ((manual_weekday != -1) && blink_flag)
 		strcpy(buf, "---");
 	else
 		get_weekday_string(weekday, buf);
 }
 
 static void get_time_string(char *buf, signed char manual_hour,
-		signed char manual_min, signed char manual_sec) {
+			    signed char manual_min, signed char manual_sec)
+{
 	unsigned char hour;
 	unsigned char min;
 	unsigned char sec;
 
-	if(manual_hour == -1)
+	if (manual_hour == -1)
 		hour = RTC_dev_time_get_hour();
 	else
 		hour = manual_hour;
 
-	if(manual_min == -1)
-		min	= RTC_dev_time_get_min();
+	if (manual_min == -1)
+		min = RTC_dev_time_get_min();
 	else
 		min = manual_min;
 
-	if(manual_sec == -1)
+	if (manual_sec == -1)
 		sec = RTC_dev_time_get_sec();
 	else
 		sec = manual_sec;
@@ -215,7 +220,7 @@ static void get_time_string(char *buf, signed char manual_hour,
 	}
 
 	// XOR one digit blinking
-	if((manual_hour != -1) && blink_flag)
+	if ((manual_hour != -1) && blink_flag)
 		strncpy(buf, "--", 2);
 	else if ((manual_min != -1) && blink_flag)
 		strncpy(buf + 3, "--", 2);
@@ -223,11 +228,22 @@ static void get_time_string(char *buf, signed char manual_hour,
 		strncpy(buf + 6, "--", 2);
 }
 
+static unsigned char nixie_mins = 0;
+static unsigned char nixie_hours = 0;
+static unsigned char prev_blink_status = 0;
+
 //TIME
-void draw_get_and_draw_time(signed char m_hour, signed char m_min, signed char m_sec,
-		signed char m_weekday, signed char m_date, signed char m_month, signed short m_year) {
+void draw_get_and_draw_time(signed char m_hour, signed char m_min,
+			    signed char m_sec, signed char m_weekday,
+			    signed char m_date, signed char m_month,
+			    signed short m_year)
+{
+	unsigned char nixie_changed = 0;
+	static uint32_t nixie_output;
+	static unsigned char minutes;
+	static unsigned char hours;
+
 	RTC_dev_get_time();
-#ifdef SCREEN_ON
 	get_time_weekday_string(weekday, m_weekday);
 	get_date_string(date, m_date, m_month, m_year);
 	get_time_string(time, m_hour, m_min, m_sec);
@@ -235,14 +251,42 @@ void draw_get_and_draw_time(signed char m_hour, signed char m_min, signed char m
 	screen_add_line_at_index(0, weekday);
 	screen_add_line_at_index(1, date);
 	screen_add_line_at_index(2, time);
-#else
 
-	nixie_split_set_digit(RTC_dev_time_get_min(), NIXIE_MIN_INDEX_LSB);
-	nixie_split_set_digit(RTC_dev_time_get_hour(), NIXIE_HOUR_INDEX_LSB);
-	//TODO reduce
-	unsigned char *output = nixie_compile_output();
-	SN54HC595_out_bytes((unsigned char *) output, CHECK_ODD(NIXIE_DEVICES));
-#endif
+	// Set nixie
+	if (m_hour == -1)
+		hours = RTC_dev_time_get_hour();
+	else
+		hours = m_hour;
+
+	if (m_min == -1)
+		minutes = RTC_dev_time_get_min();
+	else
+		minutes = m_min;
+
+	if ((nixie_mins == minutes) && (nixie_hours == hours) &&
+	    (prev_blink_status == blink_flag))
+		return;
+
+	prev_blink_status = blink_flag;
+	nixie_mins = minutes;
+	nixie_hours = hours;
+
+	// Should be XOR between hours and mins
+	if ((m_min != -1) && blink_flag) {
+		nixie_disable_tube(NIXIE_MIN_INDEX_LSB);
+		nixie_disable_tube(NIXIE_MIN_INDEX_LSB + 1);
+	}
+
+	if ((m_hour != -1) && blink_flag) {
+		nixie_disable_tube(NIXIE_HOUR_INDEX_LSB);
+		nixie_disable_tube(NIXIE_HOUR_INDEX_LSB + 1);
+	}
+
+	nixie_split_set_digit(minutes, NIXIE_MIN_INDEX_LSB);
+	nixie_split_set_digit(hours, NIXIE_HOUR_INDEX_LSB);
+
+	nixie_output = nixie_compile_output();
+	SN54HC595_out_int(nixie_output);
 }
 
 //#ifdef SCREEN_ON
@@ -273,7 +317,6 @@ void draw_get_and_draw_time(signed char m_hour, signed char m_min, signed char m
 //		}											\
 //		HANDLE_BUTTONS(LEFT_BUT,CENTER_BUT,RIGHT_BUT)
 //#endif
-
 
 //void draw_set_time_min_run(void) {
 //#ifdef SCREEN_ON
@@ -349,4 +392,3 @@ void draw_get_and_draw_time(signed char m_hour, signed char m_min, signed char m
 //void draw_alarm1_day_run(void) {
 //	SET_ALARM_DRAW_STATE(0, 2, date, NULL, NULL, NULL);
 //}
-

@@ -8,6 +8,8 @@
 #ifndef SN54HC595_H_
 #define SN54HC595_H_
 
+#include <stdint.h>
+
 #include "config.h"
 
 /*
@@ -92,7 +94,7 @@ unsigned char SN54HC595_get_dev_count(void);
 
 unsigned char SN54HC595_out_bytes(unsigned char *data,
 				  unsigned char byte_count);
-
+unsigned char SN54HC595_out_int(uint32_t data);
 unsigned char SN54HC595_out_bytes_delay(unsigned char *data,
 					unsigned char byte_count,
 					uint32_t delay);

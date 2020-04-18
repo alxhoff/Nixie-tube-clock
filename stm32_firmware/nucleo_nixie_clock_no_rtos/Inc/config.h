@@ -11,8 +11,11 @@
 #include "main.h"
 #include "stm32f1xx_hal.h"
 
+//GENERAL
+// If NIXIE_SET is set then setting time will adhere to nixie capabilities, ie. skip seconds and date
+#define NIXIE_SET
+
 //SCREEN
-#define SCREEN_ON
 #define SCREEN_CURSOR_PERIOD 750
 #define SSD1306_I2C_PORT hi2c2
 #define SCREEN_USER_CURSOR 0

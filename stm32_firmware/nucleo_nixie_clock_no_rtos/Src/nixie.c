@@ -6,9 +6,10 @@
  */
 
 #include <stdlib.h>
-#include <string.h>
+#include <stdint.h>
 
 #include "nixie.h"
+#include "SN54HC595.h"
 #include "config.h"
 
 #define CHECK_ODD(N) ((N % 2 == 0) ? N / 2 : (N + 1) / 2)
@@ -22,9 +23,6 @@ struct nixie_tube {
 
 typedef struct nixie_tube_array {
 	nixie_tube_t tubes[NIXIE_DEVICES];
-
-	unsigned char uncompiled_output[NIXIE_DEVICES];
-	unsigned char output[CHECK_ODD(NIXIE_DEVICES)];
 } nixie_tube_array_t;
 
 nixie_tube_array_t nixie_dev = { 0 };
@@ -51,7 +49,7 @@ void nixie_disable_all(void)
 		nixie_disable_tube(i);
 }
 
-static void nixie_set_tube(unsigned char index, unsigned char value)
+void nixie_set_tube(unsigned char index, unsigned char value)
 {
 	if (value >= 0 && value <= 9)
 		nixie_dev.tubes[index].value = value;
@@ -69,19 +67,15 @@ unsigned char nixie_split_set_digit(volatile unsigned char input,
 	return 0;
 }
 
-unsigned char *nixie_compile_output(void)
+uint32_t nixie_compile_output(void)
 {
-	for (unsigned char i = 0; i < NIXIE_DEVICES; i++) {
-		if (i % 2 == 0)
-			if (nixie_dev.tubes[i].enabled)
-				nixie_dev.output[i / 2] =
-					(nixie_dev.tubes[i].value << 4);
-			else
-				nixie_dev.output[i / 2] = 0xF0;
-		else if (nixie_dev.tubes[i].enabled)
-			nixie_dev.output[i / 2] |= nixie_dev.tubes[i].value;
+	uint32_t ret = 0;
+
+	for (unsigned char i = 0; i < NIXIE_DEVICES; i++)
+		if (nixie_dev.tubes[i].enabled)
+			ret |= ((nixie_dev.tubes[i].value & 0x0F) << (4 * i));
 		else
-			nixie_dev.output[i / 2] |= 0x0F;
-	}
-	return &nixie_dev.output[0];
+			ret &= ~(0x0F << (i * 4));
+
+	return ret;
 }

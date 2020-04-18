@@ -20,7 +20,7 @@ typedef enum{
 	state_time,
 	state_time_set_hour,
 	state_time_set_min,
-#ifdef SCREEN_ON
+#ifdef NIXIE_SET
 	state_time_set_sec,
 	state_time_set_date,
 	state_time_set_month,
@@ -74,11 +74,11 @@ struct state_ops state_show_time = {
 static unsigned int state_set_time_hour_data = 0;
 
 void state_set_time_hour_lb(void){
-#ifdef SCREEN_ON
+#ifdef NIXIE_SET
 	states_set_state(state_alarm_1_set);
 #else
 	states_set_state(state_time);
-#endif // SCREEN_ON
+#endif // NIXIE_SET
 }
 
 void state_set_time_hour_cb(void){
@@ -122,19 +122,19 @@ struct state_ops state_set_time_hour = {
 static unsigned int state_set_time_mins_data = 0;
 
 void state_set_time_mins_lb(void){
-#ifdef SCREEN_ON
+#ifdef NIXIE_SET
 	states_set_state(state_alarm_1_set);
 #else
 	states_set_state(state_time);
-#endif // SCREEN_ON
+#endif // NIXIE_SET
 }
 
 void state_set_time_mins_cb(void){
-#ifdef SCREEN_ON
+#ifdef NIXIE_SET
 	states_set_state(state_time_set_sec);
 #else
 	states_set_state(state_time_set_hour);
-#endif // SCREEN_ON
+#endif // NIXIE_SET
 }
 
 void state_set_time_mins_rb(void){
@@ -170,16 +170,16 @@ struct state_ops state_set_time_mins = {
 	.run = state_set_time_mins_run,
 	.exit = state_set_time_mins_exit,
 };
-#ifdef SCREEN_ON
+#ifdef NIXIE_SET
 /* ================================ SET TIME SEC============================== */
 static unsigned int state_set_time_secs_data = 0;
 
 void state_set_time_secs_lb(void){
-#ifdef SCREEN_ON
+#ifdef NIXIE_SET
 	states_set_state(state_alarm_1_set);
 #else
 	states_set_state(state_time);
-#endif // SCREEN_ON
+#endif // NIXIE_SET
 }
 
 void state_set_time_secs_cb(void){
@@ -223,11 +223,11 @@ struct state_ops state_set_time_secs = {
 static unsigned int state_set_time_date_data = 0;
 
 void state_set_time_date_lb(void){
-#ifdef SCREEN_ON
+#ifdef NIXIE_SET
 	states_set_state(state_alarm_1_set);
 #else
 	states_set_state(state_time);
-#endif // SCREEN_ON
+#endif // NIXIE_SET
 }
 
 void state_set_time_date_cb(void){
@@ -271,11 +271,11 @@ struct state_ops state_set_time_date = {
 static unsigned int state_set_time_month_data = 0;
 
 void state_set_time_month_lb(void){
-#ifdef SCREEN_ON
+#ifdef NIXIE_SET
 	states_set_state(state_alarm_1_set);
 #else
 	states_set_state(state_time);
-#endif // SCREEN_ON
+#endif // NIXIE_SET
 }
 
 void state_set_time_month_cb(void){
@@ -319,11 +319,11 @@ struct state_ops state_set_time_month = {
 static unsigned int state_set_time_year_data = 0;
 
 void state_set_time_year_lb(void){
-#ifdef SCREEN_ON
+#ifdef NIXIE_SET
 	states_set_state(state_alarm_1_set);
 #else
 	states_set_state(state_time);
-#endif // SCREEN_ON
+#endif // NIXIE_SET
 }
 
 void state_set_time_year_cb(void){
@@ -366,11 +366,11 @@ struct state_ops state_set_time_year = {
 static unsigned int state_set_time_day_data = 0;
 
 void state_set_time_day_lb(void){
-#ifdef SCREEN_ON
+#ifdef NIXIE_SET
 	states_set_state(state_alarm_1_set);
 #else
 	states_set_state(state_time);
-#endif // SCREEN_ON
+#endif // NIXIE_SET
 }
 
 void state_set_time_day_cb(void){
@@ -462,5 +462,5 @@ struct state_ops state_show_alarm_1_set_day = {
 	.run = NULL,
 	.exit = NULL,
 };
-#endif // SCREEN_ON
+#endif // NIXIE_SET
 #endif /* USER_STATES_H_ */
