@@ -182,7 +182,7 @@ Wire Wire Line
 Wire Wire Line
 	6350 3750 6550 3750
 $Comp
-L keyboard:MP2307 U8
+L nixie_control_board-rescue:MP2307-keyboard U8
 U 1 1 5B62B290
 P 5050 3900
 F 0 "U8" H 5300 3600 50  0000 C CNN
@@ -212,7 +212,7 @@ U 1 1 5B62B9A1
 P 6250 3900
 F 0 "RV2" V 6350 4000 50  0000 C CNN
 F 1 "100K(26.1K)" V 6450 3950 50  0000 C CNN
-F 2 "Potentiometers:Potentiometer_Trimmer-EVM3E" H 6250 3900 50  0001 C CNN
+F 2 "Potentiometer_SMD:Potentiometer_Trimmer-EVM3E" H 6250 3900 50  0001 C CNN
 F 3 "" H 6250 3900 50  0001 C CNN
 	1    6250 3900
 	0    1    1    0   

@@ -14,7 +14,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L keyboard:STM32F103C8T6 MCU1
+L nixie_control_board-rescue:STM32F103C8T6-keyboard MCU1
 U 1 1 59A32309
 P 2550 1850
 F 0 "MCU1" H 2300 750 60  0000 C CNN
@@ -25,7 +25,7 @@ F 3 "" H 2450 1900 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L keyboard:DS3231 U1
+L nixie_control_board-rescue:DS3231-keyboard U1
 U 1 1 59A32661
 P 2800 3600
 F 0 "U1" H 2550 3150 60  0000 C CNN
@@ -111,9 +111,9 @@ F 3 "" H 9900 2150 50  0000 C CNN
 	1    9900 2150
 	-1   0    0    1   
 $EndComp
-Text GLabel 9800 2350 3    60   Input ~ 0
-SDA
 Text GLabel 10100 2350 3    60   Input ~ 0
+SDA
+Text GLabel 9800 2350 3    60   Input ~ 0
 SCL
 $Comp
 L nixie_control_board-rescue:GND-power #PWR09
@@ -286,7 +286,7 @@ U 1 1 59A3A83B
 P 9900 5650
 F 0 "RV1" H 9750 5650 50  0000 C CNN
 F 1 "5K" H 9750 5750 50  0000 C CNN
-F 2 "Potentiometers:Potentiometer_Bourns_3296W_3-8Zoll_Inline_ScrewUp" H 9900 5650 50  0001 C CNN
+F 2 "Potentiometer_SMD:Potentiometer_Trimmer-EVM3E" H 9900 5650 50  0001 C CNN
 F 3 "" H 9900 5650 50  0000 C CNN
 	1    9900 5650
 	1    0    0    -1  
@@ -347,7 +347,7 @@ F 3 "" H 10700 5050 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L keyboard:MAX1771 U3
+L nixie_control_board-rescue:MAX1771-keyboard U3
 U 1 1 59A379DA
 P 8400 5250
 F 0 "U3" H 8150 4850 60  0000 C CNN
@@ -393,50 +393,6 @@ F 2 "" H 1800 1000 50  0000 C CNN
 F 3 "" H 1800 1000 50  0000 C CNN
 	1    1800 1000
 	0    1    1    0   
-$EndComp
-$Comp
-L keyboard:AMS1117 P3
-U 1 1 59A43C11
-P 5500 3350
-F 0 "P3" H 5250 3200 60  0000 C CNN
-F 1 "AMS1117" H 5500 3800 60  0000 C CNN
-F 2 "keyboard:SOT-223" H 5500 3350 60  0001 C CNN
-F 3 "" H 5500 3350 60  0001 C CNN
-	1    5500 3350
-	1    0    0    -1  
-$EndComp
-$Comp
-L nixie_control_board-rescue:R-device R4
-U 1 1 59A43C12
-P 5950 3450
-F 0 "R4" V 6030 3450 50  0000 C CNN
-F 1 "0" V 5950 3450 50  0000 C CNN
-F 2 "Resistor_SMD:R_0603_1608Metric" V 5880 3450 50  0001 C CNN
-F 3 "" H 5950 3450 50  0000 C CNN
-	1    5950 3450
-	1    0    0    -1  
-$EndComp
-$Comp
-L nixie_control_board-rescue:R-device R5
-U 1 1 59A43C13
-P 5950 3750
-F 0 "R5" V 6030 3750 50  0000 C CNN
-F 1 "0" V 5950 3750 50  0000 C CNN
-F 2 "Resistor_SMD:R_0603_1608Metric" V 5880 3750 50  0001 C CNN
-F 3 "" H 5950 3750 50  0000 C CNN
-	1    5950 3750
-	1    0    0    -1  
-$EndComp
-$Comp
-L nixie_control_board-rescue:GND-power #PWR020
-U 1 1 59A43C14
-P 5950 3900
-F 0 "#PWR020" H 5950 3650 50  0001 C CNN
-F 1 "GND" H 5950 3750 50  0000 C CNN
-F 2 "" H 5950 3900 50  0000 C CNN
-F 3 "" H 5950 3900 50  0000 C CNN
-	1    5950 3900
-	1    0    0    -1  
 $EndComp
 $Comp
 L nixie_control_board-rescue:CP1-device C9
@@ -619,52 +575,7 @@ SHIFT_SERIAL_CLOCK
 Text GLabel 7650 3500 2    60   Input ~ 0
 SHIFT_LATCH_CLOCK
 $Comp
-L keyboard:DHT11 U5
-U 1 1 59A560D6
-P 9000 1150
-F 0 "U5" H 8700 1200 60  0000 C CNN
-F 1 "DHT11" H 8950 1400 60  0000 C CNN
-F 2 "keyboard:DHT11" H 9000 1150 60  0001 C CNN
-F 3 "" H 9000 1150 60  0000 C CNN
-	1    9000 1150
-	1    0    0    -1  
-$EndComp
-$Comp
-L nixie_control_board-rescue:GND-power #PWR032
-U 1 1 59A563DF
-P 8950 1350
-F 0 "#PWR032" H 8950 1100 50  0001 C CNN
-F 1 "GND" H 8950 1200 50  0000 C CNN
-F 2 "" H 8950 1350 50  0000 C CNN
-F 3 "" H 8950 1350 50  0000 C CNN
-	1    8950 1350
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	8850 1750 8850 1350
-Text GLabel 9050 1550 3    60   Input ~ 0
-DHT
-Wire Wire Line
-	9050 1550 9050 1350
-Text GLabel 1950 1500 0    60   Input ~ 0
-DHT
-$Comp
-L nixie_control_board-rescue:Conn_01x01-conn P5
-U 1 1 59A47734
-P 2000 3250
-F 0 "P5" H 2000 3350 50  0000 C CNN
-F 1 "." V 2100 3250 50  0001 C CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical" H 2000 3250 50  0001 C CNN
-F 3 "" H 2000 3250 50  0000 C CNN
-	1    2000 3250
-	-1   0    0    1   
-$EndComp
-Wire Wire Line
-	2200 3250 2350 3250
-Text GLabel 3150 1800 2    60   Input ~ 0
-BUZZER
-$Comp
-L keyboard:AT24C02 U2
+L nixie_control_board-rescue:AT24C02-keyboard U2
 U 1 1 59A5FC41
 P 9900 3700
 F 0 "U2" H 9750 3450 60  0000 C CNN
@@ -672,17 +583,6 @@ F 1 "AT24C02" H 9900 3950 60  0000 C CNN
 F 2 "kicad-libraries:SOIC8" H 9900 3300 60  0001 C CNN
 F 3 "" H 9900 3650 60  0000 C CNN
 	1    9900 3700
-	1    0    0    -1  
-$EndComp
-$Comp
-L keyboard:Logo U6
-U 1 1 59A605BE
-P 9950 1100
-F 0 "U6" H 9900 950 60  0000 C CNN
-F 1 "Logo" H 9950 1250 60  0000 C CNN
-F 2 "keyboard:Logo" H 9950 1100 60  0001 C CNN
-F 3 "" H 9950 1100 60  0000 C CNN
-	1    9950 1100
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -817,7 +717,7 @@ Wire Wire Line
 Wire Wire Line
 	8550 4400 8650 4400
 Wire Wire Line
-	9900 4750 10300 4750
+	9900 4750 10150 4750
 Wire Wire Line
 	9600 4750 9900 4750
 Wire Wire Line
@@ -857,7 +757,7 @@ U 1 1 5B587F79
 P 6950 4750
 F 0 "SW4" H 6950 4483 50  0000 C CNN
 F 1 "SW_DIP_x01" H 6950 4574 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 6950 4750 50  0001 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 6950 4750 50  0001 C CNN
 F 3 "" H 6950 4750 50  0001 C CNN
 	1    6950 4750
 	1    0    0    1   
@@ -907,7 +807,6 @@ F 3 "" H 10350 3200 50  0000 C CNN
 $EndComp
 Wire Wire Line
 	10350 3200 10350 3350
-Connection ~ 5950 3300
 Connection ~ 3550 4200
 $Comp
 L nixie_control_board-rescue:C-device C15
@@ -1259,60 +1158,6 @@ Text GLabel 3650 6400 2    60   Input ~ 0
 SDA
 Text GLabel 3650 6300 2    60   Input ~ 0
 SCL
-$Comp
-L nixie_control_board-rescue:Buzzer-device BZ1
-U 1 1 5B66C38D
-P 6250 6400
-F 0 "BZ1" H 6403 6429 50  0000 L CNN
-F 1 "Buzzer" H 6403 6338 50  0000 L CNN
-F 2 "keyboard:buzzer" V 6225 6500 50  0001 C CNN
-F 3 "" V 6225 6500 50  0001 C CNN
-	1    6250 6400
-	1    0    0    -1  
-$EndComp
-$Comp
-L nixie_control_board-rescue:Q_PNP_BEC-device Q2
-U 1 1 5B67164A
-P 6050 6800
-F 0 "Q2" H 6241 6754 50  0000 L CNN
-F 1 "Q_PNP_BEC" H 6241 6845 50  0000 L CNN
-F 2 "keyboard:SOT23-3" H 6250 6900 50  0001 C CNN
-F 3 "" H 6050 6800 50  0001 C CNN
-	1    6050 6800
-	1    0    0    1   
-$EndComp
-$Comp
-L nixie_control_board-rescue:R-device R7
-U 1 1 5B67F38E
-P 5600 6800
-F 0 "R7" V 5680 6800 50  0000 C CNN
-F 1 "1K" V 5600 6800 50  0000 C CNN
-F 2 "Resistor_SMD:R_0603_1608Metric" V 5530 6800 50  0001 C CNN
-F 3 "" H 5600 6800 50  0000 C CNN
-	1    5600 6800
-	0    1    1    0   
-$EndComp
-$Comp
-L nixie_control_board-rescue:GND-power #PWR0119
-U 1 1 5B67F644
-P 6150 7100
-F 0 "#PWR0119" H 6150 6850 50  0001 C CNN
-F 1 "GND" H 6150 6950 50  0000 C CNN
-F 2 "" H 6150 7100 50  0000 C CNN
-F 3 "" H 6150 7100 50  0000 C CNN
-	1    6150 7100
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	6150 7100 6150 7000
-Wire Wire Line
-	6150 6600 6150 6500
-Wire Wire Line
-	5750 6800 5850 6800
-Text GLabel 5450 6800 0    60   Input ~ 0
-BUZZER
-Wire Wire Line
-	6150 6150 6150 6300
 Wire Wire Line
 	6550 4850 6550 5250
 $Comp
@@ -1336,25 +1181,6 @@ F 2 "" H 7650 3200 50  0000 C CNN
 F 3 "" H 7650 3200 50  0000 C CNN
 	1    7650 3200
 	0    -1   -1   0   
-$EndComp
-Text GLabel 3150 1400 2    50   Input ~ 0
-TX
-Text GLabel 3150 1500 2    50   Input ~ 0
-RX
-Text GLabel 4250 1400 0    50   Input ~ 0
-TX
-Text GLabel 4250 1500 0    50   Input ~ 0
-RX
-$Comp
-L Connector:Conn_01x02_Female J2
-U 1 1 5C59CD0B
-P 4450 1400
-F 0 "J2" H 4477 1376 50  0000 L CNN
-F 1 "Conn_01x02_Female" H 4477 1285 50  0000 L CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 4450 1400 50  0001 C CNN
-F 3 "~" H 4450 1400 50  0001 C CNN
-	1    4450 1400
-	1    0    0    -1  
 $EndComp
 $Comp
 L nixie_control_board-rescue:+5V-power #PWR0118
@@ -1387,17 +1213,6 @@ F 1 "+5V-power" H 9915 2123 50  0000 C CNN
 F 2 "" H 9900 1950 50  0001 C CNN
 F 3 "" H 9900 1950 50  0001 C CNN
 	1    9900 1950
-	1    0    0    -1  
-$EndComp
-$Comp
-L nixie_control_board-rescue:+5V-power #PWR0123
-U 1 1 5C5AA841
-P 6150 6150
-F 0 "#PWR0123" H 6150 6000 50  0001 C CNN
-F 1 "+5V-power" H 6165 6323 50  0000 C CNN
-F 2 "" H 6150 6150 50  0001 C CNN
-F 3 "" H 6150 6150 50  0001 C CNN
-	1    6150 6150
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -1484,18 +1299,6 @@ F 3 "" H 6300 3300 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	4900 3300 5050 3300
-Connection ~ 5050 3300
-$Comp
-L nixie_control_board-rescue:+5V-power #PWR0138
-U 1 1 5C5BAAF8
-P 8850 1750
-F 0 "#PWR0138" H 8850 1600 50  0001 C CNN
-F 1 "+5V-power" H 8865 1923 50  0000 C CNN
-F 2 "" H 8850 1750 50  0001 C CNN
-F 3 "" H 8850 1750 50  0001 C CNN
-	1    8850 1750
-	-1   0    0    1   
-$EndComp
 $Comp
 L nixie_control_board-rescue:+5V-power #PWR0141
 U 1 1 5C5BADB1
@@ -1582,8 +1385,37 @@ Wire Wire Line
 	6000 1050 6150 1050
 Wire Wire Line
 	6250 1050 6400 1050
+$Comp
+L nixie_control_board-rescue:C_Small-device C17
+U 1 1 5E9DCF70
+P 10150 5250
+F 0 "C17" H 10160 5320 50  0000 L CNN
+F 1 "100nF, 250V" V 10300 4900 50  0000 L CNN
+F 2 "Capacitor_SMD:C_1206_3216Metric" H 10150 5250 50  0001 C CNN
+F 3 "" H 10150 5250 50  0000 C CNN
+	1    10150 5250
+	1    0    0    -1  
+$EndComp
 Wire Wire Line
-	5950 3600 5500 3600
-Connection ~ 5950 3600
-Connection ~ 5500 3600
+	9900 5450 10150 5450
+Wire Wire Line
+	10150 5450 10150 5350
+Wire Wire Line
+	10150 5150 10150 4750
+Connection ~ 10150 4750
+Wire Wire Line
+	10150 4750 10300 4750
+Connection ~ 5050 3300
+Connection ~ 5950 3300
+$Comp
+L nixie_control_board-rescue:AMS1117-keyboard P3
+U 1 1 59A43C11
+P 5500 3350
+F 0 "P3" H 5250 3200 60  0000 C CNN
+F 1 "AMS1117" H 5500 3800 60  0000 C CNN
+F 2 "keyboard:SOT-223" H 5500 3350 60  0001 C CNN
+F 3 "" H 5500 3350 60  0001 C CNN
+	1    5500 3350
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
