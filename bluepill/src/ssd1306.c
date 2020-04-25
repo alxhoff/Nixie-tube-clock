@@ -74,12 +74,23 @@ struct ssd1306_device {
 	I2C_HandleTypeDef *port;
 
 	void (*clear)(void);
-	unsigned char (*update)(void);
+	signed char (*update)(void);
 	void (*fill)(void);
 	void (*string)(char *);
 };
 
 ssd1306_device_t ssd1306_dev = { 0 };
+
+static void ssd1306_reset_enable(void)
+{
+	HAL_GPIO_WritePin(SSD1306_RESET_PORT, SSD1306_RESET_PIN,
+			  GPIO_PIN_RESET);
+}
+
+static void ssd1306_reset_disable(void)
+{
+	HAL_GPIO_WritePin(SSD1306_RESET_PORT, SSD1306_RESET_PIN, GPIO_PIN_SET);
+}
 
 unsigned char ssd1306_get_cols(void)
 {
@@ -93,9 +104,8 @@ unsigned char ssd1306_get_rows(void)
 
 signed char ssd1306_write_command(uint8_t command)
 {
-	signed char ret = 0;
 	if (HAL_I2C_Mem_Write(ssd1306_dev.port, SSD1306_I2C_ADDR, 0x00, 1,
-			      &command, 1, 10) != 0)
+			      &command, 1, 10) != HAL_OK)
 		return -1;
 
 	return 0;
@@ -114,9 +124,12 @@ signed char ssd1306_update_screen(void)
 	uint8_t i;
 
 	for (i = 0; i < 8; i++) {
-		ssd1306_write_command(0xB0 + i);
-		ssd1306_write_command(0x00);
-		ssd1306_write_command(0x10);
+		if(ssd1306_write_command(0xB0 + i))
+            return -1;
+		if(ssd1306_write_command(0x00))
+            return -1;
+		if(ssd1306_write_command(0x10))
+            return -1;
 
 		if (HAL_I2C_Mem_Write(
 			    ssd1306_dev.port, SSD1306_I2C_ADDR, 0x40, 1,
@@ -301,6 +314,7 @@ void ssd1306_refresh(char **buf, unsigned char cursor_on, int cursor_x,
 
 signed char ssd1306_init(void)
 {
+	ssd1306_reset_disable();
 	//functions
 	ssd1306_dev.clear = &ssd1306_clear;
 	ssd1306_dev.update = &ssd1306_update_screen;
@@ -316,40 +330,67 @@ signed char ssd1306_init(void)
 	ssd1306_dev.font = SSD1306_FONT;
 
 	/* Init LCD */
-	ssd1306_write_command(0xAE); //display off
-	ssd1306_write_command(0x20); //memory addressing mode
-	ssd1306_write_command(
-		0x10); //00,Horizontal Addressing Mode;01,Vertical Addressing Mode;10,Page Addressing Mode (RESET);11,Invalid
-	ssd1306_write_command(
-		0xB0); //Set Page Start Address for Page Addressing Mode,0-7
-	ssd1306_write_command(0xC8); //Set COM Output Scan Direction
-	ssd1306_write_command(0x00); //---set low column address
-	ssd1306_write_command(0x10); //---set high column address
-	ssd1306_write_command(0x40); //--set start line address
-	ssd1306_write_command(0x81); //--set contrast control register
-	ssd1306_write_command(0xFF);
-	ssd1306_write_command(0xA1); //--set segment re-map 0 to 127
-	ssd1306_write_command(0xA6); //--set normal display
-	ssd1306_write_command(0xA8); //--set multiplex ratio(1 to 64)
-	ssd1306_write_command(0x3F); //
-	ssd1306_write_command(
-		0xA4); //0xa4,Output follows RAM content;0xa5,Output ignores RAM content
-	ssd1306_write_command(0xD3); //-set display offset
-	ssd1306_write_command(0x00); //-not offset
-	ssd1306_write_command(
-		0xD5); //--set display clock divide ratio/oscillator frequency
-	ssd1306_write_command(0xF0); //--set divide ratio
-	ssd1306_write_command(0xD9); //--set pre-charge period
-	ssd1306_write_command(0x22); //
-	ssd1306_write_command(0xDA); //--set com pins hardware configuration
-	ssd1306_write_command(0x12);
-	ssd1306_write_command(0xDB); //--set vcomh
-	ssd1306_write_command(0x20); //0x20,0.77xVcc
-	ssd1306_write_command(0x8D); //--set DC-DC enable
-	ssd1306_write_command(0x14); //
-	ssd1306_write_command(0xAF); //--turn on SSD1306 panel
+	if (ssd1306_write_command(0xAE)) //display off
+		return -1;
+	if(ssd1306_write_command(0x20)) //memory addressing mode
+        return -1;
+    //00,Horizontal Addressing Mode;01,Vertical Addressing Mode;10,Page Addressing Mode (RESET))11,Invalid
+	if(ssd1306_write_command(0x10)) 
+        return -1;
+    //Set Page Start Address for Page Addressing Mode,0-7
+	if(ssd1306_write_command(0xB0)) 
+        return -1;
+	if(ssd1306_write_command(0xC8)) //Set COM Output Scan Direction
+        return -1;
+	if(ssd1306_write_command(0x00)) //---set low column address
+        return -1;
+	if(ssd1306_write_command(0x10)) //---set high column address
+        return -1;
+	if(ssd1306_write_command(0x40)) //--set start line address
+        return -1;
+	if(ssd1306_write_command(0x81)) //--set contrast control register
+        return -1;
+	if(ssd1306_write_command(0xFF))
+        return -1;
+	if(ssd1306_write_command(0xA1)) //--set segment re-map 0 to 127
+        return -1;
+	if(ssd1306_write_command(0xA6)) //--set normal display
+        return -1;
+	if(ssd1306_write_command(0xA8)) //--set multiplex ratio(1 to 64)
+        return -1;
+	if(ssd1306_write_command(0x3F)) //
+        return -1;
+    //0xa4,Output follows RAM content;0xa5,Output ignores RAM content
+	if(ssd1306_write_command(0xA4)) 
+        return -1;
+	if(ssd1306_write_command(0xD3)) //-set display offset
+        return -1;
+	if(ssd1306_write_command(0x00)) //-not offset
+        return -1;
+    //--set display clock divide ratio/oscillator frequency
+	if(ssd1306_write_command(0xD5)) 
+        return -1;
+	if(ssd1306_write_command(0xF0)) //--set divide ratio
+        return -1;
+	if(ssd1306_write_command(0xD9)) //--set pre-charge period
+        return -1;
+	if(ssd1306_write_command(0x22)) //
+        return -1;
+	if(ssd1306_write_command(0xDA)) //--set com pins hardware configuration
+        return -1;
+	if(ssd1306_write_command(0x12))
+        return -1;
+	if(ssd1306_write_command(0xDB)) //--set vcomh
+        return -1;
+	if(ssd1306_write_command(0x20)) //0x20,0.77xVcc
+        return -1;
+	if(ssd1306_write_command(0x8D)) //--set DC-DC enable
+        return -1;
+	if(ssd1306_write_command(0x14)) //
+        return -1;
+	if(ssd1306_write_command(0xAF)) //--turn on SSD1306 panel
+        return -1;
 
-	ssd1306_clear();
 	ssd1306_clear();
 
 	ssd1306_dev.x = 0;

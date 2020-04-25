@@ -10,7 +10,7 @@
 #include "draw.h"
 #include "config.h"
 
-I2C_HandleTypeDef hi2c2;
+I2C_HandleTypeDef PROJECT_I2C_PORT;
 TIM_HandleTypeDef htim3;
 
 osThreadId defaultTaskHandle;
@@ -23,26 +23,48 @@ void StartDefaultTask(void const *argument);
 
 void TIM3_IRQHandler(void)
 {
-  HAL_TIM_IRQHandler(&htim3);
-  HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
-  blink_flag = !blink_flag;
+	HAL_TIM_IRQHandler(&htim3);
+	HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
+	blink_flag = !blink_flag;
+}
+
+void ButtonTestTask(void const *argument)
+{
+    while(1){
+        if(!HAL_GPIO_ReadPin(BUT0_GPIO_Port, BUT0_Pin)){
+            HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
+            osDelay(200);
+        }
+
+        if(!HAL_GPIO_ReadPin(BUT1_GPIO_Port, BUT1_Pin)){
+            HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
+            osDelay(200);
+        }
+
+        if(!HAL_GPIO_ReadPin(BUT2_GPIO_Port, BUT2_Pin)){
+            HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
+            osDelay(200);
+        }
+    }
 }
 
 int main(void)
 {
+	volatile int ret;
 	HAL_Init();
 	SystemClock_Config();
 	MX_GPIO_Init();
-    MX_TIM3_Init();
+	MX_TIM3_Init();
 	MX_I2C2_Init();
 
 	SN54HC595_init();
-	ssd1306_init();
+	ret = ssd1306_init();
 	screen_init();
 	RTC_dev_init(1);
 	states_init();
 
-	osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
+	/** osThreadDef(defaultTask, ButtonTestTask, osPriorityNormal, 0, 128); */
+    osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 256);
 	defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
 	osKernelStart();
@@ -55,8 +77,8 @@ static void MX_TIM3_Init(void)
 {
 	TIM_ClockConfigTypeDef sClockSourceConfig = { 0 };
 	TIM_MasterConfigTypeDef sMasterConfig = { 0 };
-	
-    htim3.Instance = TIM3;
+
+	htim3.Instance = TIM3;
 	htim3.Init.Prescaler = 64000;
 	htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
 	htim3.Init.Period = 1000;
@@ -111,16 +133,16 @@ void SystemClock_Config(void)
 
 static void MX_I2C2_Init(void)
 {
-	hi2c2.Instance = I2C2;
-	hi2c2.Init.ClockSpeed = 100000;
-	hi2c2.Init.DutyCycle = I2C_DUTYCYCLE_2;
-	hi2c2.Init.OwnAddress1 = 0;
-	hi2c2.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
-	hi2c2.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
-	hi2c2.Init.OwnAddress2 = 0;
-	hi2c2.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
-	hi2c2.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
-	if (HAL_I2C_Init(&hi2c2) != HAL_OK) {
+	PROJECT_I2C_PORT.Instance = I2C1;
+	PROJECT_I2C_PORT.Init.ClockSpeed = 100000;
+	PROJECT_I2C_PORT.Init.DutyCycle = I2C_DUTYCYCLE_2;
+	PROJECT_I2C_PORT.Init.OwnAddress1 = 0;
+	PROJECT_I2C_PORT.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+	PROJECT_I2C_PORT.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+	PROJECT_I2C_PORT.Init.OwnAddress2 = 0;
+	PROJECT_I2C_PORT.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+	PROJECT_I2C_PORT.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+	if (HAL_I2C_Init(&PROJECT_I2C_PORT) != HAL_OK) {
 		Error_Handler();
 	}
 }
@@ -138,8 +160,9 @@ static void MX_GPIO_Init(void)
 
 	/*Configure GPIO pin Output Level */
 	HAL_GPIO_WritePin(GPIOB,
-			  SHIFT_SER_IN_Pin | SHIFT_SER_CLK_Pin |
-				  SHIFT_LATCH_Pin | SHIFT_ENA_Pin,
+			  SCREEN_RESET_Pin | SHIFT_SER_IN_Pin |
+				  SHIFT_SER_CLK_Pin | SHIFT_LATCH_Pin |
+				  SHIFT_ENA_Pin,
 			  GPIO_PIN_RESET);
 
 	/*Configure GPIO pin Output Level */
@@ -155,18 +178,19 @@ static void MX_GPIO_Init(void)
 	/*Configure GPIO pins : BUT0_Pin BUT1_Pin */
 	GPIO_InitStruct.Pin = BUT0_Pin | BUT1_Pin;
 	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
 	HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
 	/*Configure GPIO pin : BUT2_Pin */
 	GPIO_InitStruct.Pin = BUT2_Pin;
 	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
 	HAL_GPIO_Init(BUT2_GPIO_Port, &GPIO_InitStruct);
 
 	/*Configure GPIO pins : SHIFT_SER_IN_Pin SHIFT_SER_CLK_Pin SHIFT_LATCH_Pin SHIFT_ENA_Pin */
-	GPIO_InitStruct.Pin = SHIFT_SER_IN_Pin | SHIFT_SER_CLK_Pin |
-			      SHIFT_LATCH_Pin | SHIFT_ENA_Pin;
+	GPIO_InitStruct.Pin = SCREEN_RESET_Pin | SHIFT_SER_IN_Pin |
+			      SHIFT_SER_CLK_Pin | SHIFT_LATCH_Pin |
+			      SHIFT_ENA_Pin;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStruct.Pull = GPIO_NOPULL;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;

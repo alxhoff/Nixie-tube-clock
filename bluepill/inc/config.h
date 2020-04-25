@@ -11,9 +11,13 @@
 #include "main.h"
 #include "stm32f1xx_hal.h"
 
+#define PROJECT_I2C_PORT hi2c1 
+
 //SCREEN
 #define SCREEN_CURSOR_PERIOD 750
-#define SSD1306_I2C_PORT hi2c2
+#define SSD1306_I2C_PORT PROJECT_I2C_PORT 
+#define SSD1306_RESET_PIN SCREEN_RESET_Pin 
+#define SSD1306_RESET_PORT SCREEN_RESET_GPIO_Port
 #define SCREEN_USER_CURSOR 0
 #define SCREEN_FRAMEBUFFER_LENGTH 20
 
@@ -27,7 +31,7 @@
 #define RTC_DEF_DATE 05
 #define RTC_DEF_MONTH 06
 #define RTC_DEF_YEAR 2017
-#define RTC_I2C_PORT hi2c2
+#define RTC_I2C_PORT PROJECT_I2C_PORT 
 
 #define RTC_DEF_ALM1_TWELVE_HR HOUR_12
 #define RTC_DEF_ALM1_HOUR 1
@@ -85,6 +89,6 @@
 
 #define NUM_OF_BUTTONS 3
 
-extern I2C_HandleTypeDef hi2c2;
+extern I2C_HandleTypeDef PROJECT_I2C_PORT;
 
 #endif /* CONFIG_H_ */

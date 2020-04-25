@@ -1315,12 +1315,12 @@ Wire Wire Line
 $Comp
 L nixie_control_board-rescue:+3.3V-power #PWR0142
 U 1 1 5C5C046E
-P 3700 5300
-F 0 "#PWR0142" H 3700 5150 50  0001 C CNN
-F 1 "+3.3V-power" V 3715 5428 50  0000 L CNN
-F 2 "" H 3700 5300 50  0001 C CNN
-F 3 "" H 3700 5300 50  0001 C CNN
-	1    3700 5300
+P 4000 5300
+F 0 "#PWR0142" H 4000 5150 50  0001 C CNN
+F 1 "+3.3V-power" V 4015 5428 50  0000 L CNN
+F 2 "" H 4000 5300 50  0001 C CNN
+F 3 "" H 4000 5300 50  0001 C CNN
+	1    4000 5300
 	0    1    1    0   
 $EndComp
 Wire Wire Line
@@ -1417,5 +1417,16 @@ F 2 "keyboard:SOT-223" H 5500 3350 60  0001 C CNN
 F 3 "" H 5500 3350 60  0001 C CNN
 	1    5500 3350
 	1    0    0    -1  
+$EndComp
+$Comp
+L nixie_control_board-rescue:R-device R?
+U 1 1 5EA53A95
+P 3850 5300
+F 0 "R?" V 3930 5300 50  0000 C CNN
+F 1 "10K" V 3850 5300 50  0000 C CNN
+F 2 "Resistor_SMD:R_0603_1608Metric" V 3780 5300 50  0001 C CNN
+F 3 "" H 3850 5300 50  0000 C CNN
+	1    3850 5300
+	0    1    1    0   
 $EndComp
 $EndSCHEMATC
