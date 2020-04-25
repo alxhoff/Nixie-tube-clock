@@ -76,6 +76,10 @@ uint32_t nixie_compile_output(void)
 			ret |= ((nixie_dev.tubes[i].value & 0x0F) << (4 * i));
 		else
 			ret &= ~(0x0F << (i * 4));
+#if NIXIE_FLIPPED == 1
+	ret = ((ret & 0xF0F0F0F0) >> 4) | ((ret & 0x0F0F0F0F) << 4);
+#endif // NIXIE_FLIPPED
+
 
 	return ret;
 }

@@ -74,7 +74,7 @@ struct state_ops state_show_time = {
 static unsigned int state_set_time_hour_data = 0;
 
 void state_set_time_hour_lb(void){
-#ifdef NIXIE_SET
+#if NIXIE_SET == 0
 	states_set_state(state_alarm_1_set);
 #else
 	states_set_state(state_time);
@@ -122,7 +122,7 @@ struct state_ops state_set_time_hour = {
 static unsigned int state_set_time_mins_data = 0;
 
 void state_set_time_mins_lb(void){
-#ifdef NIXIE_SET
+#if NIXIE_SET == 0
 	states_set_state(state_alarm_1_set);
 #else
 	states_set_state(state_time);
@@ -130,7 +130,7 @@ void state_set_time_mins_lb(void){
 }
 
 void state_set_time_mins_cb(void){
-#ifdef NIXIE_SET
+#if NIXIE_SET == 0
 	states_set_state(state_time_set_sec);
 #else
 	states_set_state(state_time_set_hour);
@@ -175,7 +175,7 @@ struct state_ops state_set_time_mins = {
 static unsigned int state_set_time_secs_data = 0;
 
 void state_set_time_secs_lb(void){
-#ifdef NIXIE_SET
+#if NIXIE_SET == 0
 	states_set_state(state_alarm_1_set);
 #else
 	states_set_state(state_time);
@@ -223,7 +223,7 @@ struct state_ops state_set_time_secs = {
 static unsigned int state_set_time_date_data = 0;
 
 void state_set_time_date_lb(void){
-#ifdef NIXIE_SET
+#if NIXIE_SET == 0
 	states_set_state(state_alarm_1_set);
 #else
 	states_set_state(state_time);
@@ -271,7 +271,7 @@ struct state_ops state_set_time_date = {
 static unsigned int state_set_time_month_data = 0;
 
 void state_set_time_month_lb(void){
-#ifdef NIXIE_SET
+#if NIXIE_SET == 0
 	states_set_state(state_alarm_1_set);
 #else
 	states_set_state(state_time);
@@ -319,7 +319,7 @@ struct state_ops state_set_time_month = {
 static unsigned int state_set_time_year_data = 0;
 
 void state_set_time_year_lb(void){
-#ifdef NIXIE_SET
+#if NIXIE_SET == 0
 	states_set_state(state_alarm_1_set);
 #else
 	states_set_state(state_time);
@@ -366,7 +366,7 @@ struct state_ops state_set_time_year = {
 static unsigned int state_set_time_day_data = 0;
 
 void state_set_time_day_lb(void){
-#ifdef NIXIE_SET
+#if NIXIE_SET == 0
 	states_set_state(state_alarm_1_set);
 #else
 	states_set_state(state_time);

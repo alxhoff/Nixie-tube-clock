@@ -123,13 +123,13 @@ unsigned char SN54HC595_out_int(uint32_t data)
 {
 	static unsigned char i;
 
-	if (shift_dev.dev_count > 4)
+	if (shift_dev.dev_count < 4)
 		memset(shift_dev.out_buf, 0, shift_dev.dev_count);
-	else if (shift_dev.dev_count < 4)
+	else if (shift_dev.dev_count > 4)
 		return -1;
 
-	for (i = 0; i < 4; i++)
-		shift_dev.out_buf[i] = (data >> (i * 8)) && 0xFF;
+	for (i = 0; i < shift_dev.dev_count; i++)
+		shift_dev.out_buf[i] = (data >> (i * 8)) & 0xFF;
 
 	shift_dev.output(&shift_dev, shift_dev.dev_count);
 

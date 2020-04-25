@@ -228,10 +228,6 @@ static void get_time_string(char *buf, signed char manual_hour,
 		strncpy(buf + 6, "--", 2);
 }
 
-static unsigned char nixie_mins = 0;
-static unsigned char nixie_hours = 0;
-static unsigned char prev_blink_status = 0;
-
 //TIME
 void draw_get_and_draw_time(signed char m_hour, signed char m_min,
 			    signed char m_sec, signed char m_weekday,
@@ -253,33 +249,22 @@ void draw_get_and_draw_time(signed char m_hour, signed char m_min,
 	screen_add_line_at_index(2, time);
 
 	// Set nixie
+	nixie_enable_all();
+
 	if (m_hour == -1)
 		hours = RTC_dev_time_get_hour();
-	else
+	else{
 		hours = m_hour;
+		nixie_disable_tube(NIXIE_HOUR_INDEX_LSB);
+		nixie_disable_tube(NIXIE_HOUR_INDEX_LSB + 1);
+	}
 
 	if (m_min == -1)
 		minutes = RTC_dev_time_get_min();
-	else
+	else{
 		minutes = m_min;
-
-	if ((nixie_mins == minutes) && (nixie_hours == hours) &&
-	    (prev_blink_status == blink_flag))
-		return;
-
-	prev_blink_status = blink_flag;
-	nixie_mins = minutes;
-	nixie_hours = hours;
-
-	// Should be XOR between hours and mins
-	if ((m_min != -1) && blink_flag) {
 		nixie_disable_tube(NIXIE_MIN_INDEX_LSB);
 		nixie_disable_tube(NIXIE_MIN_INDEX_LSB + 1);
-	}
-
-	if ((m_hour != -1) && blink_flag) {
-		nixie_disable_tube(NIXIE_HOUR_INDEX_LSB);
-		nixie_disable_tube(NIXIE_HOUR_INDEX_LSB + 1);
 	}
 
 	nixie_split_set_digit(minutes, NIXIE_MIN_INDEX_LSB);
@@ -288,107 +273,3 @@ void draw_get_and_draw_time(signed char m_hour, signed char m_min,
 	nixie_output = nixie_compile_output();
 	SN54HC595_out_int(nixie_output);
 }
-
-//#ifdef SCREEN_ON
-//#define SET_TIME_DRAW_STATE(FROM, TO, LINE, LEFT_BUT, CENTER_BUT, RIGHT_BUT)	\
-//		get_time_weekday_string(weekday);	\
-//		get_date_string(date);		\
-//		get_time_string(time);		\
-//		strcpy( weekday + 3, " *");	\
-//		if(blink_flag)			\
-//			for(signed char i = FROM; i <= TO; i++)	\
-//				LINE[i] = '_';		\
-//		screen_add_line_at_index(0, weekday); 	\
-//		screen_add_line_at_index(1, date);		\
-//		screen_add_line_at_index(2, time);		\
-//		HANDLE_BUTTONS(LEFT_BUT,CENTER_BUT,RIGHT_BUT)
-//#else
-//#define	SET_TIME_DRAW_STATE_NIXIE(NIXIE_INDEX, LEFT_BUT, CENTER_BUT, RIGHT_BUT)	\
-//		nixie_split_set_digit(RTC_dev_time_get_min(), NIXIE_MIN_INDEX_LSB);		\
-//		nixie_split_set_digit(RTC_dev_time_get_hour(), NIXIE_HOUR_INDEX_LSB);	\
-//		unsigned char *output = nixie_compile_output();							\
-//		SN54HC595_out_bytes(output, CHECK_ODD(NIXIE_DEVICES));\
-//		if(blink_flag){	\
-//			nixie_disable_tube(NIXIE_INDEX);		\
-//			nixie_disable_tube(NIXIE_INDEX + 1);	\
-//		}else{	\
-//			nixie_enable_tube(NIXIE_INDEX);			\
-//			nixie_enable_tube(NIXIE_INDEX + 1);		\
-//		}											\
-//		HANDLE_BUTTONS(LEFT_BUT,CENTER_BUT,RIGHT_BUT)
-//#endif
-
-//void draw_set_time_min_run(void) {
-//#ifdef SCREEN_ON
-//	SET_TIME_DRAW_STATE(3, 4, time, draw_set_time_exit(),
-//			change_time_state(), RTC_dev_set_time_min_increment())
-//#else
-////	SET_TIME_DRAW_STATE_NIXIE(NIXIE_MIN_INDEX_LSB, draw_set_time_exit(), change_time_state(),
-////			RTC_dev_set_time_min_increment())
-//		nixie_split_set_digit(RTC_dev_time_get_min(), NIXIE_MIN_INDEX_LSB);
-//		nixie_split_set_digit(RTC_dev_time_get_hour(), NIXIE_HOUR_INDEX_LSB);
-//		unsigned char *output = nixie_compile_output();
-//		SN54HC595_out_bytes(output, CHECK_ODD(NIXIE_DEVICES));
-//		if(blink_flag){
-//			nixie_disable_tube(NIXIE_MIN_INDEX_LSB);
-//			nixie_disable_tube(NIXIE_MIN_INDEX_LSB + 1);
-//		}else{	\
-//			nixie_enable_tube(NIXIE_MIN_INDEX_LSB);
-//			nixie_enable_tube(NIXIE_MIN_INDEX_LSB + 1);
-//		}
-//		unsigned char input = states_get_input();
-//		if((input >> 0) & 0x1){
-//			draw_set_time_exit();
-//			nixie_enable_all();
-//		}else if((input >> 1) & 0x1){
-//			change_time_state();
-//			nixie_enable_all();
-//		}else if((input >> 2) & 0x1)
-//			RTC_dev_set_time_min_increment();
-//		states_clear_input();
-//#endif
-//}
-//
-//void draw_set_time_hour_run(void) {
-//#ifdef SCREEN_ON
-//	SET_TIME_DRAW_STATE(0, 1, time, draw_set_time_exit(),
-//			change_time_state(), RTC_dev_set_time_hour_increment())
-//#else
-//	SET_TIME_DRAW_STATE_NIXIE(NIXIE_HOUR_INDEX_LSB, draw_set_time_exit(); nixie_enable_all(),
-//				change_time_state(); nixie_enable_all(),
-//				RTC_dev_set_time_hour_increment())
-//#endif
-//}
-
-//SET ALARM 1
-//void draw_alarm1_run(void) {
-//	volatile unsigned char input = states_get_input();
-//
-//	RTC_dev_get_alarm(ALARM_ONE);
-//	get_alarm_date_string(date, ALARM_ONE);
-//	get_alarm_time_string(time, ALARM_ONE);
-//	strcpy( date + 3, " *");
-//
-//	screen_add_line_at_index(1, date);
-//	screen_add_line_at_index(2, time);
-//
-//	if ((input >> 0) & 0x1)
-//		change_big_states();
-//	else if ((input >> 1) & 0x1)
-//		NULL;
-//	else if ((input >> 2) & 0x1)
-//		NULL;
-//	states_clear_input();
-//}
-//
-//void draw_alarm1_min_run(void) {
-//	SET_ALARM_DRAW_STATE(3, 4, time, NULL, NULL, NULL);
-//}
-//
-//void draw_alarm1_hour_run(void) {
-//	SET_ALARM_DRAW_STATE(0, 1, time, NULL, NULL, NULL);
-//}
-//
-//void draw_alarm1_day_run(void) {
-//	SET_ALARM_DRAW_STATE(0, 2, date, NULL, NULL, NULL);
-//}

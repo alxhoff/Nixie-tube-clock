@@ -11,10 +11,6 @@
 #include "main.h"
 #include "stm32f1xx_hal.h"
 
-//GENERAL
-// If NIXIE_SET is set then setting time will adhere to nixie capabilities, ie. skip seconds and date
-#define NIXIE_SET
-
 //SCREEN
 #define SCREEN_CURSOR_PERIOD 750
 #define SSD1306_I2C_PORT hi2c2
@@ -66,9 +62,15 @@
 #define SHIFT_SER_CLR_PIN SHIFT_CLR_Pin
 
 //NIXIES
+// If NIXIE_SET is set then setting time will adhere to nixie capabilities, ie. skip seconds and date
+#define NIXIE_SET 1
 #define NIXIE_DEVICES 4
 #define NIXIE_MIN_INDEX_LSB 0
 #define NIXIE_HOUR_INDEX_LSB 2
+// Digits are displayed in reverse order for each shift register
+// So to show 12 on the nixies you need to send it 21
+#define NIXIE_FLIPPED 1
+
 
 //BUTTONS
 #define BUTTON_COUNT 3
