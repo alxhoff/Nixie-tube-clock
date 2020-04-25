@@ -36,6 +36,12 @@ int main(void)
     MX_TIM3_Init();
 	MX_I2C2_Init();
 
+	SN54HC595_init();
+	ssd1306_init();
+	screen_init();
+	RTC_dev_init(1);
+	states_init();
+
 	osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
 	defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
@@ -177,6 +183,9 @@ static void MX_GPIO_Init(void)
 void StartDefaultTask(void const *argument)
 {
 	for (;;) {
+		screen_clear();
+		states_run();
+		screen_refresh(NULL);
 	}
 }
 
