@@ -35,6 +35,9 @@
 .SUFFIXES: .hpux_make_needs_suffix_list
 
 
+# Command-line flag to silence nested $(MAKE).
+$(VERBOSE)MAKESILENT = -s
+
 # Suppress display of executed commands.
 $(VERBOSE).SILENT:
 
@@ -60,10 +63,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/alxhoff/git/GitHub/bluepill
+CMAKE_SOURCE_DIR = /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/alxhoff/git/GitHub/bluepill/build
+CMAKE_BINARY_DIR = /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build
 
 # Utility rule file for clean_lib.
 
@@ -74,7 +77,7 @@ CMakeFiles/clean_lib: cleanlib
 
 
 cleanlib:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/alxhoff/git/GitHub/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating cleanlib"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating cleanlib"
 	/usr/bin/cmake -P cmake/cleanall.cmake
 
 clean_lib: CMakeFiles/clean_lib
@@ -93,6 +96,6 @@ CMakeFiles/clean_lib.dir/clean:
 .PHONY : CMakeFiles/clean_lib.dir/clean
 
 CMakeFiles/clean_lib.dir/depend:
-	cd /home/alxhoff/git/GitHub/bluepill/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/alxhoff/git/GitHub/bluepill /home/alxhoff/git/GitHub/bluepill /home/alxhoff/git/GitHub/bluepill/build /home/alxhoff/git/GitHub/bluepill/build /home/alxhoff/git/GitHub/bluepill/build/CMakeFiles/clean_lib.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles/clean_lib.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/clean_lib.dir/depend
 

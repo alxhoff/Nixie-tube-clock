@@ -40,6 +40,9 @@ default_target: all
 .SUFFIXES: .hpux_make_needs_suffix_list
 
 
+# Command-line flag to silence nested $(MAKE).
+$(VERBOSE)MAKESILENT = -s
+
 # Suppress display of executed commands.
 $(VERBOSE).SILENT:
 
@@ -65,10 +68,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/alxhoff/git/GitHub/bluepill
+CMAKE_SOURCE_DIR = /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/alxhoff/git/GitHub/bluepill/build
+CMAKE_BINARY_DIR = /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -97,14 +100,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alxhoff/git/GitHub/bluepill/build/CMakeFiles /home/alxhoff/git/GitHub/bluepill/build/CMakeFiles/progress.marks
-	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alxhoff/git/GitHub/bluepill/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles/progress.marks
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	$(MAKE) -f CMakeFiles/Makefile2 clean
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 clean
 .PHONY : clean
 
 # The main clean target
@@ -114,12 +117,12 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 preinstall
 .PHONY : preinstall/fast
 
 # clear depends
@@ -132,12 +135,12 @@ depend:
 
 # Build rule for target.
 STM32F1_bluepill.elf.bin: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 STM32F1_bluepill.elf.bin
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 STM32F1_bluepill.elf.bin
 .PHONY : STM32F1_bluepill.elf.bin
 
 # fast build rule for target.
 STM32F1_bluepill.elf.bin/fast:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.bin.dir/build.make CMakeFiles/STM32F1_bluepill.elf.bin.dir/build
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.bin.dir/build.make CMakeFiles/STM32F1_bluepill.elf.bin.dir/build
 .PHONY : STM32F1_bluepill.elf.bin/fast
 
 #=============================================================================
@@ -145,12 +148,12 @@ STM32F1_bluepill.elf.bin/fast:
 
 # Build rule for target.
 clean_lib: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 clean_lib
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 clean_lib
 .PHONY : clean_lib
 
 # fast build rule for target.
 clean_lib/fast:
-	$(MAKE) -f CMakeFiles/clean_lib.dir/build.make CMakeFiles/clean_lib.dir/build
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/clean_lib.dir/build.make CMakeFiles/clean_lib.dir/build
 .PHONY : clean_lib/fast
 
 #=============================================================================
@@ -158,12 +161,12 @@ clean_lib/fast:
 
 # Build rule for target.
 STM32F1_bluepill.elf.hex: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 STM32F1_bluepill.elf.hex
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 STM32F1_bluepill.elf.hex
 .PHONY : STM32F1_bluepill.elf.hex
 
 # fast build rule for target.
 STM32F1_bluepill.elf.hex/fast:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.hex.dir/build.make CMakeFiles/STM32F1_bluepill.elf.hex.dir/build
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.hex.dir/build.make CMakeFiles/STM32F1_bluepill.elf.hex.dir/build
 .PHONY : STM32F1_bluepill.elf.hex/fast
 
 #=============================================================================
@@ -171,12 +174,12 @@ STM32F1_bluepill.elf.hex/fast:
 
 # Build rule for target.
 flash: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 flash
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 flash
 .PHONY : flash
 
 # fast build rule for target.
 flash/fast:
-	$(MAKE) -f CMakeFiles/flash.dir/build.make CMakeFiles/flash.dir/build
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/flash.dir/build.make CMakeFiles/flash.dir/build
 .PHONY : flash/fast
 
 #=============================================================================
@@ -184,12 +187,12 @@ flash/fast:
 
 # Build rule for target.
 debug: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 debug
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 debug
 .PHONY : debug
 
 # fast build rule for target.
 debug/fast:
-	$(MAKE) -f CMakeFiles/debug.dir/build.make CMakeFiles/debug.dir/build
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/debug.dir/build.make CMakeFiles/debug.dir/build
 .PHONY : debug/fast
 
 #=============================================================================
@@ -197,12 +200,12 @@ debug/fast:
 
 # Build rule for target.
 STM32F1_bluepill.elf: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 STM32F1_bluepill.elf
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 STM32F1_bluepill.elf
 .PHONY : STM32F1_bluepill.elf
 
 # fast build rule for target.
 STM32F1_bluepill.elf/fast:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/build
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/build
 .PHONY : STM32F1_bluepill.elf/fast
 
 #=============================================================================
@@ -210,12 +213,12 @@ STM32F1_bluepill.elf/fast:
 
 # Build rule for target.
 clean_cmake: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 clean_cmake
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 clean_cmake
 .PHONY : clean_cmake
 
 # fast build rule for target.
 clean_cmake/fast:
-	$(MAKE) -f CMakeFiles/clean_cmake.dir/build.make CMakeFiles/clean_cmake.dir/build
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/clean_cmake.dir/build.make CMakeFiles/clean_cmake.dir/build
 .PHONY : clean_cmake/fast
 
 #=============================================================================
@@ -223,12 +226,12 @@ clean_cmake/fast:
 
 # Build rule for target.
 clean_all: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 clean_all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 clean_all
 .PHONY : clean_all
 
 # fast build rule for target.
 clean_all/fast:
-	$(MAKE) -f CMakeFiles/clean_all.dir/build.make CMakeFiles/clean_all.dir/build
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/clean_all.dir/build.make CMakeFiles/clean_all.dir/build
 .PHONY : clean_all/fast
 
 lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/gcc/startup_stm32f103xb.o: lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/gcc/startup_stm32f103xb.s.o
@@ -237,7 +240,7 @@ lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/gcc
 
 # target to build an object file
 lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/gcc/startup_stm32f103xb.s.o:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/gcc/startup_stm32f103xb.s.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/gcc/startup_stm32f103xb.s.o
 .PHONY : lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/gcc/startup_stm32f103xb.s.o
 
 lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.o: lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c.o
@@ -246,7 +249,7 @@ lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/sys
 
 # target to build an object file
 lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c.o:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c.o
 .PHONY : lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c.o
 
 lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.i: lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c.i
@@ -255,7 +258,7 @@ lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/sys
 
 # target to preprocess a source file
 lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c.i:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c.i
 .PHONY : lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c.i
 
 lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.s: lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c.s
@@ -264,7 +267,7 @@ lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/sys
 
 # target to generate assembly for a file
 lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c.s:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c.s
 .PHONY : lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c.s
 
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.o: lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c.o
@@ -273,7 +276,7 @@ lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.o: lib/
 
 # target to build an object file
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c.o:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c.o
 .PHONY : lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c.o
 
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.i: lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c.i
@@ -282,7 +285,7 @@ lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.i: lib/
 
 # target to preprocess a source file
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c.i:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c.i
 .PHONY : lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c.i
 
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.s: lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c.s
@@ -291,7 +294,7 @@ lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.s: lib/
 
 # target to generate assembly for a file
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c.s:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c.s
 .PHONY : lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c.s
 
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.o: lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c.o
@@ -300,7 +303,7 @@ lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.
 
 # target to build an object file
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c.o:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c.o
 .PHONY : lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c.o
 
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.i: lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c.i
@@ -309,7 +312,7 @@ lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.
 
 # target to preprocess a source file
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c.i:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c.i
 .PHONY : lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c.i
 
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.s: lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c.s
@@ -318,7 +321,7 @@ lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.
 
 # target to generate assembly for a file
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c.s:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c.s
 .PHONY : lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c.s
 
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.o: lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c.o
@@ -327,7 +330,7 @@ lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.o:
 
 # target to build an object file
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c.o:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c.o
 .PHONY : lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c.o
 
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.i: lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c.i
@@ -336,7 +339,7 @@ lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.i:
 
 # target to preprocess a source file
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c.i:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c.i
 .PHONY : lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c.i
 
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.s: lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c.s
@@ -345,7 +348,7 @@ lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.s:
 
 # target to generate assembly for a file
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c.s:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c.s
 .PHONY : lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c.s
 
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.o: lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c.o
@@ -354,7 +357,7 @@ lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex
 
 # target to build an object file
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c.o:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c.o
 .PHONY : lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c.o
 
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.i: lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c.i
@@ -363,7 +366,7 @@ lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex
 
 # target to preprocess a source file
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c.i:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c.i
 .PHONY : lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c.i
 
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.s: lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c.s
@@ -372,8 +375,35 @@ lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex
 
 # target to generate assembly for a file
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c.s:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c.s
 .PHONY : lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c.s
+
+lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.o: lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c.o
+
+.PHONY : lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.o
+
+# target to build an object file
+lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c.o
+.PHONY : lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c.o
+
+lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.i: lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c.i
+
+.PHONY : lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.i
+
+# target to preprocess a source file
+lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c.i
+.PHONY : lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c.i
+
+lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.s: lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c.s
+
+.PHONY : lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.s
+
+# target to generate assembly for a file
+lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c.s
+.PHONY : lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c.s
 
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.o: lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c.o
 
@@ -381,7 +411,7 @@ lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.o: 
 
 # target to build an object file
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c.o:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c.o
 .PHONY : lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c.o
 
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.i: lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c.i
@@ -390,7 +420,7 @@ lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.i: 
 
 # target to preprocess a source file
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c.i:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c.i
 .PHONY : lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c.i
 
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.s: lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c.s
@@ -399,7 +429,7 @@ lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.s: 
 
 # target to generate assembly for a file
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c.s:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c.s
 .PHONY : lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c.s
 
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.o: lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c.o
@@ -408,7 +438,7 @@ lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.o: 
 
 # target to build an object file
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c.o:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c.o
 .PHONY : lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c.o
 
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.i: lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c.i
@@ -417,7 +447,7 @@ lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.i: 
 
 # target to preprocess a source file
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c.i:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c.i
 .PHONY : lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c.i
 
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.s: lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c.s
@@ -426,7 +456,7 @@ lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.s: 
 
 # target to generate assembly for a file
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c.s:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c.s
 .PHONY : lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c.s
 
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.o: lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c.o
@@ -435,7 +465,7 @@ lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.
 
 # target to build an object file
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c.o:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c.o
 .PHONY : lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c.o
 
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.i: lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c.i
@@ -444,7 +474,7 @@ lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.
 
 # target to preprocess a source file
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c.i:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c.i
 .PHONY : lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c.i
 
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.s: lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c.s
@@ -453,7 +483,7 @@ lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.
 
 # target to generate assembly for a file
 lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c.s:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c.s
 .PHONY : lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c.s
 
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.o: lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c.o
@@ -462,7 +492,7 @@ lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cms
 
 # target to build an object file
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c.o:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c.o
 .PHONY : lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c.o
 
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.i: lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c.i
@@ -471,7 +501,7 @@ lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cms
 
 # target to preprocess a source file
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c.i:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c.i
 .PHONY : lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c.i
 
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.s: lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c.s
@@ -480,7 +510,7 @@ lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cms
 
 # target to generate assembly for a file
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c.s:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c.s
 .PHONY : lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c.s
 
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.o: lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.o
@@ -489,7 +519,7 @@ lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.o: li
 
 # target to build an object file
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.o:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.o
 .PHONY : lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.o
 
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.i: lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.i
@@ -498,7 +528,7 @@ lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.i: li
 
 # target to preprocess a source file
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.i:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.i
 .PHONY : lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.i
 
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.s: lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.s
@@ -507,7 +537,7 @@ lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.s: li
 
 # target to generate assembly for a file
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.s:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.s
 .PHONY : lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.s
 
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.o: lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.o
@@ -516,7 +546,7 @@ lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.o
 
 # target to build an object file
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.o:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.o
 .PHONY : lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.o
 
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.i: lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.i
@@ -525,7 +555,7 @@ lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.i
 
 # target to preprocess a source file
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.i:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.i
 .PHONY : lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.i
 
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.s: lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.s
@@ -534,7 +564,7 @@ lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.s
 
 # target to generate assembly for a file
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.s:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.s
 .PHONY : lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.s
 
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.o: lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c.o
@@ -543,7 +573,7 @@ lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.o: lib/ST
 
 # target to build an object file
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c.o:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c.o
 .PHONY : lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c.o
 
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.i: lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c.i
@@ -552,7 +582,7 @@ lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.i: lib/ST
 
 # target to preprocess a source file
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c.i:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c.i
 .PHONY : lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c.i
 
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.s: lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c.s
@@ -561,7 +591,7 @@ lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.s: lib/ST
 
 # target to generate assembly for a file
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c.s:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c.s
 .PHONY : lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c.s
 
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.o: lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c.o
@@ -570,7 +600,7 @@ lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/A
 
 # target to build an object file
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c.o:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c.o
 .PHONY : lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c.o
 
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.i: lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c.i
@@ -579,7 +609,7 @@ lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/A
 
 # target to preprocess a source file
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c.i:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c.i
 .PHONY : lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c.i
 
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.s: lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c.s
@@ -588,7 +618,7 @@ lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/A
 
 # target to generate assembly for a file
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c.s:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c.s
 .PHONY : lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c.s
 
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o: lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.o
@@ -597,7 +627,7 @@ lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMa
 
 # target to build an object file
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.o:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.o
 .PHONY : lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.o
 
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.i: lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.i
@@ -606,7 +636,7 @@ lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMa
 
 # target to preprocess a source file
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.i:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.i
 .PHONY : lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.i
 
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.s: lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.s
@@ -615,7 +645,7 @@ lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMa
 
 # target to generate assembly for a file
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.s:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.s
 .PHONY : lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.s
 
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.o: lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c.o
@@ -624,7 +654,7 @@ lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.o: lib/S
 
 # target to build an object file
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c.o:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c.o
 .PHONY : lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c.o
 
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.i: lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c.i
@@ -633,7 +663,7 @@ lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.i: lib/S
 
 # target to preprocess a source file
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c.i:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c.i
 .PHONY : lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c.i
 
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.s: lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c.s
@@ -642,7 +672,7 @@ lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.s: lib/S
 
 # target to generate assembly for a file
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c.s:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c.s
 .PHONY : lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c.s
 
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.o: lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.o
@@ -651,7 +681,7 @@ lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.o: lib/S
 
 # target to build an object file
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.o:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.o
 .PHONY : lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.o
 
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.i: lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.i
@@ -660,7 +690,7 @@ lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.i: lib/S
 
 # target to preprocess a source file
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.i:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.i
 .PHONY : lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.i
 
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.s: lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.s
@@ -669,7 +699,7 @@ lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.s: lib/S
 
 # target to generate assembly for a file
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.s:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.s
 .PHONY : lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.s
 
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.o: lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c.o
@@ -678,7 +708,7 @@ lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.o: lib/
 
 # target to build an object file
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c.o:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c.o
 .PHONY : lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c.o
 
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.i: lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c.i
@@ -687,7 +717,7 @@ lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.i: lib/
 
 # target to preprocess a source file
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c.i:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c.i
 .PHONY : lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c.i
 
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.s: lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c.s
@@ -696,8 +726,197 @@ lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.s: lib/
 
 # target to generate assembly for a file
 lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c.s:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c.s
 .PHONY : lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c.s
+
+src/AT24Cxx_stm32_hal.o: src/AT24Cxx_stm32_hal.c.o
+
+.PHONY : src/AT24Cxx_stm32_hal.o
+
+# target to build an object file
+src/AT24Cxx_stm32_hal.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/AT24Cxx_stm32_hal.c.o
+.PHONY : src/AT24Cxx_stm32_hal.c.o
+
+src/AT24Cxx_stm32_hal.i: src/AT24Cxx_stm32_hal.c.i
+
+.PHONY : src/AT24Cxx_stm32_hal.i
+
+# target to preprocess a source file
+src/AT24Cxx_stm32_hal.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/AT24Cxx_stm32_hal.c.i
+.PHONY : src/AT24Cxx_stm32_hal.c.i
+
+src/AT24Cxx_stm32_hal.s: src/AT24Cxx_stm32_hal.c.s
+
+.PHONY : src/AT24Cxx_stm32_hal.s
+
+# target to generate assembly for a file
+src/AT24Cxx_stm32_hal.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/AT24Cxx_stm32_hal.c.s
+.PHONY : src/AT24Cxx_stm32_hal.c.s
+
+src/RTC_dev.o: src/RTC_dev.c.o
+
+.PHONY : src/RTC_dev.o
+
+# target to build an object file
+src/RTC_dev.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/RTC_dev.c.o
+.PHONY : src/RTC_dev.c.o
+
+src/RTC_dev.i: src/RTC_dev.c.i
+
+.PHONY : src/RTC_dev.i
+
+# target to preprocess a source file
+src/RTC_dev.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/RTC_dev.c.i
+.PHONY : src/RTC_dev.c.i
+
+src/RTC_dev.s: src/RTC_dev.c.s
+
+.PHONY : src/RTC_dev.s
+
+# target to generate assembly for a file
+src/RTC_dev.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/RTC_dev.c.s
+.PHONY : src/RTC_dev.c.s
+
+src/SN54HC595.o: src/SN54HC595.c.o
+
+.PHONY : src/SN54HC595.o
+
+# target to build an object file
+src/SN54HC595.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/SN54HC595.c.o
+.PHONY : src/SN54HC595.c.o
+
+src/SN54HC595.i: src/SN54HC595.c.i
+
+.PHONY : src/SN54HC595.i
+
+# target to preprocess a source file
+src/SN54HC595.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/SN54HC595.c.i
+.PHONY : src/SN54HC595.c.i
+
+src/SN54HC595.s: src/SN54HC595.c.s
+
+.PHONY : src/SN54HC595.s
+
+# target to generate assembly for a file
+src/SN54HC595.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/SN54HC595.c.s
+.PHONY : src/SN54HC595.c.s
+
+src/buttons.o: src/buttons.c.o
+
+.PHONY : src/buttons.o
+
+# target to build an object file
+src/buttons.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/buttons.c.o
+.PHONY : src/buttons.c.o
+
+src/buttons.i: src/buttons.c.i
+
+.PHONY : src/buttons.i
+
+# target to preprocess a source file
+src/buttons.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/buttons.c.i
+.PHONY : src/buttons.c.i
+
+src/buttons.s: src/buttons.c.s
+
+.PHONY : src/buttons.s
+
+# target to generate assembly for a file
+src/buttons.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/buttons.c.s
+.PHONY : src/buttons.c.s
+
+src/draw.o: src/draw.c.o
+
+.PHONY : src/draw.o
+
+# target to build an object file
+src/draw.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/draw.c.o
+.PHONY : src/draw.c.o
+
+src/draw.i: src/draw.c.i
+
+.PHONY : src/draw.i
+
+# target to preprocess a source file
+src/draw.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/draw.c.i
+.PHONY : src/draw.c.i
+
+src/draw.s: src/draw.c.s
+
+.PHONY : src/draw.s
+
+# target to generate assembly for a file
+src/draw.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/draw.c.s
+.PHONY : src/draw.c.s
+
+src/ds3231.o: src/ds3231.c.o
+
+.PHONY : src/ds3231.o
+
+# target to build an object file
+src/ds3231.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/ds3231.c.o
+.PHONY : src/ds3231.c.o
+
+src/ds3231.i: src/ds3231.c.i
+
+.PHONY : src/ds3231.i
+
+# target to preprocess a source file
+src/ds3231.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/ds3231.c.i
+.PHONY : src/ds3231.c.i
+
+src/ds3231.s: src/ds3231.c.s
+
+.PHONY : src/ds3231.s
+
+# target to generate assembly for a file
+src/ds3231.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/ds3231.c.s
+.PHONY : src/ds3231.c.s
+
+src/fonts.o: src/fonts.c.o
+
+.PHONY : src/fonts.o
+
+# target to build an object file
+src/fonts.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/fonts.c.o
+.PHONY : src/fonts.c.o
+
+src/fonts.i: src/fonts.c.i
+
+.PHONY : src/fonts.i
+
+# target to preprocess a source file
+src/fonts.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/fonts.c.i
+.PHONY : src/fonts.c.i
+
+src/fonts.s: src/fonts.c.s
+
+.PHONY : src/fonts.s
+
+# target to generate assembly for a file
+src/fonts.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/fonts.c.s
+.PHONY : src/fonts.c.s
 
 src/freertos.o: src/freertos.c.o
 
@@ -705,7 +924,7 @@ src/freertos.o: src/freertos.c.o
 
 # target to build an object file
 src/freertos.c.o:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/freertos.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/freertos.c.o
 .PHONY : src/freertos.c.o
 
 src/freertos.i: src/freertos.c.i
@@ -714,7 +933,7 @@ src/freertos.i: src/freertos.c.i
 
 # target to preprocess a source file
 src/freertos.c.i:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/freertos.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/freertos.c.i
 .PHONY : src/freertos.c.i
 
 src/freertos.s: src/freertos.c.s
@@ -723,7 +942,7 @@ src/freertos.s: src/freertos.c.s
 
 # target to generate assembly for a file
 src/freertos.c.s:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/freertos.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/freertos.c.s
 .PHONY : src/freertos.c.s
 
 src/main.o: src/main.c.o
@@ -732,7 +951,7 @@ src/main.o: src/main.c.o
 
 # target to build an object file
 src/main.c.o:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/main.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/main.c.o
 .PHONY : src/main.c.o
 
 src/main.i: src/main.c.i
@@ -741,7 +960,7 @@ src/main.i: src/main.c.i
 
 # target to preprocess a source file
 src/main.c.i:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/main.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/main.c.i
 .PHONY : src/main.c.i
 
 src/main.s: src/main.c.s
@@ -750,8 +969,116 @@ src/main.s: src/main.c.s
 
 # target to generate assembly for a file
 src/main.c.s:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/main.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/main.c.s
 .PHONY : src/main.c.s
+
+src/nixie.o: src/nixie.c.o
+
+.PHONY : src/nixie.o
+
+# target to build an object file
+src/nixie.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/nixie.c.o
+.PHONY : src/nixie.c.o
+
+src/nixie.i: src/nixie.c.i
+
+.PHONY : src/nixie.i
+
+# target to preprocess a source file
+src/nixie.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/nixie.c.i
+.PHONY : src/nixie.c.i
+
+src/nixie.s: src/nixie.c.s
+
+.PHONY : src/nixie.s
+
+# target to generate assembly for a file
+src/nixie.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/nixie.c.s
+.PHONY : src/nixie.c.s
+
+src/screen.o: src/screen.c.o
+
+.PHONY : src/screen.o
+
+# target to build an object file
+src/screen.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/screen.c.o
+.PHONY : src/screen.c.o
+
+src/screen.i: src/screen.c.i
+
+.PHONY : src/screen.i
+
+# target to preprocess a source file
+src/screen.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/screen.c.i
+.PHONY : src/screen.c.i
+
+src/screen.s: src/screen.c.s
+
+.PHONY : src/screen.s
+
+# target to generate assembly for a file
+src/screen.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/screen.c.s
+.PHONY : src/screen.c.s
+
+src/ssd1306.o: src/ssd1306.c.o
+
+.PHONY : src/ssd1306.o
+
+# target to build an object file
+src/ssd1306.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/ssd1306.c.o
+.PHONY : src/ssd1306.c.o
+
+src/ssd1306.i: src/ssd1306.c.i
+
+.PHONY : src/ssd1306.i
+
+# target to preprocess a source file
+src/ssd1306.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/ssd1306.c.i
+.PHONY : src/ssd1306.c.i
+
+src/ssd1306.s: src/ssd1306.c.s
+
+.PHONY : src/ssd1306.s
+
+# target to generate assembly for a file
+src/ssd1306.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/ssd1306.c.s
+.PHONY : src/ssd1306.c.s
+
+src/states.o: src/states.c.o
+
+.PHONY : src/states.o
+
+# target to build an object file
+src/states.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/states.c.o
+.PHONY : src/states.c.o
+
+src/states.i: src/states.c.i
+
+.PHONY : src/states.i
+
+# target to preprocess a source file
+src/states.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/states.c.i
+.PHONY : src/states.c.i
+
+src/states.s: src/states.c.s
+
+.PHONY : src/states.s
+
+# target to generate assembly for a file
+src/states.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/states.c.s
+.PHONY : src/states.c.s
 
 src/stm32f1xx_hal_msp.o: src/stm32f1xx_hal_msp.c.o
 
@@ -759,7 +1086,7 @@ src/stm32f1xx_hal_msp.o: src/stm32f1xx_hal_msp.c.o
 
 # target to build an object file
 src/stm32f1xx_hal_msp.c.o:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_hal_msp.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_hal_msp.c.o
 .PHONY : src/stm32f1xx_hal_msp.c.o
 
 src/stm32f1xx_hal_msp.i: src/stm32f1xx_hal_msp.c.i
@@ -768,7 +1095,7 @@ src/stm32f1xx_hal_msp.i: src/stm32f1xx_hal_msp.c.i
 
 # target to preprocess a source file
 src/stm32f1xx_hal_msp.c.i:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_hal_msp.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_hal_msp.c.i
 .PHONY : src/stm32f1xx_hal_msp.c.i
 
 src/stm32f1xx_hal_msp.s: src/stm32f1xx_hal_msp.c.s
@@ -777,7 +1104,7 @@ src/stm32f1xx_hal_msp.s: src/stm32f1xx_hal_msp.c.s
 
 # target to generate assembly for a file
 src/stm32f1xx_hal_msp.c.s:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_hal_msp.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_hal_msp.c.s
 .PHONY : src/stm32f1xx_hal_msp.c.s
 
 src/stm32f1xx_it.o: src/stm32f1xx_it.c.o
@@ -786,7 +1113,7 @@ src/stm32f1xx_it.o: src/stm32f1xx_it.c.o
 
 # target to build an object file
 src/stm32f1xx_it.c.o:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_it.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_it.c.o
 .PHONY : src/stm32f1xx_it.c.o
 
 src/stm32f1xx_it.i: src/stm32f1xx_it.c.i
@@ -795,7 +1122,7 @@ src/stm32f1xx_it.i: src/stm32f1xx_it.c.i
 
 # target to preprocess a source file
 src/stm32f1xx_it.c.i:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_it.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_it.c.i
 .PHONY : src/stm32f1xx_it.c.i
 
 src/stm32f1xx_it.s: src/stm32f1xx_it.c.s
@@ -804,7 +1131,7 @@ src/stm32f1xx_it.s: src/stm32f1xx_it.c.s
 
 # target to generate assembly for a file
 src/stm32f1xx_it.c.s:
-	$(MAKE) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_it.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/STM32F1_bluepill.elf.dir/build.make CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_it.c.s
 .PHONY : src/stm32f1xx_it.c.s
 
 # Help Target
@@ -839,6 +1166,9 @@ help:
 	@echo "... lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.o"
 	@echo "... lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.i"
 	@echo "... lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.s"
+	@echo "... lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.o"
+	@echo "... lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.i"
+	@echo "... lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.s"
 	@echo "... lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.o"
 	@echo "... lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.i"
 	@echo "... lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.s"
@@ -875,12 +1205,45 @@ help:
 	@echo "... lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.o"
 	@echo "... lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.i"
 	@echo "... lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.s"
+	@echo "... src/AT24Cxx_stm32_hal.o"
+	@echo "... src/AT24Cxx_stm32_hal.i"
+	@echo "... src/AT24Cxx_stm32_hal.s"
+	@echo "... src/RTC_dev.o"
+	@echo "... src/RTC_dev.i"
+	@echo "... src/RTC_dev.s"
+	@echo "... src/SN54HC595.o"
+	@echo "... src/SN54HC595.i"
+	@echo "... src/SN54HC595.s"
+	@echo "... src/buttons.o"
+	@echo "... src/buttons.i"
+	@echo "... src/buttons.s"
+	@echo "... src/draw.o"
+	@echo "... src/draw.i"
+	@echo "... src/draw.s"
+	@echo "... src/ds3231.o"
+	@echo "... src/ds3231.i"
+	@echo "... src/ds3231.s"
+	@echo "... src/fonts.o"
+	@echo "... src/fonts.i"
+	@echo "... src/fonts.s"
 	@echo "... src/freertos.o"
 	@echo "... src/freertos.i"
 	@echo "... src/freertos.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/nixie.o"
+	@echo "... src/nixie.i"
+	@echo "... src/nixie.s"
+	@echo "... src/screen.o"
+	@echo "... src/screen.i"
+	@echo "... src/screen.s"
+	@echo "... src/ssd1306.o"
+	@echo "... src/ssd1306.i"
+	@echo "... src/ssd1306.s"
+	@echo "... src/states.o"
+	@echo "... src/states.i"
+	@echo "... src/states.s"
 	@echo "... src/stm32f1xx_hal_msp.o"
 	@echo "... src/stm32f1xx_hal_msp.i"
 	@echo "... src/stm32f1xx_hal_msp.s"

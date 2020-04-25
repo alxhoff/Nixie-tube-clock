@@ -35,6 +35,9 @@
 .SUFFIXES: .hpux_make_needs_suffix_list
 
 
+# Command-line flag to silence nested $(MAKE).
+$(VERBOSE)MAKESILENT = -s
+
 # Suppress display of executed commands.
 $(VERBOSE).SILENT:
 
@@ -60,10 +63,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/alxhoff/git/GitHub/bluepill
+CMAKE_SOURCE_DIR = /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/alxhoff/git/GitHub/bluepill/build
+CMAKE_BINARY_DIR = /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build
 
 # Utility rule file for clean_all.
 
@@ -71,7 +74,7 @@ CMAKE_BINARY_DIR = /home/alxhoff/git/GitHub/bluepill/build
 include CMakeFiles/clean_all.dir/progress.make
 
 CMakeFiles/clean_all:
-	git clean -d /home/alxhoff/git/GitHub/bluepill -f -f -x
+	git clean -d /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill -f -f -x
 
 clean_all: CMakeFiles/clean_all
 clean_all: CMakeFiles/clean_all.dir/build.make
@@ -88,6 +91,6 @@ CMakeFiles/clean_all.dir/clean:
 .PHONY : CMakeFiles/clean_all.dir/clean
 
 CMakeFiles/clean_all.dir/depend:
-	cd /home/alxhoff/git/GitHub/bluepill/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/alxhoff/git/GitHub/bluepill /home/alxhoff/git/GitHub/bluepill /home/alxhoff/git/GitHub/bluepill/build /home/alxhoff/git/GitHub/bluepill/build /home/alxhoff/git/GitHub/bluepill/build/CMakeFiles/clean_all.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles/clean_all.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/clean_all.dir/depend
 

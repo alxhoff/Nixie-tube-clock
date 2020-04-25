@@ -35,6 +35,9 @@
 .SUFFIXES: .hpux_make_needs_suffix_list
 
 
+# Command-line flag to silence nested $(MAKE).
+$(VERBOSE)MAKESILENT = -s
+
 # Suppress display of executed commands.
 $(VERBOSE).SILENT:
 
@@ -60,10 +63,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/alxhoff/git/GitHub/bluepill
+CMAKE_SOURCE_DIR = /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/alxhoff/git/GitHub/bluepill/build
+CMAKE_BINARY_DIR = /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/STM32F1_bluepill.elf.dir/depend.make
@@ -74,291 +77,459 @@ include CMakeFiles/STM32F1_bluepill.elf.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
 
+CMakeFiles/STM32F1_bluepill.elf.dir/src/AT24Cxx_stm32_hal.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
+CMakeFiles/STM32F1_bluepill.elf.dir/src/AT24Cxx_stm32_hal.c.o: ../src/AT24Cxx_stm32_hal.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/src/AT24Cxx_stm32_hal.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/src/AT24Cxx_stm32_hal.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/AT24Cxx_stm32_hal.c
+
+CMakeFiles/STM32F1_bluepill.elf.dir/src/AT24Cxx_stm32_hal.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/src/AT24Cxx_stm32_hal.c.i"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/AT24Cxx_stm32_hal.c > CMakeFiles/STM32F1_bluepill.elf.dir/src/AT24Cxx_stm32_hal.c.i
+
+CMakeFiles/STM32F1_bluepill.elf.dir/src/AT24Cxx_stm32_hal.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/src/AT24Cxx_stm32_hal.c.s"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/AT24Cxx_stm32_hal.c -o CMakeFiles/STM32F1_bluepill.elf.dir/src/AT24Cxx_stm32_hal.c.s
+
+CMakeFiles/STM32F1_bluepill.elf.dir/src/RTC_dev.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
+CMakeFiles/STM32F1_bluepill.elf.dir/src/RTC_dev.c.o: ../src/RTC_dev.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/src/RTC_dev.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/src/RTC_dev.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/RTC_dev.c
+
+CMakeFiles/STM32F1_bluepill.elf.dir/src/RTC_dev.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/src/RTC_dev.c.i"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/RTC_dev.c > CMakeFiles/STM32F1_bluepill.elf.dir/src/RTC_dev.c.i
+
+CMakeFiles/STM32F1_bluepill.elf.dir/src/RTC_dev.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/src/RTC_dev.c.s"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/RTC_dev.c -o CMakeFiles/STM32F1_bluepill.elf.dir/src/RTC_dev.c.s
+
+CMakeFiles/STM32F1_bluepill.elf.dir/src/SN54HC595.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
+CMakeFiles/STM32F1_bluepill.elf.dir/src/SN54HC595.c.o: ../src/SN54HC595.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/src/SN54HC595.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/src/SN54HC595.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/SN54HC595.c
+
+CMakeFiles/STM32F1_bluepill.elf.dir/src/SN54HC595.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/src/SN54HC595.c.i"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/SN54HC595.c > CMakeFiles/STM32F1_bluepill.elf.dir/src/SN54HC595.c.i
+
+CMakeFiles/STM32F1_bluepill.elf.dir/src/SN54HC595.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/src/SN54HC595.c.s"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/SN54HC595.c -o CMakeFiles/STM32F1_bluepill.elf.dir/src/SN54HC595.c.s
+
+CMakeFiles/STM32F1_bluepill.elf.dir/src/buttons.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
+CMakeFiles/STM32F1_bluepill.elf.dir/src/buttons.c.o: ../src/buttons.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/src/buttons.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/src/buttons.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/buttons.c
+
+CMakeFiles/STM32F1_bluepill.elf.dir/src/buttons.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/src/buttons.c.i"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/buttons.c > CMakeFiles/STM32F1_bluepill.elf.dir/src/buttons.c.i
+
+CMakeFiles/STM32F1_bluepill.elf.dir/src/buttons.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/src/buttons.c.s"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/buttons.c -o CMakeFiles/STM32F1_bluepill.elf.dir/src/buttons.c.s
+
+CMakeFiles/STM32F1_bluepill.elf.dir/src/draw.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
+CMakeFiles/STM32F1_bluepill.elf.dir/src/draw.c.o: ../src/draw.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/src/draw.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/src/draw.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/draw.c
+
+CMakeFiles/STM32F1_bluepill.elf.dir/src/draw.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/src/draw.c.i"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/draw.c > CMakeFiles/STM32F1_bluepill.elf.dir/src/draw.c.i
+
+CMakeFiles/STM32F1_bluepill.elf.dir/src/draw.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/src/draw.c.s"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/draw.c -o CMakeFiles/STM32F1_bluepill.elf.dir/src/draw.c.s
+
+CMakeFiles/STM32F1_bluepill.elf.dir/src/ds3231.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
+CMakeFiles/STM32F1_bluepill.elf.dir/src/ds3231.c.o: ../src/ds3231.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/src/ds3231.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/src/ds3231.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/ds3231.c
+
+CMakeFiles/STM32F1_bluepill.elf.dir/src/ds3231.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/src/ds3231.c.i"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/ds3231.c > CMakeFiles/STM32F1_bluepill.elf.dir/src/ds3231.c.i
+
+CMakeFiles/STM32F1_bluepill.elf.dir/src/ds3231.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/src/ds3231.c.s"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/ds3231.c -o CMakeFiles/STM32F1_bluepill.elf.dir/src/ds3231.c.s
+
+CMakeFiles/STM32F1_bluepill.elf.dir/src/fonts.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
+CMakeFiles/STM32F1_bluepill.elf.dir/src/fonts.c.o: ../src/fonts.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/src/fonts.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/src/fonts.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/fonts.c
+
+CMakeFiles/STM32F1_bluepill.elf.dir/src/fonts.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/src/fonts.c.i"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/fonts.c > CMakeFiles/STM32F1_bluepill.elf.dir/src/fonts.c.i
+
+CMakeFiles/STM32F1_bluepill.elf.dir/src/fonts.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/src/fonts.c.s"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/fonts.c -o CMakeFiles/STM32F1_bluepill.elf.dir/src/fonts.c.s
+
 CMakeFiles/STM32F1_bluepill.elf.dir/src/freertos.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
 CMakeFiles/STM32F1_bluepill.elf.dir/src/freertos.c.o: ../src/freertos.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/src/freertos.c.o"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/src/freertos.c.o   -c /home/alxhoff/git/GitHub/bluepill/src/freertos.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/src/freertos.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/src/freertos.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/freertos.c
 
 CMakeFiles/STM32F1_bluepill.elf.dir/src/freertos.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/src/freertos.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/bluepill/src/freertos.c > CMakeFiles/STM32F1_bluepill.elf.dir/src/freertos.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/freertos.c > CMakeFiles/STM32F1_bluepill.elf.dir/src/freertos.c.i
 
 CMakeFiles/STM32F1_bluepill.elf.dir/src/freertos.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/src/freertos.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/bluepill/src/freertos.c -o CMakeFiles/STM32F1_bluepill.elf.dir/src/freertos.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/freertos.c -o CMakeFiles/STM32F1_bluepill.elf.dir/src/freertos.c.s
 
 CMakeFiles/STM32F1_bluepill.elf.dir/src/main.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
 CMakeFiles/STM32F1_bluepill.elf.dir/src/main.c.o: ../src/main.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/src/main.c.o"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/src/main.c.o   -c /home/alxhoff/git/GitHub/bluepill/src/main.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/src/main.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/src/main.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/main.c
 
 CMakeFiles/STM32F1_bluepill.elf.dir/src/main.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/src/main.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/bluepill/src/main.c > CMakeFiles/STM32F1_bluepill.elf.dir/src/main.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/main.c > CMakeFiles/STM32F1_bluepill.elf.dir/src/main.c.i
 
 CMakeFiles/STM32F1_bluepill.elf.dir/src/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/src/main.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/bluepill/src/main.c -o CMakeFiles/STM32F1_bluepill.elf.dir/src/main.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/main.c -o CMakeFiles/STM32F1_bluepill.elf.dir/src/main.c.s
+
+CMakeFiles/STM32F1_bluepill.elf.dir/src/nixie.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
+CMakeFiles/STM32F1_bluepill.elf.dir/src/nixie.c.o: ../src/nixie.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/src/nixie.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/src/nixie.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/nixie.c
+
+CMakeFiles/STM32F1_bluepill.elf.dir/src/nixie.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/src/nixie.c.i"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/nixie.c > CMakeFiles/STM32F1_bluepill.elf.dir/src/nixie.c.i
+
+CMakeFiles/STM32F1_bluepill.elf.dir/src/nixie.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/src/nixie.c.s"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/nixie.c -o CMakeFiles/STM32F1_bluepill.elf.dir/src/nixie.c.s
+
+CMakeFiles/STM32F1_bluepill.elf.dir/src/screen.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
+CMakeFiles/STM32F1_bluepill.elf.dir/src/screen.c.o: ../src/screen.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/src/screen.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/src/screen.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/screen.c
+
+CMakeFiles/STM32F1_bluepill.elf.dir/src/screen.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/src/screen.c.i"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/screen.c > CMakeFiles/STM32F1_bluepill.elf.dir/src/screen.c.i
+
+CMakeFiles/STM32F1_bluepill.elf.dir/src/screen.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/src/screen.c.s"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/screen.c -o CMakeFiles/STM32F1_bluepill.elf.dir/src/screen.c.s
+
+CMakeFiles/STM32F1_bluepill.elf.dir/src/ssd1306.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
+CMakeFiles/STM32F1_bluepill.elf.dir/src/ssd1306.c.o: ../src/ssd1306.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/src/ssd1306.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/src/ssd1306.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/ssd1306.c
+
+CMakeFiles/STM32F1_bluepill.elf.dir/src/ssd1306.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/src/ssd1306.c.i"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/ssd1306.c > CMakeFiles/STM32F1_bluepill.elf.dir/src/ssd1306.c.i
+
+CMakeFiles/STM32F1_bluepill.elf.dir/src/ssd1306.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/src/ssd1306.c.s"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/ssd1306.c -o CMakeFiles/STM32F1_bluepill.elf.dir/src/ssd1306.c.s
+
+CMakeFiles/STM32F1_bluepill.elf.dir/src/states.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
+CMakeFiles/STM32F1_bluepill.elf.dir/src/states.c.o: ../src/states.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/src/states.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/src/states.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/states.c
+
+CMakeFiles/STM32F1_bluepill.elf.dir/src/states.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/src/states.c.i"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/states.c > CMakeFiles/STM32F1_bluepill.elf.dir/src/states.c.i
+
+CMakeFiles/STM32F1_bluepill.elf.dir/src/states.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/src/states.c.s"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/states.c -o CMakeFiles/STM32F1_bluepill.elf.dir/src/states.c.s
 
 CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_hal_msp.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
 CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_hal_msp.c.o: ../src/stm32f1xx_hal_msp.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_hal_msp.c.o"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_hal_msp.c.o   -c /home/alxhoff/git/GitHub/bluepill/src/stm32f1xx_hal_msp.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_hal_msp.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_hal_msp.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/stm32f1xx_hal_msp.c
 
 CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_hal_msp.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_hal_msp.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/bluepill/src/stm32f1xx_hal_msp.c > CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_hal_msp.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/stm32f1xx_hal_msp.c > CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_hal_msp.c.i
 
 CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_hal_msp.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_hal_msp.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/bluepill/src/stm32f1xx_hal_msp.c -o CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_hal_msp.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/stm32f1xx_hal_msp.c -o CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_hal_msp.c.s
 
 CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_it.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
 CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_it.c.o: ../src/stm32f1xx_it.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_it.c.o"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_it.c.o   -c /home/alxhoff/git/GitHub/bluepill/src/stm32f1xx_it.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_it.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_it.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/stm32f1xx_it.c
 
 CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_it.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_it.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/bluepill/src/stm32f1xx_it.c > CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_it.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/stm32f1xx_it.c > CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_it.c.i
 
 CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_it.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_it.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/bluepill/src/stm32f1xx_it.c -o CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_it.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/src/stm32f1xx_it.c -o CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_it.c.s
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c.o: ../lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c.o"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c.o   -c /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c.i
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c.s
+
+CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
+CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c.o: ../lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c
+
+CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c.i"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c.i
+
+CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c.s"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c.s
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c.o: ../lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c.o"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c.o   -c /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c.i
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c.s
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c.o: ../lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c.o"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c.o   -c /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c.i
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c.s
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c.o: ../lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c.o"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c.o   -c /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c.i
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c.s
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c.o: ../lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c.o"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c.o   -c /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c.i
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c.s
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c.o: ../lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c.o"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c.o   -c /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c.i
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c.s
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c.o: ../lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c.o"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c.o   -c /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c.i
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c.s
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.o: ../lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.o"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.o   -c /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.i
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.s
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.o: ../lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.o"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.o   -c /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.i
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.s
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c.o: ../lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c.o"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c.o   -c /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c.i
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/list.c.s
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c.o: ../lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c.o"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c.o   -c /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c.i
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/queue.c.s
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.o: ../lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.o"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.o   -c /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.i
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.s
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c.o: ../lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c.o"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c.o   -c /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c.i
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/timers.c.s
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c.o: ../lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c.o"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c.o   -c /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c.i
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c.s
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c.o: ../lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c.o"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c.o   -c /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c.i
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c.s
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.o: ../lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.o"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.o   -c /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.i
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.s
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c.o: ../lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c.o"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c.o   -c /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building C object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c.o"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c.o   -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c > CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c.i
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c.s
 
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/gcc/startup_stm32f103xb.s.o: CMakeFiles/STM32F1_bluepill.elf.dir/flags.make
 CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/gcc/startup_stm32f103xb.s.o: ../lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/gcc/startup_stm32f103xb.s
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building ASM object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/gcc/startup_stm32f103xb.s.o"
-	/usr/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/gcc/startup_stm32f103xb.s.o -c /home/alxhoff/git/GitHub/bluepill/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/gcc/startup_stm32f103xb.s
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building ASM object CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/gcc/startup_stm32f103xb.s.o"
+	/usr/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/gcc/startup_stm32f103xb.s.o -c /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/gcc/startup_stm32f103xb.s
 
 # Object files for target STM32F1_bluepill.elf
 STM32F1_bluepill_elf_OBJECTS = \
+"CMakeFiles/STM32F1_bluepill.elf.dir/src/AT24Cxx_stm32_hal.c.o" \
+"CMakeFiles/STM32F1_bluepill.elf.dir/src/RTC_dev.c.o" \
+"CMakeFiles/STM32F1_bluepill.elf.dir/src/SN54HC595.c.o" \
+"CMakeFiles/STM32F1_bluepill.elf.dir/src/buttons.c.o" \
+"CMakeFiles/STM32F1_bluepill.elf.dir/src/draw.c.o" \
+"CMakeFiles/STM32F1_bluepill.elf.dir/src/ds3231.c.o" \
+"CMakeFiles/STM32F1_bluepill.elf.dir/src/fonts.c.o" \
 "CMakeFiles/STM32F1_bluepill.elf.dir/src/freertos.c.o" \
 "CMakeFiles/STM32F1_bluepill.elf.dir/src/main.c.o" \
+"CMakeFiles/STM32F1_bluepill.elf.dir/src/nixie.c.o" \
+"CMakeFiles/STM32F1_bluepill.elf.dir/src/screen.c.o" \
+"CMakeFiles/STM32F1_bluepill.elf.dir/src/ssd1306.c.o" \
+"CMakeFiles/STM32F1_bluepill.elf.dir/src/states.c.o" \
 "CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_hal_msp.c.o" \
 "CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_it.c.o" \
 "CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c.o" \
+"CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c.o" \
 "CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c.o" \
 "CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c.o" \
 "CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c.o" \
@@ -380,11 +551,23 @@ STM32F1_bluepill_elf_OBJECTS = \
 # External object files for target STM32F1_bluepill.elf
 STM32F1_bluepill_elf_EXTERNAL_OBJECTS =
 
+STM32F1_bluepill.elf: CMakeFiles/STM32F1_bluepill.elf.dir/src/AT24Cxx_stm32_hal.c.o
+STM32F1_bluepill.elf: CMakeFiles/STM32F1_bluepill.elf.dir/src/RTC_dev.c.o
+STM32F1_bluepill.elf: CMakeFiles/STM32F1_bluepill.elf.dir/src/SN54HC595.c.o
+STM32F1_bluepill.elf: CMakeFiles/STM32F1_bluepill.elf.dir/src/buttons.c.o
+STM32F1_bluepill.elf: CMakeFiles/STM32F1_bluepill.elf.dir/src/draw.c.o
+STM32F1_bluepill.elf: CMakeFiles/STM32F1_bluepill.elf.dir/src/ds3231.c.o
+STM32F1_bluepill.elf: CMakeFiles/STM32F1_bluepill.elf.dir/src/fonts.c.o
 STM32F1_bluepill.elf: CMakeFiles/STM32F1_bluepill.elf.dir/src/freertos.c.o
 STM32F1_bluepill.elf: CMakeFiles/STM32F1_bluepill.elf.dir/src/main.c.o
+STM32F1_bluepill.elf: CMakeFiles/STM32F1_bluepill.elf.dir/src/nixie.c.o
+STM32F1_bluepill.elf: CMakeFiles/STM32F1_bluepill.elf.dir/src/screen.c.o
+STM32F1_bluepill.elf: CMakeFiles/STM32F1_bluepill.elf.dir/src/ssd1306.c.o
+STM32F1_bluepill.elf: CMakeFiles/STM32F1_bluepill.elf.dir/src/states.c.o
 STM32F1_bluepill.elf: CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_hal_msp.c.o
 STM32F1_bluepill.elf: CMakeFiles/STM32F1_bluepill.elf.dir/src/stm32f1xx_it.c.o
 STM32F1_bluepill.elf: CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c.o
+STM32F1_bluepill.elf: CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c.o
 STM32F1_bluepill.elf: CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c.o
 STM32F1_bluepill.elf: CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c.o
 STM32F1_bluepill.elf: CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c.o
@@ -404,7 +587,7 @@ STM32F1_bluepill.elf: CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmw
 STM32F1_bluepill.elf: CMakeFiles/STM32F1_bluepill.elf.dir/lib/STM32F1-Cube-Firmware/Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/gcc/startup_stm32f103xb.s.o
 STM32F1_bluepill.elf: CMakeFiles/STM32F1_bluepill.elf.dir/build.make
 STM32F1_bluepill.elf: CMakeFiles/STM32F1_bluepill.elf.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/alxhoff/git/GitHub/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Linking C executable STM32F1_bluepill.elf"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Linking C executable STM32F1_bluepill.elf"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/STM32F1_bluepill.elf.dir/link.txt --verbose=$(VERBOSE)
 	/usr/bin/arm-none-eabi-size STM32F1_bluepill.elf
 
@@ -418,6 +601,6 @@ CMakeFiles/STM32F1_bluepill.elf.dir/clean:
 .PHONY : CMakeFiles/STM32F1_bluepill.elf.dir/clean
 
 CMakeFiles/STM32F1_bluepill.elf.dir/depend:
-	cd /home/alxhoff/git/GitHub/bluepill/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/alxhoff/git/GitHub/bluepill /home/alxhoff/git/GitHub/bluepill /home/alxhoff/git/GitHub/bluepill/build /home/alxhoff/git/GitHub/bluepill/build /home/alxhoff/git/GitHub/bluepill/build/CMakeFiles/STM32F1_bluepill.elf.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles/STM32F1_bluepill.elf.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/STM32F1_bluepill.elf.dir/depend
 

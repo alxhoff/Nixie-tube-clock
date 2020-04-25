@@ -1,4 +1,4 @@
-# Install script for directory: /home/alxhoff/git/GitHub/bluepill
+# Install script for directory: /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/alxhoff/git/GitHub/bluepill/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

@@ -35,6 +35,9 @@
 .SUFFIXES: .hpux_make_needs_suffix_list
 
 
+# Command-line flag to silence nested $(MAKE).
+$(VERBOSE)MAKESILENT = -s
+
 # Suppress display of executed commands.
 $(VERBOSE).SILENT:
 
@@ -60,10 +63,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/alxhoff/git/GitHub/bluepill
+CMAKE_SOURCE_DIR = /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/alxhoff/git/GitHub/bluepill/build
+CMAKE_BINARY_DIR = /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build
 
 # Utility rule file for debug.
 
@@ -72,7 +75,7 @@ include CMakeFiles/debug.dir/progress.make
 
 CMakeFiles/debug:
 	openocd -c 'source [find interface/stlink-v2.cfg]' -c 'transport select hla_swd' -c 'source [find target/stm32f1x_stlink.cfg]' -c 'reset_config srst_nogate' >/dev/null 2&1 & sleep 2
-	arm-none-eabi-gdb -tui -command=/home/alxhoff/git/GitHub/bluepill/GDBCommands -se /home/alxhoff/git/GitHub/bluepill/build/STM32F1_bluepill.elf
+	arm-none-eabi-gdb -tui -command=/home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/GDBCommands -se /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/STM32F1_bluepill.elf
 	killall -15 openocd
 
 debug: CMakeFiles/debug
@@ -90,6 +93,6 @@ CMakeFiles/debug.dir/clean:
 .PHONY : CMakeFiles/debug.dir/clean
 
 CMakeFiles/debug.dir/depend:
-	cd /home/alxhoff/git/GitHub/bluepill/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/alxhoff/git/GitHub/bluepill /home/alxhoff/git/GitHub/bluepill /home/alxhoff/git/GitHub/bluepill/build /home/alxhoff/git/GitHub/bluepill/build /home/alxhoff/git/GitHub/bluepill/build/CMakeFiles/debug.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build /home/alxhoff/git/GitHub/stm32_nixie_clock_firmware/bluepill/build/CMakeFiles/debug.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/debug.dir/depend
 
