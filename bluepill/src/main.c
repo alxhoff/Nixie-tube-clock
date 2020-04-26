@@ -63,8 +63,8 @@ int main(void)
 	RTC_dev_init(1);
 	states_init();
 
-	/** osThreadDef(defaultTask, ButtonTestTask, osPriorityNormal, 0, 128); */
-    osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 256);
+    osThreadDef(defaultTask, ButtonTestTask, osPriorityNormal, 0, 128);
+    /** osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 256); */
 	defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
 	osKernelStart();

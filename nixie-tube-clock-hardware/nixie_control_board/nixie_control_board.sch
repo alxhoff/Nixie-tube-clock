@@ -868,7 +868,7 @@ L nixie_control_board-rescue:C-device C14
 U 1 1 5B5C9DD7
 P 1650 6650
 F 0 "C14" H 1675 6750 50  0000 L CNN
-F 1 "2.2uF/16V" H 1675 6550 50  0000 L CNN
+F 1 "2.2uF" H 1675 6550 50  0000 L CNN
 F 2 "Capacitor_SMD:C_0603_1608Metric" H 1688 6500 50  0001 C CNN
 F 3 "" H 1650 6650 50  0000 C CNN
 	1    1650 6650
@@ -1126,12 +1126,8 @@ F 3 "" H 3450 5600 50  0000 C CNN
 	1    3450 5600
 	0    -1   -1   0   
 $EndComp
-Text GLabel 3450 5700 2    50   Input ~ 0
-DISP_RESET
-Text GLabel 3150 2100 2    50   Input ~ 0
-DISP_RESET
 $Sheet
-S 4650 5150 850  950 
+S 5275 6150 850  950 
 U 5B626F78
 F0 "buck_converter" 50
 F1 "buck_converter.sch" 50
@@ -1202,17 +1198,6 @@ F 1 "+5V-power" H 9265 3123 50  0000 C CNN
 F 2 "" H 9250 2950 50  0001 C CNN
 F 3 "" H 9250 2950 50  0001 C CNN
 	1    9250 2950
-	1    0    0    -1  
-$EndComp
-$Comp
-L nixie_control_board-rescue:+5V-power #PWR0121
-U 1 1 5C5AA6C5
-P 9900 1950
-F 0 "#PWR0121" H 9900 1800 50  0001 C CNN
-F 1 "+5V-power" H 9915 2123 50  0000 C CNN
-F 2 "" H 9900 1950 50  0001 C CNN
-F 3 "" H 9900 1950 50  0001 C CNN
-	1    9900 1950
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -1419,14 +1404,71 @@ F 3 "" H 5500 3350 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L nixie_control_board-rescue:R-device R?
+L nixie_control_board-rescue:R-device R4
 U 1 1 5EA53A95
 P 3850 5300
-F 0 "R?" V 3930 5300 50  0000 C CNN
+F 0 "R4" V 3930 5300 50  0000 C CNN
 F 1 "10K" V 3850 5300 50  0000 C CNN
 F 2 "Resistor_SMD:R_0603_1608Metric" V 3780 5300 50  0001 C CNN
 F 3 "" H 3850 5300 50  0000 C CNN
 	1    3850 5300
 	0    1    1    0   
+$EndComp
+$Comp
+L nixie_control_board-rescue:R-device R5
+U 1 1 5EA61C4A
+P 3850 5700
+F 0 "R5" V 3930 5700 50  0000 C CNN
+F 1 "10K" V 3850 5700 50  0000 C CNN
+F 2 "Resistor_SMD:R_0603_1608Metric" V 3780 5700 50  0001 C CNN
+F 3 "" H 3850 5700 50  0000 C CNN
+	1    3850 5700
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	3450 5700 3675 5700
+$Comp
+L nixie_control_board-rescue:GND-power #PWR0119
+U 1 1 5EA7129D
+P 4000 5700
+F 0 "#PWR0119" H 4000 5450 50  0001 C CNN
+F 1 "GND" H 4000 5550 50  0000 C CNN
+F 2 "" H 4000 5700 50  0000 C CNN
+F 3 "" H 4000 5700 50  0000 C CNN
+	1    4000 5700
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Jumper:SolderJumper_2_Open JP1
+U 1 1 5EA81D32
+P 4050 6000
+F 0 "JP1" H 4050 5775 50  0000 C CNN
+F 1 "SolderJumper_2_Open" H 4050 5866 50  0000 C CNN
+F 2 "Jumper:SolderJumper-2_P1.3mm_Open_RoundedPad1.0x1.5mm" H 4050 6000 50  0001 C CNN
+F 3 "~" H 4050 6000 50  0001 C CNN
+	1    4050 6000
+	1    0    0    1   
+$EndComp
+Text Label 4200 6000 0    50   ~ 0
+RESET
+Text Label 3150 2100 0    50   ~ 0
+RESET
+Wire Wire Line
+	3900 6000 3675 6000
+Wire Wire Line
+	3675 6000 3675 5700
+Connection ~ 3675 5700
+Wire Wire Line
+	3675 5700 3700 5700
+$Comp
+L nixie_control_board-rescue:+3.3V-power #PWR0121
+U 1 1 5EA968FF
+P 9900 1950
+F 0 "#PWR0121" H 9900 1800 50  0001 C CNN
+F 1 "+3.3V-power" V 9915 2078 50  0000 L CNN
+F 2 "" H 9900 1950 50  0001 C CNN
+F 3 "" H 9900 1950 50  0001 C CNN
+	1    9900 1950
+	1    0    0    -1  
 $EndComp
 $EndSCHEMATC

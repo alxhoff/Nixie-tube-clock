@@ -314,7 +314,7 @@ void ssd1306_refresh(char **buf, unsigned char cursor_on, int cursor_x,
 
 signed char ssd1306_init(void)
 {
-	ssd1306_reset_disable();
+	ssd1306_reset_enable();
 	//functions
 	ssd1306_dev.clear = &ssd1306_clear;
 	ssd1306_dev.update = &ssd1306_update_screen;
