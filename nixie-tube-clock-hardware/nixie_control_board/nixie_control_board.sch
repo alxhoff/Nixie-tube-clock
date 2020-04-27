@@ -562,11 +562,11 @@ Text GLabel 6000 1800 0    60   Input ~ 0
 BUTTON_2
 Text GLabel 6000 2500 0    60   Input ~ 0
 BUTTON_3
-Text GLabel 1950 2400 0    60   Input ~ 0
+Text GLabel 1950 2200 0    60   Input ~ 0
 BUTTON_3
-Text GLabel 1950 2500 0    60   Input ~ 0
+Text GLabel 1950 2300 0    60   Input ~ 0
 BUTTON_2
-Text GLabel 1950 2600 0    60   Input ~ 0
+Text GLabel 1950 2400 0    60   Input ~ 0
 BUTTON_1
 Text GLabel 7650 3300 2    60   Input ~ 0
 SHIFT_SER_OUT
@@ -1047,11 +1047,6 @@ F 3 "" H 3450 6600 50  0000 C CNN
 $EndComp
 Wire Wire Line
 	3450 6500 3450 6400
-Wire Wire Line
-	3450 6400 3650 6400
-Connection ~ 3450 6400
-Wire Wire Line
-	3450 6300 3650 6300
 $Comp
 L nixie_control_board-rescue:GND-power #PWR0113
 U 1 1 5B617497
@@ -1150,9 +1145,9 @@ Wire Wire Line
 	7750 5250 7900 5250
 Wire Wire Line
 	6550 5250 7450 5250
-Text GLabel 3650 6400 2    60   Input ~ 0
+Text GLabel 3450 6400 2    60   Input ~ 0
 SDA
-Text GLabel 3650 6300 2    60   Input ~ 0
+Text GLabel 3450 6300 2    60   Input ~ 0
 SCL
 Wire Wire Line
 	6550 4850 6550 5250

@@ -96,7 +96,7 @@ void Error_Handler(void);
 #define BUT1_GPIO_Port GPIOC
 #define BUT2_Pin GPIO_PIN_0
 #define BUT2_GPIO_Port GPIOA
-#define SCREEN_RESET_Pin GPIO_PIN_5
+#define SCREEN_RESET_Pin GPIO_PIN_1
 #define SCREEN_RESET_GPIO_Port GPIOB
 #define SHIFT_SER_IN_Pin GPIO_PIN_12
 #define SHIFT_SER_IN_GPIO_Port GPIOB

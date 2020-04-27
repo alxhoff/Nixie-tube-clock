@@ -13,6 +13,25 @@
 
 #define PROJECT_I2C_PORT hi2c1 
 
+#ifndef BUT0_GPIO_Port 
+#define BUT0_GPIO_Port 0
+#endif 
+#ifndef BUT0_Pin 
+#define BUT0_Pin 0
+#endif 
+#ifndef BUT1_GPIO_Port 
+#define BUT1_GPIO_Port 0
+#endif 
+#ifndef BUT1_Pin 
+#define BUT1_Pin 0
+#endif 
+#ifndef BUT2_GPIO_Port 
+#define BUT2_GPIO_Port 0
+#endif 
+#ifndef BUT2_Pin 
+#define BUT2_Pin 0
+#endif 
+
 //SCREEN
 #define SCREEN_CURSOR_PERIOD 750
 #define SSD1306_I2C_PORT PROJECT_I2C_PORT 

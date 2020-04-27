@@ -179,7 +179,7 @@ void TIM3_IRQHandler(void)
   /* USER CODE END TIM3_IRQn 0 */
   HAL_TIM_IRQHandler(&htim3);
   /* USER CODE BEGIN TIM3_IRQn 1 */
-  HAL_GPIO_TogglePin(LD3_GPIO_Port, LD3_Pin);
+  HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
   blink_flag = !blink_flag;
   /* USER CODE END TIM3_IRQn 1 */
 }

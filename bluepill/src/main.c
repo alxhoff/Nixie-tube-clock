@@ -18,7 +18,7 @@ osThreadId defaultTaskHandle;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_TIM3_Init(void);
-static void MX_I2C2_Init(void);
+static int MX_I2C2_Init(void);
 void StartDefaultTask(void const *argument);
 
 void TIM3_IRQHandler(void)
@@ -30,22 +30,24 @@ void TIM3_IRQHandler(void)
 
 void ButtonTestTask(void const *argument)
 {
-    while(1){
-        if(!HAL_GPIO_ReadPin(BUT0_GPIO_Port, BUT0_Pin)){
-            HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
-            osDelay(200);
-        }
+	while (1) {
+		HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
+		if (!HAL_GPIO_ReadPin(BUT0_GPIO_Port, BUT0_Pin)) {
+			HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
+			osDelay(200);
+		}
 
-        if(!HAL_GPIO_ReadPin(BUT1_GPIO_Port, BUT1_Pin)){
-            HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
-            osDelay(200);
-        }
+		if (!HAL_GPIO_ReadPin(BUT1_GPIO_Port, BUT1_Pin)) {
+			HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
+			osDelay(200);
+		}
 
-        if(!HAL_GPIO_ReadPin(BUT2_GPIO_Port, BUT2_Pin)){
-            HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
-            osDelay(200);
-        }
-    }
+		if (!HAL_GPIO_ReadPin(BUT2_GPIO_Port, BUT2_Pin)) {
+			HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
+			osDelay(200);
+		}
+		osDelay(500);
+	}
 }
 
 int main(void)
@@ -55,20 +57,23 @@ int main(void)
 	SystemClock_Config();
 	MX_GPIO_Init();
 	MX_TIM3_Init();
-	MX_I2C2_Init();
+	if (MX_I2C2_Init())
+		goto err_hold;
 
 	SN54HC595_init();
-	ret = ssd1306_init();
+	if (ssd1306_init())
+		goto err_hold;
 	screen_init();
 	RTC_dev_init(1);
 	states_init();
 
-    osThreadDef(defaultTask, ButtonTestTask, osPriorityNormal, 0, 128);
-    /** osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 256); */
+	/** osThreadDef(defaultTask, ButtonTestTask, osPriorityNormal, 0, 128); */
+	osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 256);
 	defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
 	osKernelStart();
 
+err_hold:
 	while (1) {
 	}
 }
@@ -111,7 +116,7 @@ void SystemClock_Config(void)
 	RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
 	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
 	RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI_DIV2;
-	RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL12;
+	RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL16;
 	if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
 		Error_Handler();
 	}
@@ -125,13 +130,13 @@ void SystemClock_Config(void)
 	RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
 	RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-	if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) !=
+	if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) !=
 	    HAL_OK) {
 		Error_Handler();
 	}
 }
 
-static void MX_I2C2_Init(void)
+static int MX_I2C2_Init(void)
 {
 	PROJECT_I2C_PORT.Instance = I2C1;
 	PROJECT_I2C_PORT.Init.ClockSpeed = 100000;
@@ -144,64 +149,64 @@ static void MX_I2C2_Init(void)
 	PROJECT_I2C_PORT.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
 	if (HAL_I2C_Init(&PROJECT_I2C_PORT) != HAL_OK) {
 		Error_Handler();
+		return -1;
 	}
+	return 0;
 }
 
 static void MX_GPIO_Init(void)
 {
-	GPIO_InitTypeDef GPIO_InitStruct = { 0 };
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
 
-	__HAL_RCC_GPIOC_CLK_ENABLE();
-	__HAL_RCC_GPIOA_CLK_ENABLE();
-	__HAL_RCC_GPIOB_CLK_ENABLE();
+  /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
 
-	/*Configure GPIO pin Output Level */
-	HAL_GPIO_WritePin(LD1_GPIO_Port, LD1_Pin, GPIO_PIN_RESET);
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(LD1_GPIO_Port, LD1_Pin, GPIO_PIN_RESET);
 
-	/*Configure GPIO pin Output Level */
-	HAL_GPIO_WritePin(GPIOB,
-			  SCREEN_RESET_Pin | SHIFT_SER_IN_Pin |
-				  SHIFT_SER_CLK_Pin | SHIFT_LATCH_Pin |
-				  SHIFT_ENA_Pin,
-			  GPIO_PIN_RESET);
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOB, SCREEN_RESET_Pin|SHIFT_SER_IN_Pin|SHIFT_SER_CLK_Pin|SHIFT_LATCH_Pin 
+                          |SHIFT_ENA_Pin, GPIO_PIN_RESET);
 
-	/*Configure GPIO pin Output Level */
-	HAL_GPIO_WritePin(SHIFT_CLR_GPIO_Port, SHIFT_CLR_Pin, GPIO_PIN_RESET);
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(SHIFT_CLR_GPIO_Port, SHIFT_CLR_Pin, GPIO_PIN_RESET);
 
-	/*Configure GPIO pin : LD1_Pin */
-	GPIO_InitStruct.Pin = LD1_Pin;
-	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	HAL_GPIO_Init(LD1_GPIO_Port, &GPIO_InitStruct);
+  /*Configure GPIO pin : LD1_Pin */
+  GPIO_InitStruct.Pin = LD1_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(LD1_GPIO_Port, &GPIO_InitStruct);
 
-	/*Configure GPIO pins : BUT0_Pin BUT1_Pin */
-	GPIO_InitStruct.Pin = BUT0_Pin | BUT1_Pin;
-	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	GPIO_InitStruct.Pull = GPIO_PULLUP;
-	HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+  /*Configure GPIO pins : BUT0_Pin BUT1_Pin */
+  GPIO_InitStruct.Pin = BUT0_Pin|BUT1_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-	/*Configure GPIO pin : BUT2_Pin */
-	GPIO_InitStruct.Pin = BUT2_Pin;
-	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	GPIO_InitStruct.Pull = GPIO_PULLUP;
-	HAL_GPIO_Init(BUT2_GPIO_Port, &GPIO_InitStruct);
+  /*Configure GPIO pin : BUT2_Pin */
+  GPIO_InitStruct.Pin = BUT2_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(BUT2_GPIO_Port, &GPIO_InitStruct);
 
-	/*Configure GPIO pins : SHIFT_SER_IN_Pin SHIFT_SER_CLK_Pin SHIFT_LATCH_Pin SHIFT_ENA_Pin */
-	GPIO_InitStruct.Pin = SCREEN_RESET_Pin | SHIFT_SER_IN_Pin |
-			      SHIFT_SER_CLK_Pin | SHIFT_LATCH_Pin |
-			      SHIFT_ENA_Pin;
-	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  /*Configure GPIO pins : SCREEN_RESET_Pin SHIFT_SER_IN_Pin SHIFT_SER_CLK_Pin SHIFT_LATCH_Pin 
+                           SHIFT_ENA_Pin */
+  GPIO_InitStruct.Pin = SCREEN_RESET_Pin|SHIFT_SER_IN_Pin|SHIFT_SER_CLK_Pin|SHIFT_LATCH_Pin 
+                          |SHIFT_ENA_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-	/*Configure GPIO pin : SHIFT_CLR_Pin */
-	GPIO_InitStruct.Pin = SHIFT_CLR_Pin;
-	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	HAL_GPIO_Init(SHIFT_CLR_GPIO_Port, &GPIO_InitStruct);
+  /*Configure GPIO pin : SHIFT_CLR_Pin */
+  GPIO_InitStruct.Pin = SHIFT_CLR_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(SHIFT_CLR_GPIO_Port, &GPIO_InitStruct);
 }
 
 void StartDefaultTask(void const *argument)
@@ -210,6 +215,9 @@ void StartDefaultTask(void const *argument)
 		screen_clear();
 		states_run();
 		screen_refresh(NULL);
+		HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
+
+		osDelay(500);
 	}
 }
 
