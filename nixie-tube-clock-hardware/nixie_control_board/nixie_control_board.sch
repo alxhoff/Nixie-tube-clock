@@ -105,7 +105,7 @@ L nixie_control_board-rescue:R_Pack04-device RP1
 U 1 1 59A343F6
 P 9900 2150
 F 0 "RP1" H 9900 2600 50  0000 C CNN
-F 1 "R_PACK4" H 9900 2100 50  0000 C CNN
+F 1 "4K7" H 10225 2125 50  0000 C CNN
 F 2 "Resistors_SMD:R_Array_Convex_4x0402" H 9900 2150 50  0001 C CNN
 F 3 "" H 9900 2150 50  0000 C CNN
 	1    9900 2150
@@ -1292,17 +1292,6 @@ F 3 "" H 7900 3100 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	7900 3100 7650 3100
-$Comp
-L nixie_control_board-rescue:+3.3V-power #PWR0142
-U 1 1 5C5C046E
-P 4000 5300
-F 0 "#PWR0142" H 4000 5150 50  0001 C CNN
-F 1 "+3.3V-power" V 4015 5428 50  0000 L CNN
-F 2 "" H 4000 5300 50  0001 C CNN
-F 3 "" H 4000 5300 50  0001 C CNN
-	1    4000 5300
-	0    1    1    0   
-$EndComp
 Wire Wire Line
 	3700 5300 3450 5300
 Wire Wire Line
@@ -1399,17 +1388,6 @@ F 3 "" H 5500 3350 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L nixie_control_board-rescue:R-device R4
-U 1 1 5EA53A95
-P 3850 5300
-F 0 "R4" V 3930 5300 50  0000 C CNN
-F 1 "10K" V 3850 5300 50  0000 C CNN
-F 2 "Resistor_SMD:R_0603_1608Metric" V 3780 5300 50  0001 C CNN
-F 3 "" H 3850 5300 50  0000 C CNN
-	1    3850 5300
-	0    1    1    0   
-$EndComp
-$Comp
 L nixie_control_board-rescue:R-device R5
 U 1 1 5EA61C4A
 P 3850 5700
@@ -1465,5 +1443,27 @@ F 2 "" H 9900 1950 50  0001 C CNN
 F 3 "" H 9900 1950 50  0001 C CNN
 	1    9900 1950
 	1    0    0    -1  
+$EndComp
+$Comp
+L nixie_control_board-rescue:+3.3V-power #PWR0142
+U 1 1 5C5C046E
+P 4000 5300
+F 0 "#PWR0142" H 4000 5150 50  0001 C CNN
+F 1 "+3.3V-power" V 4015 5428 50  0000 L CNN
+F 2 "" H 4000 5300 50  0001 C CNN
+F 3 "" H 4000 5300 50  0001 C CNN
+	1    4000 5300
+	0    1    1    0   
+$EndComp
+$Comp
+L nixie_control_board-rescue:R-device R4
+U 1 1 5EA53A95
+P 3850 5300
+F 0 "R4" V 3930 5300 50  0000 C CNN
+F 1 "10K" V 3850 5300 50  0000 C CNN
+F 2 "Resistor_SMD:R_0603_1608Metric" V 3780 5300 50  0001 C CNN
+F 3 "" H 3850 5300 50  0000 C CNN
+	1    3850 5300
+	0    1    1    0   
 $EndComp
 $EndSCHEMATC
